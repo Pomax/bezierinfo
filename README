@@ -1,0 +1,5 @@
+This repository houses "A Primer on Bezier Curves",
+written using TeX formulae for the mathy bits, and
+Processing.js sketches for the interactive graphics.
+
+(c) 2011 Mike "Pomax" Kamermans
