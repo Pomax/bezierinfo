@@ -10,11 +10,6 @@ void setupScreen() {
 }
 
 /**
- * force-update code
- */
-void update() {}
-
-/**
  * Actual draw code
  */
 void drawFunction() {

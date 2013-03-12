@@ -45,7 +45,6 @@ void mouseMoved() {
 void mouseDragged() {
   if(current != -1) {
     active.movePoint(current, mouseX, mouseY);
-    update();
   }
   if(!playing) redraw();
   if(moulding) {
