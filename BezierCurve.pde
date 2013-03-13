@@ -2,7 +2,7 @@
  * Bezier curve class (of any degree)
  */
 class BezierCurve {
-  final int LUT_resolution = 200;
+  int LUT_resolution;
   int order;
   Point[] points,              // the control points for this curve
           abc = new Point[3],  // the "ABC" points. Only for 2nd and 3rd order curves
@@ -13,8 +13,8 @@ class BezierCurve {
   // LUT for the point x/y values and t-at-x/y values
   float[] x_values,
           y_values,
-          LUT_x = new float[LUT_resolution],
-          LUT_y = new float[LUT_resolution],
+          LUT_x,
+          LUT_y ,
           ratios;              // the distance ratios for each control point.
   // for drawing the curve, we use integer lookups
   int[] draw_x = new int[LUT_resolution],
@@ -34,6 +34,11 @@ class BezierCurve {
     this.points = points;
     order = points.length-1;
     int L = points.length;
+    LUT_resolution = (int) (400 * log(order)/log(4));
+    LUT_x = new float[LUT_resolution];
+    LUT_y = new float[LUT_resolution];
+    draw_x = new int[LUT_resolution];
+    draw_y = new int[LUT_resolution];
     x_values = new float[L];
     y_values = new float[L];
     update();
