@@ -28,115 +28,115 @@
     </style>
   </head>
   <body>
+
     <h1>A Primer on Bezier Curves</h1>
 
     <p>This page houses the new codepase and example sketches while the
     <a href="http://processingjs.nihongoresources.com/bezierinfo/">original article</a> is reworked
     to incorporate them, with text rewrites where necessary to explain things better.</p>
 
+
     <h2>Example curves</h2>
 
     <p>Simply click-drag points to see the curves change</p>
 
     <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Quadratic Bezier curves">
-void setupCurve() {
-  setupDefaultQuadratic();
-}
+    void setupCurve() {
+      setupDefaultQuadratic();
+    }
 
-void drawCurve(BezierCurve curve) {
-  curve.draw();
-}
-    </textarea>
+    void drawCurve(BezierCurve curve) {
+      curve.draw();
+    }</textarea>
 
     <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Cubic Bezier curves">
-void setupCurve() {
-  setupDefaultCubic();
-}
+    void setupCurve() {
+      setupDefaultCubic();
+    }
 
-void drawCurve(BezierCurve curve) {
-  curve.draw();
-}
-    </textarea>
+    void drawCurve(BezierCurve curve) {
+      curve.draw();
+    }</textarea>
+
 
     <h2>Lowering and elevating curve order</h2>
 
     <p>Select the sketch and press your up and down cursor keys to elevate or lower the curve order.</p>
 
     <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="A tenth order Bezier curve">
-void setupCurve() {
-  int d = dim - 2*pad;
-  int order = 10;
-  ArrayList<Point> pts = new ArrayList<Point>();
+    void setupCurve() {
+      int d = dim - 2*pad;
+      int order = 10;
+      ArrayList<Point> pts = new ArrayList<Point>();
 
-  float dst = d/2.5, nx, ny, a=0, step = 2*PI/(order+1), r;
-  for(a=0; a<2*PI; a+=step) {
-    r = random(-dst/4,dst/4);
-    pts.add(new Point(d/2 + cos(a) * (r+dst), d/2 + sin(a) * (r+dst)));
-    dst -= 1.2;
-  }
+      float dst = d/2.5, nx, ny, a=0, step = 2*PI/(order+1), r;
+      for(a=0; a<2*PI; a+=step) {
+        r = random(-dst/4,dst/4);
+        pts.add(new Point(d/2 + cos(a) * (r+dst), d/2 + sin(a) * (r+dst)));
+        dst -= 1.2;
+      }
 
-  Point[] points = new Point[pts.size()];
-  for(int p=0,last=points.length; p<last; p++) { points[p] = pts.get(p); }
-  curves.add(new BezierCurve(points));
-  reorder();
-}
+      Point[] points = new Point[pts.size()];
+      for(int p=0,last=points.length; p<last; p++) { points[p] = pts.get(p); }
+      curves.add(new BezierCurve(points));
+      reorder();
+    }
 
-void drawCurve(BezierCurve curve) {
-  curve.draw();
-}
-    </textarea>
+    void drawCurve(BezierCurve curve) {
+      curve.draw();
+    }</textarea>
+
 
     <h2>Component functions</h2>
 
     <p>These two sketches show a curve, and then its x- and y- component function as plotted against <i>t</i>.</p>
 
     <textarea class="sketch-code" data-sketch-preset="threepanel" data-sketch-title="Quadratic Bezier curve components">
-void setupCurve() {
-  setupDefaultQuadratic();
-}
+    void setupCurve() {
+      setupDefaultQuadratic();
+    }
 
-void drawCurve(BezierCurve curve) {
-  additionals();
-  curve.draw();
+    void drawCurve(BezierCurve curve) {
+      additionals();
+      curve.draw();
 
-  noAdditionals();
-  usePanelPadding();
+      noAdditionals();
+      usePanelPadding();
 
-  nextPanel();
-  drawAxes("t",0,1, "x",0,panelDim);
-  BezierCurve x_only = curve.justX(dim-2*pad);
-  x_only.draw();
+      nextPanel();
+      drawAxes("t",0,1, "x",0,panelDim);
+      BezierCurve x_only = curve.justX(dim-2*pad);
+      x_only.draw();
 
-  nextPanel();
-  drawAxes("t",0,1, "y",0,panelDim);
-  BezierCurve y_only = curve.justY(dim-2*pad);
-  y_only.draw();
-}
-    </textarea>
+      nextPanel();
+      drawAxes("t",0,1, "y",0,panelDim);
+      BezierCurve y_only = curve.justY(dim-2*pad);
+      y_only.draw();
+    }</textarea>
 
     <textarea class="sketch-code" data-sketch-preset="threepanel" data-sketch-title="Cubic Bezier curve components">
-void setupCurve() {
-  setupDefaultCubic();
-}
+    void setupCurve() {
+      setupDefaultCubic();
+    }
 
-void drawCurve(BezierCurve curve) {
-  additionals();
-  curve.draw();
+    void drawCurve(BezierCurve curve) {
+      additionals();
+      curve.draw();
 
-  noAdditionals();
-  usePanelPadding();
+      noAdditionals();
+      usePanelPadding();
 
-  nextPanel();
-  drawAxes("t",0,1, "x",0,panelDim);
-  BezierCurve x_only = curve.justX(dim-2*pad);
-  x_only.draw();
+      nextPanel();
+      drawAxes("t",0,1, "x",0,panelDim);
+      BezierCurve x_only = curve.justX(dim-2*pad);
+      x_only.draw();
 
-  nextPanel();
-  drawAxes("t",0,1, "y",0,panelDim);
-  BezierCurve y_only = curve.justY(dim-2*pad);
-  y_only.draw();
-}
-    </textarea>
+      nextPanel();
+      drawAxes("t",0,1, "y",0,panelDim);
+      BezierCurve y_only = curve.justY(dim-2*pad);
+      y_only.draw();
+    }</textarea>
+
 
     <h2>Extremities</h2>
 
@@ -144,88 +144,87 @@ void drawCurve(BezierCurve curve) {
     quadratic curves, there is no B''(t), so we only compute B'(t) = 0.</p>
 
     <textarea class="sketch-code" data-sketch-preset="threepanel" data-sketch-title="Quadratic Bezier curve components">
-void setupCurve() {
-  setupDefaultQuadratic();
-}
+    void setupCurve() {
+      setupDefaultQuadratic();
+    }
 
-void drawCurve(BezierCurve curve) {
-  additionals();
-  curve.draw();
+    void drawCurve(BezierCurve curve) {
+      additionals();
+      curve.draw();
 
-  noAdditionals();
-  usePanelPadding();
+      noAdditionals();
+      usePanelPadding();
 
-  nextPanel();
-  drawAxes("t",0,1, "x",0,panelDim);
-  BezierCurve x_only = curve.justX(dim-2*pad);
-  x_only.draw();
+      nextPanel();
+      drawAxes("t",0,1, "x",0,panelDim);
+      BezierCurve x_only = curve.justX(dim-2*pad);
+      x_only.draw();
 
-  stroke(255,0,0);
-  float[] tx = x_only.getInflections();
-  for(float t: tx) {
-    if(t==0 || t==1) continue;
-    Point p = x_only.getPoint(t);
-    ellipse(p.x,p.y,5,5);
-    line(p.x,p.y-3,p.x,0);
-  }
+      stroke(255,0,0);
+      float[] tx = x_only.getInflections();
+      for(float t: tx) {
+        if(t==0 || t==1) continue;
+        Point p = x_only.getPoint(t);
+        ellipse(p.x,p.y,5,5);
+        line(p.x,p.y-3,p.x,0);
+      }
 
-  nextPanel();
-  drawAxes("t",0,1, "y",0,panelDim);
-  BezierCurve y_only = curve.justY(dim-2*pad);
-  y_only.draw();
+      nextPanel();
+      drawAxes("t",0,1, "y",0,panelDim);
+      BezierCurve y_only = curve.justY(dim-2*pad);
+      y_only.draw();
 
-  stroke(255,0,255);
-  float[] ty = y_only.getInflections();
-  for(float t: ty) {
-    if(t==0 || t==1) continue;
-    Point p = y_only.getPoint(t);
-    ellipse(p.x,p.y,5,5);
-    line(p.x,p.y-3,p.x,0);
-  }
-}
-    </textarea>
+      stroke(255,0,255);
+      float[] ty = y_only.getInflections();
+      for(float t: ty) {
+        if(t==0 || t==1) continue;
+        Point p = y_only.getPoint(t);
+        ellipse(p.x,p.y,5,5);
+        line(p.x,p.y-3,p.x,0);
+      }
+    }</textarea>
 
     <textarea class="sketch-code" data-sketch-preset="threepanel" data-sketch-title="Cubic Bezier curve components">
-void setupCurve() {
-  setupDefaultCubic();
-}
+    void setupCurve() {
+      setupDefaultCubic();
+    }
 
-void drawCurve(BezierCurve curve) {
-  additionals();
-  curve.draw();
+    void drawCurve(BezierCurve curve) {
+      additionals();
+      curve.draw();
 
-  noAdditionals();
-  usePanelPadding();
+      noAdditionals();
+      usePanelPadding();
 
-  nextPanel();
-  drawAxes("t",0,1, "x",0,panelDim);
-  BezierCurve x_only = curve.justX(dim-2*pad);
-  x_only.draw();
+      nextPanel();
+      drawAxes("t",0,1, "x",0,panelDim);
+      BezierCurve x_only = curve.justX(dim-2*pad);
+      x_only.draw();
 
-  stroke(255,0,0);
-  float[] tx = x_only.getInflections();
-  for(float t: tx) {
-    if(t==0 || t==1) continue;
-    Point p = x_only.getPoint(t);
-    ellipse(p.x,p.y,5,5);
-    line(p.x,p.y-3,p.x,0);
-  }
+      stroke(255,0,0);
+      float[] tx = x_only.getInflections();
+      for(float t: tx) {
+        if(t==0 || t==1) continue;
+        Point p = x_only.getPoint(t);
+        ellipse(p.x,p.y,5,5);
+        line(p.x,p.y-3,p.x,0);
+      }
 
-  nextPanel();
-  drawAxes("t",0,1, "y",0,panelDim);
-  BezierCurve y_only = curve.justY(dim-2*pad);
-  y_only.draw();
+      nextPanel();
+      drawAxes("t",0,1, "y",0,panelDim);
+      BezierCurve y_only = curve.justY(dim-2*pad);
+      y_only.draw();
 
-  stroke(255,0,255);
-  float[] ty = y_only.getInflections();
-  for(float t: ty) {
-    if(t==0 || t==1) continue;
-    Point p = y_only.getPoint(t);
-    ellipse(p.x,p.y,5,5);
-    line(p.x,p.y-3,p.x,0);
-  }
-}
-    </textarea>
+      stroke(255,0,255);
+      float[] ty = y_only.getInflections();
+      for(float t: ty) {
+        if(t==0 || t==1) continue;
+        Point p = y_only.getPoint(t);
+        ellipse(p.x,p.y,5,5);
+        line(p.x,p.y-3,p.x,0);
+      }
+    }</textarea>
+
 
     <h2>Bounding boxes</h2>
 
@@ -233,64 +232,63 @@ void drawCurve(BezierCurve curve) {
     four values we need to box in our curve. Color coding is the same as before.</p>
 
     <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Quadratic Bezier bounding box">
-void setupCurve() {
-  setupDefaultQuadratic();
-}
+    void setupCurve() {
+      setupDefaultQuadratic();
+    }
 
-void drawCurve(BezierCurve curve) {
-  curve.draw();
+    void drawCurve(BezierCurve curve) {
+      curve.draw();
 
-  stroke(255,0,0);
-  BezierCurve x_only = curve.justX(dim-2*pad);
-  float[] tx = x_only.getInflections();
-  for(float t: tx) {
-    if(t==0 || t==1) continue;
-    Point p = curve.getPoint(t);
-    ellipse(p.x,p.y,5,5);
-  }
+      stroke(255,0,0);
+      BezierCurve x_only = curve.justX(dim-2*pad);
+      float[] tx = x_only.getInflections();
+      for(float t: tx) {
+        if(t==0 || t==1) continue;
+        Point p = curve.getPoint(t);
+        ellipse(p.x,p.y,5,5);
+      }
 
-  stroke(255,0,255);
-  BezierCurve y_only = curve.justY(dim-2*pad);
-  float[] ty = y_only.getInflections();
-  for(float t: ty) {
-    if(t==0 || t==1) continue;
-    Point p = curve.getPoint(t);
-    ellipse(p.x,p.y,5,5);
-  }
+      stroke(255,0,255);
+      BezierCurve y_only = curve.justY(dim-2*pad);
+      float[] ty = y_only.getInflections();
+      for(float t: ty) {
+        if(t==0 || t==1) continue;
+        Point p = curve.getPoint(t);
+        ellipse(p.x,p.y,5,5);
+      }
 
-  drawBoundingBox(curve.generateBoundingBox());
-}
-    </textarea>
+      drawBoundingBox(curve.generateBoundingBox());
+    }</textarea>
 
     <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Cubic Bezier bounding box">
-void setupCurve() {
-  setupDefaultCubic();
-}
+    void setupCurve() {
+      setupDefaultCubic();
+    }
 
-void drawCurve(BezierCurve curve) {
-  curve.draw();
+    void drawCurve(BezierCurve curve) {
+      curve.draw();
 
-  stroke(255,0,0);
-  BezierCurve x_only = curve.justX(dim-2*pad);
-  float[] tx = x_only.getInflections();
-  for(float t: tx) {
-    if(t==0 || t==1) continue;
-    Point p = curve.getPoint(t);
-    ellipse(p.x,p.y,5,5);
-  }
+      stroke(255,0,0);
+      BezierCurve x_only = curve.justX(dim-2*pad);
+      float[] tx = x_only.getInflections();
+      for(float t: tx) {
+        if(t==0 || t==1) continue;
+        Point p = curve.getPoint(t);
+        ellipse(p.x,p.y,5,5);
+      }
 
-  stroke(255,0,255);
-  BezierCurve y_only = curve.justY(dim-2*pad);
-  float[] ty = y_only.getInflections();
-  for(float t: ty) {
-    if(t==0 || t==1) continue;
-    Point p = curve.getPoint(t);
-    ellipse(p.x,p.y,5,5);
-  }
+      stroke(255,0,255);
+      BezierCurve y_only = curve.justY(dim-2*pad);
+      float[] ty = y_only.getInflections();
+      for(float t: ty) {
+        if(t==0 || t==1) continue;
+        Point p = curve.getPoint(t);
+        ellipse(p.x,p.y,5,5);
+      }
 
-  drawBoundingBox(curve.generateBoundingBox());
-}
-    </textarea>
+      drawBoundingBox(curve.generateBoundingBox());
+    }</textarea>
+
 
     <h2>Tight boxes</h2>
 
@@ -300,26 +298,25 @@ void drawCurve(BezierCurve curve) {
     x/y, we apply the inverse rotation and translation (in that order) to fit the bounding box around our curve.</p>
 
     <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Tight quadratic Bezier bounding box">
-void setupCurve() {
-  setupDefaultQuadratic();
-}
+    void setupCurve() {
+      setupDefaultQuadratic();
+    }
 
-void drawCurve(BezierCurve curve) {
-  curve.draw();
-  drawBoundingBox(curve.generateTightBoundingBox());
-}
-    </textarea>
+    void drawCurve(BezierCurve curve) {
+      curve.draw();
+      drawBoundingBox(curve.generateTightBoundingBox());
+    }</textarea>
 
     <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Tight cubic Bezier bounding box">
-void setupCurve() {
-  setupDefaultCubic();
-}
+    void setupCurve() {
+      setupDefaultCubic();
+    }
 
-void drawCurve(BezierCurve curve) {
-  curve.draw();
-  drawBoundingBox(curve.generateTightBoundingBox());
-}
-    </textarea>
+    void drawCurve(BezierCurve curve) {
+      curve.draw();
+      drawBoundingBox(curve.generateTightBoundingBox());
+    }</textarea>
+
 
     <h2>Intersections</h2>
 
@@ -329,40 +326,39 @@ void drawCurve(BezierCurve curve) {
     not actually on both line segments).</p>
 
     <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Line/line intersections">
-Point p1, p2, p3, p4;
+    Point p1, p2, p3, p4;
 
-void setupCurve() {
-  p1 = new Point(50,50);
-  p2 = new Point(150,110);
-  curves.add(new BezierCurve(new Point[]{p1,p2}));
-  p3 = new Point(50,250);
-  p4 = new Point(170,170);
-  curves.add(new BezierCurve(new Point[]{p3,p4}));
-}
+    void setupCurve() {
+      p1 = new Point(50,50);
+      p2 = new Point(150,110);
+      curves.add(new BezierCurve(new Point[]{p1,p2}));
+      p3 = new Point(50,250);
+      p4 = new Point(170,170);
+      curves.add(new BezierCurve(new Point[]{p3,p4}));
+    }
 
-void drawCurve(BezierCurve curve) {
-  // draw the lines through p1/p2 and p3/p4
-  stroke(0,50);
-  float dx = 10*(p2.x-p1.x), dy = 10*(p2.y-p1.y);
-  line(p1.x-dx,p1.y-dy,p2.x+dx,p2.y+dy);
-  dx = 10*(p4.x-p3.x); dy = 10*(p4.y-p3.y);
-  line(p3.x-dx,p3.y-dy,p4.x+dx,p4.y+dy);
+    void drawCurve(BezierCurve curve) {
+      // draw the lines through p1/p2 and p3/p4
+      stroke(0,50);
+      float dx = 10*(p2.x-p1.x), dy = 10*(p2.y-p1.y);
+      line(p1.x-dx,p1.y-dy,p2.x+dx,p2.y+dy);
+      dx = 10*(p4.x-p3.x); dy = 10*(p4.y-p3.y);
+      line(p3.x-dx,p3.y-dy,p4.x+dx,p4.y+dy);
 
-  // show the line segments
-  curves.get(0).draw();
-  curves.get(1).draw();
+      // show the line segments
+      curves.get(0).draw();
+      curves.get(1).draw();
 
-  // show the intersection point
-  Point ntr = comp.getProjection(p1,p2,p3,p4);
+      // show the intersection point
+      Point ntr = comp.getProjection(p1,p2,p3,p4);
 
-  // red if virtual intersection, green if real
-  boolean oncurves = true;
-  if(curves.get(0).over(ntr.x,ntr.y) == -1) { oncurves = false; }
-  if(curves.get(1).over(ntr.x,ntr.y) == -1) { oncurves = false; }
-  stroke(oncurves?0:255, oncurves?255:0, 0);
-  ellipse(ntr.x,ntr.y,5,5);
-}
-    </textarea>
+      // red if virtual intersection, green if real
+      boolean oncurves = true;
+      if(curves.get(0).over(ntr.x,ntr.y) == -1) { oncurves = false; }
+      if(curves.get(1).over(ntr.x,ntr.y) == -1) { oncurves = false; }
+      stroke(oncurves?0:255, oncurves?255:0, 0);
+      ellipse(ntr.x,ntr.y,5,5);
+    }</textarea>
 
     <p>Curve/line intersection is more work: we rotate/translate both the line and curve together
     so that the line coincides with the x-axis. The intersections of the curve and the line are now
@@ -371,73 +367,72 @@ void drawCurve(BezierCurve curve) {
     using a numerical approach. Specifically, the Newton-Raphson root finding method.</p>
 
     <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Quadratic curve/line intersections">
-Point p1, p2;
+    Point p1, p2;
 
-void setupCurve() {
-  p1 = new Point(40,60);
-  p2 = new Point(260,200);
-  curves.add(new BezierCurve(new Point[]{
-    p1, p2
-  }));
-  curves.add(new BezierCurve(new Point[]{
-    new Point(25,150),
-    new Point(180,30),
-    new Point(230,250)
-  }));
-}
+    void setupCurve() {
+      p1 = new Point(40,60);
+      p2 = new Point(260,200);
+      curves.add(new BezierCurve(new Point[]{
+        p1, p2
+      }));
+      curves.add(new BezierCurve(new Point[]{
+        new Point(25,150),
+        new Point(180,30),
+        new Point(230,250)
+      }));
+    }
 
-void drawCurve(BezierCurve curve) {
-  curves.get(0).draw();
-  curves.get(1).draw();
+    void drawCurve(BezierCurve curve) {
+      curves.get(0).draw();
+      curves.get(1).draw();
 
-  BezierCurve aligned = curves.get(1).align(p1,p2);
-  float[] roots = comp.findAllRoots(0, aligned.y_values);
-  fill(150,0,150);
-  float x, y;
-  for(float t: roots) {
-    if(t<0 || t>1) continue;
-    x = curves.get(1).getXValue(t);
-    y = curves.get(1).getYValue(t);
-    ellipse(x,y,5,5);
-    text(""+round(1000*t)/1000,x+10,y);
-  }
-}
-    </textarea>
+      BezierCurve aligned = curves.get(1).align(p1,p2);
+      float[] roots = comp.findAllRoots(0, aligned.y_values);
+      fill(150,0,150);
+      float x, y;
+      for(float t: roots) {
+        if(t<0 || t>1) continue;
+        x = curves.get(1).getXValue(t);
+        y = curves.get(1).getYValue(t);
+        ellipse(x,y,5,5);
+        text(""+round(1000*t)/1000,x+10,y);
+      }
+    }</textarea>
 
     <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Cubic curve/line intersections">
-Point p1, p2;
+    Point p1, p2;
 
-void setupCurve() {
-  p1 = new Point(100,20);
-  p2 = new Point(195,255);
-  curves.add(new BezierCurve(new Point[]{
-    p1, p2
-  }));
-  curves.add(new BezierCurve(new Point[]{
-    new Point(150,125),
-    new Point(40,30),
-    new Point(270,115),
-    new Point(145,200)
-  }));
-}
+    void setupCurve() {
+      p1 = new Point(100,20);
+      p2 = new Point(195,255);
+      curves.add(new BezierCurve(new Point[]{
+        p1, p2
+      }));
+      curves.add(new BezierCurve(new Point[]{
+        new Point(150,125),
+        new Point(40,30),
+        new Point(270,115),
+        new Point(145,200)
+      }));
+    }
 
-void drawCurve(BezierCurve curve) {
-  curves.get(0).draw();
-  curves.get(1).draw();
+    void drawCurve(BezierCurve curve) {
+      curves.get(0).draw();
+      curves.get(1).draw();
 
-  BezierCurve aligned = curves.get(1).align(p1,p2);
-  float[] roots = comp.findAllRoots(0, aligned.y_values);
-  fill(150,0,150);
-  float x, y;
-  for(float t: roots) {
-    if(t<0 || t>1) continue;
-    x = curves.get(1).getXValue(t);
-    y = curves.get(1).getYValue(t);
-    ellipse(x,y,5,5);
-    text(""+round(1000*t)/1000,x+10,y);
-  }
-}
-    </textarea>
+      BezierCurve aligned = curves.get(1).align(p1,p2);
+      float[] roots = comp.findAllRoots(0, aligned.y_values);
+      fill(150,0,150);
+      float x, y;
+      for(float t: roots) {
+        if(t<0 || t>1) continue;
+        x = curves.get(1).getXValue(t);
+        y = curves.get(1).getYValue(t);
+        ellipse(x,y,5,5);
+        text(""+round(1000*t)/1000,x+10,y);
+      }
+    }</textarea>
+
 
     <h2>de Casteljau's algorithm</h2>
 
@@ -459,29 +454,29 @@ void drawCurve(BezierCurve curve) {
     point for every <i>t</i> value. To pause or resume, simply click or hit space bar (when focussed on the sketch).</p>
 
     <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Traversing a curve using de Casteljau's algorithm">
-void setupCurve() {
-  //setupDefaultCubic();
-  Point[] points = {
-    new Point(65,25),
-    new Point(5,150),
-    new Point(80,290),
-    new Point(220,235),
-    new Point(250,150),
-    new Point(135,125),
-  };
-  curves.add(new BezierCurve(points));
-  reorder();
-  animate();
-  span();
-}
+    void setupCurve() {
+      //setupDefaultCubic();
+      Point[] points = {
+        new Point(65,25),
+        new Point(5,150),
+        new Point(80,290),
+        new Point(220,235),
+        new Point(250,150),
+        new Point(135,125),
+      };
+      curves.add(new BezierCurve(points));
+      reorder();
+      animate();
+      span();
+    }
 
-void drawCurve(BezierCurve curve) {
-  curve.draw();
-  Point p = curve.getPoint(t);
-  ellipse(p.x, p.y, 5, 5);
-  drawSpan(curve, t);
-}
-    </textarea>
+    void drawCurve(BezierCurve curve) {
+      curve.draw();
+      Point p = curve.getPoint(t);
+      ellipse(p.x, p.y, 5, 5);
+      drawSpan(curve, t);
+    }</textarea>
+
 
     <h2>Splitting curves</h2>
 
@@ -491,33 +486,33 @@ void drawCurve(BezierCurve curve) {
     after <i>t</i>:</p>
 
     <textarea class="sketch-code" data-sketch-preset="threepanel" data-sketch-title="Bezier curve splitting. Curve order can be lowered/elevated.">
-void setupCurve() {
-  setupDefaultCubic();
-  reorder();
-  animate();
-  span();
-}
+    void setupCurve() {
+      setupDefaultCubic();
+      reorder();
+      animate();
+      span();
+    }
 
-void drawCurve(BezierCurve curve) {
-  curve.draw();
-  Point p = curve.getPoint(t);
-  ellipse(p.x, p.y, 5, 5);
-  drawSpan(curve, t);
+    void drawCurve(BezierCurve curve) {
+      curve.draw();
+      Point p = curve.getPoint(t);
+      ellipse(p.x, p.y, 5, 5);
+      drawSpan(curve, t);
 
-  BezierCurves[] segments = curve.split(t);
-  usePanelPadding();
+      BezierCurves[] segments = curve.split(t);
+      usePanelPadding();
 
-  nextPanel();
-  drawAxes("first curve x",0,panelDim, "first\ncurve\ny",0,panelDim);
-  drawSpan(curve, t);
-  segments[0].draw();
+      nextPanel();
+      drawAxes("first curve x",0,panelDim, "first\ncurve\ny",0,panelDim);
+      drawSpan(curve, t);
+      segments[0].draw();
 
-  nextPanel();
-  drawAxes("second curve x",0,panelDim, "second\ncurve\ny",0,panelDim);
-  drawSpan(curve, t);
-  segments[1].draw();
-}
-    </textarea>
+      nextPanel();
+      drawAxes("second curve x",0,panelDim, "second\ncurve\ny",0,panelDim);
+      drawSpan(curve, t);
+      segments[1].draw();
+    }</textarea>
+
 
     <h2>Projection ratio</h2>
 
@@ -529,62 +524,61 @@ void drawCurve(BezierCurve curve) {
     involved: click-drag on the curves to see this visualised.</p>
 
     <textarea class="sketch-code" data-sketch-preset="moulding" data-sketch-title="Moulding a quadratic Bezier curve">
-void setupCurve() {
-  setupDefaultQuadratic();
-  mould();
-  span();
-  additionals();
-}
+    void setupCurve() {
+      setupDefaultQuadratic();
+      mould();
+      span();
+      additionals();
+    }
 
-void mouldCurve(BezierCurve curve, int mx, int my) {
-  if(Bt != -1) {
-    B = new Point(mx, my);
-    BezierCurve newcurve = comp.generateCurve(curve.order, curve.points[0], B, curve.points[curve.order], Bt);
-    curves.clear();
-    curves.add(newcurve);
+    void mouldCurve(BezierCurve curve, int mx, int my) {
+      if(Bt != -1) {
+        B = new Point(mx, my);
+        BezierCurve newcurve = comp.generateCurve(curve.order, curve.points[0], B, curve.points[curve.order], Bt);
+        curves.clear();
+        curves.add(newcurve);
 
-    stroke(0,255,0);
-    line(curve.points[0].x,curve.points[0].y,curve.points[curve.order].x,curve.points[curve.order].y);
+        stroke(0,255,0);
+        line(curve.points[0].x,curve.points[0].y,curve.points[curve.order].x,curve.points[curve.order].y);
 
-    drawSpan(newcurve, Bt);
+        drawSpan(newcurve, Bt);
 
-    Point[] abc = newcurve.getABC(Bt);
-    stroke(255,0,0);
-    line(abc[0].x,abc[0].y,abc[1].x,abc[1].y);
-    stroke(0,255,255);
-    line(abc[2].x,abc[2].y,abc[1].x,abc[1].y);
-  }
-}
-    </textarea>
+        Point[] abc = newcurve.getABC(Bt);
+        stroke(255,0,0);
+        line(abc[0].x,abc[0].y,abc[1].x,abc[1].y);
+        stroke(0,255,255);
+        line(abc[2].x,abc[2].y,abc[1].x,abc[1].y);
+      }
+    }</textarea>
 
     <textarea class="sketch-code" data-sketch-preset="moulding" data-sketch-title="Moulding a cubic Bezier curve">
-void setupCurve() {
-  setupDefaultCubic();
-  mould();
-  span();
-  additionals();
-}
+    void setupCurve() {
+      setupDefaultCubic();
+      mould();
+      span();
+      additionals();
+    }
 
-void mouldCurve(BezierCurve curve, int mx, int my) {
-  if(Bt != -1) {
-    B = new Point(mx, my);
-    BezierCurve newcurve = comp.generateCurve(curve.order, curve.points[0], B, curve.points[curve.order], Bt, tangents);
-    curves.clear();
-    curves.add(newcurve);
+    void mouldCurve(BezierCurve curve, int mx, int my) {
+      if(Bt != -1) {
+        B = new Point(mx, my);
+        BezierCurve newcurve = comp.generateCurve(curve.order, curve.points[0], B, curve.points[curve.order], Bt, tangents);
+        curves.clear();
+        curves.add(newcurve);
 
-    stroke(0,255,0);
-    line(curve.points[0].x,curve.points[0].y,curve.points[curve.order].x,curve.points[curve.order].y);
+        stroke(0,255,0);
+        line(curve.points[0].x,curve.points[0].y,curve.points[curve.order].x,curve.points[curve.order].y);
 
-    drawSpan(newcurve, Bt);
+        drawSpan(newcurve, Bt);
 
-    Point[] abc = newcurve.getABC(Bt);
-    stroke(255,0,0);
-    line(abc[0].x,abc[0].y,abc[1].x,abc[1].y);
-    stroke(0,255,255);
-    line(abc[2].x,abc[2].y,abc[1].x,abc[1].y);
-  }
-}
-    </textarea>
+        Point[] abc = newcurve.getABC(Bt);
+        stroke(255,0,0);
+        line(abc[0].x,abc[0].y,abc[1].x,abc[1].y);
+        stroke(0,255,255);
+        line(abc[2].x,abc[2].y,abc[1].x,abc[1].y);
+      }
+    }</textarea>
+
 
     <h2>Curve offsetting</h2>
 
@@ -596,44 +590,43 @@ void mouldCurve(BezierCurve curve, int mx, int my) {
     and end points).</p>
 
     <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Offsetting a quadratic Bezier curve">
-void setupCurve() {
-  setupDefaultQuadratic();
-  offsetting();
-  offset = 20;
-}
+    void setupCurve() {
+      setupDefaultQuadratic();
+      offsetting();
+      offset = 20;
+    }
 
-void drawCurve(BezierCurve curve) {
-  additionals();
-  curve.draw();
-  if(offset>0) {
-    noAdditionals();
-    BezierCurve[] offsetCurve = curve.offset(offset);
-    for(BezierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
-    BezierCurve[] offsetCurve = curve.offset(-offset);
-    for(BezierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
-  }
-}
-    </textarea>
+    void drawCurve(BezierCurve curve) {
+      additionals();
+      curve.draw();
+      if(offset>0) {
+        noAdditionals();
+        BezierCurve[] offsetCurve = curve.offset(offset);
+        for(BezierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
+        BezierCurve[] offsetCurve = curve.offset(-offset);
+        for(BezierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
+      }
+    }</textarea>
 
     <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Offsetting a cubic Bezier curve">
-void setupCurve() {
-  setupDefaultCubic();
-  offsetting();
-  offset = 20;
-}
+    void setupCurve() {
+      setupDefaultCubic();
+      offsetting();
+      offset = 20;
+    }
 
-void drawCurve(BezierCurve curve) {
-  additionals();
-  curve.draw();
-  if(offset>0) {
-    noAdditionals();
-    BezierCurve[] offsetCurve = curve.offset(offset);
-    for(BezierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
-    BezierCurve[] offsetCurve = curve.offset(-offset);
-    for(BezierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
-  }
-}
-    </textarea>
+    void drawCurve(BezierCurve curve) {
+      additionals();
+      curve.draw();
+      if(offset>0) {
+        noAdditionals();
+        BezierCurve[] offsetCurve = curve.offset(offset);
+        for(BezierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
+        BezierCurve[] offsetCurve = curve.offset(-offset);
+        for(BezierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
+      }
+    }</textarea>
+
 
     <h2>Graduated curve offsetting</h2>
 
@@ -642,49 +635,47 @@ void drawCurve(BezierCurve curve) {
     can offset a curve so that it offsets at some value <i>a*offset</i> at the start, and <i>b*offset</i>
     at the end of the offset curves. If we use a=0 and b=1, the result is this:</p>
 
-    <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Offsetting a quadratic Bezier curve">
-void setupCurve() {
-  setupDefaultQuadratic();
-  offsetting();
-  offset = 20;
-}
+    <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Graduated offsetting a quadratic Bezier curve">
+    void setupCurve() {
+      setupDefaultQuadratic();
+      offsetting();
+      offset = 20;
+    }
 
-void drawCurve(BezierCurve curve) {
-  additionals();
-  curve.draw();
-  if(offset>0) {
-    noAdditionals();
-    BezierCurve[] offsetCurve = curve.offset(offset, 0, 1);
-    comp.graduateOffset(offsetCurve, offset, 0, 1);
-    for(BezierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
-    BezierCurve[] offsetCurve = curve.offset(-offset, 0, 1);
-    comp.graduateOffset(offsetCurve, -offset, 0, 1);
-    for(BezierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
-  }
-}
-    </textarea>
+    void drawCurve(BezierCurve curve) {
+      additionals();
+      curve.draw();
+      if(offset>0) {
+        noAdditionals();
+        BezierCurve[] offsetCurve = curve.offset(offset, 0, 1);
+        comp.graduateOffset(offsetCurve, offset, 0, 1);
+        for(BezierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
+        BezierCurve[] offsetCurve = curve.offset(-offset, 0, 1);
+        comp.graduateOffset(offsetCurve, -offset, 0, 1);
+        for(BezierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
+      }
+    }</textarea>
 
-    <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Offsetting a cubic Bezier curve">
-void setupCurve() {
-  setupDefaultCubic();
-  offsetting();
-  offset = 20;
-}
+    <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Graduated offsetting a cubic Bezier curve">
+    void setupCurve() {
+      setupDefaultCubic();
+      offsetting();
+      offset = 20;
+    }
 
-void drawCurve(BezierCurve curve) {
-  additionals();
-  curve.draw();
-  if(offset>0) {
-    noAdditionals();
-    BezierCurve[] offsetCurve = curve.offset(offset);
-    comp.graduateOffset(offsetCurve, offset, 0, 1);
-    for(BezierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
-    BezierCurve[] offsetCurve = curve.offset(-offset, 0, 1);
-    comp.graduateOffset(offsetCurve, -offset, 0, 1);
-    for(BezierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
-  }
-}
-    </textarea>
+    void drawCurve(BezierCurve curve) {
+      additionals();
+      curve.draw();
+      if(offset>0) {
+        noAdditionals();
+        BezierCurve[] offsetCurve = curve.offset(offset);
+        comp.graduateOffset(offsetCurve, offset, 0, 1);
+        for(BezierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
+        BezierCurve[] offsetCurve = curve.offset(-offset, 0, 1);
+        comp.graduateOffset(offsetCurve, -offset, 0, 1);
+        for(BezierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
+      }
+    }</textarea>
 
   </body>
 </html>
