@@ -41,6 +41,7 @@ boolean testCurveMoulding(BezierCurve curve, int mx, int my) {
     cursor(HAND);
     return true;
   }
+  clear();
   return false;
 }
 
@@ -57,6 +58,10 @@ void startCurveMoulding(BezierCurve curve, float t) {
  * mark moulding end
  */
 void endCurveMoulding(BezierCurve curve) {
+  clear();
+}
+
+void clear() {
   B = null;
   tanget = null;
   Bt = -1;

@@ -1,3 +1,8 @@
+boolean animated = false;
+void animate() { animated = true; loop(); }
+void noAnimate() { animated = false; noLoop(); }
+void toggleAnimate() { animated = !animated; } 
+
 boolean moulding = false;
 void mould() { moulding = true; }
 void noMoulding() { moulding = false; }
@@ -52,3 +57,14 @@ boolean drawConnected = true;
 void connect() { drawConnected = true; }
 void noConnect() { drawConnected = false; }
 void toggleConnect() { drawConnected = !drawConnected; }
+
+boolean allowOffsetting = false;
+void offsetting() { allowOffsetting = true; }
+void noOffsetting() { allowOffsetting = false; }
+void toggleOffsetting() { allowOffsetting = !allowOffsetting; }
+
+boolean allowReordering = false;
+void reorder() { allowReordering = true; }
+void noReorder() { allowReordering = false; }
+void toggleReorder() { allowReordering = !allowReordering; }
+

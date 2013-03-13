@@ -13,11 +13,12 @@ float t = 0, step = 0.002;
  * set up a curve, and show everything we know about it.
  */
 void setup() {
-  setupScreen();
-  setupCurve();
   // force text engine load (only needed for Processing)
   text("",0,0);
+  setupScreen();
+  noAnimate();
   noLoop();
+  setupCurve();
 }
 
 // the default 2nd order curve
@@ -133,4 +134,13 @@ void draw() {
   if(playing) { postDraw(); }
   // PJS patching
   resetMatrix();
+  
+  if(animated && !playing) {
+    pushStyle();
+    fill(255,0,0,15);
+    textAlign(CENTER,CENTER);
+    textSize(dim/9);
+    text("Animated sketch\nCick to play/pause", width/2, height/2);
+    popStyle();
+  }
 }

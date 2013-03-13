@@ -450,7 +450,9 @@ class BezierCurve {
     for(int i=0; i<ret.length; i++) { ret[i] = t_values.get(i); }
 
     if(ret.length > order+2) {
-      println("ERROR: getInflections is returning way too many roots");
+      String errMsg = "ERROR: getInflections is returning way too many roots";
+      if(javascript != null) { javascript.console.log(errMsg); } else { println(errMsg); }
+      return new float[0];
     }
 
     return ret;

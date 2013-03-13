@@ -55,8 +55,10 @@ void mouseDragged() {
 }
 
 void mouseClicked() {
-  if(playing) { noLoop(); pause(); }
-  else { loop(); play(); }
+  if(animated) {
+    if(playing) { pause(); }
+    else { play(); }
+  }
 }
 
 void mousePressed() {
@@ -71,6 +73,7 @@ void mousePressed() {
 }
 
 void mouseReleased() {
+  current = -1;
   if(moulding) {
     for(BezierCurve curve: curves) {
       endCurveMoulding(curve);
@@ -80,13 +83,13 @@ void mouseReleased() {
 
 void keyPressed() {
   for(BezierCurve curve: curves) {
-    if(keyCode==UP) {
+    if(allowReordering && keyCode==UP) {
       curves.set(curves.indexOf(curve), curve.elevate());
     }
-    else if(keyCode==DOWN && curve.lower()!=null) {
+    else if(allowReordering && keyCode==DOWN && curve.lower()!=null) {
       curves.set(curves.indexOf(curve), curve.lower());
     }
-    else if(str(key).equals(" ")) {
+    else if(animated && str(key).equals(" ")) {
       togglePlaying();
     }
     else if(str(key).equals("g")) {
@@ -98,10 +101,10 @@ void keyPressed() {
     else if(str(key).equals("p")) {
       toggleSpan();
     }
-    else if(str(key).equals("+")) {
+    else if(allowOffsetting && str(key).equals("+")) {
       offset++;
     }
-    else if(str(key).equals("-")) {
+    else if(allowOffsetting && str(key).equals("-")) {
       offset--;
       if(offset<0) offset=0;
     }
