@@ -85,11 +85,13 @@ void mouseReleased() {
 
 void keyPressed() {
   for(BezierCurve curve: curves) {
-    if(allowReordering && keyCode==UP) {
+    if(allowReordering && keyCode==38) {
       curves.set(curves.indexOf(curve), curve.elevate());
+      if(!animated || !playing) { redraw(); }
     }
-    else if(allowReordering && keyCode==DOWN && curve.lower()!=null) {
+    else if(allowReordering && keyCode==40 && curve.lower()!=null) {
       curves.set(curves.indexOf(curve), curve.lower());
+      if(!animated || !playing) { redraw(); }
     }
     else if(animated && str(key).equals(" ")) {
       togglePlaying();
