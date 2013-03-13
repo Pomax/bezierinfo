@@ -46,12 +46,12 @@ void mouseDragged() {
   if(current != -1) {
     active.movePoint(current, mouseX, mouseY);
   }
-  if(!playing) redraw();
   if(moulding) {
     for(BezierCurve curve: curves) {
       mouldCurve(curve, mouseX, mouseY);
     }
   }
+  if(!animated || !playing) redraw();
 }
 
 void mouseClicked() {
@@ -69,6 +69,7 @@ void mousePressed() {
         startCurveMoulding(curve, t);
       }
     }
+    if(!animated || !playing) redraw(); 
   }
 }
 
@@ -79,6 +80,7 @@ void mouseReleased() {
       endCurveMoulding(curve);
     }
   }
+  if(!animated || !playing) redraw(); 
 }
 
 void keyPressed() {
