@@ -48,11 +48,6 @@ void additionals() { showAdditionals = true; }
 void noAdditionals() { showAdditionals = false; }
 void toggleAdditionals() { showAdditionals = !showAdditionals; }
 
-boolean showFakeRatio = false;
-void fakeRatio() { showFakeRatio = true; }
-void noFakeRatio() { showFakeRatio = false; }
-void toggleFakeRatio() { showFakeRatio = !showFakeRatio; }
-
 boolean drawConnected = true;
 void connect() { drawConnected = true; }
 void noConnect() { drawConnected = false; }

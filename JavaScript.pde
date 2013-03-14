@@ -7,7 +7,7 @@
  * Processing sketch in either Java/JS mode.
  *
  ******************************************/
- 
+
 
 /**
  * Style object
@@ -48,11 +48,6 @@ abstract class JavaScript {
   Console console;
   Document document;
 }
-
-/**
- * JS reference.
- */
-JavaScript javascript = null;
 
 /**
  * Bind JS reference.

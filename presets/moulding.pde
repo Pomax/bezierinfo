@@ -14,24 +14,24 @@ void setupScreen() {
  */
 void drawFunction() {
   BezierCurve curve = curves.get(0);
-  drawCurve(curve);
+  curve.draw();
+  if(Bt!=-1) {
+    Point p = curve.getPoint(Bt);
+    ellipse(p.x,p.y,5,5);
+    stroke(0,0,200);
+    line(curve.points[0].x,curve.points[0].y,curve.points[curve.order].x,curve.points[curve.order].y);
+    drawSpan(curve, Bt);
+    Point[] abc = curve.getABC(Bt);
+    stroke(255,0,0);
+    line(abc[0].x,abc[0].y,abc[1].x,abc[1].y);
+    stroke(0,255,255);
+    line(abc[2].x,abc[2].y,abc[1].x,abc[1].y);
+  }
 }
 
 Point B = null;
 Point[] tangents = null;
 float Bt = -1;
-
-
-/**
- * draw curve and if there is a mould point, that too
- */
-void drawCurve(BezierCurve curve) {
-  curve.draw();
-  if(Bt!=-1) {
-    Point p = curve.getPoint(Bt);
-    ellipse(p.x,p.y,5,5);
-  }
-}
 
 /**
  * indicate we can move the curve

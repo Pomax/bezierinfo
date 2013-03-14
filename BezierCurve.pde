@@ -120,7 +120,7 @@ class BezierCurve {
   float getDXValue(float t) { return comp.getDerivative(1, t, x_values);  }
   float getDYValue(float t) { return comp.getDerivative(1, t, y_values);  }
   Point getDerivativePoint(float t)  { return new Point(getDXValue(t), getDYValue(t)); }
-  Point[] getSpanLines(float t)  { 
+  Point[] getSpanLines(float t)  {
     Point[] span = generateSpan(t);
     int prev = span.length-3, b = span.length-1, next = span.length-2;
     Point p1 = new Point(span[prev].x-span[b].x, span[prev].y-span[b].y);
@@ -610,7 +610,8 @@ class BezierCurve {
   /**
    * draw this curve
    */
-  void draw() {
+  void draw() { draw(30); }
+  void draw(int c) {
     if(showAdditionals && showPointPoly) {
       stroke(0,100);
       for(int i=1; i<=order; i++) {
@@ -619,10 +620,10 @@ class BezierCurve {
         line(p1.x,p1.y,p2.x,p2.y);
       }
     }
-    stroke(30);
     float t=0;
     int nx, ny, ox = draw_x[0], oy = draw_y[0];
     for(int idx=0; idx<LUT_resolution; idx++) {
+      stroke(c);
       nx = draw_x[idx];
       ny = draw_y[idx];
       if(nx==ox && ny==oy) continue;

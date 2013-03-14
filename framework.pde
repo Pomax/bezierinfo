@@ -1,3 +1,6 @@
+// JS reference.
+JavaScript javascript = null;
+
 // quasi-universal sketch dimensions
 final int dim = 300;
 final int pad = 20;
@@ -50,7 +53,7 @@ int panelDim = dim;
 void usePanelPadding() {
   translate(pad, pad);
   panelDim = dim - 2*pad;
-} 
+}
 
 /**
  * switch drawing over to the next dim*dim area
@@ -123,7 +126,7 @@ void drawSpan(BezierCurve curve, float t) {
  * Pass-through that takes care of [t] incrementing
  */
 void draw() {
-  if(ghosting && frameCount>1) { 
+  if(ghosting && frameCount>1) {
     strokeWeight(0);
     fill(255,10);
     rect(-1,-1,width+1,height+1);
@@ -132,9 +135,10 @@ void draw() {
   if(playing) { preDraw(); }
   drawFunction();
   if(playing) { postDraw(); }
+
   // PJS patching
   resetMatrix();
-  
+
   if(animated && !playing) {
     pushStyle();
     fill(255,0,0,15);

@@ -35,7 +35,6 @@
     <a href="http://processingjs.nihongoresources.com/bezierinfo/">original article</a> is reworked
     to incorporate them, with text rewrites where necessary to explain things better.</p>
 
-
     <h2>Example curves</h2>
 
     <p>Simply click-drag points to see the curves change</p>
@@ -57,6 +56,30 @@
     void drawCurve(BezierCurve curve) {
       curve.draw();
     }</textarea>
+
+
+    <h2>Bezier curves: interpolation functions</h2>
+
+    <p>Bezier curves are (like all splines) interpolation funtions. The following graphs show the
+    interpolation functions for quadratic and cubic curves, with "S" being the strength of a point's
+    contribution to the total sum of the Bezier function. Click or click-drag to see the
+    interpolation percentages for each curve-defining point at a specific <i>t</i> value.</p>
+
+    <p>Also shown is the interpolation function for a 15th order Bezier function. As you can see,
+    the start and end point contribute considerably more to the curve's shape than any other point
+    in the control point set.</p>
+
+    <textarea class="sketch-code" data-sketch-preset="ratios" data-sketch-title="Quadratic interpolations">
+    int order = 3;
+    </textarea>
+
+    <textarea class="sketch-code" data-sketch-preset="ratios" data-sketch-title="Cubic interpolations">
+    int order = 4;
+    </textarea>
+
+    <textarea class="sketch-code" data-sketch-preset="ratios" data-sketch-title="15th order interpolations">
+    int order = 15;
+    </textarea>
 
 
     <h2>Lowering and elevating curve order</h2>
@@ -290,12 +313,62 @@
     }</textarea>
 
 
+    <h2>Aligning curves</h2>
+
+    <p>We can translate/rotate a curve so that their first point lies on (0,0), and the last point lies on
+    some (...,0). This reduces the complexity of the interpolation functions (the first terms become zero
+    and the last terms in the y functions become zero as well). The following graphs illustrate this:</p>
+
+    <textarea class="sketch-code" data-sketch-preset="twopanel" data-sketch-title="Aligning a quadratic curve">
+    void setupCurve() {
+      setupDefaultQuadratic();
+    }
+
+    void drawCurve(BezierCurve curve) {
+      additionals();
+      curve.draw();
+
+      noAdditionals();
+      nextPanel();
+      stroke(0);
+      line(0,0,0,dim);
+
+      stroke(0,50);
+      translate(3*dim/4,dim/2);
+      line(-3*dim/4,0,dim/4,0);
+      line(0,-dim/2,0,dim/2);
+
+      curve.align().draw();
+    }</textarea>
+
+    <textarea class="sketch-code" data-sketch-preset="twopanel" data-sketch-title="Aligning a cubic curve">
+    void setupCurve() {
+      setupDefaultCubic();
+    }
+
+    void drawCurve(BezierCurve curve) {
+      additionals();
+      curve.draw();
+
+      noAdditionals();
+      nextPanel();
+      stroke(0);
+      line(0,0,0,dim);
+
+      stroke(0,50);
+      translate(3*dim/4,dim/2);
+      line(-3*dim/4,0,dim/4,0);
+      line(0,-dim/2,0,dim/2);
+
+      curve.align().draw();
+    }</textarea>
+
+
     <h2>Tight boxes</h2>
 
-    <p>We can form the tight bounding box by first axis-aligning the curves: we move the curves so that their
-    first point lies on (0,0) and then rotate the curve so that the last point is on the x-axis, too. We then
-    do the exact same thing as for the regular bounding box operation. Once we have our min/max values for
-    x/y, we apply the inverse rotation and translation (in that order) to fit the bounding box around our curve.</p>
+    <p>We can form the tight bounding box by first aligning the curve. Once we have our min/max values for
+    x/y for this aligned curve, we can apply the inverse rotation and translation (in that order) to the
+    bounding box values to fit this bounding box around our origianl curve.</p>
 
     <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Tight quadratic Bezier bounding box">
     void setupCurve() {
@@ -466,7 +539,8 @@
       };
       curves.add(new BezierCurve(points));
       reorder();
-      animate();
+//      animate();
+//      pause();
       span();
     }
 
@@ -489,7 +563,8 @@
     void setupCurve() {
       setupDefaultCubic();
       reorder();
-      animate();
+//      animate();
+//      pause();
       span();
     }
 
@@ -537,17 +612,6 @@
         BezierCurve newcurve = comp.generateCurve(curve.order, curve.points[0], B, curve.points[curve.order], Bt);
         curves.clear();
         curves.add(newcurve);
-
-        stroke(0,255,0);
-        line(curve.points[0].x,curve.points[0].y,curve.points[curve.order].x,curve.points[curve.order].y);
-
-        drawSpan(newcurve, Bt);
-
-        Point[] abc = newcurve.getABC(Bt);
-        stroke(255,0,0);
-        line(abc[0].x,abc[0].y,abc[1].x,abc[1].y);
-        stroke(0,255,255);
-        line(abc[2].x,abc[2].y,abc[1].x,abc[1].y);
       }
     }</textarea>
 
@@ -565,18 +629,36 @@
         BezierCurve newcurve = comp.generateCurve(curve.order, curve.points[0], B, curve.points[curve.order], Bt, tangents);
         curves.clear();
         curves.add(newcurve);
-
-        stroke(0,255,0);
-        line(curve.points[0].x,curve.points[0].y,curve.points[curve.order].x,curve.points[curve.order].y);
-
-        drawSpan(newcurve, Bt);
-
-        Point[] abc = newcurve.getABC(Bt);
-        stroke(255,0,0);
-        line(abc[0].x,abc[0].y,abc[1].x,abc[1].y);
-        stroke(0,255,255);
-        line(abc[2].x,abc[2].y,abc[1].x,abc[1].y);
       }
+    }</textarea>
+
+
+    <h2>Arc length</h2>
+
+    <p>In order to compute the arc length of a Bezier curve, we use the Legendre-Gauss quadrature approach.
+    It's fast, and much more precise than curve flattening. However, the higher the curve order, the more
+    accurate the Legendre-Gauss quadrature approach will be.</p>
+
+    <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Arc length for a Bezier curve">
+    void setupCurve() {
+      setupDefaultCubic();
+      reorder();
+    }
+
+    void drawCurve(BezierCurve curve) {
+      curve.draw();
+      pushStyle();
+      fill(0);
+      float f = curve.getCurveLength();
+      if (f<0) {
+        curves.clear();
+        curves.add(curve.lower());
+        redraw();
+        return;
+      }
+      f = int(1000*f)/1000;
+      text("curve length: "+f+"px", 15, 15);
+      popStyle();
     }</textarea>
 
 
@@ -676,6 +758,12 @@
         for(BezierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
       }
     }</textarea>
+
+
+    <h2>Clipping</h2>
+
+    <p>TEXT AND CODE GOES HERE</p>
+
 
   </body>
 </html>
