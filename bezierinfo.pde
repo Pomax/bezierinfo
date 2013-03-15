@@ -14,12 +14,18 @@ void setupCurve() {
   int order = 2;
   ArrayList<Point> pts = new ArrayList<Point>();
 
+/*
   float dst = d/3, nx, ny, a=0, step = 2*PI/(order+1), r;
   for(a=0; a<2*PI; a+=step) {
     r = 0;//random(dst/1);
     pts.add(new Point(d/2 + cos(a) * (r+dst), d/2 + sin(a) * (r+dst)));
     dst -= 1.2;
   }
+*/
+  pts.add(new Point(120,160));
+  pts.add(new Point(35,200));
+  pts.add(new Point(215,215));
+  pts.add(new Point(110,96));
 
   Point[] points = new Point[pts.size()];
   for(int p=0,last=points.length; p<last; p++) { points[p] = pts.get(p); }
@@ -64,6 +70,8 @@ void drawFunction() {
   if(showSpan) {
     drawSpan(curve, t);
   }
+  
+  drawBoundingBox(curve.generateBoundingBox());
 
   // point on the curve at [t]
   Point p = curve.getPoint(t);
@@ -129,6 +137,9 @@ void drawFunction() {
   }
 
   //noLoop();
+//  println(curve.split(0.5)[0].originalInterval);
+//  println(curve.split(0.5)[0].split(0.25)[1].originalInterval);
+//  println(curve.split(0.5)[0].split(0.25)[1].split(0.75)[0].originalInterval);
 }
 
 // draw a bounding box

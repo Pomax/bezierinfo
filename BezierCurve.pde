@@ -15,13 +15,15 @@ class BezierCurve {
           y_values,
           LUT_x,
           LUT_y ,
-          ratios;              // the distance ratios for each control point.
+          ratios,              // the distance from the start, as ratios, for each control point projected onto the curve
+          originalInterval = {0,1};
   // for drawing the curve, we use integer lookups
   int[] draw_x = new int[LUT_resolution],
         draw_y = new int[LUT_resolution];
   float span_t = -1,     // indicates the 't' value for which span/left/right was last computed
         curveLength,     // the arc length of this curve, computed on construction
         bias = 0;        // are control points are on one side of the baseline? -1/1 means yes (sign indicates left/right), 0 means no.
+        
 
   // lower order Bezier curve, if this curve is an elevation
   BezierCurve generator = null;
@@ -178,7 +180,6 @@ class BezierCurve {
     };
     left_split[l] = span[next-1];
     right_split[0] = span[next-1];
-//    right_split = (Point[]) reverse(right_split);
     // fill in the ABC array
     int last = span.length - 1;
     abc[0] = (order%2==0 ? span[order/2] : span[order + order - 1]);
@@ -222,6 +223,22 @@ class BezierCurve {
       p.y = ny;
     }
     return bbox;
+  }
+  
+  // {(mx,my), (MX,my), (MX,MY), (mx,MY)};
+  boolean pointInRect(Point p, Point[] rect) {
+    float mx = rect[0].x - 0.1, my = rect[0].y - 0.1,
+          MX = rect[2].x + 0.1, MY = rect[2].y + 0.1,
+          x = p.x, y = p.y;
+    return mx <= x && x <= MX && my <= y && y <= MY;
+  }
+
+  boolean hasBoundOverlapWith(BezierCurve other) {
+    Point[] bbox = generateBoundingBox(),
+            obbox = other.generateBoundingBox();
+    for(Point p: bbox) { if(pointInRect(p,obbox)) return true; }
+    for(Point p: obbox) { if(pointInRect(p,bbox)) return true; }
+    return false;
   }
 
   /**
@@ -279,6 +296,24 @@ class BezierCurve {
     Point p1 = getNormal(0), p2 = getNormal(1);
     return abs(atan2(p1.x*p2.y - p2.x*p1.y, p1.x*p2.x + p1.y*p2.y) % 2*PI);
   }
+  
+  /**
+   * Get the t-interval, with respects to the ancestral curve. 
+   */
+  float getInterval() {
+    return originalInterval[1] - originalInterval[0];
+  }
+  
+  /**
+   * Bound when splitting curves: mark which [t] values on the original curve
+   * the start and end of this curve correspond to. Note that if this curve is
+   * the result of multiple splits, the "original" is the ancestral curve
+   * that the very first split() was called on.  
+   */
+  void setOriginalT(float st1, float st2) {
+    originalInterval[0] = st1; 
+    originalInterval[1] = st2;
+  }
 
   /**
    * Split into two curves at t
@@ -286,6 +321,8 @@ class BezierCurve {
   BezierCurve[] split(float t) {
     if (t != span_t) { generateSpan(t); }
     BezierCurve[] subcurves = {new BezierCurve(left_split), new BezierCurve(right_split)};
+    subcurves[0].setOriginalT(originalInterval[0],map(t,0,1,originalInterval[0],originalInterval[1]));
+    subcurves[1].setOriginalT(map(t,0,1,originalInterval[0],originalInterval[1]),originalInterval[1]);
     return subcurves;
   }
 
@@ -453,13 +490,11 @@ class BezierCurve {
     for(float f: ret) { if(!t_values.contains(f)) { t_values.add(f); }}
     ret = new float[t_values.size()];
     for(int i=0; i<ret.length; i++) { ret[i] = t_values.get(i); }
-
-    if(ret.length > order+2) {
-      String errMsg = "ERROR: getInflections is returning way too many roots";
+    if(ret.length > (2*order+2)) {
+      String errMsg = "ERROR: getInflections is returning way too many roots ("+ret.length+")";
       if(javascript != null) { javascript.console.log(errMsg); } else { println(errMsg); }
       return new float[0];
     }
-
     return ret;
   }
 

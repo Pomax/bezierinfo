@@ -22,6 +22,7 @@
         font-size: 80%;
         background: rgb(250,250,204);
       }
+      .sketch canvas { margin: auto; }
       .sketch-title:before {
         content: "Figure " attr(data-number) ": ";
       }
@@ -207,6 +208,8 @@
       }
     }</textarea>
 
+    <br>
+
     <textarea class="sketch-code" data-sketch-preset="threepanel" data-sketch-title="Cubic Bezier curve components">
     void setupCurve() {
       setupDefaultCubic();
@@ -340,6 +343,8 @@
 
       curve.align().draw();
     }</textarea>
+
+    <br>
 
     <textarea class="sketch-code" data-sketch-preset="twopanel" data-sketch-title="Aligning a cubic curve">
     void setupCurve() {
@@ -587,6 +592,77 @@
     }</textarea>
 
 
+    <h2>Curve/curve intersection</h2>
+
+    <p>divide and conquer based on de Casteljau splitting: take two curves whose bounding boxes
+    overlap. Split both curves in half, remove any subcurve that has no bounding box overlap with
+    any other curve, for each subcurve that is left, repeat the procedure. Once the subcurves are
+    so small that overlaps let us effectively identify a single coordinate, we stop. This happens
+    pretty fast.</p>
+    </p>
+
+    <textarea class="sketch-code" data-sketch-preset="clipping" data-sketch-title="Curve/curve intersections">
+    float PRECISION = 0.01;
+
+    ArrayList<BezierCurve> intersections1 = new ArrayList<BezierCurve>();
+    ArrayList<BezierCurve> intersections2 = new ArrayList<BezierCurve>();
+
+    void iterate() {
+      if(curves1.size()==0) {
+        curves.get(0).draw(color(255,0,0));
+        curves.get(1).draw(color(0,0,255));
+        stroke(255,0,255);
+        for(BezierCurve c: intersections1) {
+          ellipse(c.points[0].x, c.points[0].y, 10,10);
+        }
+        for(BezierCurve c: intersections2) {
+          ellipse(c.points[0].x, c.points[0].y, 10,10);
+        }
+        return;
+      }
+
+      clearSubcurves();
+
+      BezierCurve c1, c2;
+      for(int i=curves1.size()-1; i>=0; i--) {
+        c1 = curves1.get(i);
+
+        if(c1.getCurveLength()<0.25) {
+          intersections1.add(c1);
+          curves1.remove(i);
+          continue;
+        }
+
+        for(int j=curves2.size()-1; j>=0; j--) {
+          c2 = curves2.get(j);
+
+          if(c2.getCurveLength()<0.25) {
+            intersections2.add(c2);
+            curves2.remove(j);
+            continue;
+          }
+
+          if(c1.hasBoundOverlapWith(c2)) {
+
+            BezierCurve[] c1s = c1.split(0.5);
+            subcurves1.add(c1s[0]);
+            subcurves1.add(c1s[1]);
+            curves1.remove(c1);
+
+            BezierCurve[] c2s = c2.split(0.5);
+            subcurves2.add(c2s[0]);
+            subcurves2.add(c2s[1]);
+            curves2.remove(c2);
+          }
+        }
+      }
+
+      curves1 = subcurves1;
+      curves2 = subcurves2;
+
+      if(iterated) iterate();
+    }</textarea>
+
     <h2>Projection ratio</h2>
 
     <p>Quadratic and cubic Bezier curves have a nice property that allows curve moulding (picking
@@ -756,12 +832,6 @@
         for(BezierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
       }
     }</textarea>
-
-
-    <h2>Clipping</h2>
-
-    <p>TEXT AND CODE GOES HERE</p>
-
 
   </body>
 </html>

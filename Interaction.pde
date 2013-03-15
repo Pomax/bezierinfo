@@ -69,7 +69,7 @@ void mousePressed() {
         startCurveMoulding(curve, t);
       }
     }
-    if(!animated || !playing) redraw(); 
+    if(!animated || !playing) redraw();
   }
 }
 
@@ -80,7 +80,7 @@ void mouseReleased() {
       endCurveMoulding(curve);
     }
   }
-  if(!animated || !playing) redraw(); 
+  if(!animated || !playing) redraw();
 }
 
 void keyPressed() {
