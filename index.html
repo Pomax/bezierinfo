@@ -604,6 +604,9 @@
     <textarea class="sketch-code" data-sketch-preset="clipping" data-sketch-title="Curve/curve intersections">
     int iterationCount = 1;
 
+    ArrayList<CurvePair> seen = new ArrayList<CurvePair>();
+
+
     void iterate() {
       if(pairs.size()==0) {
         iterated = false;
@@ -616,6 +619,7 @@
 
       newPairs.clear();
       for(CurvePair cp: pairs) {
+        seen.add(cp);
         cp.draw(getColor(random(999)));
         if(cp.hasOverlap()) {
           if(cp.smallEnough()) { finals.add(cp); }
@@ -629,8 +633,18 @@
       }
       pairs.clear();
       for(CurvePair cp: newPairs) { pairs.add(cp); }
+    }
 
-    }</textarea>
+    void checkCurvePairs() {
+      CurvePair p = seen.remove(0);
+      background(255);
+      background(p.overlapping ? color(0,255,0,20) : color(255,0,0,20));
+      p.c1.draw(color(255,0,0));
+      drawBoundingBox(p.c1.generateBoundingBox());
+      p.c2.draw(color(0,0,255));
+      drawBoundingBox(p.c2.generateBoundingBox());
+    }
+    </textarea>
 
     <h2>Projection ratio</h2>
 

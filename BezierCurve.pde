@@ -23,7 +23,7 @@ class BezierCurve {
   float span_t = -1,     // indicates the 't' value for which span/left/right was last computed
         curveLength,     // the arc length of this curve, computed on construction
         bias = 0;        // are control points are on one side of the baseline? -1/1 means yes (sign indicates left/right), 0 means no.
-        
+
 
   // lower order Bezier curve, if this curve is an elevation
   BezierCurve generator = null;
@@ -108,7 +108,7 @@ class BezierCurve {
           bias = 0;
           break; }}}
   }
-  
+
   // how close are these two curves?
   float getSimilarity(BezierCurve other) {
     float diff = 0, dx, dy, d;
@@ -219,7 +219,10 @@ class BezierCurve {
     Point[] bbox = {new Point(mx,my), new Point(MX,my), new Point(MX,MY), new Point(mx,MY)};
     return bbox;
   }
-  
+
+  /**
+   * Get the bounding box area
+   */
   float getArea() {
     Point[] bbox = generateBoundingBox();
     float dx = bbox[2].x - bbox[0].x,
@@ -228,6 +231,9 @@ class BezierCurve {
     return A;
   }
 
+  /**
+   * Generate a bounding box for the aligned curve
+   */
   Point[] generateTightBoundingBox() {
     float ox = points[0].x,
           oy = points[0].y,
@@ -244,21 +250,27 @@ class BezierCurve {
     }
     return bbox;
   }
-  
-  // {(mx,my), (MX,my), (MX,MY), (mx,MY)};
-  boolean pointInRect(Point p, Point[] rect) {
-    float mx = rect[0].x, my = rect[0].y,
-          MX = rect[2].x, MY = rect[2].y,
-          x = p.x, y = p.y;
-    return mx <= x && x <= MX && my <= y && y <= MY;
-  }
 
+  /**
+   * Is there an overlap between these two curves,
+   * based on their bounding boxes?
+   */
   boolean hasBoundOverlapWith(BezierCurve other) {
     Point[] bbox = generateBoundingBox(),
             obbox = other.generateBoundingBox();
-    for(Point p: bbox) { if(pointInRect(p,obbox)) return true; }
-    for(Point p: obbox) { if(pointInRect(p,bbox)) return true; }
-    return false;
+    float dx = abs(bbox[2].x - bbox[0].x)/2,
+           dy = abs(bbox[2].y - bbox[0].y)/2,
+           odx = abs(obbox[2].x - obbox[0].x)/2,
+           ody = abs(obbox[2].y - obbox[0].y)/2,
+           mx = bbox[0].x + dx,
+           my = bbox[0].y + dy,
+           omx = obbox[0].x + odx,
+           omy = obbox[0].y + ody,
+           distx = abs(mx-omx),
+           disty = abs(my-omy),
+           tx = dx + odx,
+           ty = dy + ody;
+    return distx < tx && disty < ty;
   }
 
   /**
@@ -316,32 +328,32 @@ class BezierCurve {
     Point p1 = getNormal(0), p2 = getNormal(1);
     return abs(atan2(p1.x*p2.y - p2.x*p1.y, p1.x*p2.x + p1.y*p2.y) % 2*PI);
   }
-  
+
   /**
-   * Get the t-interval, with respects to the ancestral curve. 
+   * Get the t-interval, with respects to the ancestral curve.
    */
   float[] getInterval() {
     return originalInterval;
     /*
     float d0 = originalInterval[0],
-          v0 = (d0==0? 0 : 1.0/d0), 
+          v0 = (d0==0? 0 : 1.0/d0),
           v1 = 1.0/originalInterval[1];
     return new float[]{v0,v1};
     */
   }
-  
+
   /**
    * Bound when splitting curves: mark which [t] values on the original curve
    * the start and end of this curve correspond to. Note that if this curve is
    * the result of multiple splits, the "original" is the ancestral curve
-   * that the very first split() was called on.  
+   * that the very first split() was called on.
    */
   void setOriginalT(float d1, float d2) {
-    originalInterval[0] = d1; 
+    originalInterval[0] = d1;
     originalInterval[1] = d2;
   }
 
-  
+
   /**
    * Split in half
    */

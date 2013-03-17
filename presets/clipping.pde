@@ -4,14 +4,16 @@
  * a bad algorithm.
  */
 class CurvePair {
+  boolean overlapping = false;
   BezierCurve c1, c2;
   CurvePair(BezierCurve _c1, BezierCurve _c2) {
     c1 = _c1;
     c2 = _c2;
+    overlapping = c1.hasBoundOverlapWith(c2);
   }
   // Is this pair an overlapping pair?
   boolean hasOverlap() {
-    return c1.hasBoundOverlapWith(c2);
+    return overlapping;
   }
   // Split up this pair into two subcurves for
   // each pair, and permute-combine.
@@ -38,14 +40,12 @@ class CurvePair {
   String toString() { return c1  + " -- " + c2; }
 }
 
-
 float PRECISION = 0.01;
 boolean iterated = false;
 BezierCurve c1, c2;
 ArrayList<CurvePair> pairs = new ArrayList<CurvePair>(),
                      newPairs = new ArrayList<CurvePair>(),
                      finals = new ArrayList<CurvePair>();
-
 
 /**
  * set up the screen
@@ -58,6 +58,9 @@ void setupScreen() {
   noConnect();
 }
 
+/**
+ *
+ */
 void setupCurve() {
   Point[] curve1 = new Point[]{
     new Point(10,100),
@@ -107,6 +110,9 @@ void drawFunction() {
   if(iterated) { iterate(); }
 }
 
+/**
+ *
+ */
 void drawResult() {
   additionals();
   curves.get(0).draw(color(255,0,0));
