@@ -36,6 +36,8 @@
     <a href="http://processingjs.nihongoresources.com/bezierinfo/">original article</a> is reworked
     to incorporate them, with text rewrites where necessary to explain things better.</p>
 
+    <h2 style="font-style:italic;">NOTE: All graphics are interactive</h2>
+
     <h2>Example curves</h2>
 
     <p>Simply click-drag points to see the curves change</p>
@@ -254,8 +256,8 @@
 
     <h2>Bounding boxes</h2>
 
-    <p>If we have the extremities, a simple for loop that tests for min/max values for x and y means we have the
-    four values we need to box in our curve. Color coding is the same as before.</p>
+    <p>If we have the extremities, and the start/end points, a simple for loop that tests for min/max values for
+    x and y means we have the four values we need to box in our curve. Color coding is the same as before.</p>
 
     <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Quadratic Bezier bounding box">
     void setupCurve() {
@@ -320,7 +322,8 @@
 
     <p>We can translate/rotate a curve so that their first point lies on (0,0), and the last point lies on
     some (...,0). This reduces the complexity of the interpolation functions (the first terms become zero
-    and the last terms in the y functions become zero as well). The following graphs illustrate this:</p>
+    and the last terms in the y functions become zero as well). The following graphs illustrate the result
+    of aligning the curves to the x-axis:</p>
 
     <textarea class="sketch-code" data-sketch-preset="twopanel" data-sketch-title="Aligning a quadratic curve">
     void setupCurve() {
@@ -372,8 +375,8 @@
     <h2>Tight boxes</h2>
 
     <p>We can form the tight bounding box by first aligning the curve. Once we have our min/max values for
-    x/y for this aligned curve, we can apply the inverse rotation and translation (in that order) to the
-    bounding box values to fit this bounding box around our origianl curve.</p>
+    the aligned curve, we can apply an inverse rotation and translation (in that order) to the
+    bounding box values so that the bounding box they define fits around our original curve.</p>
 
     <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Tight quadratic Bezier bounding box">
     void setupCurve() {
@@ -394,7 +397,6 @@
       curve.draw();
       drawBoundingBox(curve.generateTightBoundingBox());
     }</textarea>
-
 
     <h2>Intersections</h2>
 
@@ -511,6 +513,8 @@
       }
     }</textarea>
 
+    <p>Curve/curve intersection requires a more complex approach</p>
+
 
     <h2>de Casteljau's algorithm</h2>
 
@@ -594,19 +598,17 @@
 
     <h2>Curve/curve intersection</h2>
 
-    <p>divide and conquer based on de Casteljau splitting: take two curves whose bounding boxes
-    overlap. Split both curves in half, remove any subcurve that has no bounding box overlap with
-    any other curve, for each subcurve that is left, repeat the procedure. Once the subcurves are
-    so small that overlaps let us effectively identify a single coordinate, we stop. This happens
-    pretty fast. Click here to run this algorithm after setting up your curves: <button id="clippingButton">detect</button></p>
+    <p>Using de Casteljau's algorithm to split the curve we can implement curve/curve intersection
+    finding using a "divide and conquer" technique: take two curves and consider them as a tuple.
+    If their bounding boxes overlap, split each curve up into two subcurves, and form four new
+    pairs. For each of these pairs, perform the same evaluation. Once the subcurves are
+    so small that overlaps let us effectively identify a single coordinate, stop. The following
+    graphic applies this algorithm to a pair of curves, slowed down. Click here to run the algorithm,
+    after setting up your curves: <button id="clippingButton">detect</button></p>
     </p>
 
     <textarea class="sketch-code" data-sketch-preset="clipping" data-sketch-title="Curve/curve intersections">
     int iterationCount = 1;
-
-    ArrayList<CurvePair> seen = new ArrayList<CurvePair>();
-
-
     void iterate() {
       if(pairs.size()==0) {
         iterated = false;
@@ -619,7 +621,6 @@
 
       newPairs.clear();
       for(CurvePair cp: pairs) {
-        seen.add(cp);
         cp.draw(getColor(random(999)));
         if(cp.hasOverlap()) {
           if(cp.smallEnough()) { finals.add(cp); }
@@ -633,16 +634,6 @@
       }
       pairs.clear();
       for(CurvePair cp: newPairs) { pairs.add(cp); }
-    }
-
-    void checkCurvePairs() {
-      CurvePair p = seen.remove(0);
-      background(255);
-      background(p.overlapping ? color(0,255,0,20) : color(255,0,0,20));
-      p.c1.draw(color(255,0,0));
-      drawBoundingBox(p.c1.generateBoundingBox());
-      p.c2.draw(color(0,0,255));
-      drawBoundingBox(p.c2.generateBoundingBox());
     }
     </textarea>
 

@@ -109,10 +109,12 @@ void keyPressed() {
     }
     else if(allowOffsetting && str(key).equals("+")) {
       offset++;
+      if(!animated || !playing) redraw();
     }
     else if(allowOffsetting && str(key).equals("-")) {
       offset--;
       if(offset<0) offset=0;
+      if(!animated || !playing) redraw();
     }
   }
 }
