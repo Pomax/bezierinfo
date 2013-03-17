@@ -4,7 +4,6 @@ void setupScreen() {
   controls();
   additionals();
   noConnect();
-  setupColors();
 }
 
 void setupCurve() {
@@ -17,14 +16,6 @@ void setupCurve() {
     curves.add(new BezierCurve(points));
   }
   textAlign(CENTER,CENTER);
-}
-
-int[] colors = new int[1000];
-void setupColors() {
-  for(int i=0; i<colors.length; i++) {
-    randomSeed(i);
-    colors[i] = color(random(255),random(255),random(255));
-  }
 }
 
 void drawFunction() {
@@ -44,7 +35,7 @@ void drawFunction() {
 
   for(int i=0; i<curves.size(); i++) {
     BezierCurve c = curves.get(i);
-    color col = colors[i];
+    color col = getColor(i);
     c.draw(col);
     fill(col);
     Point p = c.getPoint(i/(order-1)),

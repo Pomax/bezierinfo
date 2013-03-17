@@ -26,9 +26,9 @@ int current = -1,
 void mouseMoved() {
   for(BezierCurve curve: curves) {
     int p = curve.overPoint(mouseX, mouseY);
+    current = p;
     if(p != -1) {
       active = curve;
-      current = p;
       cursor(HAND);
       return;
     }
@@ -71,10 +71,12 @@ void mousePressed() {
     }
     if(!animated || !playing) redraw();
   }
+
 }
 
 void mouseReleased() {
   current = -1;
+  active = null;
   if(moulding) {
     for(BezierCurve curve: curves) {
       endCurveMoulding(curve);

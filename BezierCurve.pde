@@ -15,7 +15,7 @@ class BezierCurve {
           y_values,
           LUT_x,
           LUT_y ,
-          ratios,              // the distance from the start, as ratios, for each control point projected onto the curve
+          ratios, // the distance from the start, as ratios, for each control point projected onto the curve
           originalInterval = {0,1};
   // for drawing the curve, we use integer lookups
   int[] draw_x = new int[LUT_resolution],
@@ -107,6 +107,18 @@ class BezierCurve {
         if(comp.getSide(points[0],points[order],points[i])!=bias) {
           bias = 0;
           break; }}}
+  }
+  
+  // how close are these two curves?
+  float getSimilarity(BezierCurve other) {
+    float diff = 0, dx, dy, d;
+    for(int i=0; i<points.length; i++) {
+      dx = points[i].x - other.points[i].x;
+      dy = points[i].y - other.points[i].y;
+      d = sqrt(dx*dx+dy*dy);
+      diff += d;
+    }
+    return diff;
   }
 
   /**
@@ -207,6 +219,14 @@ class BezierCurve {
     Point[] bbox = {new Point(mx,my), new Point(MX,my), new Point(MX,MY), new Point(mx,MY)};
     return bbox;
   }
+  
+  float getArea() {
+    Point[] bbox = generateBoundingBox();
+    float dx = bbox[2].x - bbox[0].x,
+          dy = bbox[2].y - bbox[0].y,
+          A = dx*dy;
+    return A;
+  }
 
   Point[] generateTightBoundingBox() {
     float ox = points[0].x,
@@ -227,8 +247,8 @@ class BezierCurve {
   
   // {(mx,my), (MX,my), (MX,MY), (mx,MY)};
   boolean pointInRect(Point p, Point[] rect) {
-    float mx = rect[0].x - 0.1, my = rect[0].y - 0.1,
-          MX = rect[2].x + 0.1, MY = rect[2].y + 0.1,
+    float mx = rect[0].x, my = rect[0].y,
+          MX = rect[2].x, MY = rect[2].y,
           x = p.x, y = p.y;
     return mx <= x && x <= MX && my <= y && y <= MY;
   }
@@ -300,8 +320,14 @@ class BezierCurve {
   /**
    * Get the t-interval, with respects to the ancestral curve. 
    */
-  float getInterval() {
-    return originalInterval[1] - originalInterval[0];
+  float[] getInterval() {
+    return originalInterval;
+    /*
+    float d0 = originalInterval[0],
+          v0 = (d0==0? 0 : 1.0/d0), 
+          v1 = 1.0/originalInterval[1];
+    return new float[]{v0,v1};
+    */
   }
   
   /**
@@ -310,19 +336,29 @@ class BezierCurve {
    * the result of multiple splits, the "original" is the ancestral curve
    * that the very first split() was called on.  
    */
-  void setOriginalT(float st1, float st2) {
-    originalInterval[0] = st1; 
-    originalInterval[1] = st2;
+  void setOriginalT(float d1, float d2) {
+    originalInterval[0] = d1; 
+    originalInterval[1] = d2;
+  }
+
+  
+  /**
+   * Split in half
+   */
+  BezierCurve[] split() {
+    BezierCurve[] subcurves = split(0.5);
+    float mid = (originalInterval[0] + originalInterval[1])/2;
+    subcurves[0].setOriginalT(originalInterval[0], mid);
+    subcurves[1].setOriginalT(mid, originalInterval[1]);
+    return subcurves;
   }
 
   /**
-   * Split into two curves at t
+   * Split into two curves at some [t] value
    */
   BezierCurve[] split(float t) {
     if (t != span_t) { generateSpan(t); }
     BezierCurve[] subcurves = {new BezierCurve(left_split), new BezierCurve(right_split)};
-    subcurves[0].setOriginalT(originalInterval[0],map(t,0,1,originalInterval[0],originalInterval[1]));
-    subcurves[1].setOriginalT(map(t,0,1,originalInterval[0],originalInterval[1]),originalInterval[1]);
     return subcurves;
   }
 

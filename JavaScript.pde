@@ -48,10 +48,3 @@ abstract class JavaScript {
   Console console;
   Document document;
 }
-
-/**
- * Bind JS reference.
- */
-void bindJavaScript(JavaScript js) {
-  javascript = js;
-}

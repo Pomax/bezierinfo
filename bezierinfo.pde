@@ -137,9 +137,9 @@ void drawFunction() {
   }
 
   //noLoop();
-//  println(curve.split(0.5)[0].originalInterval);
-//  println(curve.split(0.5)[0].split(0.25)[1].originalInterval);
-//  println(curve.split(0.5)[0].split(0.25)[1].split(0.75)[0].originalInterval);
+  println("---"); println(curve.split()[0].getInterval());
+  println("---"); println(curve.split()[0].split()[1].getInterval());
+  println("---"); println(curve.split()[0].split()[1].split()[0].getInterval());
 }
 
 // draw a bounding box

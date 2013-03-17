@@ -1,6 +1,13 @@
 // JS reference.
 JavaScript javascript = null;
 
+/**
+ * Bind JS reference.
+ */
+void bindJavaScript(JavaScript js) {
+  javascript = js;
+}
+
 // quasi-universal sketch dimensions
 final int dim = 300;
 final int pad = 20;
@@ -18,6 +25,7 @@ float t = 0, step = 0.002;
 void setup() {
   // force text engine load (only needed for Processing)
   text("",0,0);
+  setupColors();
   setupScreen();
   noAnimate();
   noLoop();
@@ -148,3 +156,17 @@ void draw() {
     popStyle();
   }
 }
+
+/**
+ * Fixed color list
+ */
+int[] colorListing = new int[100];
+
+void setupColors() {
+  for(int i=0; i<colorListing.length; i++) {
+    randomSeed(i);
+    colorListing[i] = color(random(255),random(255),random(255));
+  }
+}
+
+int getColor(float idx) { return colorListing[int(idx) % 100]; }

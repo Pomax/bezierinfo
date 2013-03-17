@@ -1,12 +1,51 @@
-ArrayList<BezierCurve> curves1 = new ArrayList<BezierCurve>(),
-                       curves2 = new ArrayList<BezierCurve>(),
-                       subcurves1 = new ArrayList<BezierCurve>(),
-                       subcurves2 = new ArrayList<BezierCurve>();
-
-void clearSubcurves() {
-  subcurves1 = new ArrayList<BezierCurve>();
-  subcurves2 = new ArrayList<BezierCurve>();
+/**
+ * CurvePairs are linked curves for finding intersections.
+ * Without linking specific pairs, it's very easy to write
+ * a bad algorithm.
+ */
+class CurvePair {
+  BezierCurve c1, c2;
+  CurvePair(BezierCurve _c1, BezierCurve _c2) {
+    c1 = _c1;
+    c2 = _c2;
+  }
+  // Is this pair an overlapping pair?
+  boolean hasOverlap() {
+    return c1.hasBoundOverlapWith(c2);
+  }
+  // Split up this pair into two subcurves for
+  // each pair, and permute-combine.
+  CurvePair[] splitAndCombine() {
+    CurvePair[] sc = new CurvePair[4];
+    BezierCurve[] c1s = c1.split();
+    BezierCurve[] c2s = c2.split();
+    sc[0] = new CurvePair(c1s[0], c2s[0]);
+    sc[1] = new CurvePair(c1s[1], c2s[0]);
+    sc[2] = new CurvePair(c1s[0], c2s[1]);
+    sc[3] = new CurvePair(c1s[1], c2s[1]);
+    return sc;
+  }
+  // Is this pair small enough to count as "done"?
+  boolean smallEnough() {
+    return c1.getCurveLength() < 0.5 && c2.getCurveLength() < 0.5
+  }
+  // draw these curves with linked coloring
+  void draw(color c) {
+    c1.draw(c);
+    c2.draw(c);
+  }
+  // ye olde toStringe
+  String toString() { return c1  + " -- " + c2; }
 }
+
+
+float PRECISION = 0.01;
+boolean iterated = false;
+BezierCurve c1, c2;
+ArrayList<CurvePair> pairs = new ArrayList<CurvePair>(),
+                     newPairs = new ArrayList<CurvePair>(),
+                     finals = new ArrayList<CurvePair>();
+
 
 /**
  * set up the screen
@@ -32,30 +71,65 @@ void setupCurve() {
     new Point(80,280),
     new Point(210,190)
   };
-  curves1.add(new BezierCurve(curve1));
-  curves2.add(new BezierCurve(curve2));
-  curves.add(curves1.get(0));
-  curves.add(curves2.get(0));
-}
+  c1 = new BezierCurve(curve1);
+  c2 = new BezierCurve(curve2);
+  pairs.add(new CurvePair(c1,c2));
+  curves.add(c1);
+  curves.add(c2);
 
-boolean iterated = false;
+  /***************************** JAVASCRIPT **/
+    var b = document.getElementById("clippingButton");
+    if(b) {
+      b.onclick = function() {
+        iterated = true;
+        animate();
+        play();
+        loop();
+        frameRate(2);
+        redraw();
+      };
+    }
+  /***************************** JAVASCRIPT **/
+
+}
 
 /**
  * Actual draw code
  */
 void drawFunction() {
-  BezierCurve curve = curves.get(0);
-
-  if(iterated) noAdditionals();
-  for(BezierCurve c: curves1) {
-    c.draw(color(255,0,0));
-    drawBoundingBox(c.generateBoundingBox());
+  if(iterated) { noAdditionals(); }
+  for(CurvePair cp: pairs) {
+    cp.c1.draw(color(255,0,0));
+    drawBoundingBox(cp.c1.generateBoundingBox());
+    cp.c2.draw(color(0,0,255));
+    drawBoundingBox(cp.c2.generateBoundingBox());
   }
-  for(BezierCurve c: curves2) {
-    c.draw(color(0,0,255));
-    drawBoundingBox(c.generateBoundingBox());
-  }
+  if(iterated) { iterate(); }
+}
 
-  iterate();
-  iterated = true;
+void drawResult() {
+  additionals();
+  curves.get(0).draw(color(255,0,0));
+  curves.get(1).draw(color(0,0,255));
+
+  noAdditionals();
+  float t;
+  float[] tvalues;
+  for(CurvePair cp: finals) {
+    noFill();
+    stroke(255,0,0);
+    ellipse(cp.c1.points[0].x, cp.c1.points[0].y, 10,10);
+    fill(255,0,0);
+    tvalues = cp.c1.getInterval();
+    t = (tvalues[0]+tvalues[1])/2;
+    text("t ≈ "+int(1000*t)/1000, cp.c1.points[0].x + 10, cp.c1.points[0].y-2);
+
+    noFill();
+    stroke(0,0,255);
+    ellipse(cp.c2.points[0].x, cp.c2.points[0].y, 10,10);
+    fill(0,0,255);
+    tvalues = cp.c2.getInterval();
+    t = (tvalues[0]+tvalues[1])/2;
+    text("t ≈ "+int(1000*t)/1000, cp.c2.points[0].x + 10, cp.c2.points[0].y+12);
+  }
 }
