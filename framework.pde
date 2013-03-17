@@ -23,6 +23,7 @@ float t = 0, step = 0.002;
  * set up a curve, and show everything we know about it.
  */
 void setup() {
+  ellipseMode(CENTER);
   // force text engine load (only needed for Processing)
   text("",0,0);
   setupColors();
