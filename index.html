@@ -359,7 +359,7 @@
         int order = 10;
         ArrayList<Point> pts = new ArrayList<Point>();
 
-        float dst = d/2.5, nx, ny, a=0, step = 2*PI/(order+1), r;
+        float dst = d/2.5, nx, ny, a=0, step = 2*PI/order, r;
         for(a=0; a<2*PI; a+=step) {
           r = random(-dst/4,dst/4);
           pts.add(new Point(d/2 + cos(a) * (r+dst), d/2 + sin(a) * (r+dst)));
