@@ -79,7 +79,7 @@
 
     <h1>A Primer on Bézier Curves</h1>
 
-    <section id="introduction">
+    <section id="preface">
       <p>This page houses the new codepase and example sketches while the
       <a href="http://processingjs.nihongoresources.com/Bézierinfo/">original article</a> is reworked
       to incorporate them, with text rewrites where necessary to explain things better.</p>
@@ -113,7 +113,7 @@
       <p>—Pomax</p>
     </section>
 
-    <section id="">
+    <section id="introduction">
       <h2>Introduction</h2>
 
       <p>Let's start with the good stuff: when we're talking about Bézier curves, we're talking about the
@@ -141,7 +141,7 @@
       }</textarea>
     </section>
 
-    <section id="">
+    <section id="explanation">
       <h2>So how do they work?</h2>
 
       <p>Bézier curves are a form of "parametric" function. Mathematically speaking, parametric
@@ -341,7 +341,7 @@
       a multitude of possible operations and algorithms that we can apply, and the tasks they achieve.</p>
     </section>
 
-    <section id="">
+    <section id="reordering">
       <h2>Lowering and elevating curve order</h2>
 
       <p>One interesting property of Bézier curves is that an <i>n<sup>th</sup></i> order curve can
@@ -399,7 +399,7 @@
       }</textarea>
     </section>
 
-    <section id="">
+    <section id="components">
       <h2>Component functions</h2>
 
       <p>One of the first things people run into when they start using Bézier curves in their own programs is
@@ -470,7 +470,7 @@
       }</textarea>
     </section>
 
-    <section id="">
+    <section id="derivatives">
       <h2>Derivatives</h2>
 
       <p>There's a number of useful things that you can do with Bézier curves based on their derivative,
@@ -523,7 +523,7 @@
 
     </section>
 
-    <section id="">
+    <section id="extremities">
       <h2>Finding extremities</h2>
 
       <p>Now that we understand (well, superficially anyway) the component functions, we can find the extremities of our
@@ -656,7 +656,7 @@
       }</textarea>
     </section>
 
-    <section id="">
+    <section id="boundingbox">
       <h2>Bounding boxes</h2>
 
       <p>If we have the extremities, and the start/end points, a simple for loop that tests for min/max values for
@@ -736,7 +736,7 @@
       but in order to do so we first need to look at how aligning works.</p>
     </section>
 
-    <section id="">
+    <section id="aligning">
       <h2>Aligning curves</h2>
 
       <p>While there are an incredible number of curves we can define by varying the x- and y-coordinates for
@@ -798,7 +798,7 @@
       }</textarea>
     </section>
 
-    <section id="">
+    <section id="tightbounds">
       <h2>Tight boxes</h2>
 
       <p>With our knowledge of bounding boxes, and curve alignment, We can now form the "tight" bounding box for
@@ -834,7 +834,7 @@
       the best fit bounding box, but the math is fairly grueling and just not really worth spending time on.</p>
     </section>
 
-    <section id="">
+    <section id="pointvectors">
       <h2>Tangents and normals</h2>
 
       <p>If you want to move objects along a curve, or "away from" a curve, the two vectors you're most interested
@@ -919,7 +919,7 @@
       }</textarea>
     </section>
 
-    <section id="">
+    <section id="intersections">
       <h2>Intersections</h2>
 
       <p>Let's look at some more things we will want to do with Bézier curves. Almost immediately after figuring out how to
@@ -1061,7 +1061,7 @@
       techniques we've not covered yet: de Casteljau's algorithm, and curve splitting.</p>
     </section>
 
-    <section id="">
+    <section id="decasteljau">
       <h2>de Casteljau's algorithm</h2>
 
       <p>This algorithm is the basis for drawing arbitrarily complex Bézier curves. It's really straight forward:</p>
@@ -1108,7 +1108,7 @@
       }</textarea>
     </section>
 
-    <section id="">
+    <section id="splitting">
       <h2>Splitting curves</h2>
 
       <p>With de Casteljau's algorithm we also find all the points we need to split up a Bézier curve into two, smaller
@@ -1148,7 +1148,7 @@
       }</textarea>
     </section>
 
-    <section id="">
+    <section id="curveintersection">
       <h2>Curve/curve intersection</h2>
 
       <p>Using de Casteljau's algorithm to split the curve we can now implement curve/curve intersection
@@ -1199,7 +1199,7 @@
       </textarea>
     </section>
 
-    <section id="">
+    <section id="moulding">
       <h2>Curve moulding (using the projection ratio)</h2>
 
       <p>De Casteljau's algorithm is the pivotal algorithm when it comes to Bézier curves. You can use it not just to split
@@ -1343,7 +1343,7 @@
       }</textarea>
     </section>
 
-    <section id="">
+    <section id="arclength">
       <h2>Arc length</h2>
 
       <p>How long is a Bézier curve? As it turns out, that's not actually an easy question, because the answer
@@ -1481,7 +1481,7 @@
       }</textarea>
     </section>
 
-    <section id="">
+    <section id="offsetting">
       <h2>Curve offsetting</h2>
 
       <p>Perhaps you are like me, and you've been writing various small programs that use Bézier curves in some way or another,
@@ -1620,7 +1620,7 @@
       }</textarea>
     </section>
 
-    <section id="">
+    <section id="graduatedoffset">
       <h2>Graduated curve offsetting</h2>
 
       <p>If we can compute the length of a curve, which we can if we use the Legendre-Gauss quadrature
