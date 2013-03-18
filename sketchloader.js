@@ -47,7 +47,7 @@
       canvas.setAttribute("class", sketch.getAttribute("class"));
       var preset = sketch.getAttribute("data-sketch-preset");
       var dps = "presets/" + preset+".pde";
-      dps += " RuntimeException.pjs API.pde Point.pde BezierCurve.pde BezierComputer.pde Interaction.pde JavaScript.pde framework.pde";
+      dps += " Point.pde BezierCurve.pde BezierComputer.pde framework.pde Interaction.pde API.pde JavaScript.pde RuntimeException.pjs";
       canvas.setAttribute("data-processing-sources", dps);
       canvas.setAttribute("data-preset",preset);
 
