@@ -111,7 +111,7 @@
         setupDefaultQuadratic();
       }
 
-      void drawCurve(BézierCurve curve) {
+      void drawCurve(BezierCurve curve) {
         curve.draw();
       }</textarea>
 
@@ -120,7 +120,7 @@
         setupDefaultCubic();
       }
 
-      void drawCurve(BézierCurve curve) {
+      void drawCurve(BezierCurve curve) {
         curve.draw();
       }</textarea>
     </section>
@@ -317,7 +317,7 @@
         setupDefaultCubic();
       }
 
-      void drawCurve(BézierCurve curve) {
+      void drawCurve(BezierCurve curve) {
         curve.draw();
       }</textarea>
 
@@ -374,11 +374,11 @@
 
         Point[] points = new Point[pts.size()];
         for(int p=0,last=points.length; p<last; p++) { points[p] = pts.get(p); }
-        curves.add(new BézierCurve(points));
+        curves.add(new BezierCurve(points));
         reorder();
       }
 
-      void drawCurve(BézierCurve curve) {
+      void drawCurve(BezierCurve curve) {
         curve.draw();
       }</textarea>
     </section>
@@ -412,7 +412,7 @@
         setupDefaultQuadratic();
       }
 
-      void drawCurve(BézierCurve curve) {
+      void drawCurve(BezierCurve curve) {
         additionals();
         curve.draw();
 
@@ -421,12 +421,12 @@
 
         nextPanel();
         drawAxes("t",0,1, "x",0,panelDim);
-        BézierCurve x_only = curve.justX(dim-2*pad);
+        BezierCurve x_only = curve.justX(dim-2*pad);
         x_only.draw();
 
         nextPanel();
         drawAxes("t",0,1, "y",0,panelDim);
-        BézierCurve y_only = curve.justY(dim-2*pad);
+        BezierCurve y_only = curve.justY(dim-2*pad);
         y_only.draw();
       }</textarea>
 
@@ -435,7 +435,7 @@
         setupDefaultCubic();
       }
 
-      void drawCurve(BézierCurve curve) {
+      void drawCurve(BezierCurve curve) {
         additionals();
         curve.draw();
 
@@ -444,12 +444,12 @@
 
         nextPanel();
         drawAxes("t",0,1, "x",0,panelDim);
-        BézierCurve x_only = curve.justX(dim-2*pad);
+        BezierCurve x_only = curve.justX(dim-2*pad);
         x_only.draw();
 
         nextPanel();
         drawAxes("t",0,1, "y",0,panelDim);
-        BézierCurve y_only = curve.justY(dim-2*pad);
+        BezierCurve y_only = curve.justY(dim-2*pad);
         y_only.draw();
       }</textarea>
     </section>
@@ -562,7 +562,7 @@
         setupDefaultQuadratic();
       }
 
-      void drawCurve(BézierCurve curve) {
+      void drawCurve(BezierCurve curve) {
         additionals();
         curve.draw();
 
@@ -571,7 +571,7 @@
 
         nextPanel();
         drawAxes("t",0,1, "x",0,panelDim);
-        BézierCurve x_only = curve.justX(dim-2*pad);
+        BezierCurve x_only = curve.justX(dim-2*pad);
         x_only.draw();
 
         stroke(255,0,0);
@@ -585,7 +585,7 @@
 
         nextPanel();
         drawAxes("t",0,1, "y",0,panelDim);
-        BézierCurve y_only = curve.justY(dim-2*pad);
+        BezierCurve y_only = curve.justY(dim-2*pad);
         y_only.draw();
 
         stroke(255,0,255);
@@ -603,7 +603,7 @@
         setupDefaultCubic();
       }
 
-      void drawCurve(BézierCurve curve) {
+      void drawCurve(BezierCurve curve) {
         additionals();
         curve.draw();
 
@@ -612,7 +612,7 @@
 
         nextPanel();
         drawAxes("t",0,1, "x",0,panelDim);
-        BézierCurve x_only = curve.justX(dim-2*pad);
+        BezierCurve x_only = curve.justX(dim-2*pad);
         x_only.draw();
 
         stroke(255,0,0);
@@ -626,7 +626,7 @@
 
         nextPanel();
         drawAxes("t",0,1, "y",0,panelDim);
-        BézierCurve y_only = curve.justY(dim-2*pad);
+        BezierCurve y_only = curve.justY(dim-2*pad);
         y_only.draw();
 
         stroke(255,0,255);
@@ -663,11 +663,11 @@
         setupDefaultQuadratic();
       }
 
-      void drawCurve(BézierCurve curve) {
+      void drawCurve(BezierCurve curve) {
         curve.draw();
 
         stroke(255,0,0);
-        BézierCurve x_only = curve.justX(dim-2*pad);
+        BezierCurve x_only = curve.justX(dim-2*pad);
         float[] tx = x_only.getInflections();
         for(float t: tx) {
           if(t==0 || t==1) continue;
@@ -676,7 +676,7 @@
         }
 
         stroke(255,0,255);
-        BézierCurve y_only = curve.justY(dim-2*pad);
+        BezierCurve y_only = curve.justY(dim-2*pad);
         float[] ty = y_only.getInflections();
         for(float t: ty) {
           if(t==0 || t==1) continue;
@@ -692,11 +692,11 @@
         setupDefaultCubic();
       }
 
-      void drawCurve(BézierCurve curve) {
+      void drawCurve(BezierCurve curve) {
         curve.draw();
 
         stroke(255,0,0);
-        BézierCurve x_only = curve.justX(dim-2*pad);
+        BezierCurve x_only = curve.justX(dim-2*pad);
         float[] tx = x_only.getInflections();
         for(float t: tx) {
           if(t==0 || t==1) continue;
@@ -705,7 +705,7 @@
         }
 
         stroke(255,0,255);
-        BézierCurve y_only = curve.justY(dim-2*pad);
+        BezierCurve y_only = curve.justY(dim-2*pad);
         float[] ty = y_only.getInflections();
         for(float t: ty) {
           if(t==0 || t==1) continue;
@@ -742,7 +742,7 @@
         setupDefaultQuadratic();
       }
 
-      void drawCurve(BézierCurve curve) {
+      void drawCurve(BezierCurve curve) {
         additionals();
         curve.draw();
 
@@ -764,7 +764,7 @@
         setupDefaultCubic();
       }
 
-      void drawCurve(BézierCurve curve) {
+      void drawCurve(BezierCurve curve) {
         additionals();
         curve.draw();
 
@@ -796,7 +796,7 @@
         setupDefaultQuadratic();
       }
 
-      void drawCurve(BézierCurve curve) {
+      void drawCurve(BezierCurve curve) {
         curve.draw();
         drawBoundingBox(curve.generateTightBoundingBox());
       }</textarea>
@@ -806,7 +806,7 @@
         setupDefaultCubic();
       }
 
-      void drawCurve(BézierCurve curve) {
+      void drawCurve(BezierCurve curve) {
         curve.draw();
         drawBoundingBox(curve.generateTightBoundingBox());
       }</textarea>
@@ -861,7 +861,7 @@
         setupDefaultQuadratic();
       }
 
-      void drawCurve(BézierCurve curve) {
+      void drawCurve(BezierCurve curve) {
         curve.draw(color(0,40));
         float t, d = 15;
         Point p, tg, n;
@@ -884,7 +884,7 @@
         setupDefaultCubic();
       }
 
-      void drawCurve(BézierCurve curve) {
+      void drawCurve(BezierCurve curve) {
         curve.draw(color(0,40));
         float t, d = 15;
         Point p, tg, n;
@@ -933,13 +933,13 @@
       void setupCurve() {
         p1 = new Point(50,50);
         p2 = new Point(150,110);
-        curves.add(new BézierCurve(new Point[]{p1,p2}));
+        curves.add(new BezierCurve(new Point[]{p1,p2}));
         p3 = new Point(50,250);
         p4 = new Point(170,170);
-        curves.add(new BézierCurve(new Point[]{p3,p4}));
+        curves.add(new BezierCurve(new Point[]{p3,p4}));
       }
 
-      void drawCurve(BézierCurve curve) {
+      void drawCurve(BezierCurve curve) {
         // draw the lines through p1/p2 and p3/p4
         stroke(0,50);
         float dx = 10*(p2.x-p1.x), dy = 10*(p2.y-p1.y);
@@ -979,21 +979,21 @@
       void setupCurve() {
         p1 = new Point(40,60);
         p2 = new Point(260,200);
-        curves.add(new BézierCurve(new Point[]{
+        curves.add(new BezierCurve(new Point[]{
           p1, p2
         }));
-        curves.add(new BézierCurve(new Point[]{
+        curves.add(new BezierCurve(new Point[]{
           new Point(25,150),
           new Point(180,30),
           new Point(230,250)
         }));
       }
 
-      void drawCurve(BézierCurve curve) {
+      void drawCurve(BezierCurve curve) {
         curves.get(0).draw();
         curves.get(1).draw();
 
-        BézierCurve aligned = curves.get(1).align(p1,p2);
+        BezierCurve aligned = curves.get(1).align(p1,p2);
         float[] roots = comp.findAllRoots(0, aligned.y_values);
         fill(150,0,150);
         float x, y;
@@ -1012,10 +1012,10 @@
       void setupCurve() {
         p1 = new Point(100,20);
         p2 = new Point(195,255);
-        curves.add(new BézierCurve(new Point[]{
+        curves.add(new BezierCurve(new Point[]{
           p1, p2
         }));
-        curves.add(new BézierCurve(new Point[]{
+        curves.add(new BezierCurve(new Point[]{
           new Point(150,125),
           new Point(40,30),
           new Point(270,115),
@@ -1023,11 +1023,11 @@
         }));
       }
 
-      void drawCurve(BézierCurve curve) {
+      void drawCurve(BezierCurve curve) {
         curves.get(0).draw();
         curves.get(1).draw();
 
-        BézierCurve aligned = curves.get(1).align(p1,p2);
+        BezierCurve aligned = curves.get(1).align(p1,p2);
         float[] roots = comp.findAllRoots(0, aligned.y_values);
         fill(150,0,150);
         float x, y;
@@ -1078,13 +1078,13 @@
           new Point(250,150),
           new Point(135,125),
         };
-        curves.add(new BézierCurve(points));
+        curves.add(new BezierCurve(points));
         reorder();
         animate();
         span();
       }
 
-      void drawCurve(BézierCurve curve) {
+      void drawCurve(BezierCurve curve) {
         curve.draw();
         Point p = curve.getPoint(t);
         ellipse(p.x, p.y, 5, 5);
@@ -1111,13 +1111,13 @@
         span();
       }
 
-      void drawCurve(BézierCurve curve) {
+      void drawCurve(BezierCurve curve) {
         curve.draw();
         Point p = curve.getPoint(t);
         ellipse(p.x, p.y, 5, 5);
         drawSpan(curve, t);
 
-        BézierCurve[] segments = curve.split(t);
+        BezierCurve[] segments = curve.split(t);
         usePanelPadding();
 
         nextPanel();
@@ -1208,7 +1208,7 @@
         setupDefaultQuadratic();
       }
 
-      void drawCurve(BézierCurve curve) {
+      void drawCurve(BezierCurve curve) {
         curve.draw();
 
         if(Bt != -1) {
@@ -1222,7 +1222,7 @@
         setupDefaultCubic();
       }
 
-      void drawCurve(BézierCurve curve) {
+      void drawCurve(BezierCurve curve) {
         curve.draw();
 
         if(Bt != -1) {
@@ -1300,10 +1300,10 @@
         additionals();
       }
 
-      void mouldCurve(BézierCurve curve, int mx, int my) {
+      void mouldCurve(BezierCurve curve, int mx, int my) {
         if(Bt != -1) {
           B = new Point(mx, my);
-          BézierCurve newcurve = comp.generateCurve(curve.order, curve.points[0], B, curve.points[curve.order], Bt);
+          BezierCurve newcurve = comp.generateCurve(curve.order, curve.points[0], B, curve.points[curve.order], Bt);
           curves.clear();
           curves.add(newcurve);
         }
@@ -1317,10 +1317,10 @@
         additionals();
       }
 
-      void mouldCurve(BézierCurve curve, int mx, int my) {
+      void mouldCurve(BezierCurve curve, int mx, int my) {
         if(Bt != -1) {
           B = new Point(mx, my);
-          BézierCurve newcurve = comp.generateCurve(curve.order, curve.points[0], B, curve.points[curve.order], Bt, tangents);
+          BezierCurve newcurve = comp.generateCurve(curve.order, curve.points[0], B, curve.points[curve.order], Bt, tangents);
           curves.clear();
           curves.add(newcurve);
         }
@@ -1448,7 +1448,7 @@
         reorder();
       }
 
-      void drawCurve(BézierCurve curve) {
+      void drawCurve(BezierCurve curve) {
         curve.draw();
         pushStyle();
         fill(0);
@@ -1572,15 +1572,15 @@
         offset = 20;
       }
 
-      void drawCurve(BézierCurve curve) {
+      void drawCurve(BezierCurve curve) {
         additionals();
         curve.draw();
         if(offset>0) {
           noAdditionals();
-          BézierCurve[] offsetCurve = curve.offset(offset);
-          for(BézierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
+          BezierCurve[] offsetCurve = curve.offset(offset);
+          for(BezierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
           offsetCurve = curve.offset(-offset);
-          for(BézierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
+          for(BezierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
         }
       }</textarea>
 
@@ -1591,15 +1591,15 @@
         offset = 20;
       }
 
-      void drawCurve(BézierCurve curve) {
+      void drawCurve(BezierCurve curve) {
         additionals();
         curve.draw();
         if(offset>0) {
           noAdditionals();
-          BézierCurve[] offsetCurve = curve.offset(offset);
-          for(BézierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
+          BezierCurve[] offsetCurve = curve.offset(offset);
+          for(BezierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
           offsetCurve = curve.offset(-offset);
-          for(BézierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
+          for(BezierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
         }
       }</textarea>
     </section>
@@ -1622,17 +1622,17 @@
         offset = 20;
       }
 
-      void drawCurve(BézierCurve curve) {
+      void drawCurve(BezierCurve curve) {
         additionals();
         curve.draw();
         if(offset>0) {
           noAdditionals();
-          BézierCurve[] offsetCurve = curve.offset(offset);
+          BezierCurve[] offsetCurve = curve.offset(offset);
           comp.graduateOffset(offsetCurve, offset, 0, 1);
-          for(BézierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
+          for(BezierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
           offsetCurve = curve.offset(-offset);
           comp.graduateOffset(offsetCurve, -offset, 0, 1);
-          for(BézierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
+          for(BezierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
         }
       }</textarea>
 
@@ -1643,17 +1643,17 @@
         offset = 20;
       }
 
-      void drawCurve(BézierCurve curve) {
+      void drawCurve(BezierCurve curve) {
         additionals();
         curve.draw();
         if(offset>0) {
           noAdditionals();
-          BézierCurve[] offsetCurve = curve.offset(offset);
+          BezierCurve[] offsetCurve = curve.offset(offset);
           comp.graduateOffset(offsetCurve, offset, 0, 1);
-          for(BézierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
+          for(BezierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
           offsetCurve = curve.offset(-offset);
           comp.graduateOffset(offsetCurve, -offset, 0, 1);
-          for(BézierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
+          for(BezierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
         }
       }</textarea>
     </section>
