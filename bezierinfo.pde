@@ -70,7 +70,7 @@ void drawFunction() {
   if(showSpan) {
     drawSpan(curve, t);
   }
-  
+
   drawBoundingBox(curve.generateBoundingBox());
 
   // point on the curve at [t]

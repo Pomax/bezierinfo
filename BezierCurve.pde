@@ -1,3 +1,9 @@
+/***************************************************
+ *                                                 *
+ *      A generic Bezier curve implementation      *
+ *                                                 *
+ ***************************************************/
+
 /**
  * Bezier curve class (of any degree)
  */
@@ -36,7 +42,7 @@ class BezierCurve {
     this.points = points;
     order = points.length-1;
     int L = points.length;
-    LUT_resolution = (int) (400 * log(order)/log(4));
+    LUT_resolution = 1 + (int) (400 * log(order)/log(4));
     LUT_x = new float[LUT_resolution];
     LUT_y = new float[LUT_resolution];
     draw_x = new int[LUT_resolution];
@@ -739,4 +745,3 @@ class BezierCurve {
     return ret;
   }
 }
-

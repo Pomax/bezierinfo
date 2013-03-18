@@ -1,7 +1,13 @@
+/***************************************************
+ *                                                 *
+ *      Additional "use"/"don't use" API           *
+ *                                                 *
+ ***************************************************/
+
 boolean animated = false;
 void animate() { animated = true; loop(); }
 void noAnimate() { animated = false; noLoop(); }
-void toggleAnimate() { animated = !animated; } 
+void toggleAnimate() { animated = !animated; }
 
 boolean moulding = false;
 void mould() { moulding = true; }
@@ -62,4 +68,3 @@ boolean allowReordering = false;
 void reorder() { allowReordering = true; }
 void noReorder() { allowReordering = false; }
 void toggleReorder() { allowReordering = !allowReordering; }
-

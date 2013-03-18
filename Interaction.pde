@@ -1,21 +1,20 @@
+/***************************************************
+ *                                                 *
+ *      Mouse and keyboard interaction code        *
+ *                                                 *
+ ***************************************************/
+
+// Runs before drawFunction is called,
+// if this is an animate sketch.
 void preDraw() {
   if(t>1) {
     t = 0;
   }
 }
 
+// Runs after drawFunction is called,
+// if this is an animate sketch.
 void postDraw() {
-/*
-  for(BezierCurve curve: curves) {
-    float m = curve.over(mouseX,mouseY);
-    int p = curve.overPoint(mouseX, mouseY);
-    if(m!=-1 && p<0) {
-      fill(0);
-      text("t ≈ "+m,mouseX+10,mouseY+10);
-      noFill();
-    }
-  }
-*/
   t += step;
 }
 
@@ -23,6 +22,8 @@ BezierCurve active = null;
 int current = -1,
     offset = 0;
 
+
+// curve interaction based on mouse movement alone
 void mouseMoved() {
   for(BezierCurve curve: curves) {
     int p = curve.overPoint(mouseX, mouseY);
@@ -42,6 +43,7 @@ void mouseMoved() {
   current = -1;
 }
 
+// point/curve dragging
 void mouseDragged() {
   if(current != -1) {
     active.movePoint(current, mouseX, mouseY);
@@ -54,6 +56,7 @@ void mouseDragged() {
   if(!animated || !playing) redraw();
 }
 
+// playback control
 void mouseClicked() {
   if(animated) {
     if(playing) { pause(); }
@@ -61,6 +64,7 @@ void mouseClicked() {
   }
 }
 
+// selection using the mouse
 void mousePressed() {
   if(moulding && current==-1) {
     for(BezierCurve curve: curves) {
@@ -71,9 +75,9 @@ void mousePressed() {
     }
     if(!animated || !playing) redraw();
   }
-
 }
 
+// end-of-interaction trigger
 void mouseReleased() {
   current = -1;
   active = null;
@@ -85,7 +89,18 @@ void mouseReleased() {
   if(!animated || !playing) redraw();
 }
 
+// modifier monitoring
+boolean shift = false,
+         control = false,
+         alt = false;
+
+// key input handling
 void keyPressed() {
+
+  if(keyCode==SHIFT)   { shift   = true; }
+  if(keyCode==CONTROL) { control = true; }
+  if(keyCode==ALT)     { alt     = true; }
+
   for(BezierCurve curve: curves) {
     if(allowReordering && keyCode==38) {
       curves.set(curves.indexOf(curve), curve.elevate());
@@ -119,3 +134,9 @@ void keyPressed() {
   }
 }
 
+// modifier monitoring
+void keyReleased() {
+  if(keyCode==SHIFT)   { shift   = false; }
+  if(keyCode==CONTROL) { control = false; }
+  if(keyCode==ALT)     { alt     = false; }
+}

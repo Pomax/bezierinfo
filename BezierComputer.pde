@@ -1,3 +1,9 @@
+/***************************************************
+ *                                                 *
+ * A special computer class for generic operations *
+ *                                                 *
+ ***************************************************/
+
 /**
  * static computation class
  */

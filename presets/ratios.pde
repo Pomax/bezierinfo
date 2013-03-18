@@ -1,3 +1,9 @@
+/***************************************************
+ *                                                 *
+ *   Preset functions for showing curve weights    *
+ *                                                 *
+ ***************************************************/
+
 void setupScreen() {
   size(dim,dim);
   labels();

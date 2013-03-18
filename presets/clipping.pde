@@ -1,3 +1,9 @@
+/***************************************************
+ *                                                 *
+ *  Preset functions for curve/curve intersecting  *
+ *                                                 *
+ ***************************************************/
+
 /**
  * CurvePairs are linked curves for finding intersections.
  * Without linking specific pairs, it's very easy to write

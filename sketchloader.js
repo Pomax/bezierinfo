@@ -3,6 +3,12 @@
   var dependencies = [],
       sourceCode = [];
 
+  var scHeader = "/***************************************************\n"+
+" *                                                 *\n"+
+" *   Example source - this is public domain code   *\n"+
+" *                                                 *\n"+
+" ***************************************************/\n\n";
+
   var viewSource = function(idx) {
     var source = sourceCode[idx] + "\n", xhr;
     dependencies[idx].split(/\s+/).forEach(function(dep) {
@@ -10,7 +16,7 @@
       xhr = new XMLHttpRequest();
       xhr.open("GET",dep,false);
       xhr.send(null);
-      source += xhr.responseText;
+      source += "\n" + xhr.responseText;
     });
     var tab = window.open("");
     tab.document.body.style.whiteSpace = "pre";
@@ -46,7 +52,7 @@
       canvas.setAttribute("data-preset",preset);
 
       dependencies[figCount] = dps.replace(" RuntimeException.pjs",'') + (preset == "abc" || preset == "moulding" ? "" : " moulding.pde");
-      sourceCode[figCount] = sketch.value.replace(/(^|\n)      /g,"\n") + "\n";
+      sourceCode[figCount] = scHeader + sketch.value.replace(/(^|\n)      /g,"\n") + "\n";
 
       var viewSource = "<span onclick=\"viewSource(" + figCount + ")\">view source</span>";
       var label = document.createElement("span");

@@ -1,2 +1,2 @@
-// runtimeexception shim
+// runtime exception shim for Pjs.
 class RuntimeException { }
