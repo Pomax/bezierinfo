@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Bezier curve framework</title>
+    <title>Bézier curve framework</title>
 
     <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
@@ -77,11 +77,11 @@
   </head>
   <body>
 
-    <h1>A Primer on Bezier Curves</h1>
+    <h1>A Primer on Bézier Curves</h1>
 
     <section id="introduction">
       <p>This page houses the new codepase and example sketches while the
-      <a href="http://processingjs.nihongoresources.com/bezierinfo/">original article</a> is reworked
+      <a href="http://processingjs.nihongoresources.com/Bézierinfo/">original article</a> is reworked
       to incorporate them, with text rewrites where necessary to explain things better.</p>
 
       <h2 style="font-style:italic;">NOTE: All graphics are interactive</h2>
@@ -100,27 +100,27 @@
     <section id="">
       <h2>Introduction</h2>
 
-      <p>Let's start with the good stuff: when we're talking about Bezier curves, we're talking about the
+      <p>Let's start with the good stuff: when we're talking about Bézier curves, we're talking about the
       things that you can see in the following graphics. They run from some start point to some end point,
       with their curvature influenced by one or more "intermediate" control points. Now, because all the
       graphics on this page are interactive, go manipulate those curves a bit: click-drag the points,
       and see how their shape changes based on what you do.</p>
 
-      <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Quadratic Bezier curves">
+      <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Quadratic Bézier curves">
       void setupCurve() {
         setupDefaultQuadratic();
       }
 
-      void drawCurve(BezierCurve curve) {
+      void drawCurve(BézierCurve curve) {
         curve.draw();
       }</textarea>
 
-      <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Cubic Bezier curves">
+      <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Cubic Bézier curves">
       void setupCurve() {
         setupDefaultCubic();
       }
 
-      void drawCurve(BezierCurve curve) {
+      void drawCurve(BézierCurve curve) {
         curve.draw();
       }</textarea>
     </section>
@@ -254,9 +254,9 @@
       at the value listed on top of the Σ). So, now we know what the base function(s) look(s) like,
       time to add in the magic that makes Bézier curves so special: control points.<p>
 
-      <h2>Controlling Bezier curvatures</h2>
+      <h2>Controlling Bézier curvatures</h2>
 
-      <p>Bezier curves are (like all "splines") interpolation funtions, meaning they take a set of
+      <p>Bézier curves are (like all "splines") interpolation funtions, meaning they take a set of
       points, and generate values somewhere "between" those points. (One of the consequences of this
       is that you'll never be able to generate a point that lies outside the outline for the control
       points, commonly called the "hull" for the curve. Useful information!). In fact, we can visualise
@@ -264,11 +264,11 @@
       important, where, in the curve.</p>
 
       <p>The following graphs show the interpolation functions for quadratic and cubic curves, with "S"
-      being the strength of a point's contribution to the total sum of the Bezier function. Click or
+      being the strength of a point's contribution to the total sum of the Bézier function. Click or
       click-drag to see the interpolation percentages for each curve-defining point at a specific <i>t</i>
       value.</p>
 
-      <p>Also shown is the interpolation function for a 15th order Bezier function. As you can see,
+      <p>Also shown is the interpolation function for a 15th order Bézier function. As you can see,
       the start and end point contribute considerably more to the curve's shape than any other point
       in the control point set.</p>
 
@@ -287,7 +287,7 @@
       <p>If we want to change the curve, we need to change the weights of each point, effectively changing
       the interpolations. The way to do this is about as straight forward as possible: just multiply each
       point with a value that changes its strength. These values are conventionally called "Weights", and
-      we can add them to our original Bezier function:</p>
+      we can add them to our original Bézier function:</p>
 
       <p>\[
         Bézier(n,t) = \sum_{i=0}^{n}
@@ -302,7 +302,7 @@
       we want our curve to have: for an <i>n<sup>th</sup></i> order curve, w<sub>0</sub> is our start coordinate,
       w<sub>n</sub> is our last coordinate, and everything in between is a controlling coordinate. Say we want
       a cubic curve that starts at (120,160), is controlled by (35,200) and (220,260) and ends at (220,40),
-      we use this Bezier curve:</p>
+      we use this Bézier curve:</p>
 
       <p>\[
       \left \{ \begin{matrix}
@@ -312,23 +312,23 @@
 
       <p>Which gives us the curve we saw at the top of the article:</p>
 
-      <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Our cubic Bezier curve">
+      <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Our cubic Bézier curve">
       void setupCurve() {
         setupDefaultCubic();
       }
 
-      void drawCurve(BezierCurve curve) {
+      void drawCurve(BézierCurve curve) {
         curve.draw();
       }</textarea>
 
-      <p>What else can we do with Bezier curves? Quite a lot, actually. The rest of this article covers
+      <p>What else can we do with Bézier curves? Quite a lot, actually. The rest of this article covers
       a multitude of possible operations and algorithms that we can apply, and the tasks they achieve.</p>
     </section>
 
     <section id="">
       <h2>Lowering and elevating curve order</h2>
 
-      <p>One interesting property of Bezier curves is that an <i>n<sup>th</sup></i> order curve can
+      <p>One interesting property of Bézier curves is that an <i>n<sup>th</sup></i> order curve can
       always be perfectly represented by an <i>(n+1)<sup>th</sup></i> order curve, by giving the
       higher order curve specific control points.</p>
 
@@ -359,7 +359,7 @@
       <p>We can apply this to a (semi) random curve, as is done in the following graphic. Select the sketch
       and press your up and down cursor keys to elevate or lower the curve order.</p>
 
-      <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="A tenth order Bezier curve">
+      <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="A tenth order Bézier curve">
       void setupCurve() {
         int d = dim - 2*pad;
         int order = 10;
@@ -374,11 +374,11 @@
 
         Point[] points = new Point[pts.size()];
         for(int p=0,last=points.length; p<last; p++) { points[p] = pts.get(p); }
-        curves.add(new BezierCurve(points));
+        curves.add(new BézierCurve(points));
         reorder();
       }
 
-      void drawCurve(BezierCurve curve) {
+      void drawCurve(BézierCurve curve) {
         curve.draw();
       }</textarea>
     </section>
@@ -407,12 +407,12 @@
       <p>If you move points in a curve sideways, you should only see the middle graph change; likely, moving
       points vertically should only show a change in the right graph.</p>
 
-      <textarea class="sketch-code" data-sketch-preset="threepanel" data-sketch-title="Quadratic Bezier curve components">
+      <textarea class="sketch-code" data-sketch-preset="threepanel" data-sketch-title="Quadratic Bézier curve components">
       void setupCurve() {
         setupDefaultQuadratic();
       }
 
-      void drawCurve(BezierCurve curve) {
+      void drawCurve(BézierCurve curve) {
         additionals();
         curve.draw();
 
@@ -421,21 +421,21 @@
 
         nextPanel();
         drawAxes("t",0,1, "x",0,panelDim);
-        BezierCurve x_only = curve.justX(dim-2*pad);
+        BézierCurve x_only = curve.justX(dim-2*pad);
         x_only.draw();
 
         nextPanel();
         drawAxes("t",0,1, "y",0,panelDim);
-        BezierCurve y_only = curve.justY(dim-2*pad);
+        BézierCurve y_only = curve.justY(dim-2*pad);
         y_only.draw();
       }</textarea>
 
-      <textarea class="sketch-code" data-sketch-preset="threepanel" data-sketch-title="Cubic Bezier curve components">
+      <textarea class="sketch-code" data-sketch-preset="threepanel" data-sketch-title="Cubic Bézier curve components">
       void setupCurve() {
         setupDefaultCubic();
       }
 
-      void drawCurve(BezierCurve curve) {
+      void drawCurve(BézierCurve curve) {
         additionals();
         curve.draw();
 
@@ -444,12 +444,12 @@
 
         nextPanel();
         drawAxes("t",0,1, "x",0,panelDim);
-        BezierCurve x_only = curve.justX(dim-2*pad);
+        BézierCurve x_only = curve.justX(dim-2*pad);
         x_only.draw();
 
         nextPanel();
         drawAxes("t",0,1, "y",0,panelDim);
-        BezierCurve y_only = curve.justY(dim-2*pad);
+        BézierCurve y_only = curve.justY(dim-2*pad);
         y_only.draw();
       }</textarea>
     </section>
@@ -457,10 +457,10 @@
     <section id="">
       <h2>Derivatives</h2>
 
-      <p>There's a number of useful things that you can do with Bezier curves based on their derivative,
-      and one of the more amusing observations about Bezier curves is that their derivatves are, in fact,
-      also Bezier curves. In fact, the derivation of a Bezier curve is relatively straight forward, although
-      we do need a bit of math. First, let's revisit our original Bezier curve description:</p>
+      <p>There's a number of useful things that you can do with Bézier curves based on their derivative,
+      and one of the more amusing observations about Bézier curves is that their derivatves are, in fact,
+      also Bézier curves. In fact, the derivation of a Bézier curve is relatively straight forward, although
+      we do need a bit of math. First, let's revisit our original Bézier curve description:</p>
 
       <p>\[
         Bézier(n,t) = \sum_{i=0}^{n}
@@ -485,9 +485,9 @@
       \]</p>
 
 
-      <p>What are the differences? In terms of the actual Bezier curve, virtually nothing!
+      <p>What are the differences? In terms of the actual Bézier curve, virtually nothing!
       We lowered the order (rather than <i>n</i>, it's now <i>n-1</i>), but it's still the
-      same Bezier function. The only real difference, as it turns out, is in how the weights
+      same Bézier function. The only real difference, as it turns out, is in how the weights
       change when we derive the curve's function. If we have four points A, B, C, and D, then
       the derivative will three points, the second derivative two, and the third derivative
       one:</p>
@@ -501,7 +501,7 @@
 
       <p>We can keep performing this trick for as long as we have more than one weight. Once
       we have one weight left, the next step will see <i>k = 0</i>, and the result of our
-      "Bezier function" summation is zero, because we're not adding anything at all. As such,
+      "Bézier function" summation is zero, because we're not adding anything at all. As such,
       a quadratic curve has no second derivative, a cubic curve has no third derivative, and
       generalised: an <i>n<sup>th</sup></i> order curve has <i>n-1</i> derivatives.</p>
 
@@ -511,7 +511,7 @@
       <h2>Finding extremities</h2>
 
       <p>Now that we understand (well, superficially anyway) the component functions, we can find the extremities of our
-      Bezier curve by finding maxima and minima on the component functions, by solving the equasions B'(t) = 0 and B''(t) = 0.
+      Bézier curve by finding maxima and minima on the component functions, by solving the equasions B'(t) = 0 and B''(t) = 0.
       Although, in the case of quadratic curves there is no B''(t), so we only need to compute B'(t) = 0.</p>
 
       <p>The problem with this is that as the order of the curve goes up, we can't actually solve those equasions the normal
@@ -549,20 +549,20 @@
 
         <p>As it turns out, Newton-Raphson is so blindingly fast, we don't really have to pick: we simply run the
         algorithm from <i>t=0</i> to <i>t=1</i> at small steps (say, 1/200<sup>th</sup>) and the result will be
-        all the roots we want. Of course, this may pose problems for high order Bezier curves: 200 steps for a
-        200<sup>th</sup> order bezier curve is going to go wrong, but that's okay: there is no reason, ever, to
-        use Bezier curves of orders higher than 10, let alone 100.</p>
+        all the roots we want. Of course, this may pose problems for high order Bézier curves: 200 steps for a
+        200<sup>th</sup> order Bézier curve is going to go wrong, but that's okay: there is no reason, ever, to
+        use Bézier curves of orders higher than 10, let alone 100.</p>
       </div>
 
-      <p>With this, we can determine the first and second derivative roots for our Bezier curves, and show them
+      <p>With this, we can determine the first and second derivative roots for our Bézier curves, and show them
       in our previous graphics:</p>
 
-      <textarea class="sketch-code" data-sketch-preset="threepanel" data-sketch-title="Quadratic Bezier curve components">
+      <textarea class="sketch-code" data-sketch-preset="threepanel" data-sketch-title="Quadratic Bézier curve components">
       void setupCurve() {
         setupDefaultQuadratic();
       }
 
-      void drawCurve(BezierCurve curve) {
+      void drawCurve(BézierCurve curve) {
         additionals();
         curve.draw();
 
@@ -571,7 +571,7 @@
 
         nextPanel();
         drawAxes("t",0,1, "x",0,panelDim);
-        BezierCurve x_only = curve.justX(dim-2*pad);
+        BézierCurve x_only = curve.justX(dim-2*pad);
         x_only.draw();
 
         stroke(255,0,0);
@@ -585,7 +585,7 @@
 
         nextPanel();
         drawAxes("t",0,1, "y",0,panelDim);
-        BezierCurve y_only = curve.justY(dim-2*pad);
+        BézierCurve y_only = curve.justY(dim-2*pad);
         y_only.draw();
 
         stroke(255,0,255);
@@ -598,12 +598,12 @@
         }
       }</textarea>
 
-      <textarea class="sketch-code" data-sketch-preset="threepanel" data-sketch-title="Cubic Bezier curve components">
+      <textarea class="sketch-code" data-sketch-preset="threepanel" data-sketch-title="Cubic Bézier curve components">
       void setupCurve() {
         setupDefaultCubic();
       }
 
-      void drawCurve(BezierCurve curve) {
+      void drawCurve(BézierCurve curve) {
         additionals();
         curve.draw();
 
@@ -612,7 +612,7 @@
 
         nextPanel();
         drawAxes("t",0,1, "x",0,panelDim);
-        BezierCurve x_only = curve.justX(dim-2*pad);
+        BézierCurve x_only = curve.justX(dim-2*pad);
         x_only.draw();
 
         stroke(255,0,0);
@@ -626,7 +626,7 @@
 
         nextPanel();
         drawAxes("t",0,1, "y",0,panelDim);
-        BezierCurve y_only = curve.justY(dim-2*pad);
+        BézierCurve y_only = curve.justY(dim-2*pad);
         y_only.draw();
 
         stroke(255,0,255);
@@ -658,16 +658,16 @@
       <p>Applying this approach to our previous root finding, we get the following bounding boxes (with curve
       extremites colored the same as in the root finding graphics):</p>
 
-      <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Quadratic Bezier bounding box">
+      <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Quadratic Bézier bounding box">
       void setupCurve() {
         setupDefaultQuadratic();
       }
 
-      void drawCurve(BezierCurve curve) {
+      void drawCurve(BézierCurve curve) {
         curve.draw();
 
         stroke(255,0,0);
-        BezierCurve x_only = curve.justX(dim-2*pad);
+        BézierCurve x_only = curve.justX(dim-2*pad);
         float[] tx = x_only.getInflections();
         for(float t: tx) {
           if(t==0 || t==1) continue;
@@ -676,7 +676,7 @@
         }
 
         stroke(255,0,255);
-        BezierCurve y_only = curve.justY(dim-2*pad);
+        BézierCurve y_only = curve.justY(dim-2*pad);
         float[] ty = y_only.getInflections();
         for(float t: ty) {
           if(t==0 || t==1) continue;
@@ -687,16 +687,16 @@
         drawBoundingBox(curve.generateBoundingBox());
       }</textarea>
 
-      <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Cubic Bezier bounding box">
+      <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Cubic Bézier bounding box">
       void setupCurve() {
         setupDefaultCubic();
       }
 
-      void drawCurve(BezierCurve curve) {
+      void drawCurve(BézierCurve curve) {
         curve.draw();
 
         stroke(255,0,0);
-        BezierCurve x_only = curve.justX(dim-2*pad);
+        BézierCurve x_only = curve.justX(dim-2*pad);
         float[] tx = x_only.getInflections();
         for(float t: tx) {
           if(t==0 || t==1) continue;
@@ -705,7 +705,7 @@
         }
 
         stroke(255,0,255);
-        BezierCurve y_only = curve.justY(dim-2*pad);
+        BézierCurve y_only = curve.justY(dim-2*pad);
         float[] ty = y_only.getInflections();
         for(float t: ty) {
           if(t==0 || t==1) continue;
@@ -742,7 +742,7 @@
         setupDefaultQuadratic();
       }
 
-      void drawCurve(BezierCurve curve) {
+      void drawCurve(BézierCurve curve) {
         additionals();
         curve.draw();
 
@@ -764,7 +764,7 @@
         setupDefaultCubic();
       }
 
-      void drawCurve(BezierCurve curve) {
+      void drawCurve(BézierCurve curve) {
         additionals();
         curve.draw();
 
@@ -791,22 +791,22 @@
       bounding box back to our original curve by rotating it by -R, and then translating it by -T. We now have
       nice tight bounding boxes for our curves:</p>
 
-      <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Tight quadratic Bezier bounding box">
+      <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Tight quadratic Bézier bounding box">
       void setupCurve() {
         setupDefaultQuadratic();
       }
 
-      void drawCurve(BezierCurve curve) {
+      void drawCurve(BézierCurve curve) {
         curve.draw();
         drawBoundingBox(curve.generateTightBoundingBox());
       }</textarea>
 
-      <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Tight cubic Bezier bounding box">
+      <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Tight cubic Bézier bounding box">
       void setupCurve() {
         setupDefaultCubic();
       }
 
-      void drawCurve(BezierCurve curve) {
+      void drawCurve(BézierCurve curve) {
         curve.draw();
         drawBoundingBox(curve.generateTightBoundingBox());
       }</textarea>
@@ -856,12 +856,12 @@
       <p>The following two graphics show the tangent and normal along a quadratic and cubic curve, with
       the tangent coloured blue, and the normal coloured red.</p>
 
-      <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Quadratic Bezier tangents and normals">
+      <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Quadratic Bézier tangents and normals">
       void setupCurve() {
         setupDefaultQuadratic();
       }
 
-      void drawCurve(BezierCurve curve) {
+      void drawCurve(BézierCurve curve) {
         curve.draw(color(0,40));
         float t, d = 15;
         Point p, tg, n;
@@ -879,12 +879,12 @@
         }
       }</textarea>
 
-      <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Cubic Bezier tangents and normals">
+      <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Cubic Bézier tangents and normals">
       void setupCurve() {
         setupDefaultCubic();
       }
 
-      void drawCurve(BezierCurve curve) {
+      void drawCurve(BézierCurve curve) {
         curve.draw(color(0,40));
         float t, d = 15;
         Point p, tg, n;
@@ -933,13 +933,13 @@
       void setupCurve() {
         p1 = new Point(50,50);
         p2 = new Point(150,110);
-        curves.add(new BezierCurve(new Point[]{p1,p2}));
+        curves.add(new BézierCurve(new Point[]{p1,p2}));
         p3 = new Point(50,250);
         p4 = new Point(170,170);
-        curves.add(new BezierCurve(new Point[]{p3,p4}));
+        curves.add(new BézierCurve(new Point[]{p3,p4}));
       }
 
-      void drawCurve(BezierCurve curve) {
+      void drawCurve(BézierCurve curve) {
         // draw the lines through p1/p2 and p3/p4
         stroke(0,50);
         float dx = 10*(p2.x-p1.x), dy = 10*(p2.y-p1.y);
@@ -979,21 +979,21 @@
       void setupCurve() {
         p1 = new Point(40,60);
         p2 = new Point(260,200);
-        curves.add(new BezierCurve(new Point[]{
+        curves.add(new BézierCurve(new Point[]{
           p1, p2
         }));
-        curves.add(new BezierCurve(new Point[]{
+        curves.add(new BézierCurve(new Point[]{
           new Point(25,150),
           new Point(180,30),
           new Point(230,250)
         }));
       }
 
-      void drawCurve(BezierCurve curve) {
+      void drawCurve(BézierCurve curve) {
         curves.get(0).draw();
         curves.get(1).draw();
 
-        BezierCurve aligned = curves.get(1).align(p1,p2);
+        BézierCurve aligned = curves.get(1).align(p1,p2);
         float[] roots = comp.findAllRoots(0, aligned.y_values);
         fill(150,0,150);
         float x, y;
@@ -1012,10 +1012,10 @@
       void setupCurve() {
         p1 = new Point(100,20);
         p2 = new Point(195,255);
-        curves.add(new BezierCurve(new Point[]{
+        curves.add(new BézierCurve(new Point[]{
           p1, p2
         }));
-        curves.add(new BezierCurve(new Point[]{
+        curves.add(new BézierCurve(new Point[]{
           new Point(150,125),
           new Point(40,30),
           new Point(270,115),
@@ -1023,11 +1023,11 @@
         }));
       }
 
-      void drawCurve(BezierCurve curve) {
+      void drawCurve(BézierCurve curve) {
         curves.get(0).draw();
         curves.get(1).draw();
 
-        BezierCurve aligned = curves.get(1).align(p1,p2);
+        BézierCurve aligned = curves.get(1).align(p1,p2);
         float[] roots = comp.findAllRoots(0, aligned.y_values);
         fill(150,0,150);
         float x, y;
@@ -1048,7 +1048,7 @@
     <section id="">
       <h2>de Casteljau's algorithm</h2>
 
-      <p>This algorithm is the basis for drawing arbitrarily complex Bezier curves. It's really straight forward:</p>
+      <p>This algorithm is the basis for drawing arbitrarily complex Bézier curves. It's really straight forward:</p>
 
       <ul>
         <li>treat <i>t</i> as a ratio (which it is). t=0 is 0% along a line, t=1 is 100% along a line.</li>
@@ -1078,13 +1078,13 @@
           new Point(250,150),
           new Point(135,125),
         };
-        curves.add(new BezierCurve(points));
+        curves.add(new BézierCurve(points));
         reorder();
         animate();
         span();
       }
 
-      void drawCurve(BezierCurve curve) {
+      void drawCurve(BézierCurve curve) {
         curve.draw();
         Point p = curve.getPoint(t);
         ellipse(p.x, p.y, 5, 5);
@@ -1095,7 +1095,7 @@
     <section id="">
       <h2>Splitting curves</h2>
 
-      <p>With de Casteljau's algorithm we also find all the points we need to split up a Bezier curve into two, smaller
+      <p>With de Casteljau's algorithm we also find all the points we need to split up a Bézier curve into two, smaller
       curves, which taken together form the original curve. When we construct de Casteljau's skeleton for some value
       <i>t</i>, the procedure gives us all the points we need to split a curve at that <i>t</i> value: one curve is defined
       by all the inside skeleton points found prior to our on-curve point, with the other curve being defined by all the
@@ -1103,7 +1103,7 @@
 
       <p>This is best illustrated with an animated graphic:</p>
 
-      <textarea class="sketch-code" data-sketch-preset="threepanel" data-sketch-title="Bezier curve splitting. Curve order can be lowered/elevated.">
+      <textarea class="sketch-code" data-sketch-preset="threepanel" data-sketch-title="Bézier curve splitting. Curve order can be lowered/elevated.">
       void setupCurve() {
         setupDefaultCubic();
         reorder();
@@ -1111,13 +1111,13 @@
         span();
       }
 
-      void drawCurve(BezierCurve curve) {
+      void drawCurve(BézierCurve curve) {
         curve.draw();
         Point p = curve.getPoint(t);
         ellipse(p.x, p.y, 5, 5);
         drawSpan(curve, t);
 
-        BezierCurve[] segments = curve.split(t);
+        BézierCurve[] segments = curve.split(t);
         usePanelPadding();
 
         nextPanel();
@@ -1186,8 +1186,8 @@
     <section id="">
       <h2>Curve moulding (using the projection ratio)</h2>
 
-      <p>De Casteljau's algorithm is the pivotal algorithm when it comes to Bezier curves. You can use it not just to split
-      curves, but also to draw them efficiently (especially for high-order Bezier curves), as well as to come up with curves
+      <p>De Casteljau's algorithm is the pivotal algorithm when it comes to Bézier curves. You can use it not just to split
+      curves, but also to draw them efficiently (especially for high-order Bézier curves), as well as to come up with curves
       based on three points and a tangent. Particularly this last thing is really useful because it lets us "mould" a curve,
       by picking it up at some point, and dragging that point around to change the curve's shape.</p>
 
@@ -1196,19 +1196,19 @@
       <p>Let's start out with a pre-existing curve, defined by <i>start</i>, two control points, and <i>end</i>. We can
       mould this curve by picking a point somewhere on the curve, at some <i>t</i> value, and the moving it to a new
       location and reconstructing the curve that goes through <i>start</i>, our new point with the original tangent,
-      and </i>end</i>. In order to see how and why we can do this, let's look at some identity information for Bezier
-      curves. There's actually a hidden goldmine of identities that we can exploit when doing Bezier operations, and
+      and </i>end</i>. In order to see how and why we can do this, let's look at some identity information for Bézier
+      curves. There's actually a hidden goldmine of identities that we can exploit when doing Bézier operations, and
       this will only scratch the surface. But, in a good way!</p>
 
       <p>In the following graphic, click anywhere on the curves to see the identity information that we'll
       be using to run de Casteljau in reverse:</p>
 
-      <textarea class="sketch-code" data-sketch-preset="abc" data-sketch-title="Projections in a quadratic Bezier curve">
+      <textarea class="sketch-code" data-sketch-preset="abc" data-sketch-title="Projections in a quadratic Bézier curve">
       void setupCurve() {
         setupDefaultQuadratic();
       }
 
-      void drawCurve(BezierCurve curve) {
+      void drawCurve(BézierCurve curve) {
         curve.draw();
 
         if(Bt != -1) {
@@ -1217,12 +1217,12 @@
         }
       }</textarea>
 
-      <textarea class="sketch-code" data-sketch-preset="abc" data-sketch-title="Projections in a cubic Bezier curve">
+      <textarea class="sketch-code" data-sketch-preset="abc" data-sketch-title="Projections in a cubic Bézier curve">
       void setupCurve() {
         setupDefaultCubic();
       }
 
-      void drawCurve(BezierCurve curve) {
+      void drawCurve(BézierCurve curve) {
         curve.draw();
 
         if(Bt != -1) {
@@ -1253,14 +1253,14 @@
 
       <div class="note">
         <p>In fact, because the distance ratio is a fixed value for each point <i>B</i>, which we get by picking
-        some <i>t</i> value on our curve, the distance ratio is actually an identity function for Bezier curves.
+        some <i>t</i> value on our curve, the distance ratio is actually an identity function for Bézier curves.
         If we were to plot all the ratio values for all possible <i>t</i> values for quadratic and cubic curves,
         we'd see two very interesting functions: asymptotic at <i>t=0</i> and <i>t=1</i>, tending towards positive
         infinity, with a zero-derivative minimum at <i>t=0.5</i>.</p>
 
         <p>Since these are ratios, we can actually express the ratio values as a function of <i>t</i>. I actually
         failed at coming up with the precise functions, but thanks to some help from
-        <a href="http://mathoverflow.net/questions/122257/finding-the-formula-for-bezier-curve-ratios-hull-point-point-baseline">Boris
+        <a href="http://mathoverflow.net/questions/122257/finding-the-formula-for-Bézier-curve-ratios-hull-point-point-baseline">Boris
         Zbarsky</a> we can see that the ratio functions are actually remarkably simple:</p>
 
         <table style="width:100%; border:0"><tr><td>
@@ -1285,14 +1285,14 @@
       any tangent we like, coming up with an aesthetically pleasing new tangent is probably material for an
       entire paper on curve design.</p>
 
-      <p>Quadratic and cubic Bezier curves have a nice property that allows curve moulding (picking
+      <p>Quadratic and cubic Bézier curves have a nice property that allows curve moulding (picking
       a point on the curve and changing the curve shape by moving it around), based on the fact that
       there is always a line {A,C} through the on-curve point B, where C lies on the baseline (the
       line between the curve's start and end coordinates) and the ratio between distance d1 = A-B
       and d2 = B-C is fixed. The following to sketches illustrate this line and the three points
       involved: click-drag on the curves to see this visualised.</p>
 
-      <textarea class="sketch-code" data-sketch-preset="moulding" data-sketch-title="Moulding a quadratic Bezier curve">
+      <textarea class="sketch-code" data-sketch-preset="moulding" data-sketch-title="Moulding a quadratic Bézier curve">
       void setupCurve() {
         setupDefaultQuadratic();
         mould();
@@ -1300,16 +1300,16 @@
         additionals();
       }
 
-      void mouldCurve(BezierCurve curve, int mx, int my) {
+      void mouldCurve(BézierCurve curve, int mx, int my) {
         if(Bt != -1) {
           B = new Point(mx, my);
-          BezierCurve newcurve = comp.generateCurve(curve.order, curve.points[0], B, curve.points[curve.order], Bt);
+          BézierCurve newcurve = comp.generateCurve(curve.order, curve.points[0], B, curve.points[curve.order], Bt);
           curves.clear();
           curves.add(newcurve);
         }
       }</textarea>
 
-      <textarea class="sketch-code" data-sketch-preset="moulding" data-sketch-title="Moulding a cubic Bezier curve">
+      <textarea class="sketch-code" data-sketch-preset="moulding" data-sketch-title="Moulding a cubic Bézier curve">
       void setupCurve() {
         setupDefaultCubic();
         mould();
@@ -1317,10 +1317,10 @@
         additionals();
       }
 
-      void mouldCurve(BezierCurve curve, int mx, int my) {
+      void mouldCurve(BézierCurve curve, int mx, int my) {
         if(Bt != -1) {
           B = new Point(mx, my);
-          BezierCurve newcurve = comp.generateCurve(curve.order, curve.points[0], B, curve.points[curve.order], Bt, tangents);
+          BézierCurve newcurve = comp.generateCurve(curve.order, curve.points[0], B, curve.points[curve.order], Bt, tangents);
           curves.clear();
           curves.add(newcurve);
         }
@@ -1330,7 +1330,7 @@
     <section id="">
       <h2>Arc length</h2>
 
-      <p>How long is a Bezier curve? As it turns out, that's not actually an easy question, because the answer
+      <p>How long is a Bézier curve? As it turns out, that's not actually an easy question, because the answer
       requires math that —much like root finding— cannot generally be solved the traditional way. If we
       have a parametric curve with <i>f<sub>x</sub>(t)</i> and <i>f<sub>y</sub>(t)</i>, then the length of the
       curve, measured from start point to some point <i>t = z</i>, is computed using the following seemingly
@@ -1435,20 +1435,20 @@
         \]</p>
 
         <p>We can program that pretty easily, provided we have that <i>f(t)</i> available, which we do,
-        as we know the full description for the Bezier curve functions B<sub>x</sub>(t) and B<sub>y</sub>(t).</p>
+        as we know the full description for the Bézier curve functions B<sub>x</sub>(t) and B<sub>y</sub>(t).</p>
       </div>
 
-      <p>So, with this information we can determine the approximate length of a Bezier curve by computing the
+      <p>So, with this information we can determine the approximate length of a Bézier curve by computing the
       Legendre-Gauss sum. The following graphic show a cubic curve, with its computed lengths, but the sketch
       allows curve order elevation and lowering.</p>
 
-      <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Arc length for a Bezier curve">
+      <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Arc length for a Bézier curve">
       void setupCurve() {
         setupDefaultCubic();
         reorder();
       }
 
-      void drawCurve(BezierCurve curve) {
+      void drawCurve(BézierCurve curve) {
         curve.draw();
         pushStyle();
         fill(0);
@@ -1484,9 +1484,9 @@
       <div class="note">
         <p>"What do you mean, you can't. Prove it."</p>
 
-        <p>First off, when I say "you can't" what I really mean is "you can't offset a Bezier curve with another
-        Bezier curve". not even by using a really high order curve. You can find the function that describes the
-        offset curve, but it won't be a polynomial, and as such it cannot be represented as a Bezier curve, which
+        <p>First off, when I say "you can't" what I really mean is "you can't offset a Bézier curve with another
+        Bézier curve". not even by using a really high order curve. You can find the function that describes the
+        offset curve, but it won't be a polynomial, and as such it cannot be represented as a Bézier curve, which
         <strong>has</strong> to be a polynomial. Let's look at why this is:</p>
 
         <p>From a mathematical point of view, an offset curve <i>O(t)</i> is a curve such that, given our original curve
@@ -1538,68 +1538,68 @@
 
         <p>There is a small class of polynomials where the square root is also a polynomial, but
         they're utterly useless to us: any polynomial with unweighted binomial coefficients has a square root that is
-        also a polynomial. Now, you might think that Bezier curves are just fine because they do, but they don't;
+        also a polynomial. Now, you might think that Bézier curves are just fine because they do, but they don't;
         remember that only the <strong>base</strong> function has binomial coefficients. That's before we factor
         in our coordinates, which turn it into a non-binomial polygon. The only way to make sure the functions
         stay binomial is to make all our coordinates have the same value. And that's not a curve, that's a point.
         We can already create offset curves for points, we call them circles, and they have much simpler functions
-        than Bezier curves.</p>
+        than Bézier curves.</p>
 
         <p>So, since the tangent length isn't a polynomial, the normalised tangent won't be a polynomial either, which
         means <i>N(t)</i> won't be a polynomial, which means that <i>d</i> times <i>N(t)</i> won't be a polynomial,
         which means that, ultimately, <i>O(t)</i> won't be a polynomial, which means that even if we can determine the
         function for <i>O(t)</i> just fine (and that's far from trivial!), it simply cannot be represented as a
-        Bezier curve.</p>
+        Bézier curve.</p>
 
-        <p>And that's one reason why Bezier curves are tricky: there are actually a <i>lot</i> of curvatures that
-        cannot be represent with a Bezier curve at all. They can't even model their own offset curves. They're weird
+        <p>And that's one reason why Bézier curves are tricky: there are actually a <i>lot</i> of curvatures that
+        cannot be represent with a Bézier curve at all. They can't even model their own offset curves. They're weird
         that way. So how do all those other programs do it? Well, much like we're about to do, they cheat. We're
         going to approximate an offset curve in a way that will look relatively close to what the real offset
         curve would look like, if we could compute it.</p>
       </div>
 
-      <p>So, you cannot offset a Bezier curve perfectly with another Bezier curve, no matter how hight-order you make
-      that other Bezier curve. However, we can chop up a curve into "safe" subcurves (where safe means that all the
+      <p>So, you cannot offset a Bézier curve perfectly with another Bézier curve, no matter how hight-order you make
+      that other Bézier curve. However, we can chop up a curve into "safe" subcurves (where safe means that all the
       control points are always on a single side of the baseline, and the midpoint of the curve at <i>t=0.5</i> is
       roughly in the center of the polygon defined by the curve coordinates) and then point-scale those subcurves
       with respect to the curve's scaling origin (which is the intersection of the point normals at the start
       and end points).</p>
 
-      <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Offsetting a quadratic Bezier curve">
+      <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Offsetting a quadratic Bézier curve">
       void setupCurve() {
         setupDefaultQuadratic();
         offsetting();
         offset = 20;
       }
 
-      void drawCurve(BezierCurve curve) {
+      void drawCurve(BézierCurve curve) {
         additionals();
         curve.draw();
         if(offset>0) {
           noAdditionals();
-          BezierCurve[] offsetCurve = curve.offset(offset);
-          for(BezierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
+          BézierCurve[] offsetCurve = curve.offset(offset);
+          for(BézierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
           offsetCurve = curve.offset(-offset);
-          for(BezierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
+          for(BézierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
         }
       }</textarea>
 
-      <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Offsetting a cubic Bezier curve">
+      <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Offsetting a cubic Bézier curve">
       void setupCurve() {
         setupDefaultCubic();
         offsetting();
         offset = 20;
       }
 
-      void drawCurve(BezierCurve curve) {
+      void drawCurve(BézierCurve curve) {
         additionals();
         curve.draw();
         if(offset>0) {
           noAdditionals();
-          BezierCurve[] offsetCurve = curve.offset(offset);
-          for(BezierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
+          BézierCurve[] offsetCurve = curve.offset(offset);
+          for(BézierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
           offsetCurve = curve.offset(-offset);
-          for(BezierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
+          for(BézierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
         }
       }</textarea>
     </section>
@@ -1615,45 +1615,45 @@
       <p>The following two graphics show this with a starting width of 0, and an ending width that's
       20 pixels by default, but can be controlled with your + and - keys:</p>
 
-      <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Graduated offsetting a quadratic Bezier curve">
+      <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Graduated offsetting a quadratic Bézier curve">
       void setupCurve() {
         setupDefaultQuadratic();
         offsetting();
         offset = 20;
       }
 
-      void drawCurve(BezierCurve curve) {
+      void drawCurve(BézierCurve curve) {
         additionals();
         curve.draw();
         if(offset>0) {
           noAdditionals();
-          BezierCurve[] offsetCurve = curve.offset(offset);
+          BézierCurve[] offsetCurve = curve.offset(offset);
           comp.graduateOffset(offsetCurve, offset, 0, 1);
-          for(BezierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
+          for(BézierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
           offsetCurve = curve.offset(-offset);
           comp.graduateOffset(offsetCurve, -offset, 0, 1);
-          for(BezierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
+          for(BézierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
         }
       }</textarea>
 
-      <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Graduated offsetting a cubic Bezier curve">
+      <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Graduated offsetting a cubic Bézier curve">
       void setupCurve() {
         setupDefaultCubic();
         offsetting();
         offset = 20;
       }
 
-      void drawCurve(BezierCurve curve) {
+      void drawCurve(BézierCurve curve) {
         additionals();
         curve.draw();
         if(offset>0) {
           noAdditionals();
-          BezierCurve[] offsetCurve = curve.offset(offset);
+          BézierCurve[] offsetCurve = curve.offset(offset);
           comp.graduateOffset(offsetCurve, offset, 0, 1);
-          for(BezierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
+          for(BézierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
           offsetCurve = curve.offset(-offset);
           comp.graduateOffset(offsetCurve, -offset, 0, 1);
-          for(BezierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
+          for(BézierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
         }
       }</textarea>
     </section>
