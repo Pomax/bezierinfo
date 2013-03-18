@@ -45,7 +45,7 @@
       canvas.setAttribute("data-processing-sources", dps);
       canvas.setAttribute("data-preset",preset);
 
-      dependencies[figCount] = dps;
+      dependencies[figCount] = dps.replace(" RuntimeException.pjs",'');
       sourceCode[figCount] = sketch.value.replace(/(^|\n)      /g,"\n") + "\n";
 
       var viewSource = "<span onclick=\"viewSource(" + figCount + ")\">view source</span>";

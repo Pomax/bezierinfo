@@ -4,7 +4,11 @@
     <meta charset="utf-8">
     <title>Bezier curve framework</title>
 
-    <script type="text/x-mathjax-config">MathJax.Hub.Config({displayAlign: "left", displayIndent: "2em"});</script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      displayAlign: "left",
+      displayIndent: "2em",
+    });</script>
     <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
 
     <script src="sketchloader.js"></script>
@@ -63,10 +67,12 @@
         border: 1px solid grey;
       }
       div.note * { margin: 0; padding: 0; }
-      div.note p { margin: 0.5em 0; }
-      div.note div.MathJax_Display { margin: 0.5em 0; }
+      div.note p { margin: 1em 0; }
+      div.note div.MathJax_Display { margin: 1em 0; }
 
       a, a:visited { color: rgb(0,0,200); text-decoration: none; }
+
+      .MathJax { -webkit-font-smoothing: none!important; }
     </style>
   </head>
   <body>
@@ -1355,8 +1361,8 @@
 
         <p>However, we're working in 2D, and <i>d</i> is a single value, so we want to turn it into a vector. If we
         want a point distance <i>d</i> "away" from the curve <i>B(t)</i> then what we really mean is that we want
-        a point at <i>d</i> times the "normal vector" from point <i>B(t)</i>, where the "normal" is a vector is
-        a vector that runs perpendicular ("at a right angle") to the tangent at <i>B(t)</i>. Easy enough:</p>
+        a point at <i>d</i> times the "normal vector" from point <i>B(t)</i>, where the "normal" is a vector
+        that runs perpendicular ("at a right angle") to the tangent at <i>B(t)</i>. Easy enough:</p>
 
         <p>\[
           O(t) = B(t) + d \cdot N(t)
