@@ -766,6 +766,89 @@
     </section>
 
     <section id="">
+      <h2>Tangents and normals</h2>
+
+      <p>If you want to move objects along a curve, or "away from" a curve, the two vectors you're most interested
+      in are the tangent vector and normal vector for curve points. These are actually really easy to find. For
+      moving, and orienting, along a curve we use the tangent, which indicates the direction travel at specific
+      points, and is literally just the first derivative of our curve:</p>
+
+      <p>\[
+      \left \{ \begin{matrix}
+        tangent_x(t) = B'_x(t) \\
+        tangent_y(t) = B'_y(t)
+      \end{matrix} \right. \]</p>
+
+      <p>This gives us the directional vector we want. We can normalize it to give us uniform directional vectors
+      at each point, and then do whatever it is we want to do based on those directions:</p>
+
+      <p>\[
+      \left \{ \begin{matrix}
+        direction_x(t) = \frac{tangent_x(t)}{\sqrt{tangent_x(t)^2 + tangent_y(t)^2}} \\
+        direction_y(t) = \frac{tangent_y(t)}{\sqrt{tangent_x(t)^2 + tangent_y(t)^2}}
+      \end{matrix} \right. \]</p>
+
+      <p>If we want to move away from the curve instead, perpendicular to the curve at some point <i>t</i>, we want
+      the "normal" vector. This vector runs at a right angle to the direction of the curve, so all we have to do is
+      rotate the directional vector and done:</p>
+
+      <p>\[
+      \left \{ \begin{matrix}
+        normal_x(t) = direction_x(t) \cdot \cos{\frac{\pi}{2}} - direction_y(t) \cdot \sin{\frac{\pi}{2}}\\
+        normal_y(t) = direction_x(t) \cdot \sin{\frac{\pi}{2}} + direction_y(t) \cdot \cos{\frac{\pi}{2}}
+      \end{matrix} \right. \]</p>
+
+      <p>The following two graphics show the tangent and normal along a quadratic and cubic curve, with
+      the tangent coloured blue, and the normal coloured red.</p>
+
+      <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Quadratic Bezier tangents and normals">
+      void setupCurve() {
+        setupDefaultQuadratic();
+      }
+
+      void drawCurve(BezierCurve curve) {
+        curve.draw(color(0,40));
+        float t, d = 15;
+        Point p, tg, n;
+        for(int i=0; i<=10; i++) {
+          t = i/10.0;
+          p = curve.getPoint(t);
+          tg = curve.getDerivativePoint(t).normalize();
+          n = curve.getNormal(t);
+          stroke(0,0,255);
+          line(p.x, p.y, p.x+d*tg.x, p.y+d*tg.y);
+          stroke(200,0,0);
+          line(p.x, p.y, p.x+d*n.x, p.y+d*n.y);
+          stroke(0);
+          ellipse(p.x, p.y, 5, 5);
+        }
+      }</textarea>
+
+      <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Cubic Bezier tangents and normals">
+      void setupCurve() {
+        setupDefaultCubic();
+      }
+
+      void drawCurve(BezierCurve curve) {
+        curve.draw(color(0,40));
+        float t, d = 15;
+        Point p, tg, n;
+        for(int i=0; i<=10; i++) {
+          t = i/10.0;
+          p = curve.getPoint(t);
+          tg = curve.getDerivativePoint(t).normalize();
+          n = curve.getNormal(t);
+          stroke(0,0,255);
+          line(p.x, p.y, p.x+d*tg.x, p.y+d*tg.y);
+          stroke(200,0,0);
+          line(p.x, p.y, p.x+d*n.x, p.y+d*n.y);
+          stroke(0);
+          ellipse(p.x, p.y, 5, 5);
+        }
+      }</textarea>
+    </section>
+
+    <section id="">
       <h2>Intersections</h2>
 
       <p>Let's look at some more things we will want to do with Bézier curves. Almost immediately after figuring out how to
