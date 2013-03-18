@@ -150,7 +150,7 @@ void draw() {
 
   if(animated && !playing) {
     pushStyle();
-    fill(255,0,0,15);
+    fill(255,0,0,25);
     textAlign(CENTER,CENTER);
     textSize(dim/9);
     text("Animated sketch\nCick to play/pause", width/2, height/2);
