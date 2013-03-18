@@ -36,7 +36,7 @@ void drawABC(BezierCurve curve, Point[] abc) {
   fill(240);
   rect(0, dim-15, dim, 15);
 
-  noFill(0);
+  noFill();
   stroke(0);
   ellipse(abc[1].x, abc[1].y, 5, 5);
   ellipse(abc[2].x, abc[2].y, 5, 5);
@@ -56,11 +56,11 @@ void drawABC(BezierCurve curve, Point[] abc) {
   float d1 = dist(abc[0].x, abc[0].y, abc[1].x, abc[1].y),
          d2 = dist(abc[2].x, abc[2].y, abc[1].x, abc[1].y);
   textAlign(LEFT);
-  text("A-B: " + int(1000*d1)/1000, 10, dim-2);
+  text("A-B: " + int(1000*d1)/1000.0, 10, dim-2);
   textAlign(CENTER);
-  text("B-C: " + int(1000*d2)/1000, dim/2, dim-2);
+  text("B-C: " + int(1000*d2)/1000.0, dim/2, dim-2);
   textAlign(RIGHT);
-  text("ratio: " + int(1000*(d1/d2))/1000, dim-10, dim-2);
+  text("ratio: " + int(1000*(d1/d2))/1000.0, dim-10, dim-2);
 
   popStyle();
 }

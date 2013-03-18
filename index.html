@@ -979,7 +979,7 @@
         ellipse(p.x, p.y, 5, 5);
         drawSpan(curve, t);
 
-        BezierCurves[] segments = curve.split(t);
+        BezierCurve[] segments = curve.split(t);
         usePanelPadding();
 
         nextPanel();
@@ -1441,7 +1441,7 @@
           noAdditionals();
           BezierCurve[] offsetCurve = curve.offset(offset);
           for(BezierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
-          BezierCurve[] offsetCurve = curve.offset(-offset);
+          offsetCurve = curve.offset(-offset);
           for(BezierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
         }
       }</textarea>
@@ -1460,7 +1460,7 @@
           noAdditionals();
           BezierCurve[] offsetCurve = curve.offset(offset);
           for(BezierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
-          BezierCurve[] offsetCurve = curve.offset(-offset);
+          offsetCurve = curve.offset(-offset);
           for(BezierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
         }
       }</textarea>
@@ -1489,10 +1489,10 @@
         curve.draw();
         if(offset>0) {
           noAdditionals();
-          BezierCurve[] offsetCurve = curve.offset(offset, 0, 1);
+          BezierCurve[] offsetCurve = curve.offset(offset);
           comp.graduateOffset(offsetCurve, offset, 0, 1);
           for(BezierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
-          BezierCurve[] offsetCurve = curve.offset(-offset, 0, 1);
+          offsetCurve = curve.offset(-offset);
           comp.graduateOffset(offsetCurve, -offset, 0, 1);
           for(BezierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
         }
@@ -1513,7 +1513,7 @@
           BezierCurve[] offsetCurve = curve.offset(offset);
           comp.graduateOffset(offsetCurve, offset, 0, 1);
           for(BezierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
-          BezierCurve[] offsetCurve = curve.offset(-offset, 0, 1);
+          offsetCurve = curve.offset(-offset);
           comp.graduateOffset(offsetCurve, -offset, 0, 1);
           for(BezierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
         }
