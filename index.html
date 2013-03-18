@@ -339,8 +339,8 @@
       before, except represented as a cubic curve, rather than a quadratic curve.</p>
 
       <p>The general rule for raising an <i>n<sup>th</sup></i> order curve to an <i>(n+1)<sup>th</sup></i>
-      order curve is as follows (observing that for P<sub>0</sub> and P<sub>n+1</sub> the new weight
-      is the same as the old weight):</p>
+      order curve is as follows (observing that the start and end weights are the same as the start and
+      end weights for the old curve):</p>
 
       <p>\[
         Bézier(n+1,t) = \sum_{i=0}^{n+1}
@@ -348,7 +348,7 @@
                       \cdot\
                       \underset{polynomial\ term}{\underbrace{(1-t)^{n+1-i} \cdot t^{i}}}
                       \cdot
-                      \underset{new\ weights}{\underbrace{\left ( \frac{i}{n+1} \cdot P_{i-1} + \frac{n+1-i}{n+1} \cdot P_i \right )}}
+                      \underset{new\ weights}{\underbrace{\left ( \frac{i}{n+1} \cdot w_{i-1} + \frac{n+1-i}{n+1} \cdot w_i \right )}}
       \]</p>
 
       <p>However, this rule also has as direct consequence that you <strong>cannot</strong> generally
