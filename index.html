@@ -780,7 +780,7 @@
       \end{matrix} \right. \]</p>
 
       <p>This gives us the directional vector we want. We can normalize it to give us uniform directional vectors
-      at each point, and then do whatever it is we want to do based on those directions:</p>
+      (having a length of 1.0) at each point, and then do whatever it is we want to do based on those directions:</p>
 
       <p>\[
       \left \{ \begin{matrix}
@@ -789,8 +789,8 @@
       \end{matrix} \right. \]</p>
 
       <p>If we want to move away from the curve instead, perpendicular to the curve at some point <i>t</i>, we want
-      the "normal" vector. This vector runs at a right angle to the direction of the curve, so all we have to do is
-      rotate the directional vector and done:</p>
+      the "normal" vector. This vector runs at a right angle to the direction of the curve, and is typically of lenght
+      1.0, so all we have to do is rotate the normalized directional vector and we're done:</p>
 
       <p>\[
       \left \{ \begin{matrix}
