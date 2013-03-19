@@ -20421,9 +20421,9 @@
       }
 
       return (
-        top < (w.pageYOffset + w.innerHeight) &&
-        left < (w.pageXOffset + w.innerWidth) &&
-        (top + height) > w.pageYOffset &&
+        top < (w.pageYOffset + w.innerHeight) ||
+        left < (w.pageXOffset + w.innerWidth) ||
+        (top + height) > w.pageYOffset ||
         (left + width) > w.pageXOffset
       );
     }
