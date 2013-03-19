@@ -14,10 +14,13 @@
     <script src="sketchloader.js"></script>
     <script src="processing.patched.js"></script>
     <style>
-      section {
+      header, section, footer {
         width: 960px;
         margin: 0 auto;
       }
+
+      header { font-size: 125%; }
+
 
       section p {
         text-align: justify;
@@ -73,11 +76,24 @@
       a, a:visited { color: rgb(0,0,200); text-decoration: none; }
 
       .MathJax { -webkit-font-smoothing: none!important; }
+
+      a.ribbon {
+        position: absolute;
+        top: 0;
+        right: 0;
+      }
     </style>
   </head>
   <body>
+    <a class="ribbon" href="http://github.com/pomax/bezierinfo"><img
+      src="images/ribbon.png"
+      alt="check the code on GitHub"
+      title="check out the code on GitHub"
+    ></a>
 
-    <h1>A Primer on Bézier Curves</h1>
+    <header>
+        <h1>A Primer on Bézier Curves</h1>
+    </header>
 
     <section id="preface">
       <p>This page houses the new codepase and example sketches while the
