@@ -73,3 +73,8 @@ boolean resetAllowed = false;
 void mayReset() { resetAllowed = true; }
 void noReset() { resetAllowed = false; }
 void toggleReset() { resetAllowed = !resetAllowed; }
+
+boolean redrawOnMouseMove = false;
+void redrawOnMove() { redrawOnMouseMove = true; }
+void noRedrawOnMove() { redrawOnMouseMove = false; }
+void toggleRedrawOnMove() { redrawOnMouseMove = !redrawOnMouseMove; }

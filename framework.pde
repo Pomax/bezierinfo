@@ -22,7 +22,11 @@ final int pad = 20;
   Generic main sketch code. All the important bits happen in whatever supplies drawFunction()
 **/
 BezierComputer comp = new BezierComputer();
+BezierComputer getComputer() { return comp; }
+
 ArrayList<BezierCurve> curves = new ArrayList<BezierCurve>();
+ArrayList<BezierCurve> getCurves() { return curves; }
+
 float t = 0, step = 0.002;
 
 /**

@@ -31,16 +31,19 @@ void mouseMoved() {
     if(p != -1) {
       active = curve;
       cursor(HAND);
+      if(redrawOnMouseMove) { redraw(); }
       return;
     }
     if(moulding) {
       if(testCurveMoulding(curve, mouseX, mouseY)) {
+        if(redrawOnMouseMove) { redraw(); }
         return;
       }
     }
   }
   cursor(ARROW);
   current = -1;
+  if(redrawOnMouseMove) { redraw(); }
 }
 
 // point/curve dragging

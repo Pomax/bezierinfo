@@ -47,6 +47,7 @@
                          "String getSketchLabel() { return \""+ sketchLabel +"\"; }\n\n";
 
       var canvas = document.createElement("canvas");
+      canvas.id = "figure"+figCount;
       canvas.setAttribute("class", sketch.getAttribute("class"));
       var preset = sketch.getAttribute("data-sketch-preset");
       var dps = "presets/" + preset+".pde";

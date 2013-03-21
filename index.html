@@ -1467,6 +1467,54 @@
       }</textarea>
     </section>
 
+    <section id="projections">
+      <h2>Projecting a point onto a Bézier curve</h2>
+
+      <p>Say we have a Bézier curve and some point, not on the curve, of which we want to know which
+      <i>t</i> value on the curve gives us an on-curve point closest to our off-curve point. Or: say
+      we want to find the projection of a random point onto a curve. How do we do that?</p>
+
+      <p>If the Bézier curve is of low enough order, we might be able to <a href="http://jazzros.blogspot.ca/2011/03/projecting-point-on-bezier-curve.html">work out the math for how
+      to do this</a>, and get a perfect <i>t</i> value back, but in general this is an incredibly hard
+      problem and the easiest solution is, really, a numerical approach again. It's a bit like the
+      Newton-Raphson approach in that we'll try some <i>t</i> values, checking which is closest to
+      our point, and then refine our search around the closest <i>t</i> value. We keep doing this
+      until we've reach the desired fidelity: given precision <i>p</i>, we stop if we find a value
+      <i>t</i> such that the distance from <i>B(t)</i> to the off-curve point is smaller than the
+      distance from <i>B(t-p)</i> or the distance from <i>B(t+p)</i>.</p>
+
+      <p>The following graphic demonstrates this procedure. Simply move the cursor around, and
+      if it does not lie on top of the curve, you will see a line that projects the cursor onto
+      the curve based on an iteratively found "ideal" <i>t</i> value with precision 0.001.</p>
+
+      <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Projecting a point onto a Bézier curve">
+      void setupCurve() {
+        int d = dim - 2*pad;
+        int order = 10;
+        int[] c = {248,188,218,294,45,290,12,236,14,82,186,177,221,90,18,156,34,57,198,18};
+        Point[] points = new Point[c.length/2];
+        for(int i=0, e=c.length; i<e; i+=2) {
+          points[i/2] = new Point(c[i], c[i+1]);
+        }
+        curves.add(new BezierCurve(points));
+        redrawOnMove();
+      }
+
+      void drawCurve(BezierCurve curve) {
+        additionals();
+        curve.draw();
+
+        if(curve.over(mouseX,mouseY) == -1) {
+          float t = curve.getPointProjection(new Point(mouseX, mouseY));
+          Point p = curve.getPoint(t);
+          stroke(255,0,0);
+          line(mouseX, mouseY, p.x, p.y);
+        }
+      }</textarea>
+
+    </section>
+
+
     <section id="offsetting">
       <h2>Curve offsetting</h2>
 
@@ -1609,13 +1657,32 @@
     <section id="graduatedoffset">
       <h2>Graduated curve offsetting</h2>
 
-      <p>If we can compute the length of a curve, which we can if we use the Legendre-Gauss quadrature
-      approach, then we can also determine how far "along the line" any point on the curve is. With
-      that knowledge, we can offset a curve so that its offset curve is not uniformly wide, but graduated
-      between with two different offset widths at the start and end.</p>
+      <p>What if we want to do graduated offsetting, starting at some distance <i>s</i> but ending
+      at some other distance <i>e</i>? well, if we can compute the length of a curve (which we can
+      if we use the Legendre-Gauss quadrature approach) then we can also determine how far "along the
+      line" any point on the curve is. With that knowledge, we can offset a curve so that its offset
+      curve is not uniformly wide, but graduated between with two different offset widths at the
+      start and end.</p>
 
-      <p>The following two graphics show this with a starting width of 0, and an ending width that's
-      20 pixels by default, but can be controlled with your + and - keys:</p>
+      <p>Like normal offsetting we cut up our curve in subcurves, and then check at which distance
+      along the origina curve it starts and ends, and we can see which point on the curve each of
+      the control points maps to. This gives us a distance-along-the-curve for each point in the
+      curve. If <i>S</i> is the total length of all subcurves up to this curve (or zero, if it's the
+      first curve), and <i>L</i> is the length of our original curve, then we get these offset values:</p>
+
+      <ul>
+        <li>start: <i>map(S, 0,L, s,e)</i></li>
+        <li>c1: <i>map(S+d1, 0,L, s,e)</i>, d1 = distance along curve to projection of c1</li>
+        <li>c2: <i>map(S+d2, 0,L, s,e)</i></li>
+        <li>...</li>
+        <li>end: <i>map(S+length(subcurve), 0,L, d1,d2)</i></li>
+      </ul>
+
+      At each of the relevant points (start, end, and the projections of the control points onto
+      the curve) we know the curve's normal, so offsetting is simply a matter of taking our original
+      point, and moving it along the normal vector by the offset distance for each point. Doing so
+      will give us the following result (these have with a starting width of 0, and an end width
+      of 40 pixels, but can be controlled with your + and - keys):</p>
 
       <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Graduated offsetting a quadratic Bézier curve">
       void setupCurve() {

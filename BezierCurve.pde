@@ -90,20 +90,11 @@ class BezierCurve {
     ratios = new float[order+1];
     ratios[0] = 0;
     for(int i=1; i<=order; i++) {
-      t = 0.5;
-      Point p = new Point(points[i]);
-      // find an approximate t value that acts as the control's
-      // projection onto the curve, towards the origin.
-      float mindist=9999999, pdist;
-      int mindist_idx=0;
-      for(int idx=0; idx<LUT_resolution; idx+=1) {
-        pdist = dist(p.x, p.y, LUT_x[idx], LUT_y[idx]);
-        if(pdist<mindist) {
-          mindist = pdist;
-          mindist_idx = idx;
-          t = (float)idx/(float)LUT_resolution; }}
+      t = getPointProjection(points[i]);
       normals[i] = getNormal(t);
-      float partialLength = (order==1? dist(x_values[0],y_values[0],LUT_x[mindist_idx],LUT_y[mindist_idx]) : comp.getArcLength(t, x_values, y_values));
+      int mindist_idx = int(t*LUT_resolution);
+      float partialLength = (order==1 ? dist(x_values[0],y_values[0],LUT_x[mindist_idx],LUT_y[mindist_idx])
+                                       : comp.getArcLength(t, x_values, y_values));
       ratios[i] = partialLength/curveLength;
     }
     ratios[order] = 1;
@@ -115,6 +106,22 @@ class BezierCurve {
         if(comp.getSide(points[0],points[order],points[i])!=bias) {
           bias = 0;
           break; }}}
+  }
+
+  /**
+   * find an approximate t value that acts as the control's
+   * projection onto the curve, towards the origin.
+   */
+  float getPointProjection(Point p) {
+    float t=0.5, pdist, mindist=9999999;
+    int mindist_idx=0;
+    for(int idx=0; idx<LUT_resolution; idx+=1) {
+      pdist = dist(p.x, p.y, LUT_x[idx], LUT_y[idx]);
+      if(pdist<mindist) {
+        mindist = pdist;
+        mindist_idx = idx;
+        t = (float)idx/(float)LUT_resolution; }}
+    return t;
   }
 
   // how close are these two curves?
@@ -580,7 +587,7 @@ class BezierCurve {
     BezierCurve offset = new BezierCurve(newPoints);
     return offset;
   }
-  
+
   /**
    * Offset the entire curve by some distance.
    * Segmenting it based on inflection points.
@@ -592,7 +599,7 @@ class BezierCurve {
     for(int b=0; b<slices.size(); b++) {
       segment = slices.get(b).simpleOffset(distance);
       segments.add(segment);
-    }    
+    }
     return makeOffsetArray(segments);
   }
 
@@ -631,11 +638,11 @@ class BezierCurve {
       e = map(S, 0,L, start,end);
       segment = segment.graduatedOffset(distance, s, e);
       segments.add(segment);
-    }    
+    }
     return makeOffsetArray(segments);
   }
-  
-  // arraylist -> [], with normal correction if needed. 
+
+  // arraylist -> [], with normal correction if needed.
   private BezierCurve[] makeOffsetArray(ArrayList<BezierCurve> segments) {
     // Step 3: convert the arraylist to an array, and return
     BezierCurve[] offsetCurve = new BezierCurve[segments.size()];
@@ -769,6 +776,6 @@ class BezierCurve {
  */
 class NullBezierCurve extends BezierCurve {
   NullBezierCurve() { super(); }
-  BezierCurve getDerivative() { return this; } 
+  BezierCurve getDerivative() { return this; }
   float getValue(float t) { return 0; }
 }
