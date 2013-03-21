@@ -8,9 +8,7 @@ int iterationCount = 1;
 float PRECISION = 0.01;
 boolean iterated = false;
 BezierCurve c1, c2;
-ArrayList<CurvePair> pairs = new ArrayList<CurvePair>(),
-                     newPairs = new ArrayList<CurvePair>(),
-                     finals = new ArrayList<CurvePair>();
+ArrayList<CurvePair> pairs, newPairs, finals;
 
 /**
  * set up the screen
@@ -21,6 +19,12 @@ void setupScreen() {
   controls();
   additionals();
   noConnect();
+
+  iterationCount = 1;
+  iterated = false;
+  pairs = new ArrayList<CurvePair>();
+  newPairs = new ArrayList<CurvePair>();
+  finals = new ArrayList<CurvePair>();
 }
 
 /**

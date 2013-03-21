@@ -39,6 +39,11 @@ void setup() {
 
 // reset all the things
 void reset() {
+  // reset values
+  curves.clear();
+  t = 0;
+  step = 0.002;
+  // reset methods
   setupScreen();
   noAnimate();
   setupCurve();

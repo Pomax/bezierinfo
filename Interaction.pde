@@ -58,7 +58,6 @@ void mouseDragged() {
 
 // playback control
 void mouseClicked() {
-  if(resetAllowed) { reset(); }
   if(animated) {
     if(playing) { pause(); }
     else { play(); }
@@ -67,6 +66,7 @@ void mouseClicked() {
 
 // selection using the mouse
 void mousePressed() {
+  if(resetAllowed) { reset(); }
   if(moulding && current==-1) {
     for(BezierCurve curve: curves) {
       float t = curve.over(mouseX, mouseY);
