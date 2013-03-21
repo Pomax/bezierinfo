@@ -730,9 +730,45 @@
       point lies on (0,0), which turns our <i>n</i> term polynomial functions into <i>n-1</i> term functions.
       The order stays the same, but we have less terms. Then, we can rotate the curves so that the last point
       always lies on the x-axis, too, making its coordinate (...,0). This further simplifies the function for
-      the y-component to an <i>n-2</i> term function.</p>
+      the y-component to an <i>n-2</i> term function. For instance, if we have a cubic curve such as this:</p>
 
-      <p>The following graphics illustrate the result of aligning our example curves to the x-axis:</p>
+      <p>\[
+      \left \{ \begin{matrix}
+        x = \underline{120} \cdot (1-t)^3 + \underline{35} \cdot 3 \cdot (1-t)^2 \cdot t + \underline{220} \cdot 3 \cdot (1-t) \cdot t^2 + \underline{220} \cdot t^3 \\
+        y = \underline{160} \cdot (1-t)^3 + \underline{200} \cdot 3 \cdot (1-t)^2 \cdot t + \underline{260} \cdot 3 \cdot (1-t) \cdot t^2 + \underline{40} \cdot t^3
+      \end{matrix} \right. \]</p>
+
+      <p>Then translating it so that the first coordinate lies on (0,0), moving all <i>x</i> coordinates
+      by -120, and all <i>y</i> coordinates by -160, gives us:</p>
+
+      <p>\[
+      \left \{ \begin{matrix}
+        x = \underline{0} \cdot (1-t)^3 - \underline{85} \cdot 3 \cdot (1-t)^2 \cdot t + \underline{100} \cdot 3 \cdot (1-t) \cdot t^2 + \underline{100} \cdot t^3 \\
+        y = \underline{0} \cdot (1-t)^3 + \underline{40} \cdot 3 \cdot (1-t)^2 \cdot t + \underline{100} \cdot 3 \cdot (1-t) \cdot t^2 - \underline{120} \cdot t^3
+      \end{matrix} \right. \]</p>
+
+      <p>If we then rotate the curve so that its end point lies on the x-axis, the coordinates (integer-rounded
+      for illustrative purposes here) become:</p>
+
+      <p>\[
+      \left \{ \begin{matrix}
+        x = \underline{0} \cdot (1-t)^3 + \underline{85} \cdot 3 \cdot (1-t)^2 \cdot t + \underline{12} \cdot 3 \cdot (1-t) \cdot t^2 - \underline{156} \cdot t^3 \\
+        y = \underline{0} \cdot (1-t)^3 + \underline{40} \cdot 3 \cdot (1-t)^2 \cdot t - \underline{140} \cdot 3 \cdot (1-t) \cdot t^2 + \underline{0} \cdot t^3
+      \end{matrix} \right. \]</p>
+
+      <p>If we drop all the zero-terms, this gives us:</p>
+
+      <p>\[
+      \left \{ \begin{array}{l}
+        x = \underline{85} \cdot 3 \cdot (1-t)^2 \cdot t + \underline{13} \cdot 3 \cdot (1-t) \cdot t^2 - \underline{156} \cdot t^3 \\
+        y = \underline{40} \cdot 3 \cdot (1-t)^2 \cdot t - \underline{141} \cdot 3 \cdot (1-t) \cdot t^2
+      \end{array} \right. \]</p>
+
+      <p>We see that our original cubic curve now has a simplified cubic <i>x</i> function, and a
+      <i>y</i> function that's actually an order lower than before, only being a quadratic function.
+      This can make finding inflection points a lot easier! The following graphics illustrate the
+      result of aligning our example curves to the x-axis:</p>
+
 
       <textarea class="sketch-code" data-sketch-preset="twopanel" data-sketch-title="Aligning a quadratic curve">
       void setupCurve() {
@@ -743,7 +779,6 @@
         additionals();
         curve.draw();
 
-        noAdditionals();
         nextPanel();
         stroke(0);
         line(0,0,0,dim);
@@ -753,7 +788,7 @@
         line(-3*dim/4,0,dim/4,0);
         line(0,-dim/2,0,dim/2);
 
-        curve.align().draw();
+        curve.align().draw(color(150));
       }</textarea>
 
       <textarea class="sketch-code" data-sketch-preset="twopanel" data-sketch-title="Aligning a cubic curve">
@@ -765,7 +800,6 @@
         additionals();
         curve.draw();
 
-        noAdditionals();
         nextPanel();
         stroke(0);
         line(0,0,0,dim);
@@ -775,7 +809,7 @@
         line(-3*dim/4,0,dim/4,0);
         line(0,-dim/2,0,dim/2);
 
-        curve.align().draw();
+        curve.align().draw(color(150));
       }</textarea>
     </section>
 
@@ -808,7 +842,7 @@
         drawBoundingBox(curve.generateTightBoundingBox());
       }</textarea>
 
-      <p>These are, strictly speaking, not necessarily the tightest possible bounding box. It is possible to compute
+      <p>These are, strictly speaking, not necessarily the tightest possible bounding boxes. It is possible to compute
       the optimal bounding box by determining which spanning lines we need to effect a minimal box area, but because
       of the parametric nature of Bézier curves this is actually a rather costly operation, and the gain in bounding
       precision is often not worth it. If there is high demand for it, I'll add a section on how to precisely compute
