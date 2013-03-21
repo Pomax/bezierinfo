@@ -20,8 +20,8 @@ void noGhost() { ghosting = false; }
 void toggleGhosting() { if(ghosting) { noGhost(); } else { ghost(); }}
 
 boolean playing = false;
-void play() { playing = true; }
-void pause() { playing = false; }
+void play() { playing = true; loop(); }
+void pause() { playing = false; noLoop(); }
 void togglePlaying() { if(playing) { pause(); } else { play(); }}
 
 boolean showLabels = true;
@@ -68,3 +68,8 @@ boolean allowReordering = false;
 void reorder() { allowReordering = true; }
 void noReorder() { allowReordering = false; }
 void toggleReorder() { allowReordering = !allowReordering; }
+
+boolean resetAllowed = false;
+void mayReset() { resetAllowed = true; }
+void noReset() { resetAllowed = false; }
+void toggleReset() { resetAllowed = !resetAllowed; }

@@ -118,13 +118,11 @@ void drawFunction() {
     int offsetDistance = offset,
         normalDistance = offset/2;
     if(offset != oldOffset) {
-      offset1 = curve.offset(offsetDistance);
-      comp.graduateOffset(offset1, offsetDistance, 0, 1);
+      offset1 = curve.offset(offsetDistance, 0, 1);
     }
     for(BezierCurve b: offset1) { b.draw(); }
     if(offset != oldOffset) {
-      offset2 = curve.offset(-offsetDistance);
-      comp.graduateOffset(offset2, -offsetDistance, 0, 1);
+      offset2 = curve.offset(-offsetDistance, 0, 1);
       oldOffset = offset;
     }
     for(BezierCurve b: offset2) { b.draw(); }

@@ -58,6 +58,7 @@ void mouseDragged() {
 
 // playback control
 void mouseClicked() {
+  if(resetAllowed) { reset(); }
   if(animated) {
     if(playing) { pause(); }
     else { play(); }

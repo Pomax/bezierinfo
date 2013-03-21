@@ -34,6 +34,8 @@ class BezierCurve {
   // lower order Bezier curve, if this curve is an elevation
   BezierCurve generator = null;
 
+  // reserved
+  protected BezierCurve() {}
 
   /**
    * construct a typical curve
@@ -553,21 +555,15 @@ class BezierCurve {
   }
 
   /**
-   * Graduate this curve along its normals
+   * Slice up this curve along its inflection points.
    */
-  void graduate(float offset, float start, float end) {
-    float moveStart = map(start,0,1,offset,0),
-          moveEnd =  map(end,0,1,offset,0),
-          dx, dy;
-    for(int i=0; i<=order; i++) {
-      dx = map(ratios[i],0,1,moveStart,moveEnd);
-      dy = map(ratios[i],0,1,moveStart,moveEnd);
-      dx *= normals[i].x;
-      dy *= normals[i].y;
-      points[i].x -= dx;
-      points[i].y -= dy;
+  ArrayList<BezierCurve> getSlices() {
+    float[] inflections = align().getInflections();
+    ArrayList<BezierCurve> slices = new ArrayList<BezierCurve>();
+    for(int i=0, L=inflections.length-1; i<L; i++) {
+      slices.add(split(inflections[i], inflections[i+1]));
     }
-    update();
+    return slices;
   }
 
   /**
@@ -584,40 +580,63 @@ class BezierCurve {
     BezierCurve offset = new BezierCurve(newPoints);
     return offset;
   }
-
+  
   /**
-   * Offset the entire curve by some distance, by
-   * segmenting it based on inflection points, and
-   * then simpleOffsetting those segments along
-   * the segment normals.
+   * Offset the entire curve by some distance.
+   * Segmenting it based on inflection points.
    */
   BezierCurve[] offset(float distance) {
-    // Step 1: split up the curve along inflections (this can be cached)
-    float[] inflections = align().getInflections();
-    ArrayList<BezierCurve> slices = new ArrayList<BezierCurve>();
-    for(int i=0, L=inflections.length-1; i<L; i++) {
-      slices.add(split(inflections[i], inflections[i+1]));
-    }
-
-    // Step 2: offset the generated segments
-    ArrayList<BezierCurve> segments = new ArrayList<BezierCurve>();
-    BezierCurve slice, segment;
+    BezierCurve segment;
+    ArrayList<BezierCurve> segments = new ArrayList<BezierCurve>(),
+                           slices = getSlices();
     for(int b=0; b<slices.size(); b++) {
-      slice = slices.get(b);
-      segment = slice.simpleOffset(distance);
-      // Is this segment not adequately curved to act as
-      // an offset segment, or did we generate a segment
-      // that is actually unbiased? Then generate better
-      // segments.
-      if(segment.getScaleAngle() > PI/2 || !segment.isBiased()) {
-        BezierCurve[] retried = slice.split(0.5);
-        segment = retried[0].simpleOffset(distance);
-        segments.add(segment);
-        segment = retried[1].simpleOffset(distance);
-        segments.add(segment);
-      } else { segments.add(segment);}
-    }
+      segment = slices.get(b).simpleOffset(distance);
+      segments.add(segment);
+    }    
+    return makeOffsetArray(segments);
+  }
 
+  /**
+   * Graduate this curve along its normals
+   */
+  BezierCurve graduatedOffset(float offset, float start, float end) {
+    float moveStart = map(start,0,1,0,offset),
+          moveEnd =  map(end,0,1,0,offset),
+          dx, dy;
+    Point[] newPoints = new Point[order+1];
+    for(int i=0; i<=order; i++) {
+      dx = map(ratios[i],0,1,moveStart,moveEnd);
+      dy = map(ratios[i],0,1,moveStart,moveEnd);
+      dx *= normals[i].x;
+      dy *= normals[i].y;
+      newPoints[i] = new Point(points[i].x + dx, points[i].y + dy);
+    }
+    return new BezierCurve(newPoints);
+  }
+
+  /**
+   * Offset the entire curve by some interpolating distance,
+   * starting at offset [start] and ending at offset [end].
+   * Segmenting it based on inflection points.
+   */
+  BezierCurve[] offset(float distance, float start, float end) {
+    BezierCurve segment;
+    ArrayList<BezierCurve> segments = new ArrayList<BezierCurve>(),
+                           slices = getSlices();
+    float S = 0, L = getCurveLength(), s, e;
+    for(int b=0; b<slices.size(); b++) {
+      segment = slices.get(b);
+      s = map(S, 0,L, start,end);
+      S += segment.getCurveLength();
+      e = map(S, 0,L, start,end);
+      segment = segment.graduatedOffset(distance, s, e);
+      segments.add(segment);
+    }    
+    return makeOffsetArray(segments);
+  }
+  
+  // arraylist -> [], with normal correction if needed. 
+  private BezierCurve[] makeOffsetArray(ArrayList<BezierCurve> segments) {
     // Step 3: convert the arraylist to an array, and return
     BezierCurve[] offsetCurve = new BezierCurve[segments.size()];
     for(int b=0; b<segments.size(); b++) {
@@ -626,7 +645,6 @@ class BezierCurve {
         // We used estimations for the control-projections,
         // so the start and end normals may in fact be wrong.
         correctIfNeeded(offsetCurve[b-1], offsetCurve[b]); }}
-
     // and we're done!
     return offsetCurve;
   }
@@ -744,4 +762,13 @@ class BezierCurve {
     }
     return ret;
   }
+}
+
+/**
+ * a null curve is what you get if you derive beyond what the curve supports.
+ */
+class NullBezierCurve extends BezierCurve {
+  NullBezierCurve() { super(); }
+  BezierCurve getDerivative() { return this; } 
+  float getValue(float t) { return 0; }
 }

@@ -21,7 +21,7 @@
       <a href="http://processingjs.nihongoresources.com/Bézierinfo/">original article</a> is reworked
       to incorporate them, with text rewrites where necessary to explain things better.</p>
 
-      <h2 style="font-style:italic;">NOTE: All graphics are interactive</h2>
+      <h2 style="font-style:italic;">All Bézier graphics are interactive</h2>
 
       <p>This page uses <a href="http://processing.org">Processing</a> examples, rendering as
       interactive graphics on the page using <a href="http://processingjs.org">Processing.js</a>,
@@ -33,7 +33,7 @@
       a web browser, it's a legacy application). It also uses math, in LaTeX form, which is typeset
       using the most excellent <a href="http://mathjax.org">MathJax</a> library.</p>
 
-      <h2 style="font-style:italic;">ALSO NOTE: examples have a "view source" option</h2>
+      <h2 style="font-style:italic;">Examples have a "view source" option</h2>
 
       <p>Just seeing that the guy who wrote the article knows how to write the code needed to
       demonstrate Bezier curve things is basically useless, I think you'll agree. You don't benefit
@@ -46,6 +46,14 @@
       all rights to it. Do with it what you want, to me this is trivial code and it would be
       ridiculous to claim it as anything other than "I just wrote this to demonstrate how things
       work".</p>
+
+      <h2 style="font-style:italic;">Questions, comments</h2>
+
+      If you have suggestions for new sections, hit up the github issue tracker (linked to in the upper
+      right). If you have questions about the material, there's currently no comment section while I'm
+      doing the rewrite, but you can use the issue tracker for that as well. Once the rewrite's done,
+      I'll add a general comment section back in, and maybe a more topical "select this section of text
+      and hit the 'question' button to ask a question about it" system. We'll see.
 
       <p>—Pomax (or in the tweetworld, @<a href="https://twitter.com/TheRealPomax">TheRealPomax</a>)</p>
     </section>
@@ -138,18 +146,48 @@
 
       <p>There we go. <i>x</i>/<i>y</i> coordinates, linked through some mystery value <i>t</i>.</p>
 
-      <p>Parametric curves don't define the <i>y</i> coordinate in terms of the <i>x</i> coordinate,
+      <p>So, parametric curves don't define a <i>y</i> coordinate in terms of an <i>x</i> coordinate,
       like normal functions do, but they instead link the values to a "control" variable.
       If we vary the value of <i>t</i>, then with every change we get <strong>two</strong> values,
       which we can use as (<i>x</i>,<i>y</i>) coordinates in a graph. The above set of functions,
       for instance, generates points on a circle: We can range <i>t</i> from negative to positive
       infinity, and the resulting (<i>x</i>,<i>y</i>) coordinates will always lie on a circle with
-      radius 1 around the origin (0,0).</p>
+      radius 1 around the origin (0,0). If we plot it for <i>t</i> from 0 to 5, we get this:</p>
 
-      <p>So Bézier curves are (one of many classes of) parametric functions, and are characterised
-      by using the same kind of function for all its dimensions. Unlike the above example,
+      <textarea class="sketch-code" data-sketch-preset="empty" data-sketch-title="A circle: x=sin(t), y=cos(t)">
+
+      void drawFunction() {
+        translate(dim/2,dim/2);
+        stroke(150);
+        line(-dim,0,dim,0);
+        line(0,-dim,0,dim);
+
+        stroke(0);
+        float r = dim/3;
+        for(float t=0; t<=5; t+=0.01) {
+          point(r * sin(t), r * cos(t));
+        }
+
+        fill(0);
+        for(float i=0; i<=5; i+=0.5) {
+          ellipse(r*sin(i),r*cos(i),3,3);
+          text("t="+i,r*sin(i)+10,r*cos(i));
+        }
+
+        fill(150);
+        textAlign(CENTER,CENTER);
+        text("0,0",-10,10);
+        text("1",r+10,15);
+        text("-1",-10,r+10);
+        text("-1",-r-10,15);
+        text("1",-10,-r-10);
+      }</textarea>
+
+      <p>Bézier curves are (one in many classes of) parametric functions, and are characterised
+      by using the same base function for all its dimensions. Unlike the above example,
       where the <i>x</i> and <i>y</i> values use different functions (one uses a sine, the other
-      a cosine), Bézier curves use "binomial polynomials" for both <i>x</i> and <i>y</i>.</p>
+      a cosine), Bézier curves use the "binomial polynomial" for both <i>x</i> and <i>y</i>.
+      So what are binomial polynomials?</p>
 
       <p>You may remember polynomials from high school, where they're those sums that look like:</p>
 
@@ -787,8 +825,8 @@
 
       <p>\[
       \left \{ \begin{matrix}
-        tangent_x(t) = B'_x(t) \\
-        tangent_y(t) = B'_y(t)
+        tangent_x(t) = d_x(t) = B'_x(t) \\
+        tangent_y(t) = d_y(t) = B'_y(t)
       \end{matrix} \right. \]</p>
 
       <p>This gives us the directional vector we want. We can normalize it to give us uniform directional vectors
@@ -796,10 +834,12 @@
 
       <p>\[
       \left \{ \begin{matrix}
-        direction_x(t) = \frac{tangent_x(t)}{\sqrt{tangent_x(t)^2 + tangent_y(t)^2}}
-                       = \frac{B'_x(t)}{\sqrt{B'_x(t)^2 + B'_y(t)^2}} \\
-        direction_y(t) = \frac{tangent_y(t)}{\sqrt{tangent_x(t)^2 + tangent_y(t)^2}}
-                       = \frac{B'_y(t)}{\sqrt{B'_x(t)^2 + B'_y(t)^2}}
+        \hat{x}(t) = || d_x(t) ||
+                   =\frac{tangent_x(t)}{ || tangent(t) || }
+                   = \frac{B'_x(t)}{\sqrt{B'_x(t)^2 + B'_y(t)^2}} \\
+        \hat{y}(t) = || d_y(t) ||
+                   = \frac{tangent_y(t)}{ || tangent(t) || }
+                   = \frac{B'_y(t)}{\sqrt{B'_x(t)^2 + B'_y(t)^2}}
       \end{matrix} \right. \]</p>
 
       <p>If we want to move away from the curve instead, perpendicular to the curve at some point <i>t</i>, we want
@@ -808,12 +848,12 @@
 
       <p>\[
       \left \{ \begin{matrix}
-        normal_x(t) = direction_x(t) \cdot \cos{\frac{\pi}{2}} - direction_y(t) \cdot \sin{\frac{\pi}{2}}\\
-        normal_y(t) = direction_x(t) \cdot \sin{\frac{\pi}{2}} + direction_y(t) \cdot \cos{\frac{\pi}{2}}
+        normal_x(t) = \hat{x}(t) \cdot \cos{\frac{\pi}{2}} - \hat{y}(t) \cdot \sin{\frac{\pi}{2}}\\
+        normal_y(t) = \hat{x}(t) \cdot \sin{\frac{\pi}{2}} + \hat{y}(t) \cdot \cos{\frac{\pi}{2}}
       \end{matrix} \right. \]</p>
 
       <p>The following two graphics show the tangent and normal along a quadratic and cubic curve, with
-      the tangent coloured blue, and the normal coloured red.</p>
+      the direction vector coloured blue, and the normal vector coloured red.</p>
 
       <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Quadratic Bézier tangents and normals">
       void setupCurve() {
@@ -1040,6 +1080,7 @@
         curves.add(new BezierCurve(points));
         reorder();
         animate();
+        pause();
         span();
       }
 
@@ -1067,6 +1108,7 @@
         setupDefaultCubic();
         reorder();
         animate();
+        pause();
         span();
       }
 
@@ -1095,13 +1137,15 @@
       <h2>Curve/curve intersection</h2>
 
       <p>Using de Casteljau's algorithm to split the curve we can now implement curve/curve intersection
-      finding using a "divide and conquer" technique: take two curves C1 and C2, and treat them as a pair.
-      If their bounding boxes overlap, split up each curve into two subcurves, C1.1, C1.2, C2.1 nd C2.2,
-      and form four new pairs (C1.1,C2.1), (C1.1,C2.2), (C1.2,C2.1), and (C1.2,C2.2). If their bounding
-      boxes do not overlap, discard the pair, as there is no intersection between this pair of curves.
-      If there was overlap, for each of the newly formed pairs, perform the same evaluation. Once the
-      subcurves we form are so small that they effectively occupy sub-pixel areas, we consider an
-      intersection found.</p>
+      finding using a "divide and conquer" technique: take two curves <i>C<sub>1</sub></i> and <i>C<sub>2</sub></i>,
+      and treat them as a pair. If their bounding boxes overlap, split up each curve into two subcurves,
+      <i>C<sub>1.1</sub></i>, <i>C<sub>1.2</sub></i>, <i>C<sub>2.1</sub></i> and <i>C<sub>2.2</sub></i>,
+      and form four new pairs (<i>C<sub>1.1</sub></i>,<i>C<sub>2.1</sub></i>), (<i>C<sub>1.1</sub></i>,
+      <i>C<sub>2.2</sub></i>), (<i>C<sub>1.2</sub></i>,<i>C<sub>2.1</sub></i>), and (<i>C<sub>1.2</sub></i>,
+      <i>C<sub>2.2</sub></i>). If their bounding boxes do not overlap, discard the pair, as there is no
+      intersection between this pair of curves. If there was overlap, for each of the newly formed pairs,
+      perform the same evaluation. Once the subcurves we form are so small that they effectively occupy
+      sub-pixel areas, we consider an intersection found.</p>
 
       <p>This algorithm will start with a single pair, "balloon" until it runs in parallel for a large
       number of potential subpairs, and then taper back down as it homes in on intersection coordinates,
@@ -1112,7 +1156,6 @@
       your curves in some creative arrangment: <button id="clippingButton">detect</button></p>
 
       <textarea class="sketch-code" data-sketch-preset="clipping" data-sketch-title="Curve/curve intersections">
-      int iterationCount = 1;
       void iterate() {
         if(pairs.size()==0) {
           iterated = false;
@@ -1326,8 +1369,8 @@
         \int_{-1}^{1}\sqrt{ \left (dx/dt \right )^2+\left (dy/dt \right )^2} dt
         ≃
         \left [ C_1 \cdot f\left(t_1\right)
-                + ...
-                + C_n \cdot f\left(t_n\right)
+               \ +\ ...
+               \ +\ C_n \cdot f\left(t_n\right)
         \right ]
         =
         \sum_{i=1}^{n}{C_i \cdot f\left(t_i\right)}
@@ -1586,11 +1629,9 @@
         curve.draw();
         if(offset>0) {
           noAdditionals();
-          BezierCurve[] offsetCurve = curve.offset(offset);
-          comp.graduateOffset(offsetCurve, offset, 0, 1);
+          BezierCurve[] offsetCurve = curve.offset(offset, 0, 1);
           for(BezierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
-          offsetCurve = curve.offset(-offset);
-          comp.graduateOffset(offsetCurve, -offset, 0, 1);
+          offsetCurve = curve.offset(-offset, 0, 1);
           for(BezierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
         }
       }</textarea>
@@ -1607,11 +1648,9 @@
         curve.draw();
         if(offset>0) {
           noAdditionals();
-          BezierCurve[] offsetCurve = curve.offset(offset);
-          comp.graduateOffset(offsetCurve, offset, 0, 1);
+          BezierCurve[] offsetCurve = curve.offset(offset, 0, 1);
           for(BezierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
-          offsetCurve = curve.offset(-offset);
-          comp.graduateOffset(offsetCurve, -offset, 0, 1);
+          offsetCurve = curve.offset(-offset, 0, 1);
           for(BezierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
         }
       }</textarea>

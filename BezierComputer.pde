@@ -169,23 +169,6 @@ class BezierComputer {
   }
 
   /**
-   * Take a poly-Bezier offset curve and graduate
-   * its offsets rather than keeping them uniform
-   */
-  void graduateOffset(BezierCurve[] offset, float d, float start, float end) {
-    float L = 0, slen = 0, blen, s, e;
-    for(BezierCurve b: offset) { L += b.getCurveLength(); }
-    for(BezierCurve b: offset) {
-      blen = b.getCurveLength();
-      if(blen<0) { println("ERROR: curve length has a negative value."); }
-      s = map(slen, 0,L, start,end);
-      e = map(slen+blen, 0,L, start,end);
-      b.graduate(d, s, e);
-      slen += blen;
-    }
-  }
-
-  /**
    * Arc length computation, using the Legendre-Guass quadrature approach.
    * If no length can be computed due to a lack of T/C values, return -1
    * to signify "I cannot compute this value for you".

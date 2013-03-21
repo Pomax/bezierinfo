@@ -39,15 +39,18 @@
     sketches.forEach(function(sketch) {
       figCount++;
 
+      var sketchLabel = sketch.getAttribute("data-sketch-title");
+
       var script = document.createElement("script");
       script.type = "text/processing";
-      script.innerHTML = sketch.value;
+      script.innerHTML = sketch.value + "\n" +
+                         "String getSketchLabel() { return \""+ sketchLabel +"\"; }\n\n";
 
       var canvas = document.createElement("canvas");
       canvas.setAttribute("class", sketch.getAttribute("class"));
       var preset = sketch.getAttribute("data-sketch-preset");
       var dps = "presets/" + preset+".pde";
-      dps += " Point.pde BezierCurve.pde BezierComputer.pde framework.pde Interaction.pde API.pde JavaScript.pde RuntimeException.pjs";
+      dps += " Point.pde BezierCurve.pde CurvePair.pde BezierComputer.pde framework.pde Interaction.pde API.pde JavaScript.pde RuntimeException.pjs";
       canvas.setAttribute("data-processing-sources", dps);
       canvas.setAttribute("data-preset",preset);
 
@@ -56,7 +59,7 @@
 
       var viewSource = "<span onclick=\"viewSource(" + figCount + ")\">view source</span>";
       var label = document.createElement("span");
-      label.innerHTML = sketch.getAttribute("data-sketch-title") + " (" + viewSource + ")";
+      label.innerHTML = sketchLabel + " (" + viewSource + ")";
       label.setAttribute("class", "sketch-title");
       label.setAttribute("data-number", ""+figCount);
 

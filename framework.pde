@@ -33,10 +33,16 @@ void setup() {
   // force text engine load (only needed for Processing)
   text("",0,0);
   setupColors();
+  noLoop();
+  reset();
+}
+
+// reset all the things
+void reset() {
   setupScreen();
   noAnimate();
-  noLoop();
   setupCurve();
+  noReset();
 }
 
 // the default 2nd order curve
