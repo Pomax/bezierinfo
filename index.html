@@ -1775,14 +1775,16 @@
     </section>
   </body>
 
- <!-- scripts can come last -->
-  <script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    displayAlign: "left",
-    displayIndent: "2em",
-  });</script>
-  <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+  <!-- scripts can come last so they don't hold up the DOM -->
+  <script>localStorage.clear();sessionStorage.clear();</script>
   <script src="autonav.js"></script>
   <script src="sketchloader.js"></script>
   <script src="processing.patched.js"></script>
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      displayAlign: "left",
+      displayIndent: "2em",
+    });
+  </script>
+  <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
 </html>

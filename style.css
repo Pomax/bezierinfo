@@ -10,6 +10,11 @@ section p {
   text-align: justify;
 }
 
+canvas.loading-sketch {
+  background: url('images/ajax-loader.gif');
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+}
 .sketch-code {
   display: inline-block;
   unicode-bidi: embed;

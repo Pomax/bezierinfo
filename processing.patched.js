@@ -1,4 +1,4 @@
-
+// then, load P.js
 (function(window, document, Math, undef) {
 
   var nop = function(){};
@@ -20205,6 +20205,7 @@
   };
 
 //#if PARSER
+
   /**
    * aggregate all source code into a single file, then rewrite that
    * source and bind to canvas via new Processing(canvas, sourcestring).
@@ -20218,8 +20219,19 @@
 
     code = code || [];
     var startPos = code.length;
+    canvas.classList.add("loading-sketch");
 
+    // **
+    // *
+    // *
     function ajaxAsync(url, callback) {
+      // in sessionStorage?
+      if(localStorage[url]) {
+        callback(localStorage[url]);
+        return;
+      }
+
+      // not in sessionStorage. Retrieve and store.
       var xhr = new XMLHttpRequest();
       xhr.onreadystatechange = function() {
         if (xhr.readyState === 4) {
@@ -20236,8 +20248,8 @@
               error = "File is empty.";
             }
           }
-
-          callback(xhr.responseText, error);
+          localStorage[url] = xhr.responseText;
+          callback(localStorage[url], error);
         }
       };
       xhr.open("GET", url, true);
@@ -20258,6 +20270,7 @@
         if (loaded === sourcesCount) {
           if (errors.length === 0) {
             try {
+              canvas.classList.remove("loading-sketch");
               return new Processing(canvas, code.join("\n"));
             } catch(e) {
               throw "Processing.js: Unable to execute pjs sketch: " + e;
@@ -20288,6 +20301,7 @@
 
     // if not, immediately create our instance
     if (sourcesCount === 0) {
+      canvas.classList.remove("loading-sketch");
       return new Processing(canvas, code.join("\n"));
     }
   };
@@ -20411,22 +20425,19 @@
       var top = e.offsetTop,
           left = e.offsetLeft,
           width = e.offsetWidth,
-          height = e.offsetHeight,
-          w = window;
+          height = e.offsetHeight;
 
       while(e.offsetParent) {
         e = e.offsetParent;
         top += e.offsetTop;
-        left += e.offsetLeft;
-      }
+        left += e.offsetLeft; }
 
       return (
-        top < (w.pageYOffset + w.innerHeight) ||
-        left < (w.pageXOffset + w.innerWidth) ||
-        (top + height) > w.pageYOffset ||
-        (left + width) > w.pageXOffset
-      );
-    }
+        top < (window.pageYOffset + window.innerHeight) &&
+        left < (window.pageXOffset + window.innerWidth) &&
+        (top + height) > window.pageYOffset &&
+        (left + width) > window.pageXOffset );
+    };
 
     // Run through all codeBindings, loading any immediately visible sketches.
     var loadList = [];
