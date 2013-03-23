@@ -113,15 +113,36 @@ class BezierCurve {
    * projection onto the curve, towards the origin.
    */
   float getPointProjection(Point p) {
-    float t=0.5, pdist, mindist=9999999;
+    float t=0.5, pdist, mindist=9999999, tp, tn;
     int mindist_idx=0;
+    // find a reasonable initial "t"
     for(int idx=0; idx<LUT_resolution; idx+=1) {
       pdist = dist(p.x, p.y, LUT_x[idx], LUT_y[idx]);
       if(pdist<mindist) {
         mindist = pdist;
         mindist_idx = idx;
         t = (float)idx/(float)LUT_resolution; }}
+    t = refineProjection(p, t, mindist, 1.0/(1.01*LUT_resolution));
     return t;
+  }
+  
+  /**
+   * Refine a point projection's [t] value.
+   */
+  float refineProjection(Point p, float t, float distance, float precision) {
+    if(precision < 0.0001) return t;
+    // refinement
+    float prev_t = t-precision,
+          next_t = t+precision;
+    Point prev = getPoint(prev_t),
+          next = getPoint(next_t);    
+    float prev_distance = dist(p.x, p.y, prev.x, prev.y),
+          next_distance = dist(p.x, p.y, next.x, next.y);
+    // smaller distances?
+    if(prev_t >= 0 && prev_distance < distance) { return refineProjection(p, prev_t, prev_distance, precision); }
+    if(next_t <= 1 && next_distance < distance) { return refineProjection(p, next_t, next_distance, precision); }
+    // larger distances
+    return refineProjection(p, t, distance, precision/2.0);
   }
 
   // how close are these two curves?
@@ -562,51 +583,39 @@ class BezierCurve {
   }
 
   /**
+   * Add a slice to this curve's offset subcurves. If a slice
+   * is too complex (i.e. has more than one inflection point)
+   * we split it up into two simpler curves, because otherwise
+   * normal-based offsetting will look really wrong.
+   */
+  void addSlices(ArrayList<BezierCurve> slices, BezierCurve c) {
+    BezierCurve bc = c.align();
+    float[] inflections = bc.getInflections();
+    if(inflections.length>3) {
+      BezierCurve[] splitup = c.split(0.5);
+      addSlices(slices, splitup[0]);
+      addSlices(slices, splitup[1]);
+    } else { slices.add(c); }
+  }
+
+  /**
    * Slice up this curve along its inflection points.
    */
   ArrayList<BezierCurve> getSlices() {
     float[] inflections = align().getInflections();
     ArrayList<BezierCurve> slices = new ArrayList<BezierCurve>();
     for(int i=0, L=inflections.length-1; i<L; i++) {
-      slices.add(split(inflections[i], inflections[i+1]));
+      addSlices(slices, split(inflections[i], inflections[i+1]));
     }
     return slices;
   }
 
   /**
-   * Offset this curve as a segment, i.e. without chopping it up.
+   * Graduated-offset this curve along its normals,
+   * without segmenting it.
    */
-  BezierCurve simpleOffset(float distance) {
-    Point[] newPoints = new Point[order+1];
-    float x, y;
-    for(int i=0; i<=order; i++) {
-      x = points[i].x + distance * normals[i].x;
-      y = points[i].y + distance * normals[i].y;
-      newPoints[i] = new Point(x, y);
-    }
-    BezierCurve offset = new BezierCurve(newPoints);
-    return offset;
-  }
-
-  /**
-   * Offset the entire curve by some distance.
-   * Segmenting it based on inflection points.
-   */
-  BezierCurve[] offset(float distance) {
-    BezierCurve segment;
-    ArrayList<BezierCurve> segments = new ArrayList<BezierCurve>(),
-                           slices = getSlices();
-    for(int b=0; b<slices.size(); b++) {
-      segment = slices.get(b).simpleOffset(distance);
-      segments.add(segment);
-    }
-    return makeOffsetArray(segments);
-  }
-
-  /**
-   * Graduate this curve along its normals
-   */
-  BezierCurve graduatedOffset(float offset, float start, float end) {
+  BezierCurve simpleOffset(float offset) { return simpleOffset(offset,1,1); }
+  BezierCurve simpleOffset(float offset, float start, float end) {
     float moveStart = map(start,0,1,0,offset),
           moveEnd =  map(end,0,1,0,offset),
           dx, dy;
@@ -616,8 +625,7 @@ class BezierCurve {
       dy = map(ratios[i],0,1,moveStart,moveEnd);
       dx *= normals[i].x;
       dy *= normals[i].y;
-      newPoints[i] = new Point(points[i].x + dx, points[i].y + dy);
-    }
+      newPoints[i] = new Point(points[i].x + dx, points[i].y + dy); }
     return new BezierCurve(newPoints);
   }
 
@@ -626,6 +634,7 @@ class BezierCurve {
    * starting at offset [start] and ending at offset [end].
    * Segmenting it based on inflection points.
    */
+  BezierCurve[] offset(float distance) { return offset(distance, 1, 1); }
   BezierCurve[] offset(float distance, float start, float end) {
     BezierCurve segment;
     ArrayList<BezierCurve> segments = new ArrayList<BezierCurve>(),
@@ -636,7 +645,7 @@ class BezierCurve {
       s = map(S, 0,L, start,end);
       S += segment.getCurveLength();
       e = map(S, 0,L, start,end);
-      segment = segment.graduatedOffset(distance, s, e);
+      segment = segment.simpleOffset(distance, s, e);
       segments.add(segment);
     }
     return makeOffsetArray(segments);
@@ -651,7 +660,10 @@ class BezierCurve {
       if(b>0 && !simplifiedFunctions) {
         // We used estimations for the control-projections,
         // so the start and end normals may in fact be wrong.
-        correctIfNeeded(offsetCurve[b-1], offsetCurve[b]); }}
+        // make sure they line up by "pulling them together".
+        correctIfNeeded(offsetCurve[b-1], offsetCurve[b]);
+      }
+    }
     // and we're done!
     return offsetCurve;
   }

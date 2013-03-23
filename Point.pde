@@ -20,7 +20,7 @@ class Point {
   }
 
   // scale
-  Point times(float f) {
+  Point scale(float f) {
     return new Point(f*x,f*y);
   }
 

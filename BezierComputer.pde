@@ -123,8 +123,9 @@ class BezierComputer {
   }
 
   BezierCurve generateCurve(int order, Point p1, Point p2, Point p3, float t) {
-    Point tangent = new Point((p1.x-p3.x)/2, (p1.y-p3.y)/2);
-    return generateCurve(order, p1, p2, p3, t, new Point[]{tangent,tangent});
+    Point tangent = new Point((p1.x-p3.x)/((order-1)*2), (p1.y-p3.y)/((order-1)*2));
+    Point[] tangents = {tangent, tangent.scale(-1)};
+    return generateCurve(order, p1, p2, p3, t, tangents);
   }
 
   BezierCurve generateCurve(int order, Point p1, Point p2, Point p3, float t, Point[] tangents) {
@@ -148,9 +149,9 @@ class BezierComputer {
   private Point[] getCubicControls(Point NA, Point NB, float t, Point[] span, Point[] tangents) {
     float mt = 1-t, dx = tangents[0].x, dy = tangents[0].y;
     Point new7 = new Point(NB.x + dx, NB.y + dy);
-    dx = tangents[1].x;
-    dy = tangents[1].y;
-    Point new8 = new Point(NB.x + dx, NB.y + dy);
+    dx = -tangents[1].x;
+    dy = -tangents[1].y;
+    Point new8 = new Point(NB.x - dx, NB.y - dy);
     // reverse De Casteljau
     dx = t * (new7.x - NA.x) / mt;
     dy = t * (new7.y - NA.y) / mt;

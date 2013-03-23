@@ -41,14 +41,14 @@ int oldOffset = 0;
 void drawFunction() {
   BezierCurve curve = curves.get(0);
 
-/*
-  BezierCurve bc = comp.generateCurve(2, new Point(120,20), new Point(150,150), new Point(180,120));
+///*
+  BezierCurve bc = comp.generateCurve(3, new Point(120,20), new Point(150,150), new Point(180,120));
   bc.draw();
   Point bcp = bc.getPoint(0.5);
   bcp.draw();
   text(bcp.x+"/"+bcp.y,bcp.x+10,bcp.y+10);
   if(true) return;
-*/
+//*/
 
   // the curve
   stroke(0);
@@ -112,7 +112,7 @@ void drawFunction() {
   spl[1].draw();
   translate(-dim,0);
 */
-
+offset = 20;
   if(offset>0) {
     // offset the curve over some distance
     int offsetDistance = offset,

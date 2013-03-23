@@ -77,8 +77,8 @@ void mousePressed() {
         startCurveMoulding(curve, t);
       }
     }
-    if(!animated || !playing) redraw();
   }
+  if(!animated || !playing) redraw();
 }
 
 // end-of-interaction trigger
