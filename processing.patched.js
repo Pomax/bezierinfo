@@ -20219,7 +20219,6 @@
 
     code = code || [];
     var startPos = code.length;
-    canvas.classList.add("loading-sketch");
 
     // **
     // *

@@ -48,7 +48,7 @@
 
       var canvas = document.createElement("canvas");
       canvas.id = "figure"+figCount;
-      canvas.setAttribute("class", sketch.getAttribute("class"));
+      canvas.setAttribute("class", sketch.getAttribute("class") + " loading-sketch");
       var preset = sketch.getAttribute("data-sketch-preset");
       var dps = "presets/" + preset+".pde";
       dps += " Point.pde BezierCurve.pde CurvePair.pde BezierComputer.pde framework.pde Interaction.pde API.pde JavaScript.pde RuntimeException.pjs";
