@@ -1377,10 +1377,11 @@
       Bézier curve fitting requires three points, as well as a tangent and <i>t</i> value. We can
       come up with "default" values, where the <i>t</i> value for our middle point is simply 0.5,
       and the tangent is identical to the baseline for quadratic curves, or half the baseline for
-      cubic curveS.</p>
+      cubic curves.</p>
 
-      <p>First, let's look at the "default" curve creation; click three times on the following
-      sketches to set up a quadratic and cubic curve, respectively</p>
+      <p>Using these "default" values for curve creation, we can already get fairly respectable
+      curves; Click three times on each of the following sketches to set up the points
+      that shoule be used to form a quadratic and cubic curve, respectively</p>
 
       <textarea class="sketch-code" data-sketch-preset="generate" data-sketch-title="Fitting a quadratic Bézier curve">
       void setupCurve() { span(); }
@@ -1832,6 +1833,174 @@
           for(BezierCurve b: offsetCurve) { b.draw(); b.getPoint(0).draw(); b.getPoint(1).draw();}
         }
       }</textarea>
+    </section>
+
+    <section id="circles">
+      <h2>Circles and Bézier curves</h2>
+
+      <p>Circles and Bézier curves are very different beasts, and circles are infinitely easier
+      to work with than Bézier curves. Their formula is much simpler, and they can be drawn more
+      efficiently. But, sometimes you don't have the luxury of using circles, or ellipses, or
+      arcs. Sometimes, all you have are Bézier curves. For instance, if you're doing font design,
+      fonts have no concept of geometric shapes, they only know curves. OpenType fonts with TrueType
+      outlines only know quadratic Bézier curves, and OpenType fonts with Type2 outlines only
+      know cubic Bézier curves. So how do you draw a circle, or an ellipse, or an arc?</p>
+
+      <p>You approximate.</p>
+
+      <p>We already know that Bézier curves cannot model all curves that we can think of, and
+      this includes perfect circles, as well as ellipses, and their arc counterparts. However,
+      we can certainly approximate them to a degree that is visually acceptable. Quadratic and cubic
+      curves offer us different curvature control, so in order to approximate a circle we will
+      first need to figure out what the error is if we try to approximate arcs of increasing degree
+      with quadratic and cubic curves, and where the coordinates even lie.</p>
+
+      <p>Since arcs are mid-point-symmetrical, we need the control points to set up a symmetrical
+      curve. For quadratic curves this means that the control point will be somewhere on a line
+      that intersects the baseline at a right angle. And we don't get any choice on where that
+      will be, since the derivatives at the start and end point have to line up, so our control
+      point will lie at the intersection of the tangets at the start and end point.</p>
+
+      <p>First, let's try to fit the quadratic curve onto a circular arc. In the following sketch
+      you can move the mouse around over a unit circle, to see how well, or poorly, a quadratic
+      curve can approxiate the arc from (1,0) to where your mouse cursor is:</p>
+
+      <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Quadratic Bézier arc approximation">
+      void setupCurve() {
+        ellipseMode(CENTER);
+        redrawOnMove();
+      }
+
+      void drawCurve(BezierCurve curve) {
+        float f = 1.5, f2 = 2*f;
+        noFill();
+        stroke(255,0,0);
+        ellipse(dim/2,dim/2,dim/f,dim/f);
+
+        float mx = mouseX - dim/2,
+              my = mouseY - dim/2,
+              d = dist(0,0,mx,my),
+              mxn = mx/d,
+              myn = my/d,
+              ax = acos(mxn),
+              ay = asin(myn),
+              da = ax-ay,
+              s = (ay > 0 ? 0 : -ax),
+              e = (ay > 0 ? ax : 0),
+              dx = sin(ax),
+              dy = s==0 ? -cos(ax) : cos(ax);
+        fill(0,255,0,100);
+        arc(dim/2,dim/2,dim/f,dim/f, s, e);
+
+        stroke(200);
+        line(0,dim/2,dim,dim/2);
+        line(dim/2,0,dim/2,dim);
+
+        Point[] points = {
+          new Point(dim/2 + dim/f2,dim/2),
+          new Point(dim/2,dim/2),
+          new Point(dim/2 + dim/f2*cos(ax), dim/2 + dim/f2*sin(ay))
+        };
+        Point c = comp.lli(new Point[]{
+          points[0],
+          new Point(points[0].x, points[0].y + 10),
+          points[2],
+          new Point(points[2].x + dx, points[2].y + dy)
+        });
+        points[1] = c;
+        (new BezierCurve(points)).draw();
+      }</textarea>
+
+      <p>As you can see, things go horribly wrong quite quickly; even trying to approximate a quarter circle
+      using a quadratic curve is a bad idea. An eighth of a turns might look okay, but how okay is okay?
+      Let's apply some math and find out. What we're interested in is how far off our on-curve coordinates
+      are with respect to a circular arc, given a specifc start and end angle.</p>
+
+      <p>\[
+        MATH GOES HERE
+      \]</p>
+
+      <p>For cubic curves the control points must be each other's mirror around the line running
+      through the baseline midpoint, at a right angle, and again the derivatives at the start and
+      end points must agree. Again we don't have altogether that much choice: there is only one
+      pair of control points that guarantees correct derivatives for the start and end points,
+      while also making the midpoint of the curve lie on top of the curve.</p>
+
+      <p>In order to find a cubic curve, we first "guess" the curve, based on the previously outlined
+      curve-through-three-points procedure. This will give use a curve with correct start, mid and
+      end points, but incorrect derivatives for start and end, given the control points. We then
+      slide the control points along the line that connects them until they effect the corrected
+      derivative at the start and end points (you may remember that the derivative at the start
+      is aligned with the line from start point to control point 1, and that the derivative at the
+      end is aligned with the line from control point 2 to the end point).</p>
+
+      <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Quadratic Bézier arc approximation">
+      void setupCurve() {
+        ellipseMode(CENTER);
+        redrawOnMove();
+      }
+
+      void drawCurve(BezierCurve curve) {
+        float f = 1.5, f2 = 2*f;
+        noFill();
+        stroke(255,0,0);
+        ellipse(dim/2,dim/2,dim/f,dim/f);
+
+        float mx = mouseX - dim/2,
+              my = mouseY - dim/2,
+              d = dist(0,0,mx,my),
+              mxn = mx/d,
+              myn = my/d,
+              ax = acos(mxn),
+              ay = asin(myn),
+              da = ax-ay,
+              s = (ay > 0 ? 0 : -ax),
+              e = (ay > 0 ? ax : 0),
+              dx = sin(ax),
+              dy = s==0 ? -cos(ax) : cos(ax),
+              dxm = sin(ax/2);
+              dym = s==0 ? -cos(ax/2) : cos(ax/2);
+        fill(0,255,0,100);
+        arc(dim/2,dim/2,dim/f,dim/f, s, e);
+
+        stroke(200);
+        line(0,dim/2,dim,dim/2);
+        line(dim/2,0,dim/2,dim);
+
+        // guess the curve based on the start/mid/end points:
+        Point p1 = new Point(dim/2 + dim/f2,dim/2),
+              p2 = new Point(dim/2 + dim/f2*cos((s+e)/2), dim/2 + dim/f2*sin((s+e)/2)),
+              p3 = new Point(dim/2 + dim/f2*cos(ax), dim/2 + dim/f2*sin(ay));
+        BezierCurve guess = comp.generateCurve(3,p1,p2,p3);
+        // then, move the control points so that B'(0) and B'(1) are correct:
+        Point c1 = comp.lli(new Point[]{
+          guess.points[0],
+          new Point(p1.x, p1.y+10),
+          guess.points[1],
+          guess.points[2],
+        });
+        // taking advantage of symmetry, we trivially know c2 now, too:
+        dx = guess.points[1].x - c1.x;
+        dy = guess.points[1].y - c1.y;
+        Point c2 = new Point(guess.points[2].x + dx,
+                             guess.points[2].y + dy);
+        // replace, update, and draw.
+        guess.points[1] = c1;
+        guess.points[2] = c2;
+        guess.update();
+        guess.draw();
+      }</textarea>
+
+      <p>Cubic curves are actually a lot better than quadratic curves, and don't look all that wrong
+      until we go past a quarter circle; 3/8th start to hint at problems, and half a circle has an
+      obvious "gap" between the real circle and the cubic approximation. Quarter curves actually
+      look pretty damn okay! But, again, how okay is okay? Let's apply some more math to find out.</p>
+
+      <p>\[
+        MATH GOES HERE
+      \]</p>
+
+
     </section>
 
     <section id="remaining">
