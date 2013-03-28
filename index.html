@@ -1934,7 +1934,7 @@
       is aligned with the line from start point to control point 1, and that the derivative at the
       end is aligned with the line from control point 2 to the end point).</p>
 
-      <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Quadratic Bézier arc approximation">
+      <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Cubic Bézier arc approximation">
       void setupCurve() {
         ellipseMode(CENTER);
         redrawOnMove();
@@ -1972,6 +1972,18 @@
               p2 = new Point(dim/2 + dim/f2*cos((s+e)/2), dim/2 + dim/f2*sin((s+e)/2)),
               p3 = new Point(dim/2 + dim/f2*cos(ax), dim/2 + dim/f2*sin(ay));
         BezierCurve guess = comp.generateCurve(3,p1,p2,p3);
+
+        noAdditionals();
+        guess.draw(color(150,150,255,100));
+        stroke(150,150,255,100)
+        line(guess.points[0].x, guess.points[0].y, guess.points[1].x, guess.points[1].y);
+        line(guess.points[1].x, guess.points[1].y, guess.points[2].x, guess.points[2].y);
+        line(guess.points[2].x, guess.points[2].y, guess.points[3].x, guess.points[3].y);
+        noFill();
+        ellipse(guess.points[1].x, guess.points[1].y, 5,5);
+        ellipse(guess.points[2].x, guess.points[2].y, 5,5);
+        additionals();
+
         // then, move the control points so that B'(0) and B'(1) are correct:
         Point c1 = comp.lli(new Point[]{
           guess.points[0],
@@ -1991,10 +2003,13 @@
         guess.draw();
       }</textarea>
 
-      <p>Cubic curves are actually a lot better than quadratic curves, and don't look all that wrong
-      until we go past a quarter circle; 3/8th start to hint at problems, and half a circle has an
-      obvious "gap" between the real circle and the cubic approximation. Quarter curves actually
-      look pretty damn okay! But, again, how okay is okay? Let's apply some more math to find out.</p>
+      <p>We see two curves here; very faintly the "guessed" curve, and drawn normally, the proper curve
+      with the control points shifter along the control line so that the derivatives at the start and end
+      points are correct. With this, we can see that cubic curves are actually a lot better than quadratic
+      curves, and don't look all that wrong until we go past a quarter circle; 3/8th start to hint at
+      problems, and half a circle has an obvious "gap" between the real circle and the cubic approximation.
+      Quarter curves actually look pretty damn okay! But, again, how okay is okay? Let's apply some more
+      math to find out.</p>
 
       <p>\[
         MATH GOES HERE
