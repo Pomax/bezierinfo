@@ -81,3 +81,7 @@ a.ribbon {
 }
 
 #navbar h3 { margin: 0.2em 1em; }
+
+td p {
+  text-align:center;
+}

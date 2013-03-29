@@ -1892,6 +1892,8 @@
         fill(0,255,0,100);
         arc(dim/2,dim/2,dim/f,dim/f, s, e);
 
+        if((s==0 && e>PI/2) || s<-PI/2) { connect(); } else { noConnect(); }
+
         stroke(200);
         line(0,dim/2,dim,dim/2);
         line(dim/2,0,dim/2,dim);
@@ -1914,11 +1916,108 @@
       <p>As you can see, things go horribly wrong quite quickly; even trying to approximate a quarter circle
       using a quadratic curve is a bad idea. An eighth of a turns might look okay, but how okay is okay?
       Let's apply some math and find out. What we're interested in is how far off our on-curve coordinates
-      are with respect to a circular arc, given a specifc start and end angle.</p>
+      are with respect to a circular arc, given a specifc start and end angle. We'll be looking at how much
+      space there is between the circular arc, and the quadratic curve's midpoint.</p>
+
+      <p>We start out with our start and end point, and for convenience we will place them on a unit
+      circle (a circle around 0,0 with radius 1), at some angle <i>φ</i>:</p>
+
+      <p>\[ S = \begin{pmatrix} 1 \\ 0 \end{pmatrix} \ , \ \  E = \begin{pmatrix} cos(φ) \\ sin(φ) \end{pmatrix} \]</p>
+
+      <p>What we want to find is the intersection of the tangents, so we want a point C such that:</p>
+
+      <p>\[ C = S + a \cdot \begin{pmatrix} 0 \\ 1 \end{pmatrix} \ , \ \ C = E + b \cdot \begin{pmatrix} -sin(φ) \\ cos(φ) \end{pmatrix} \]</p>
+
+      <p>i.e. we want a point that lies on the vertical line through A (at some distance <i>a</i>
+      from A) and also lies on the tangent line through B (at some distance <i>b</i> from B). Solving
+      this gives us:</p>
+
+      <p>\[ \left\{ \begin{array}{l}
+        C_x = 1 = cos(φ) + b \cdot -sin(φ)\\
+        C_y = a = sin(φ) + b \cdot cos(φ)
+      \end{array} \right. \]</p>
+
+      <p>First we solve for <i>b</i>:</p>
+
+      <p>\[ \begin{array}{l}
+        1 = cos(φ) + b \cdot -sin(φ) \ → \  
+        1 - cos(φ) = -b \cdot sin(φ) \ → \  
+        -1 + cos(φ) = b \cdot sin(φ) \\ \\
+        b = \frac{-1 + cos(φ)}{sin(φ)}
+      \end{array} \]</p>
+
+      <p>which we can then substitute in the expression for <i>a</i>:</p>
+
+      <p>\[ \begin{align*}
+        a &= sin(φ) + b \cdot cos(φ) \\
+          &= sin(φ) + \frac{-1 + cos(φ)}{sin(φ)} \cdot cos(φ) \\
+          &= sin(φ) + \frac{-cos(φ) + cos^2(φ)}{sin(φ)} \\
+          &= \frac{sin^2(φ) + cos^2(φ) - cos(φ)}{sin(φ)} \\
+        a &= \frac{1 - cos(φ)}{sin(φ)}
+      \end{align*} \]</p>
+
+      <p>A quick check shows that plugging these values for <i>a</i> and <i>b</i> into the expressions
+      for C<sub>x</sub> and C<sub>y</sub> give the same x/y coordinates for both "<i>a</i> away from A"
+      and "<i>b</i> away from B", so let's continue: now that we know the coordinate values for C, we
+      know where our on-curve point T for <i>t=0.5</i> (or angle φ/2) is, because we can just evaluate
+      the Bézier polynomial, and we know where the circle arc's actual point P is for angle φ/2:</p>
 
       <p>\[
-        MATH GOES HERE
+        P_x = cos(\frac{φ}{2}) \ , \ \  P_y = sin(\frac{φ}{2})
       \]</p>
+
+      <p>We compute T, observing that if <i>t=0.5</i>, the polynomial values (1-t)², 2(1-t)t, and t²
+      are 0.25, 0.5, and 0.25 respectively:</p>
+
+      <p>\[
+        T = \frac{1}{4}S + \frac{2}{4}C + \frac{1}{4}E = 
+
+        \frac{1}{4}(S + 2C + E) = 
+
+        \left\{\begin{align*}
+        T_x &= \frac{1}{4}(3 + cos(φ))\\ 
+        T_y &= \frac{1}{4}\left(\frac{2-2cos(φ)}{sin(φ)} + sin(φ)\right)
+             = \frac{1}{4}\left(sin(φ) + 2tan\left(\frac{φ}{2}\right)\right)
+        \end{align*}\right.
+      \]</p>
+
+      <p>And the distance between these two is the standard Euclidean distance:</p>
+
+      <p>\[\begin{array}{l}
+        d_x = T_x - P_x = \frac{1}{4}(3 + cos(φ)) - cos(\frac{φ}{2}) = 2sin^4\left(\frac{φ}{4}\right) \\
+        d_y = T_y - P_y = \frac{1}{4}\left(sin(φ) + 2tan\left(\frac{φ}{2}\right)\right) - sin(\frac{φ}{2}) \\
+        d = \sqrt{d^2_x + d^2_y}
+      \end{array}\]</p>
+
+      <p>The expanded formula for <i>d</i> is unwieldy, but what we care about is what it looks</p>
+
+      <table><tr><td>
+        <p><a href="http://www.wolframalpha.com/input/?i=plot+sqrt%28%281%2F4+*+%28sin%28x%29+%2B+2tan%28x%2F2%29%29+-+sin%28x%2F2%29%29%5E2+%2B+%282sin%5E4%28x%2F4%29%29%5E2%29+for+0+%3C%3D+x+%3C%3D+pi"><img
+        src="http://www3.wolframalpha.com/Calculate/MSP/MSP94820ciffd98gh324h300003db4ef76id368ia9?MSPStoreType=image/gif&s=35&w=300.&h=190.&cdf=RangeControl"
+        ></a></p>
+        <p>plotted for 0 ≤ φ ≤ π:</p>
+      </td><td>
+        <p><a href="http://www.wolframalpha.com/input/?i=plot+sqrt%28%281%2F4+*+%28sin%28x%29+%2B+2tan%28x%2F2%29%29+-+sin%28x%2F2%29%29%5E2+%2B+%282sin%5E4%28x%2F4%29%29%5E2%29+for+0+%3C%3D+x+%3C%3D+pi%2F2"><img
+        src="http://www3.wolframalpha.com/Calculate/MSP/MSP32611h52e75dei587g360000533f7i80hdbdacic?MSPStoreType=image/gif&s=48&w=300.&h=187.&cdf=RangeControl"></a></p>
+        <p>plotted for 0 ≤ φ ≤ ½π:</p>
+      </td><td>
+        <p><a href="http://www.wolframalpha.com/input/?i=plot+sqrt%28%281%2F4+*+%28sin%28x%29+%2B+2tan%28x%2F2%29%29+-+sin%28x%2F2%29%29%5E2+%2B+%282sin%5E4%28x%2F4%29%29%5E2%29+for+0+%3C%3D+x+%3C%3D+pi%2F4"><img
+        src="http://www4b.wolframalpha.com/Calculate/MSP/MSP15121d483fg9e4ece2ca000053h42eef5e40iai6?MSPStoreType=image/gif&s=51&w=300.&h=174.&cdf=RangeControl"></a></p>
+        <p>plotted for 0 ≤ φ ≤ ¼π:</p>
+      </td></tr></table>
+
+      <p>We now see why the eighth circle arc looks decent, but the quarter circle arc doesn't:
+      an error of 0.06 at <i>t=0.5</i> means we're 6% off the mark... we will already be off by
+      one pixel on a circle with pixel radius 17. Any decent sized quarter circle arc, say with
+      radius 100px, will be way off if approximated by a quadratic curve! For the eighth circle
+      arc, however, the error is only 0.003, or 0.3%, which explains why it looks so close to
+      the actual eighth circle arc. In fact, if we want a truly tiny error, like 0.001, we'll
+      have to contend with an angle of (rounded) 0.593667, which equates to roughly 34 degrees.
+      We'd need 11 quadratic curves to form a full circle with that precision! (technically,
+      10 and ten seventeenth, but we can't do partial curves, so we have to round up). That's a
+      whole lot of curves just to get a shape that can be drawn using a simple function!</p>
+
+      <p>So let's try the same thing for cubic curves.</p>
 
       <p>For cubic curves the control points must be each other's mirror around the line running
       through the baseline midpoint, at a right angle, and again the derivatives at the start and
@@ -1954,14 +2053,16 @@
               ax = acos(mxn),
               ay = asin(myn),
               da = ax-ay,
-              s = (ay > 0 ? 0 : -ax),
-              e = (ay > 0 ? ax : 0),
+              s = 0; //(ay > 0 ? 0 : -ax),
+              e = (ay > 0 ? ax : 2*PI - ax),
               dx = sin(ax),
               dy = s==0 ? -cos(ax) : cos(ax),
               dxm = sin(ax/2);
               dym = s==0 ? -cos(ax/2) : cos(ax/2);
         fill(0,255,0,100);
         arc(dim/2,dim/2,dim/f,dim/f, s, e);
+
+        if(e<PI) { noConnect(); } else { connect(); }
 
         stroke(200);
         line(0,dim/2,dim,dim/2);
@@ -2006,10 +2107,10 @@
       <p>We see two curves here; very faintly the "guessed" curve, and drawn normally, the proper curve
       with the control points shifter along the control line so that the derivatives at the start and end
       points are correct. With this, we can see that cubic curves are actually a lot better than quadratic
-      curves, and don't look all that wrong until we go past a quarter circle; 3/8th start to hint at
-      problems, and half a circle has an obvious "gap" between the real circle and the cubic approximation.
-      Quarter curves actually look pretty damn okay! But, again, how okay is okay? Let's apply some more
-      math to find out.</p>
+      curves, and don't look all that wrong until we go past a quarter circle; ⅜th
+      starts to hint at problems, and half a circle has an obvious "gap" between the real circle and the
+      cubic approximation. Anything past that just looks plain ridiculous... but quarter curves actually
+      look pretty okay! Again, how okay is okay? Let's apply some more math to find out.</p>
 
       <p>\[
         MATH GOES HERE
