@@ -1910,7 +1910,9 @@
           new Point(points[2].x + dx, points[2].y + dy)
         });
         points[1] = c;
-        (new BezierCurve(points)).draw();
+        BezierCurve bc = new BezierCurve(points);
+        bc.draw();
+        bc.getPoint(0.5).draw();
       }</textarea>
 
       <p>As you can see, things go horribly wrong quite quickly; even trying to approximate a quarter circle
@@ -2120,7 +2122,9 @@
         guess.update();
         guess.draw();
 
-        guess.getPoint(0.2).draw();
+        float a = 0.211325;
+        guess.getPoint(a).draw();
+        guess.getPoint(1-a).draw();
       }</textarea>
 
       <p>We see two curves here; very faintly the "guessed" curve, and drawn normally, the proper curve
