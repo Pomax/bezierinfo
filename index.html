@@ -1950,9 +1950,9 @@
 
       <p>\[ \begin{align*}
         a &= sin(φ) + b \cdot cos(φ) \\
-          &= sin(φ) + \frac{-1 + cos(φ)}{sin(φ)} \cdot cos(φ) \\
-          &= sin(φ) + \frac{-cos(φ) + cos^2(φ)}{sin(φ)} \\
-          &= \frac{sin^2(φ) + cos^2(φ) - cos(φ)}{sin(φ)} \\
+        .. &= sin(φ) + \frac{-1 + cos(φ)}{sin(φ)} \cdot cos(φ) \\
+        .. &= sin(φ) + \frac{-cos(φ) + cos^2(φ)}{sin(φ)} \\
+        .. &= \frac{sin^2(φ) + cos^2(φ) - cos(φ)}{sin(φ)} \\
         a &= \frac{1 - cos(φ)}{sin(φ)}
       \end{align*} \]</p>
 
@@ -1977,19 +1977,20 @@
         \left\{\begin{align*}
         T_x &= \frac{1}{4}(3 + cos(φ))\\
         T_y &= \frac{1}{4}\left(\frac{2-2cos(φ)}{sin(φ)} + sin(φ)\right)
-             = \frac{1}{4}\left(sin(φ) + 2tan\left(\frac{φ}{2}\right)\right)
+             = \frac{1}{4}\left(2tan\left(\frac{φ}{2}\right) + sin(φ)\right)
         \end{align*}\right.
       \]</p>
 
       <p>And the distance between these two is the standard Euclidean distance:</p>
 
       <p>\[\begin{array}{l}
-        d_x = T_x - P_x = \frac{1}{4}(3 + cos(φ)) - cos(\frac{φ}{2}) = 2sin^4\left(\frac{φ}{4}\right) \\
-        d_y = T_y - P_y = \frac{1}{4}\left(sin(φ) + 2tan\left(\frac{φ}{2}\right)\right) - sin(\frac{φ}{2}) \\
-        d = \sqrt{d^2_x + d^2_y}
+        d_x(φ) = T_x - P_x = \frac{1}{4}(3 + cos(φ)) - cos(\frac{φ}{2}) = 2sin^4\left(\frac{φ}{4}\right) \ , \\
+        d_y(φ) = T_y - P_y = \frac{1}{4}\left(2tan\left(\frac{φ}{2}\right) + sin(φ)\right) - sin(\frac{φ}{2}) \ , \\
+        d(φ) = \sqrt{d^2_x + d^2_y} = \ ... \  = 2sin^4(\frac{φ}{2})\sqrt{\frac{1}{cos^2(\frac{φ}{2})}}
       \end{array}\]</p>
 
-      <p>The expanded formula for <i>d</i> is unwieldy, but what we care about is what it looks like:</p>
+      <p>So, what does this distance function look like when we plot it for a
+      number of ranges for the angle φ, such as a half circle, quarter circle and eighth circle?</p>
 
       <table><tr><td>
         <p><a href="http://www.wolframalpha.com/input/?i=plot+sqrt%28%281%2F4+*+%28sin%28x%29+%2B+2tan%28x%2F2%29%29+-+sin%28x%2F2%29%29%5E2+%2B+%282sin%5E4%28x%2F4%29%29%5E2%29+for+0+%3C%3D+x+%3C%3D+pi"><img
@@ -2007,17 +2008,33 @@
       </td></tr></table>
 
       <p>We now see why the eighth circle arc looks decent, but the quarter circle arc doesn't:
-      an error of 0.06 at <i>t=0.5</i> means we're 6% off the mark... we will already be off by
-      one pixel on a circle with pixel radius 17. Any decent sized quarter circle arc, say with
-      radius 100px, will be way off if approximated by a quadratic curve! For the eighth circle
-      arc, however, the error is only 0.003, or 0.3%, which explains why it looks so close to
-      the actual eighth circle arc. In fact, if we want a truly tiny error, like 0.001, we'll
-      have to contend with an angle of (rounded) 0.593667, which equates to roughly 34 degrees.
+      an error of roughly 0.06 at <i>t=0.5</i> means we're 6% off the mark... we will already be
+      off by one pixel on a circle with pixel radius 17. Any decent sized quarter circle arc, say
+      with radius 100px, will be way off if approximated by a quadratic curve! For the eighth
+      circle arc, however, the error is only roughly 0.003, or 0.3%, which explains why it looks
+      so close to the actual eighth circle arc. In fact, if we want a truly tiny error, like 0.001,
+      we'll have to contend with an angle of (rounded) 0.593667, which equates to roughly 34 degrees.
       We'd need 11 quadratic curves to form a full circle with that precision! (technically,
       10 and ten seventeenth, but we can't do partial curves, so we have to round up). That's a
       whole lot of curves just to get a shape that can be drawn using a simple function!</p>
 
-      <p>So let's try the same thing for cubic curves.</p>
+      <p>In fact, let's flip the function around, so that if we plug in the precision error, labeled
+      ε, we get back the maximum angle for that precision:</p>
+
+      <p>\[
+        φ = 4 \cdot arccos \left(\frac{\sqrt{2+ε-\sqrt{ε(2+ε)}}}{\sqrt{2}}\right)
+      \]</p>
+
+      <p>Things are starting to look, frankly, a bit ridiculous at this point, but this is as far
+      as we need the math to take us. If we plug in the precisions 0.1, 0.01, 0.001 and 0.0001 we
+      get the values 1.748, 1.038, 0.594 and 0.3356; in degrees, roughly 100 (requiring four curves),
+      59.5 (requiring six curves), 34 (requiring 11 curves), and 19.2 (requiring a whopping nineteen
+      curves). </p>
+
+      <p>The bottom line? <strong>Quadratic curves are kind of lousy</strong>, if you want circular
+      (or elliptical, which are circles that have been squashed in one dimension) curvatures. We
+      can do better, even if it's just by raising the order of our curve once. So let's try the
+      same thing for cubic curves.</p>
 
       <p>For cubic curves the control points must be each other's mirror around the line running
       through the baseline midpoint, at a right angle, and again the derivatives at the start and
@@ -2102,20 +2119,43 @@
         guess.points[2] = c2;
         guess.update();
         guess.draw();
+
+        guess.getPoint(0.2).draw();
       }</textarea>
 
       <p>We see two curves here; very faintly the "guessed" curve, and drawn normally, the proper curve
       with the control points shifted along the control line so that the derivatives at the start and end
       points are correct. With this, we can see that cubic curves are actually a lot better than quadratic
-      curves, and don't look all that wrong until we go past a quarter circle; ⅜th
-      starts to hint at problems, and half a circle has an obvious "gap" between the real circle and the
-      cubic approximation. Anything past that just looks plain ridiculous... but quarter curves actually
-      look pretty okay! Again, how okay is okay? Let's apply some more math to find out.</p>
+      curves, and don't look all that wrong until we go past a quarter circle; ⅜th starts to hint at
+      problems, and half a circle has an obvious "gap" between the real circle and the cubic approximation.
+      Anything past that just looks plain ridiculous... but quarter curves actually look pretty okay!
+      Again, how okay is okay? Let's apply some more math to find out.</p>
+
+      <p>Unlike for the quadratic curve, we can't use <i>t=0.5</i> as our reference point because by its
+      very nature it's one of the three points that are actually guaranteed to lie on the circular curve.
+      Instead, we need a different <i>t</i> value. If we run some analysis on the curve we find that the
+      actual <i>t</i> value at which the curve is furthest from what it should be is 0.211325 (rounded).
+      Now, that's going to make our functions look horribly complicated, so instead we'll use 0.2,
+      because this makes the "not-the-weight" terms in the Bézier function nice and simple to work with,
+      while still being fairly close to the maximum divergence. The start and end point are the same as before:</p>
+
+      <p>\[ S = \begin{pmatrix} 1 \\ 0 \end{pmatrix} \ , \ \  E = \begin{pmatrix} cos(φ) \\ sin(φ) \end{pmatrix} \]</p>
+
+      <p>But we now need to find two control points, rather than one:</p>
+
+      <p>\[\begin{array}{l}
+        C_1 = S + a \cdot \begin{pmatrix} 0 \\ 1 \end{pmatrix} \ , \\
+        C_2 = E + b \cdot \begin{pmatrix} -sin(φ) \\ cos(φ) \end{pmatrix}
+      \end{array}\]</p>
+
+      <p>Unlike for the quadratic case, we need some more information in order to compute <i>a</i> and <i>b</i>,
+      since they're no longer dependent variables. Luckily, we have de Casteljau's algorith to tell us where
+      C<sub>1</sub> and C<sub>2</sub> lie, but it's more, and tedious, work. So... let me get tedious so you
+      don't have to:</p>
 
       <p>\[
-        MATH\ GOES\ HERE,\ TOMORROW
+        MORE\ MATH\ GOES\ HERE
       \]</p>
-
 
     </section>
 
