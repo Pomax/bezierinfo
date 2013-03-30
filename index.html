@@ -1865,42 +1865,18 @@
       you can move the mouse around over a unit circle, to see how well, or poorly, a quadratic
       curve can approxiate the arc from (1,0) to where your mouse cursor is:</p>
 
-      <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Quadratic Bézier arc approximation">
-      void setupCurve() {
-        ellipseMode(CENTER);
-        redrawOnMove();
+      <textarea class="sketch-code" data-sketch-preset="arcfitting" data-sketch-title="Quadratic Bézier arc approximation">
+      void setupCurve() { order = 2; }
+
+      void checkConnect() {
+        if((s==0 && e>PI/2) || s<-PI/2) { connect(); }
+        else { noConnect(); }
       }
 
-      void drawCurve(BezierCurve curve) {
-        float f = 1.5, f2 = 2*f;
-        noFill();
-        stroke(255,0,0);
-        ellipse(dim/2,dim/2,dim/f,dim/f);
-
-        float mx = mouseX - dim/2,
-              my = mouseY - dim/2,
-              d = dist(0,0,mx,my),
-              mxn = mx/d,
-              myn = my/d,
-              ax = acos(mxn),
-              ay = asin(myn),
-              da = ax-ay,
-              s = (ay > 0 ? 0 : -ax),
-              e = (ay > 0 ? ax : 0),
-              dx = sin(ax),
-              dy = s==0 ? -cos(ax) : cos(ax);
-        fill(0,255,0,100);
-        arc(dim/2,dim/2,dim/f,dim/f, s, e);
-
-        if((s==0 && e>PI/2) || s<-PI/2) { connect(); } else { noConnect(); }
-
-        stroke(200);
-        line(0,dim/2,dim,dim/2);
-        line(dim/2,0,dim/2,dim);
-
+      void findArcFitting() {
         Point[] points = {
-          new Point(dim/2 + dim/f2,dim/2),
-          new Point(dim/2,dim/2),
+          new Point(dim/2 + dim/f2, dim/2),
+          new Point(dim/2, dim/2),
           new Point(dim/2 + dim/f2*cos(ax), dim/2 + dim/f2*sin(ay))
         };
         Point c = comp.lli(new Point[]{
@@ -2038,7 +2014,7 @@
       can do better, even if it's just by raising the order of our curve once. So let's try the
       same thing for cubic curves.</p>
 
-      <p>For cubic curves the control points must be each other's mirror around the line running
+      <p id="circles_cubic">For cubic curves the control points must be each other's mirror around the line running
       through the baseline midpoint, at a right angle, and again the derivatives at the start and
       end points must agree. Again we don't have altogether that much choice: there is only one
       pair of control points that guarantees correct derivatives for the start and end points,
@@ -2052,57 +2028,23 @@
       is aligned with the line from start point to control point 1, and that the derivative at the
       end is aligned with the line from control point 2 to the end point).</p>
 
-      <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Cubic Bézier arc approximation">
-      void setupCurve() {
-        ellipseMode(CENTER);
-        redrawOnMove();
+      <textarea class="sketch-code" data-sketch-preset="arcfitting" data-sketch-title="Cubic Bézier arc approximation">
+      void setupCurve() { order = 3; }
+
+      void checkConnect() {
+        if(e < PI) { noConnect(); } else { connect(); }
       }
 
-      void drawCurve(BezierCurve curve) {
-        float f = 1.5, f2 = 2*f;
-        noFill();
-        stroke(255,0,0);
-        ellipse(dim/2,dim/2,dim/f,dim/f);
-
-        float mx = mouseX - dim/2,
-              my = mouseY - dim/2,
-              d = dist(0,0,mx,my),
-              mxn = mx/d,
-              myn = my/d,
-              ax = acos(mxn),
-              ay = asin(myn),
-              da = ax-ay,
-              s = 0; //(ay > 0 ? 0 : -ax),
-              e = (ay > 0 ? ax : 2*PI - ax),
-              dx = sin(ax),
-              dy = s==0 ? -cos(ax) : cos(ax),
-              dxm = sin(ax/2);
-              dym = s==0 ? -cos(ax/2) : cos(ax/2);
-        fill(0,255,0,100);
-        arc(dim/2,dim/2,dim/f,dim/f, s, e);
-
-        if(e<PI) { noConnect(); } else { connect(); }
-
-        stroke(200);
-        line(0,dim/2,dim,dim/2);
-        line(dim/2,0,dim/2,dim);
-
+      void findArcFitting() {
         // guess the curve based on the start/mid/end points:
         Point p1 = new Point(dim/2 + dim/f2,dim/2),
               p2 = new Point(dim/2 + dim/f2*cos((s+e)/2), dim/2 + dim/f2*sin((s+e)/2)),
               p3 = new Point(dim/2 + dim/f2*cos(ax), dim/2 + dim/f2*sin(ay));
         BezierCurve guess = comp.generateCurve(3,p1,p2,p3);
 
-        noAdditionals();
-        guess.draw(color(150,150,255,100));
-        stroke(150,150,255,100)
-        line(guess.points[0].x, guess.points[0].y, guess.points[1].x, guess.points[1].y);
-        line(guess.points[1].x, guess.points[1].y, guess.points[2].x, guess.points[2].y);
-        line(guess.points[2].x, guess.points[2].y, guess.points[3].x, guess.points[3].y);
-        noFill();
-        ellipse(guess.points[1].x, guess.points[1].y, 5,5);
-        ellipse(guess.points[2].x, guess.points[2].y, 5,5);
-        additionals();
+        Point oc1 = guess.points[1];
+
+        drawGuess(guess);
 
         // then, move the control points so that B'(0) and B'(1) are correct:
         Point c1 = comp.lli(new Point[]{
@@ -2111,11 +2053,13 @@
           guess.points[1],
           guess.points[2],
         });
+
         // taking advantage of symmetry, we trivially know c2 now, too:
         dx = guess.points[1].x - c1.x;
         dy = guess.points[1].y - c1.y;
         Point c2 = new Point(guess.points[2].x + dx,
                              guess.points[2].y + dy);
+
         // replace, update, and draw.
         guess.points[1] = c1;
         guess.points[2] = c2;
@@ -2123,7 +2067,8 @@
         guess.draw();
 
         float a = 0.211325;
-        guess.getPoint(a).draw();
+        Point pa = guess.getPoint(a);
+        pa.draw();
         guess.getPoint(1-a).draw();
       }</textarea>
 
@@ -2138,36 +2083,187 @@
       <p>Unlike for the quadratic curve, we can't use <i>t=0.5</i> as our reference point because by its
       very nature it's one of the three points that are actually guaranteed to lie on the circular curve.
       Instead, we need a different <i>t</i> value. If we run some analysis on the curve we find that the
-      actual <i>t</i> value at which the curve is furthest from what it should be is 0.211325 (rounded).
-      Now, that's going to make our functions look horribly complicated, so instead we'll use 0.2,
-      because this makes the "not-the-weight" terms in the Bézier function nice and simple to work with,
-      while still being fairly close to the maximum divergence. The start and end point are the same as before:</p>
+      actual <i>t</i> value at which the curve is furthest from what it should be is 0.211325 (rounded),
+      but we don't know "why", since finding this value involves root-finding, and is nearly impossible
+      to do symbolically without pages and pages of math just to express one of the possible solutions.</p>
+
+      <p>So instead, let's simply take that <i>t</i> value and see what the error is for circular arcs
+      with an angle ranging from 0 to 2π:</p>
+
+      <table><tr><td>
+        <p><img src="images/arc-c-2pi.gif"></p>
+        <p>plotted for 0 ≤ φ ≤ 2π:</p>
+      </td><td>
+        <p><img src="images/arc-c-pi.gif"></p>
+        <p>plotted for 0 ≤ φ ≤ π:</p>
+      </td><td>
+        <p><img src="images/arc-c-pi2.gif"></p>
+        <p>plotted for 0 ≤ φ ≤ ½π:</p>
+      </td></tr></table>
+
+      <p>We see that cubic Bézier curves are much better when it comes to approximating circular arcs,
+      with an error of less than 0.027 at the two "bulge" points for a quarter circle (which had an
+      error of 0.06 for quadratic curves at the mid point), and an error near 0.001 for an eighth
+      of a circle. In fact, the precision of a cubic curve at a quarter circle is considered "good
+      enough" by many to justify using four cubic Bézier curves to fake a full circle when no circle
+      shapes are available, and generally people will not notice it's not a real circle unless you
+      overlay the actual circle so they can see the difference.</p>
+
+      <p>So if we want to use a cubic Bézier curve, where do the curve's points go?
+      The start and end point are the same as before:</p>
 
       <p>\[ S = \begin{pmatrix} 1 \\ 0 \end{pmatrix} \ , \ \  E = \begin{pmatrix} cos(φ) \\ sin(φ) \end{pmatrix} \]</p>
 
       <p>But we now need to find two control points, rather than one:</p>
 
-      <p>\[\begin{array}{l}
-        C_1 = S + a \cdot \begin{pmatrix} 0 \\ 1 \end{pmatrix} \ , \\
-        C_2 = E + b \cdot \begin{pmatrix} -sin(φ) \\ cos(φ) \end{pmatrix}
-      \end{array}\]</p>
-
-      <p>Unlike for the quadratic case, we need some more information in order to compute <i>a</i> and <i>b</i>,
-      since they're no longer dependent variables. Luckily, we have de Casteljau's algorith to tell us where
-      C<sub>1</sub> and C<sub>2</sub> lie, but it's more, and tedious, work. So... let me get tedious so you
-      don't have to:</p>
-
       <p>\[
-        MORE\ MATH\ GOES\ HERE
+        C_1 = S + a \cdot \begin{pmatrix} 0 \\ 1 \end{pmatrix} \ \ , \ \ 
+        C_2 = E + b \cdot \begin{pmatrix} -sin(φ) \\ cos(φ) \end{pmatrix}
       \]</p>
 
+      <p>Unlike for the quadratic case, we need some more information in order to compute <i>a</i> and <i>b</i>,
+      since they're no longer dependent variables. First, we observe that the curve is symmetrical, so whatever
+      values we end up finding for C<sub>1</sub> will apply to C<sub>2</sub> as well (rotated along its tangent),
+      so we'll focus on finding the location of C<sub>1</sub> only. So here's where we do something that you might
+      not expect: we're going to ignore for a moment, because we're going to have a much easier time if we just
+      solve this problem with geometry first, then move to calculus to solve a much simpler problem.</p>
+
+      <p>If we look at the triangle that is formed between our starting point, or initial guess C<sub>1</sub>
+      and our real C<sub>1</sub>, there's something funny going on: if we treat the line {start,guess} as
+      our opposite side, the line {guess,real} as our adjacent side, with {start,real} our hypothenuse, then
+      the angle for the corner hypothenuse/adjacent is half that of the arc we're convering. Try it: if you
+      place the end point at a quarter circle (pi/2, or 90 degrees), the angle in our triangle is half a
+      quarter (pi/4, or 45 degrees). With that knowledge, and a knowledge of what the length of any of
+      our lines segments are (as a function), we can determine where our control points are, and thus have
+      everything we need to find the error distance function. Of the three lines, the one we can easiest
+      determine is {start,guess}, so let's find out what the guessed control point is. Again geometrically,
+      because we have the benefit of an on-curve <i>t=0.5</i> value.</p>
+
+      <p>The distance from our guessed point to the start point is exactly the same as the projection distance
+      we looked at earlier. Using <i>t=0.5</i> as our point "B" in the "A,B,C" projection, then we know the
+      length of the line segment {C,A}, since it's d<sub>1</sub> = {A,B} + d<sub>2</sub> = {B,C}:</p>
+
+      <p>\[
+        ||{A,C}|| = d_2 + d_1 = d_2 + d_2 \cdot ratio_3 \left(\frac{1}{2}\right) = d_2 + \frac{1}{3}d_2 = \frac{4}{3}d_2
+      \]</p>
+
+      <p>So that just leaves us to find the distance from <i>t=0.5</i> to the baseline for an arbitrary
+      angle φ, which is the distance from the center of the circle to our <i>t=0.5</i> point, minus the
+      distance from the center to the line that runs from start point to end point. The first is the
+      same as the point P we found for the quadratic curve:</p>
+
+      <p>\[
+        P_x = cos(\frac{φ}{2}) \ , \ \  P_y = sin(\frac{φ}{2})
+      \]</p>
+
+      <p>And the distance from the origin to the line start/end is another application of angles,
+      since the triangle {origin,start,C} has known angles, and two known sides. We can find
+      the length of the line {origin,C}, which lets us trivially compute the coordinate for C:</p>
+
+      <p>\[\begin{array}{l}
+        l = cos(\frac{φ}{2}) \ , \\
+        \left\{\begin{array}{l}
+          C_x = l \cdot cos\left(\frac{φ}{2}\right) = cos^2\left(\frac{φ}{2}\right)\ , \\
+          C_y = l \cdot sin\left(\frac{φ}{2}\right) = cos(\frac{φ}{2}) \cdot sin\left(\frac{φ}{2}\right)\ , \\
+        \end{array}\right.
+      \end{array}\]</p>
+
+      <p>With the coordinate C, and knowledge of coordinate B, we can determine coordinate A, and get a vector
+      that is identical to the vector {start,guess}:</p>
+
+      <p>\[\left\{\begin{array}{l}
+        B_x - C_x = cos\left(\frac{φ}{2}\right) - cos^2\left(\frac{φ}{2}\right) \\
+        B_y - C_y = sin\left(\frac{φ}{2}\right) - cos(\frac{φ}{2}) \cdot sin\left(\frac{φ}{2}\right)
+                  = sin\left(\frac{φ}{2}\right) - \frac{sin(φ)}{2}
+      \end{array}\right.\]</p>
+
+      <p>\[\left\{\begin{array}{l}      
+        \vec{v}_x = \{C,A\}_x = \frac{4}{3} \cdot (B_x - C_x) \\
+        \vec{v}_y = \{C,A\}_y = \frac{4}{3} \cdot (B_y - C_y)
+      \end{array}\right.\]</p>
+
+      <p>Which means we can now determine the distance {start,guessed}, which is the same as the distance
+        {C,A}, and use that to determine the vertical distance from our start point to our C<sub>1</sub>:</p>
+
+      <p>\[\left\{\begin{array}{l}
+        C_{1x} = 1 \\
+        C_{1y} = \frac{d}{sin\left(\frac{φ}{2}\right)}
+               = \frac{\sqrt{\vec{v}^2_x + \vec{v}^2_y}}{sin\left(\frac{φ}{2}\right)}
+               = \frac{4}{3} tan \left( \frac{φ}{4} \right)
+      \end{array}\right.\]</p>
+
+      <p>And after this tedious detour to find the coordinate for C<sub>1</sub>, we can find C<sub>2</sub>
+      fairly simply, since it's lies at distance -C<sub>1y</sub> along the end point's tangent:</p>
+
+      <p>\[\begin{array}{l}
+        E'_x = -sin(φ) \ , \ E'_y = cos(φ) \ , \ ||E'|| = \sqrt{ (-sin(φ))^2 + cos^2(φ)} = 1 \ , \\
+        \left\{\begin{array}{l}
+          C_2x = E_x - C_{1y} \cdot \frac{E_x'}{||E'||}
+               = cos(φ) + C_{1y} \cdot sin(φ) 
+               = cos(φ) + \frac{4}{3} tan \left( \frac{φ}{4} \right) \cdot sin(φ) \\ 
+          C_2y = E_y - C_{1y} \cdot \frac{E_y'}{||E'||}
+               = sin(φ) - C_{1y} \cdot cos(φ) 
+               = sin(φ) - \frac{4}{3} tan \left( \frac{φ}{4} \right) \cdot cos(φ)
+        \end{array}\right.
+      \end{array}\]</p>
+
+      <p>And that's it, we have all four points now for an arbitary circular arc with angle φ.
+      To make life just that little bit easier, I'll also throw in the the standard coordinates
+      if you want to approximate a circle with cubic Bézier curves, assuming a unit circle:</p>
+
+      <ul>
+        <li>start: (1,0)</li>
+        <li>c1: (1, ≈0.55228)</li>
+        <li>c2: (≈0.55228, 1)</li>
+        <li>end: (0,1)</li>
+      </ul>
+
+      <p>Forming the full curve is then a matter of mirroring these coordinates about the origin:</p>
+
+      <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Cubic Bézier circle approximation">
+      void setupCurve() { setupDefaultCubic(); }
+
+      void drawCurve(BezierCurve curve) {
+        float ox = dim/2, oy = dim/2, r = dim/2.5;
+
+        stroke(150);
+        line(0,dim/2,dim,dim/2);
+        line(dim/2,0,dim/2,dim);
+
+        (new BezierCurve(new Point[]{
+          new Point(ox + r*1,       oy + r*0),
+          new Point(ox + r*1,       oy + r*0.55228),
+          new Point(ox + r*0.55228, oy + r*1),
+          new Point(ox + r*0,       oy + r*1)
+        })).draw();
+
+        (new BezierCurve(new Point[]{
+          new Point(ox + r*0,       oy + r*1),
+          new Point(ox - r*0.55228, oy + r*1),
+          new Point(ox - r*1,       oy + r*0.55228),
+          new Point(ox - r*1,       oy + r*0)
+        })).draw();
+
+        (new BezierCurve(new Point[]{
+          new Point(ox - r*1,       oy + r*0),
+          new Point(ox - r*1,       oy - r*0.55228),
+          new Point(ox - r*0.55228, oy - r*1),
+          new Point(ox + r*0,       oy - r*1)
+        })).draw();
+
+        (new BezierCurve(new Point[]{
+          new Point(ox + r*0,       oy - r*1),
+          new Point(ox + r*0.55228, oy - r*1),
+          new Point(ox + r*1,       oy - r*0.55228),
+          new Point(ox + r*1,       oy + r*0)
+        })).draw();
+      }</textarea>
     </section>
 
     <section id="remaining">
       <h2>Sections that still need to be written</h2>
 
       <ol>
-        <li>Approximating (elliptical?) arcs with Bezier curves</li>
         <li>Approximating Bezier curves with (elliptical?) arcs</li>
         <li>Drawing "dashed" curves (effectively: getting t-for-distance)</li>
       </ol>
@@ -2175,23 +2271,6 @@
       <p>If there's anything missing from this list, plase file an issue on github (link's in the
       upper right corner)</p>
     </section>
-
-<!--
-      <textarea class="sketch-code" data-sketch-preset="generate" data-sketch-title="Fitting a cubic Bézier curve">
-      void setupCurve() { span(); }
-
-      void drawCurve(BezierCurve curve) {
-        Point[] p = {
-          new Point(0,dim/2),
-          new Point(dim/2,0),
-          new Point(dim,dim/2),
-          new Point(dim/2,dim)
-        };
-        comp.generateCurve(3, p[0], p[1], p[2]).draw();
-        comp.generateCurve(3, p[2], p[3], p[0]).draw();
-        ellipse(dim/2,dim/2,dim,dim);
-      }</textarea>
--->
   </body>
 
   <!-- scripts can come last so they don't hold up the DOM -->

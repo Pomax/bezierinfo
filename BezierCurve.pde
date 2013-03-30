@@ -62,6 +62,7 @@ class BezierCurve {
    * - control normals
    */
   void update() {
+    span_t = -1;
     generator = null;
     // Split up "point" x- and y- components for quick lookup.
     for(int i=0, last=points.length; i<last; i++) {
@@ -125,7 +126,7 @@ class BezierCurve {
     t = refineProjection(p, t, mindist, 1.0/(1.01*LUT_resolution));
     return t;
   }
-  
+
   /**
    * Refine a point projection's [t] value.
    */
@@ -135,7 +136,7 @@ class BezierCurve {
     float prev_t = t-precision,
           next_t = t+precision;
     Point prev = getPoint(prev_t),
-          next = getPoint(next_t);    
+          next = getPoint(next_t);
     float prev_distance = dist(p.x, p.y, prev.x, prev.y),
           next_distance = dist(p.x, p.y, next.x, next.y);
     // smaller distances?

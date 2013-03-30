@@ -1,0 +1,33 @@
+<!--
+      <p>Now, finally, we have all the values we need to see how big the error on our curve is, since
+      we can finally fully specify our Bézier formulae, taking into account that we fixed out value
+      for <i>t</i> at 0.211325. We're interested in finding the distance for a circular arc with
+      angle φ:</p>
+
+      <p>\[\begin{array}{l}
+        d(φ) = || B(φ) - C(φ') || \ , \\
+        where\ φ' = tan^{-1}\left( \frac{B(φ)_y}{B(φ)_x} \right) \ , \\
+        C(φ') = \left\{\begin{array}{l}
+          cos\left( tan^{-1}\left( \frac{B(φ)_y}{B(φ)_x} \right) \right) \\
+          sin\left( tan^{-1}\left( \frac{B(φ)_y}{B(φ)_x} \right) \right) \\
+        \end{array}\right. \\
+        B(φ) = \left\{\begin{array}{l}
+          (1-t)^3
+          +
+          3t(1-t)^2
+          +
+          3(1-t)t^2 \cdot \left( cos(φ) + \frac{4}{3} tan \left( \frac{φ}{4} \right) \cdot sin(φ) \right)
+          +
+          t^3 \cdot cos(φ)
+          \\
+          3t(1-t)^2 \cdot \left( \frac{4}{3} tan \left( \frac{φ}{4} \right) \right)
+          +
+          3(1-t)t^2 \cdot \left( sin(φ) - \frac{4}{3} tan \left( \frac{φ}{4} \right) \cdot cos(φ) \right)
+          +
+          t^3 \cdot sin(φ)
+        \end{array}\right. \\
+      \end{array}\]</p>
+
+      <p>And this is why people say math is boring. When you really want to find something special,
+      it's just hard work. Just like anything else. And that's why I'm doing this, so you don't have to =)</p>
+-->
