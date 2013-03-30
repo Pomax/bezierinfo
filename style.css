@@ -65,6 +65,15 @@ canvas.loading-sketch {
 .sketch-title:before {
   content: "Figure " attr(data-number) ": ";
 }
+.sketch canvas {
+  -webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+.sketch canvas:focus {
+  outline: none;
+  border: 1px solid rgb(0,0,200);
+}
 
 .sketch canvas[data-preset=simple],
 .sketch canvas[data-preset=ratios],

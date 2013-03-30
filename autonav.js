@@ -1,6 +1,5 @@
 (function(d) {
   var nav = d.querySelector("#navbar ol");
-  console.log(nav);
   var items = d.querySelectorAll("section"), e, i, l;
   var sectionId = 1;
   for(i=1, l=items.length; i<l; i++) {
