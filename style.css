@@ -1,3 +1,12 @@
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: url('images/paper.png');
+}
+
 header, section, footer {
   width: 960px;
   margin: 0 auto;
@@ -5,7 +14,16 @@ header, section, footer {
 
 header { font-size: 125%; }
 
-
+article {
+  width: 960px;
+  margin: auto;
+  background: rgba(255, 255, 255, 0.74);
+  border: solid rgba(255, 0, 0, 0.35);
+  border-width: 0;
+  border-left-width: 1px;
+  padding: 1em;
+  box-shadow: 25px 0px 25px 25px rgba(255, 255, 255, 0.74);
+}
 section p {
   text-align: justify;
 }
@@ -98,3 +116,5 @@ a.ribbon {
 td p {
   text-align:center;
 }
+
+#scriptblock { display: none; }
