@@ -82,13 +82,14 @@ a.ribbon {
 #navbar {
   float: right;
   background: white;
-  padding: 0 0 1em 1em;
+  padding: 0 0.2em 0.5em 0.5em;
   border: 1px solid black;
-  margin: 0 0 0 1em;
+  margin: 0 0 0.2em 1em;
   font-size: 80%;
 }
 
-#navbar h3 { margin: 0.2em 1em; }
+#navbar h3 { margin: 0.2em 0; }
+#navbar ol { margin: 0.2em; margin-left: -1em; }
 
 td p {
   text-align:center;

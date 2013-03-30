@@ -19,6 +19,7 @@
     <section id="preface">
       <div id="navbar">
         <h3>Table of Contents</h3>
+        <ol></ol>
       </div>
 
       <p>This page houses the new codepase and example sketches while the
@@ -2408,10 +2409,10 @@
             stroke(0,0,200,100);
             line(0,y,x,y);
             stroke(0,100,0,100);
-            line(x,0,x,y);            
+            line(x,0,x,y);
             markers.add(inverted.get(d));
           }
-        }        
+        }
 
         stroke(0);
         for(float t: t_keys) {
@@ -2433,7 +2434,7 @@
       }</textarea>
 
       <p>However, are there better ways? One such way is discussed in "<a href="http://www.geometrictools.com/Documentation/MovingAlongCurveSpecifiedSpeed.pdf"
-      >Moving Along a Curve with Specied Speed</a>" by David Eberly of Geometric Tools, LLC, but 
+      >Moving Along a Curve with Specied Speed</a>" by David Eberly of Geometric Tools, LLC, but
       basically because we have no explicit lengh function (or rather, one we don't have to
       constantly compute for different intervals), you may simply be better off with a traditional
       lookup table (LUT).</p>
