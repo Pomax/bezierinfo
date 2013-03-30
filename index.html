@@ -2218,12 +2218,13 @@
       To make life just that little bit easier, I'll also throw in the the standard coordinates
       if you want to approximate a circle with cubic Bézier curves, assuming a unit circle:</p>
 
-      <ul>
-        <li>start: (1,0)</li>
-        <li>c1: (1, ≈0.55228)</li>
-        <li>c2: (≈0.55228, 1)</li>
-        <li>end: (0,1)</li>
-      </ul>
+      <p>\[\begin{array}{l}
+        S = (1, 0) \ , \ 
+        C_1 = \left ( 1, \frac{4\sqrt{2}-4}{3} ≈ 0.55228 \right ) \ , \
+        C_2 = \left ( \frac{4\sqrt{2}-4}{3} ≈ 0.55228 , 1 \right ) \ , \
+        E = (0, 1)
+
+      \end{array}\]</p>
 
       <p>Forming the full curve is then a matter of mirroring these coordinates about the origin:</p>
 
