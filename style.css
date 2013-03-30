@@ -18,6 +18,10 @@ section *+h2:before {
   content: "";
 }
 
+section * h2:before {
+  content: "";
+}
+
 canvas.loading-sketch {
   background: url('images/ajax-loader.gif');
   background-repeat: no-repeat;
