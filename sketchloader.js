@@ -92,10 +92,8 @@
           return function loadSketch() {
             var canvas = list.splice(0,1)[0];
             var label = canvas.parentNode.querySelector("canvas ~ span");
-            console.log("trying canvas; loadSketch: "+canvas.loadSketch);
             if(canvas.loadSketch) {
-              console.log("loading sketch");
-              canvas.loadSketch;
+              canvas.loadSketch();
               return true; }
             return false; }
         }(listing));
@@ -109,7 +107,9 @@
         var trickle = function trickle() {
           if(listing.length===0) return;
           var timeout = (loadSketch() ? loadInterval : 10);
-          console.log("trickle loading, timeout: "+timeout);
+          if(console.info) {
+            console.info("trickle loading, timeout: "+timeout);
+          }
           setTimeout(trickle, timeout);
         };
 
