@@ -20448,7 +20448,7 @@
           codeBinding.canvas.loadSketch = (function(cb) {
             return function loadSketch() {
               loadSketchFromSources(cb.canvas, cb.fileNames, cb.code);
-              delete cb.canvas.loadSketch;
+              cb.canvas.loadSketch = false;
             };
           }(codeBinding));
         }

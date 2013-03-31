@@ -35,7 +35,7 @@ class CurvePair {
   boolean smallEnough() {
     return c1.getCurveLength() < 0.5 && c2.getCurveLength() < 0.5;
   }
-  
+
   // draw these curves with linked coloring
   void draw(color c) { c1.draw(c); c2.draw(c); }
 
