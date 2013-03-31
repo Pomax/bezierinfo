@@ -63,12 +63,10 @@ canvas.loading-sketch {
 }
 .sketch canvas {
   margin: auto; 
-  outline: none;
   border: 1px solid black;
 }
 .sketch canvas:focus {
-  outline: none;
-  border: 1px solid rgb(0,0,200);
+  outline: 1px solid rgba(0,0,0,0);
 }
 .sketch-title:before {
   content: "Figure " attr(data-number) ": ";
