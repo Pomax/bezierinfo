@@ -20447,7 +20447,6 @@
           loadList.push(codeBinding);
           codeBinding.canvas.loadSketch = (function(cb) {
             return function loadSketch() {
-              console.log("loading sketch");
               loadSketchFromSources(cb.canvas, cb.fileNames, cb.code);
               delete cb.canvas.loadSketch;
             };
