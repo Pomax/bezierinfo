@@ -107,9 +107,6 @@
         var trickle = function trickle() {
           if(listing.length===0) return;
           var timeout = (loadSketch() ? loadInterval : 10);
-          if(console.info) {
-            console.info("trickle loading, timeout: "+timeout);
-          }
           setTimeout(trickle, timeout);
         };
 
