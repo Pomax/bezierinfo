@@ -60,7 +60,7 @@
 
       var viewSource = "<span onclick=\"viewSource(" + figCount + ")\">view source</span>";
       var label = document.createElement("span");
-      label.innerHTML = sketchLabel + " (" + viewSource + ")";
+      label.innerHTML = sketchLabel + "<span class='viewsource'> (" + viewSource + ")</span>";
       label.setAttribute("class", "sketch-title");
       label.setAttribute("data-number", ""+figCount);
 

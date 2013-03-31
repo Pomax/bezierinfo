@@ -3,7 +3,8 @@
   <head>
     <meta charset="utf-8">
     <title>Bézier curve framework</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" media="screen" href="style.css">
+    <link rel="stylesheet" media="print" href="print.css">
   </head>
   <body>
     <a class="ribbon" href="http://github.com/pomax/bezierinfo"><img
@@ -1197,7 +1198,7 @@
 
         <p>The following graphic applies this algorithm to a pair of cubic curves, slowed down so that
         you can see the algorithm in action. Click the button to run the algorithm, after setting up
-        your curves in some creative arrangment: <button id="clippingButton">detect</button></p>
+        your curves in some creative arrangement: <button id="clippingButton">detect</button></p>
 
         <textarea class="sketch-code" data-sketch-preset="clipping" data-sketch-title="Curve/curve intersections">
         void iterate() {
@@ -1487,16 +1488,18 @@
           integral interval to any other integral interval, by shifting and scaling the inputs. Doing so, we get the
           following:</p>
 
-          <p>\[
+          <p>\[\begin{array}{l}
             \int_{0}^{z}\sqrt{ \left (dx/dt \right )^2+\left (dy/dt \right )^2} dt
-            ≃
+            \\
+            ≃ \ 
             \frac{z}{2} \cdot \left [ C_1 \cdot f\left(\frac{z}{2} \cdot t_1 + \frac{z}{2}\right)
                                       + ...
                                       + C_n \cdot f\left(\frac{z}{2} \cdot t_n + \frac{z}{2}\right)
                               \right ]
-            =
+            \\
+            = \ 
             \frac{z}{2} \cdot \sum_{i=1}^{n}{C_i \cdot f\left(\frac{z}{2} \cdot t_i + \frac{z}{2}\right)}
-          \]</p>
+          \end{array}\]</p>
 
           <p>That may look a bit more complicated, but the fraction involving <i>z</i> is a fixed number,
           so the summation, and the evaluation of the <i>f(t)</i> values are still pretty simple.</p>
@@ -1952,17 +1955,17 @@
         <p>We compute T, observing that if <i>t=0.5</i>, the polynomial values (1-t)², 2(1-t)t, and t²
         are 0.25, 0.5, and 0.25 respectively:</p>
 
-        <p>\[
-          T = \frac{1}{4}S + \frac{2}{4}C + \frac{1}{4}E =
+        <p>\[\begin{array}{l}
+          T = \frac{1}{4}S + \frac{2}{4}C + \frac{1}{4}E = \frac{1}{4}(S + 2C + E) \\
 
-          \frac{1}{4}(S + 2C + E) =
+          = \ 
 
           \left\{\begin{align*}
           T_x &= \frac{1}{4}(3 + cos(φ))\\
           T_y &= \frac{1}{4}\left(\frac{2-2cos(φ)}{sin(φ)} + sin(φ)\right)
                = \frac{1}{4}\left(2tan\left(\frac{φ}{2}\right) + sin(φ)\right)
           \end{align*}\right.
-        \]</p>
+        \end{array}\]</p>
 
         <p>And the distance between these two is the standard Euclidean distance:</p>
 
