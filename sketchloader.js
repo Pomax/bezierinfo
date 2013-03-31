@@ -92,7 +92,9 @@
           return function loadSketch() {
             var canvas = list.splice(0,1)[0];
             var label = canvas.parentNode.querySelector("canvas ~ span");
+            console.log("trying canvas; loadSketch: "+canvas.loadSketch);
             if(canvas.loadSketch) {
+              console.log("loading sketch");
               canvas.loadSketch;
               return true; }
             return false; }
