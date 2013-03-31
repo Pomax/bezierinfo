@@ -76,10 +76,10 @@
     });
   
     /**
-     * When MathJax completes, and we're not on mobile, start to
-     * trickle-load sketches. We do this last, because we need to
-     * make sure all these canvas elements actually exist, which 
-     * is completely unrelated to MathJax throwing an 'End Process'.
+     * When MathJax completes, start to trickle-load sketches. We
+     * do this last, because we need to make sure all these canvas
+     * elements actually exist, which is completely unrelated to
+     * MathJax throwing an 'End Process'.
      */
     (function(){
       MathJax.Hub.Register.MessageHook("End Process", function (msg, target) {
@@ -107,6 +107,7 @@
         var trickle = function trickle() {
           if(listing.length===0) return;
           var timeout = (loadSketch() ? loadInterval : 10);
+          console.log("trickle loading, timeout: "+timeout);
           setTimeout(trickle, timeout);
         };
 
