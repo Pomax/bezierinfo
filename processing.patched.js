@@ -20270,6 +20270,7 @@
           if (errors.length === 0) {
             canvas.classList.remove("loading-sketch");
             var sketch = new Processing(canvas, code.join("\n"));
+            console.log("built sketch <loadSketchFromSources>");
             canvas.sketch = sketch;
             canvas.loadSketch = false;
             return sketch;
@@ -20299,8 +20300,9 @@
 
     // if not, immediately create our instance
     if (sourcesCount === 0) {
-      canvas.classList.remove("loading-sketch");
+      canvas.classList.remove("loading-sketch");     
       var sketches = new Processing(canvas, code.join("\n"));
+      console.log("built sketch <loadSketchFromSources> - instant");
       canvas.sketch = sketch;
       canvas.loadSketch = false;
       return sketch;
