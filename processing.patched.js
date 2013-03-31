@@ -20271,6 +20271,7 @@
             canvas.classList.remove("loading-sketch");
             var sketch = new Processing(canvas, code.join("\n"));
             canvas.sketch = sketch;
+            canvas.loadSketch = false;
             return sketch;
           } else {
             throw "Processing.js: Unable to load pjs sketch files: " + errors.join("\n");
@@ -20299,7 +20300,10 @@
     // if not, immediately create our instance
     if (sourcesCount === 0) {
       canvas.classList.remove("loading-sketch");
-      return new Processing(canvas, code.join("\n"));
+      var sketches = new Processing(canvas, code.join("\n"));
+      canvas.sketch = sketch;
+      canvas.loadSketch = false;
+      return sketch;
     }
   };
 
@@ -20448,7 +20452,6 @@
           codeBinding.canvas.loadSketch = (function(cb) {
             return function loadSketch() {
               loadSketchFromSources(cb.canvas, cb.fileNames, cb.code);
-              cb.canvas.loadSketch = false;
             };
           }(codeBinding));
         }

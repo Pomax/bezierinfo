@@ -45,7 +45,7 @@ void draw() {
 
   float x, f;
   int last = 0;
-  textAlign(CENTER, CENTER);  
+  textAlign(CENTER, CENTER);
   for (x=0; x<xrange; x+=0.001) {
     f = map(x, 0, xrange, hpad, width);
     if (int(f)%10==0) {
@@ -56,7 +56,7 @@ void draw() {
       last = round(f);
       text((int(x*10)/10.0)+"", f, height-10);
     }
-  } 
+  }
 
   textAlign(RIGHT, CENTER);
   for (y=0; y<yrange; y+=0.00001) {
