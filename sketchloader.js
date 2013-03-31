@@ -54,6 +54,7 @@
       dps += " Point.pde BezierCurve.pde CurvePair.pde BezierComputer.pde framework.pde Interaction.pde API.pde JavaScript.pde RuntimeException.pjs";
       canvas.setAttribute("data-processing-sources", dps);
       canvas.setAttribute("data-preset",preset);
+      canvas.setAttribute("data-print-image","images/print/"+(figCount<10? "0":'')+figCount+".gif");
 
       dependencies[figCount] = dps.replace(" RuntimeException.pjs",'') + (preset == "abc" || preset == "moulding" ? "" : " moulding.pde");
       sourceCode[figCount] = scHeader + sketch.value.replace(/(^|\n)      /g,"\n") + "\n";
@@ -73,6 +74,46 @@
       div.appendChild(label);
       sketch.parentNode.replaceChild(div,sketch);
     });
+  
+    /**
+     * When MathJax completes, and we're not on mobile, start to
+     * trickle-load sketches. We do this last, because we need to
+     * make sure all these canvas elements actually exist, which 
+     * is completely unrelated to MathJax throwing an 'End Process'.
+     */
+    (function(){
+      MathJax.Hub.Register.MessageHook("End Process", function (msg, target) {
+        var listing = document.querySelectorAll("canvas").toArray();
+
+        /**
+         * try a sketch load on a canvas element
+         */
+        var loadSketch = (function(list){
+          return function loadSketch() {
+            var canvas = list.splice(0,1)[0];
+            var label = canvas.parentNode.querySelector("canvas ~ span");
+            if(canvas.loadSketch) {
+              canvas.loadSketch;
+              return true; }
+            return false; }
+        }(listing));
+
+        // interval between trickle loads, in milliseconds:
+        var loadInterval = 350;
+
+        /**
+         * trickle-load until we run out of canvas elements.
+         */
+        var trickle = function trickle() {
+          if(listing.length===0) return;
+          var timeout = (loadSketch() ? loadInterval : 10);
+          setTimeout(trickle, timeout);
+        };
+
+        // let's try this
+        trickle();
+      });
+    }());
   }
 
   document.addEventListener("DOMContentLoaded", loadSketches, false);

@@ -20269,7 +20269,9 @@
         if (loaded === sourcesCount) {
           if (errors.length === 0) {
             canvas.classList.remove("loading-sketch");
-            return new Processing(canvas, code.join("\n"));
+            var sketch = new Processing(canvas, code.join("\n"));
+            canvas.sketch = sketch;
+            return sketch;
           } else {
             throw "Processing.js: Unable to load pjs sketch files: " + errors.join("\n");
           }
@@ -20416,22 +20418,22 @@
     }
 
     // is this canvas visible in the browser viewport?
-    var visible = function(e) {
-      var top = e.offsetTop,
-          left = e.offsetLeft,
-          width = e.offsetWidth,
-          height = e.offsetHeight;
+    var isVisible = function(e) {
+      var t = e.offsetTop,
+          l = e.offsetLeft,
+          w = e.offsetWidth,
+          h = e.offsetHeight;
 
       while(e.offsetParent) {
         e = e.offsetParent;
-        top += e.offsetTop;
-        left += e.offsetLeft; }
+        t += e.offsetTop;
+        l += e.offsetLeft; }
 
       return (
-        top < (window.pageYOffset + window.innerHeight) &&
-        left < (window.pageXOffset + window.innerWidth) &&
-        (top + height) > window.pageYOffset &&
-        (left + width) > window.pageXOffset );
+        t < (window.pageYOffset + window.innerHeight) &&
+        l < (window.pageXOffset + window.innerWidth) &&
+        (t + h) > window.pageYOffset &&
+        (l + w) > window.pageXOffset );
     };
 
     // Run through all codeBindings, loading any immediately visible sketches.
@@ -20439,10 +20441,17 @@
     for (s in codeBindings) {
       if (!Object.hasOwnProperty(codeBindings, s)) {
         codeBinding = codeBindings[s];
-        if(visible(codeBinding.canvas)) {
+        if(isVisible(codeBinding.canvas)) {
           loadSketchFromSources(codeBinding.canvas, codeBinding.fileNames, codeBinding.code);
         } else {
           loadList.push(codeBinding);
+          codeBinding.canvas.loadSketch = (function(cb) {
+            return function loadSketch() {
+              console.log("loading sketch");
+              loadSketchFromSources(cb.canvas, cb.fileNames, cb.code);
+              delete cb.canvas.loadSketch;
+            };
+          }(codeBinding));
         }
       }
     }
@@ -20454,8 +20463,10 @@
         if(loadList.length>0) {
           for (i = loadList.length-1; i >= 0; i--) {
             codeBinding = loadList[i];
-            if(visible(codeBinding.canvas)) {
-              loadSketchFromSources(codeBinding.canvas, codeBinding.fileNames, codeBinding.code);
+            if(isVisible(codeBinding.canvas)) {
+              if(codeBinding.canvas.loadSketch) {
+                codeBinding.canvas.loadSketch();
+              }
               loadList.splice(i,1);
             }
           }

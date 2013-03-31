@@ -1,11 +1,19 @@
 <!doctype html>
 <html>
+
   <head>
     <meta charset="utf-8">
     <title>Bézier curve framework</title>
     <link rel="stylesheet" media="screen" href="style.css">
     <link rel="stylesheet" media="print" href="print.css">
+    <script>
+      // give NodeList a .forEach() and .toArray(), because: seriously.
+      (function(p,n,a,f,t){n=n[p];a=a[p];n[f]=a[f];n[t]=function(){var
+        r=[];this[f](function(n){r.push(n);});return r;}}
+      ("prototype",NodeList,Array,"forEach","toArray"));
+    </script>
   </head>
+
   <body>
     <a class="ribbon" href="http://github.com/pomax/bezierinfo"><img
       src="images/ribbon.png"
@@ -2448,7 +2456,7 @@
         the thing I need to look at here</i>], get in touch and I'll see how far I can get.</p>
       </section>
 
-  <hr>
+      <hr>
 
       <section id="remaining">
         <h2>Sections that still need to be written</h2>
@@ -2479,6 +2487,5 @@
       </script>
       <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
     </div>
-
   </body>
 </html>
