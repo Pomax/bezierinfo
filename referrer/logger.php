@@ -4,23 +4,31 @@
    * referring URL they communicated. Then it logs those, timestamped,
    * to a gzipped file. That's it. Why would I log anything else...?
    */
-  if(isset($_POST)) {
-  	// timestamp
+  if(isset($_GET["referrer"])) {
+    // Make sure we allow the bezierinfo article to perform POST operations
+    header('Access-Control-Allow-Origin: http://pomax.github.com');
+    header('Access-Control-Allow-Headers: Content-Type');
+  	// Form timestamps
   	$time = microtime(true);
   	$stamp = date("Y-m-d H:i:s");
-  	// referre URL
-  	$ref = $_POST["referrer"];
+  	// Get referrer URL.
+  	$ref = $_GET["referrer"];
   	// I know URLs can be really long, but generally, they're not.
   	// Even translate.google.com URLs are typically below this.
   	if(strlen($ref) <= 350) {
-	  	// client IP
+	  	// Get client IP. You did not send this as POST data,
+      // it's simply part of the HTTP request you send.
 	  	$ip = $_SERVER["REMOTE_ADDR"];
-	    // and collapse to a line of JSON
+	    // Convert the data to a single line of JSON
 	    $json_line = '{time: '.$time.', stamp: "'.$stamp.'", referrer: "'.$ref.'", ip: "'.$ip.'"}' . "\n";
-	    // write to file. Yes, there's an .htaccess rule for it.
+	    // Finally, write the data to the log file.
+      // Yes, there's an .htaccess rule that prevents downloading this.
 		  $gz = gzopen('referral_log_' . date("Y-m-d") . '.gz','a9');
 		  gzwrite($gz, $json_line);
 		  gzclose($gz);
+      // That's all there.
 	  }
   }
+
+  echo "<pre>" . print_r($_POST,true) . "</pre>";
 ?>

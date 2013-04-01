@@ -25,8 +25,7 @@
   var url = "http://what.inthefuck.com/bezierinfo/logger.php";
   // yep, I own that domain.
   var xhr = new XMLHttpRequest();
-  xhr.open("POST", url, true);
-  // that's all, that's all this does.
-  try { xhr.send("referrer=" + encodeURIComponent(document.referrer)); }
+  xhr.open("GET", url + "?" + "referrer=" + encodeURIComponent(document.referrer), true);
+  try { xhr.send(null); }
   catch(e) { /* you don't care about this error, and I can't see it, so why would we do anything with it? */ }
 }());
