@@ -40,12 +40,10 @@ class Point {
           my = nx*sin(angle) + ny*cos(angle);
     moveTo(mx+o.x,my+o.y);
   }
-  
+
   // reflect a point through this point
   Point reflect(Point original) {
-    float dx = x - original.x,
-          dy = y - original.y;
-    return new Point(x+dx, y+dy);
+    return new Point(2*x - original.x, 2*y - original.y);
   }
 
   // does this point coincide with coordinate mx/my?

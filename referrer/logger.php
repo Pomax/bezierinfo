@@ -30,6 +30,5 @@
       // That's all there.
 	  }
   }
-
   echo "<pre>" . print_r($_POST,true) . "</pre>";
 ?>

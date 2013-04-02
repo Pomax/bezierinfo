@@ -15,9 +15,9 @@ class PolyBezierCurve {
    * Form a new poly-bezier
    */
   PolyBezierCurve() {
-    segments = new ArrayList<BezierCurve>(); 
+    segments = new ArrayList<BezierCurve>();
   }
-  
+
   /**
    * Add a segment to this poly-bezier
    */
@@ -75,7 +75,7 @@ class PolyBezierCurve {
     }
     return -1;
   }
-  
+
   /**
    * get a point [point] form a segment [segment]
    */
@@ -97,8 +97,9 @@ class PolyBezierCurve {
     p.x = nx;
     p.y = ny;
     segments.get(n).update();
-    if(n>0) { segments.get(n-1).update(); }
-    if(n<segments.size()-1) { segments.get(n+1).update(); }
+    // update the adjacent section, if we moved an endpoint.
+    if(i==0 && n>0) { segments.get(n-1).update(); }
+    if(i==pointCount-1 && n<segments.size()-1) { segments.get(n+1).update(); }
   }
 
   /**
@@ -108,7 +109,6 @@ class PolyBezierCurve {
    * movePointConstrained function, instead.
    */
   // FIXME: compact with the other two functions
-  // FIXME: not quite right when moving on-curve points atm
   void movePointHalfConstrained(int idx, float nx, float ny) {
     int n = floor((float)idx/pointCount),
         i = idx%pointCount;
@@ -193,7 +193,7 @@ class PolyBezierCurve {
       phi2 = atan2(dy,dx);
       current.points[pointCount-2].rotateOver(m, phi1-phi2);
     }
-    current.update(); 
+    current.update();
     if(segment>0) { updateDown(segment-1, full); }
   }
 
@@ -226,7 +226,7 @@ class PolyBezierCurve {
 
   /**
    * draw this poly-Bezier
-   */ 
+   */
   void draw() {
     for(BezierCurve c: segments) {
       c.draw();
