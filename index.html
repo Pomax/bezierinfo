@@ -2370,12 +2370,11 @@
         <p>We see that cubic Bézier curves are much better when it comes to approximating circular arcs,
         with an error of less than 0.027 at the two "bulge" points for a quarter circle (which had an
         error of 0.06 for quadratic curves at the mid point), and an error near 0.001 for an eighth
-        of a circle. In fact, these values are not entirely comparable without an extra note: because the
-        quadratic curve was off-curve at the midpoint, whereas the cubic curve is on-curve at the midpoint,
-        the perceived error for cubic curves is actually considerably smaller than the computer error.
+        of a circle, so we're getting less than half the error for a quarter circle, or: at a slightly
+        lower error, we're getting twice the arc. This makes cubic curves quite useful.
         In fact, the precision of a cubic curve at a quarter circle is considered "good enough" by many
-        to justify using four cubic Bézier curves to fake a full circle when no circle shapes are
-        available, and generally people will not notice it's not a real circle unless you overlay the
+        to justify using four cubic Bézier curves to fake a full circle when no circle primitives are
+        available; generally, people will not notice it's not a real circle unless you overlay the
         actual circle so they can see the difference.</p>
 
         <p>So if we want to use a cubic Bézier curve, where do the curve's points go?
