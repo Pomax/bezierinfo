@@ -20213,6 +20213,8 @@
    * @param {String[]} source The array of files that must be loaded
    */
   var loadSketchFromSources = function(canvas, sources, code) {
+    if(window.location.toString().indexOf("noProcessing")!==-1) return;
+
     var errors = [],
         sourcesCount = sources.length,
         loaded = 0;

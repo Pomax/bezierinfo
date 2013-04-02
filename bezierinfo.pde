@@ -14,23 +14,31 @@ void setupCurve() {
   int order = 2;
   ArrayList<Point> pts = new ArrayList<Point>();
 
-/*
   float dst = d/3, nx, ny, a=0, step = 2*PI/(order+1), r;
   for(a=0; a<2*PI; a+=step) {
     r = 0;//random(dst/1);
     pts.add(new Point(d/2 + cos(a) * (r+dst), d/2 + sin(a) * (r+dst)));
     dst -= 1.2;
   }
-*/
+/*
   pts.add(new Point(120,160));
   pts.add(new Point(35,200));
   pts.add(new Point(215,215));
   pts.add(new Point(110,96));
+*/
 
   Point[] points = new Point[pts.size()];
   for(int p=0,last=points.length; p<last; p++) { points[p] = pts.get(p); }
   curves.add(new BezierCurve(points));
+  redrawOnMove();
+
+  p.addCurve(new BezierCurve(new Point[]{ new Point(50,50), new Point(50,100), new Point(200,50), new Point (200,100) }));
+  p.addCurve(new BezierCurve(new Point[]{ ORIGIN, ORIGIN, new Point(100,100),new Point(100,100) }));
+  p.addCurve(new BezierCurve(new Point[]{ ORIGIN, ORIGIN, new Point(20,150),new Point(20,150) }));
+  p.addCurve(new BezierCurve(new Point[]{ ORIGIN, ORIGIN, new Point(150,150),new Point(150,150) }));  
 }
+
+PolyBezierCurve p = new PolyBezierCurve();
 
 BezierCurve[] offset1, offset2;
 int oldOffset = 0;
@@ -39,16 +47,19 @@ int oldOffset = 0;
  * Actual draw code
  */
 void drawFunction() {
-  BezierCurve curve = curves.get(0);
+  p.draw();
+  int pt = p.overPoint(mouseX, mouseY);
+  if(pt!=-1) {
+    cursor(HAND);
+    if(mousePressed) {
+      p.movePoint(pt,mouseX,mouseY);
+    } 
+  }
+  else { cursor(ARROW); }
 
-///*
-  BezierCurve bc = comp.generateCurve(3, new Point(120,20), new Point(150,150), new Point(180,120));
-  bc.draw();
-  Point bcp = bc.getPoint(0.5);
-  bcp.draw();
-  text(bcp.x+"/"+bcp.y,bcp.x+10,bcp.y+10);
-  if(true) return;
-//*/
+/*
+  BezierCurve curve = curves.get(0);
+  curve.draw();
 
   // the curve
   stroke(0);
@@ -56,10 +67,6 @@ void drawFunction() {
   controls();
   additionals();
   curve.draw();
-
-/*
-  drawBBox(test.generateBoundingBox());
-*/
 
   noLabels();
   noControls();
@@ -70,9 +77,10 @@ void drawFunction() {
   if(showSpan) {
     drawSpan(curve, t);
   }
+*/
 
+/*
   drawBoundingBox(curve.generateBoundingBox());
-
   // point on the curve at [t]
   Point p = curve.getPoint(t);
   if(playing) {
@@ -99,6 +107,7 @@ void drawFunction() {
       line(abc[1].x,abc[1].y, abc[1].x - r*dx, abc[1].y - r*dy);
     } catch (NoRatioExistsException e) {}
   }
+*/  
 
 /*
   // split the curve into two subcurves at [t]
@@ -112,7 +121,8 @@ void drawFunction() {
   spl[1].draw();
   translate(-dim,0);
 */
-offset = 20;
+
+/*
   if(offset>0) {
     // offset the curve over some distance
     int offsetDistance = offset,
@@ -138,6 +148,7 @@ offset = 20;
   println("---"); println(curve.split()[0].getInterval());
   println("---"); println(curve.split()[0].split()[1].getInterval());
   println("---"); println(curve.split()[0].split()[1].split()[0].getInterval());
+*/
 }
 
 // draw a bounding box

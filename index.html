@@ -1430,6 +1430,251 @@
         and aesthetics are a personal choice)</p>
       </section>
 
+      <section id="polybezier">
+        <h2>Forming poly-Bézier curves</h2>
+
+        <p>Much like lines can be chained together to form polygons, Bézier curves can be chained together
+        to form poly-Béziers, and the only trick required is to make sure that the derivatives at the joins
+        match up. Unless you want discontinuities; then you don't even need to do that.</p>
+
+        <p>So let's start with mirroring "off-curve" points over "on-curve" points. What this means is that
+        for any two subcurves S<sub>1</sub> and S<sub>2</sub>, the first control points in S<sub>2</sub> is
+        a reflection of the last control point in S</sub>1</sub> over S</sub>1</sub>'s last point and
+        S<sub>2</sub>'s first point (which have the same coordinate, or our poly-Bézier would just be
+        unconnected curves). Of course, this only works if we require that all subcurves in a poly-Bézier
+        are of the same order, but this is generall the case.</p>
+
+        <p>The following two graphics show two randomised curves; one quadratic, one cubic. Both consist
+        of multiple subcurves, but not all points on the curves can be moved around freely. Some points,
+        when moved, move other points as well due to the equal-derivative constraint.</p>
+
+        <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Forming a quadratic poly-Bézier">
+        int pvt;
+        boolean mouseDown = false;
+        PolyBezierCurve p = new PolyBezierCurve();
+
+        void setupCurve() {
+          p.addCurve(new BezierCurve(new Point[]{
+            new Point(1/3.0*dim, 2/3.0*dim),
+            new Point(1/6.0*dim, 1/2.0*dim),
+            new Point(1/3.0*dim, 1/3.0*dim)
+          }));
+          p.addCurve(new BezierCurve(new Point[]{ ORIGIN, ORIGIN, new Point(2/3.0*dim,1/3.0*dim) }));
+          p.addCurve(new BezierCurve(new Point[]{ ORIGIN, ORIGIN, new Point(2/3.0*dim,2/3.0*dim) }));
+          redrawOnMove();
+        }
+
+        void drawCurve(BezierCurve curve) {
+          p.draw();
+          int pt = p.overPoint(mouseX, mouseY);
+          cursor(pt==-1 ? ARROW : HAND);
+          if(mouseDown != mousePressed) {
+            mouseDown = mousePressed;
+            pvt = mouseDown ? pt : -1;
+          }
+          if(pvt!=-1 && mousePressed) {
+            p.movePointConstrained(pvt,mouseX,mouseY);
+          }
+        }</textarea>
+
+        <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Forming a cubic poly-Bézier">
+        int pvt;
+        boolean mouseDown = false;
+        PolyBezierCurve p = new PolyBezierCurve();
+
+        void setupCurve() {
+          int pad = dim/3;
+          float k = 0.55228;
+          p.addCurve(new BezierCurve(new Point[]{
+            new Point(dim/2, dim/2+pad),
+            new Point(dim/2 + k*pad, dim/2+pad),
+            new Point(dim/2 + pad, dim/2 + k*pad),
+            new Point(dim/2 + pad, dim/2)
+          }));
+          p.addCurve(new BezierCurve(new Point[]{
+            ORIGIN,
+            ORIGIN,
+            new Point(dim/2 + k*pad, dim/2-pad),
+            new Point(dim/2, dim/2-pad)
+          }));
+          p.addCurve(new BezierCurve(new Point[]{
+            ORIGIN,
+            ORIGIN,
+            new Point(dim/2-pad, dim/2-k*pad),
+            new Point(dim/2-pad, dim/2)
+          }));
+          redrawOnMove();
+        }
+
+        void drawCurve(BezierCurve curve) {
+          p.draw();
+          int pt = p.overPoint(mouseX, mouseY);
+          cursor(pt==-1 ? ARROW : HAND);
+          if(mouseDown != mousePressed) {
+            mouseDown = mousePressed;
+            pvt = mouseDown ? pt : -1;
+          }
+          if(pvt!=-1 && mousePressed) {
+            p.movePointConstrained(pvt,mouseX,mouseY);
+          }
+        }</textarea>
+
+        <p>As you can see, quadratic curves are particularly ill-suited for poly-Bézier, as all points are
+        effectively linked. Move one point, and all control points in the poly-Bézier move along with it.
+        Cubic and higher curves do not suffer from this problem.</p>
+
+        <p>We can also change the parameters so that control points about an on-curve point have opposite
+        angles, but need not share have the same amplitude. This makes curve manipulation considerably
+        easier.</p>
+
+        <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="A half-constrained quadratic poly-Bézier">
+        int pvt;
+        boolean mouseDown = false;
+        PolyBezierCurve p = new PolyBezierCurve();
+
+        void setupCurve() {
+          p.addCurve(new BezierCurve(new Point[]{
+            new Point(1/3.0*dim, 2/3.0*dim),
+            new Point(1/6.0*dim, 1/2.0*dim),
+            new Point(1/3.0*dim, 1/3.0*dim)
+          }));
+          p.addCurve(new BezierCurve(new Point[]{ ORIGIN, ORIGIN, new Point(2/3.0*dim,1/3.0*dim) }));
+          p.addCurve(new BezierCurve(new Point[]{ ORIGIN, ORIGIN, new Point(2/3.0*dim,2/3.0*dim) }));
+          redrawOnMove();
+        }
+
+        void drawCurve(BezierCurve curve) {
+          p.draw();
+          int pt = p.overPoint(mouseX, mouseY);
+          cursor(pt==-1 ? ARROW : HAND);
+          if(mouseDown != mousePressed) {
+            mouseDown = mousePressed;
+            pvt = mouseDown ? pt : -1;
+          }
+          if(pvt!=-1 && mousePressed) {
+            p.movePointHalfConstrained(pvt,mouseX,mouseY);
+          }
+        }</textarea>
+
+        <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="A half-constrained cubic poly-Bézier">
+        int pvt;
+        boolean mouseDown = false;
+        PolyBezierCurve p = new PolyBezierCurve();
+
+        void setupCurve() {
+          int pad = dim/3;
+          float k = 0.55228;
+          p.addCurve(new BezierCurve(new Point[]{
+            new Point(dim/2, dim/2+pad),
+            new Point(dim/2 + k*pad, dim/2+pad),
+            new Point(dim/2 + pad, dim/2 + k*pad),
+            new Point(dim/2 + pad, dim/2)
+          }));
+          p.addCurve(new BezierCurve(new Point[]{
+            ORIGIN,
+            ORIGIN,
+            new Point(dim/2 + k*pad, dim/2-pad),
+            new Point(dim/2, dim/2-pad)
+          }));
+          p.addCurve(new BezierCurve(new Point[]{
+            ORIGIN,
+            ORIGIN,
+            new Point(dim/2-pad, dim/2-k*pad),
+            new Point(dim/2-pad, dim/2)
+          }));
+          redrawOnMove();
+        }
+
+        void drawCurve(BezierCurve curve) {
+          p.draw();
+          int pt = p.overPoint(mouseX, mouseY);
+          cursor(pt==-1 ? ARROW : HAND);
+          if(mouseDown != mousePressed) {
+            mouseDown = mousePressed;
+            pvt = mouseDown ? pt : -1;
+          }
+          if(pvt!=-1 && mousePressed) {
+            p.movePointHalfConstrained(pvt,mouseX,mouseY);
+          }
+        }</textarea>
+
+        <p>Finally, we can of course also abandon the constraints entirely, simply enforcing that the end
+        point coordinates line up. This gives us the greatest degree of freedom when it comes to modeling
+        shapes, but also means that our poly-Bézier constructs are no longer continuous curves.</p>
+
+        <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="An unconstrained quadratic poly-Bézier">
+        int pvt;
+        boolean mouseDown = false;
+        PolyBezierCurve p = new PolyBezierCurve();
+
+        void setupCurve() {
+          p.addCurve(new BezierCurve(new Point[]{
+            new Point(1/3.0*dim, 2/3.0*dim),
+            new Point(1/6.0*dim, 1/2.0*dim),
+            new Point(1/3.0*dim, 1/3.0*dim)
+          }));
+          p.addCurve(new BezierCurve(new Point[]{ ORIGIN, ORIGIN, new Point(2/3.0*dim,1/3.0*dim) }));
+          p.addCurve(new BezierCurve(new Point[]{ ORIGIN, ORIGIN, new Point(2/3.0*dim,2/3.0*dim) }));
+          redrawOnMove();
+        }
+
+        void drawCurve(BezierCurve curve) {
+          p.draw();
+          int pt = p.overPoint(mouseX, mouseY);
+          cursor(pt==-1 ? ARROW : HAND);
+          if(mouseDown != mousePressed) {
+            mouseDown = mousePressed;
+            pvt = mouseDown ? pt : -1;
+          }
+          if(pvt!=-1 && mousePressed) {
+            p.movePoint(pvt,mouseX,mouseY);
+          }
+        }</textarea>
+
+        <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="An unconstrained cubic poly-Bézier">
+        int pvt;
+        boolean mouseDown = false;
+        PolyBezierCurve p = new PolyBezierCurve();
+
+        void setupCurve() {
+          int pad = dim/3;
+          float k = 0.55228;
+          p.addCurve(new BezierCurve(new Point[]{
+            new Point(dim/2, dim/2+pad),
+            new Point(dim/2 + k*pad, dim/2+pad),
+            new Point(dim/2 + pad, dim/2 + k*pad),
+            new Point(dim/2 + pad, dim/2)
+          }));
+          p.addCurve(new BezierCurve(new Point[]{
+            ORIGIN,
+            ORIGIN,
+            new Point(dim/2 + k*pad, dim/2-pad),
+            new Point(dim/2, dim/2-pad)
+          }));
+          p.addCurve(new BezierCurve(new Point[]{
+            ORIGIN,
+            ORIGIN,
+            new Point(dim/2-pad, dim/2-k*pad),
+            new Point(dim/2-pad, dim/2)
+          }));
+          redrawOnMove();
+        }
+
+        void drawCurve(BezierCurve curve) {
+          p.draw();
+          int pt = p.overPoint(mouseX, mouseY);
+          cursor(pt==-1 ? ARROW : HAND);
+          if(mouseDown != mousePressed) {
+            mouseDown = mousePressed;
+            pvt = mouseDown ? pt : -1;
+          }
+          if(pvt!=-1 && mousePressed) {
+            p.movePoint(pvt,mouseX,mouseY);
+          }
+        }</textarea>
+
+      </section>
+
       <section id="arclength">
         <h2>Arc length</h2>
 
@@ -2303,9 +2548,9 @@
 
         <p>The following graphic shows a particularly illustrative curve, and it's length/<i>t</i>
         plot. While the curve itself is a cubic curve, the plot shows that the distance function
-        along the curve is actually a function of a much higher order than the curve.</p>
+        along the curve is actually a function of a much higher order than the curve itself.</p>
 
-        <textarea class="sketch-code" data-sketch-preset="twopanel" data-sketch-title="Distance-for-t">
+        <textarea class="sketch-code" data-sketch-preset="twopanel" data-sketch-title="The t-for-distance function">
         HashMap<Float,Float> values = new HashMap<Float,Float>();
         ArrayList<Float> keys = new ArrayList<Float>();
 
@@ -2366,7 +2611,7 @@
         along the horizontal axis. It also shows the curve in an alternating coloring based on the
         t-for-distance values we find our LUT:</p>
 
-        <textarea class="sketch-code" data-sketch-preset="threepanel" data-sketch-title="Distance-for-t">
+        <textarea class="sketch-code" data-sketch-preset="threepanel" data-sketch-title="Fixed-interval coloring a curve">
         HashMap<Float,Float> values = new HashMap<Float,Float>();
         HashMap<Float,Float> inverted = new HashMap<Float,Float>();
         ArrayList<Float> t_keys = new ArrayList<Float>();
@@ -2486,7 +2731,13 @@
           displayIndent: "2em",
         });
       </script>
-      <script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML"></script>
+      <script>(function(){
+        if(window.location.toString().indexOf("noMathJax")===-1) {
+          var script = document.createElement("script");
+          script.src = "http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML";
+          document.head.appendChild(script);
+        }
+      }());</script>
     </div>
   </body>
 </html>

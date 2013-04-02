@@ -64,6 +64,7 @@ canvas.loading-sketch {
 .sketch canvas {
   margin: auto; 
   border: 1px solid black;
+  height: 300px;
 }
 .sketch canvas:focus {
   outline: 1px solid rgba(0,0,0,0);
@@ -76,7 +77,8 @@ canvas.loading-sketch {
 .sketch canvas[data-preset=ratios],
 .sketch canvas[data-preset=clipping],
 .sketch canvas[data-preset=abc],
-.sketch canvas[data-preset=moulding]
+.sketch canvas[data-preset=moulding],
+.sketch canvas[data-preset=generate]
 { width: 300px; }
 
 .sketch canvas[data-preset=twopanel]

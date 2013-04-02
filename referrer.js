@@ -24,6 +24,11 @@
  *
  */
 (function referrer() {
+  // we don't care about file or localhost, for obvious reasons
+  var loc = window.location.toString();
+  if(loc.indexOf("file:///")!==-1) return;
+  if(loc.indexOf("/localhost/")!==-1) return;
+  // right, continue
   var url = "http://what.inthefuck.com/bezierinfo/logger.php";
   // yep, I own that domain.
   var xhr = new XMLHttpRequest();

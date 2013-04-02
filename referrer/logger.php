@@ -19,8 +19,9 @@
 	  	// Get client IP. You did not send this as POST data,
       // it's simply part of the HTTP request you send.
 	  	$ip = $_SERVER["REMOTE_ADDR"];
+	  	$host = gethostbyaddr($ip);
 	    // Convert the data to a single line of JSON
-	    $json_line = '{time: '.$time.', stamp: "'.$stamp.'", referrer: "'.$ref.'", ip: "'.$ip.'"}' . "\n";
+	    $json_line = '{time: '.$time.', stamp: "'.$stamp.'", referrer: "'.$ref.'", ip: "'.$ip.'", hostname: "'.$host.'"}' . "\n";
 	    // Finally, write the data to the log file.
       // Yes, there's an .htaccess rule that prevents downloading this.
 		  $gz = gzopen('referral_log_' . date("Y-m-d") . '.gz','a9');

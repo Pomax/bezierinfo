@@ -131,6 +131,7 @@ class BezierComputer {
   BezierCurve generateCurve(int order, Point p1, Point p2, Point p3, float t, Point[] tangents) {
     Point[] points = (order==2? new Point[]{p1,p2,p3} : new Point[]{p1,p2,p2,p3});
     BezierCurve curve = new BezierCurve(points);
+    points = curve.points;
     float ratio = calculateProjectionRatio(t, order);
     Point[] span = curve.generateSpan(t);
     Point[] ds = curve.getABC(t);

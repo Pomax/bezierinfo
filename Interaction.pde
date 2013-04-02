@@ -25,24 +25,26 @@ int current = -1,
 
 // curve interaction based on mouse movement alone
 void mouseMoved() {
-  for(BezierCurve curve: curves) {
-    int p = curve.overPoint(mouseX, mouseY);
-    current = p;
-    if(p != -1) {
-      active = curve;
-      cursor(HAND);
-      if(redrawOnMouseMove) { redraw(); }
-      return;
-    }
-    if(moulding) {
-      if(testCurveMoulding(curve, mouseX, mouseY)) {
+  if(curves.size() > 0) {
+    for(BezierCurve curve: curves) {
+      int p = curve.overPoint(mouseX, mouseY);
+      current = p;
+      if(p != -1) {
+        active = curve;
+        cursor(HAND);
         if(redrawOnMouseMove) { redraw(); }
         return;
       }
+      if(moulding) {
+        if(testCurveMoulding(curve, mouseX, mouseY)) {
+          if(redrawOnMouseMove) { redraw(); }
+          return;
+        }
+      }
     }
+    cursor(ARROW);
+    current = -1;
   }
-  cursor(ARROW);
-  current = -1;
   if(redrawOnMouseMove) { redraw(); }
 }
 

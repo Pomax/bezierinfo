@@ -41,9 +41,12 @@ class BezierCurve {
    * construct a typical curve
    */
   BezierCurve(Point[] points) {
-    this.points = points;
-    order = points.length-1;
     int L = points.length;
+    order = L-1;
+    this.points = new Point[L];
+    for(int p=0; p<L; p++) {
+      this.points[p] = new Point(points[p].x, points[p].y);
+    }
     LUT_resolution = 1 + (int) (400 * log(order)/log(4));
     LUT_x = new float[LUT_resolution];
     LUT_y = new float[LUT_resolution];

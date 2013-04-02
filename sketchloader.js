@@ -51,7 +51,7 @@
       canvas.setAttribute("class", sketch.getAttribute("class") + " loading-sketch");
       var preset = sketch.getAttribute("data-sketch-preset");
       var dps = "presets/" + preset+".pde";
-      dps += " Point.pde BezierCurve.pde CurvePair.pde BezierComputer.pde framework.pde Interaction.pde API.pde JavaScript.pde RuntimeException.pjs";
+      dps += " Point.pde BezierCurve.pde PolyBezierCurve.pde CurvePair.pde BezierComputer.pde framework.pde Interaction.pde API.pde JavaScript.pde RuntimeException.pjs";
       canvas.setAttribute("data-processing-sources", dps);
       canvas.setAttribute("data-preset",preset);
       canvas.setAttribute("data-print-image","images/print/"+(figCount<10? "0":'')+figCount+".gif");
@@ -82,7 +82,7 @@
      * MathJax throwing an 'End Process'.
      */
     (function(){
-      MathJax.Hub.Register.MessageHook("End Process", function (msg, target) {
+      var trickle = function (msg, target) {
         var listing = document.querySelectorAll("canvas").toArray();
 
         /**
@@ -91,7 +91,10 @@
         var loadSketch = (function(list){
           return function loadSketch() {
             var canvas = list.splice(0,1)[0];
-            var label = canvas.parentNode.querySelector("canvas ~ span");
+            var label = canvas.parentNode.querySelector("canvas ~ span").textContent;
+//            if(window.console && console.info) {
+//              console.info("loading sketch ["+label+"]");
+//            }
             if(canvas.loadSketch) {
               canvas.loadSketch();
               return true; }
@@ -99,7 +102,7 @@
         }(listing));
 
         // interval between trickle loads, in milliseconds:
-        var loadInterval = 350;
+        var loadInterval = 1000;
 
         /**
          * trickle-load until we run out of canvas elements.
@@ -112,7 +115,11 @@
 
         // let's try this
         trickle();
-      });
+      };
+
+      if (window.MathJax) {
+        MathJax.Hub.Register.MessageHook("End Process",trickle);
+      } else { trickle("End Process", document.body); }
     }());
   }
 
