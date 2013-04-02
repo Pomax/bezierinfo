@@ -122,10 +122,18 @@ class PolyBezierCurve {
     Point m;
     if(i==0 && n > 0) {
       m = getPoint(n,1);
-      m.moveBy(dx,dy); }
+      m.moveBy(dx,dy);
+      // also move related control in prev
+      m = getPoint(n-1,pointCount-2);
+      m.moveBy(dx,dy);
+    }
     else if(i==pointCount-1 && n < segments.size()-1) {
       m = getPoint(n,i-1);
-      m.moveBy(dx,dy); }
+      m.moveBy(dx,dy);
+      // also move related control in next
+      m = getPoint(n+1,1);
+      m.moveBy(dx,dy);
+    }
     segments.get(n).update();
     // cascade changes
     if(n>0) { updateDown(n-1, false); }
