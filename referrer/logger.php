@@ -5,7 +5,7 @@
    * to a gzipped file. That's it. Why would I log anything else...?
    */
   if(isset($_GET["referrer"])) {
-    // Make sure we allow the bezierinfo article to perform POST operations
+    // Allow the bezier article to call us.
     header('Access-Control-Allow-Origin: http://pomax.github.com');
     header('Access-Control-Allow-Headers: Content-Type');
   	// Form timestamps
