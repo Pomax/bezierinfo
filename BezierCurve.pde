@@ -736,7 +736,7 @@ class BezierCurve {
    */
   void draw() { draw(30); }
   void draw(int c) {
-    if(showAdditionals && showPointPoly) {
+    if(showAdditionals && showControlPoints && showPointPoly) {
       stroke(0,100);
       for(int i=1; i<=order; i++) {
         Point p1 = points[i-1];

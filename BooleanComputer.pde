@@ -61,7 +61,7 @@ class BooleanComputer {
   }
 
   /**
-   * custom quicksort
+   * custom quicksort for sorting curvepairs based either on t1 or t2 properties.
    */
   void sortCurvePairs(ArrayList<CurvePair> cp, int MODE) {
     if(cp.size()==0) return;
@@ -72,8 +72,14 @@ class BooleanComputer {
     ArrayList<CurvePair> right = new ArrayList<CurvePair>();
     for(int i=cp.size()-1; i>=0; i--) {
       if(i==pos) { cp.remove(i); continue; }
-      if(MODE == 1) { if(cp.get(i).t1 < pivot.t1) { left.add(cp.get(i)); } else { right.add(cp.get(i)); }}
-      else if(MODE == 2) { if(cp.get(i).t2 < pivot.t2) { left.add(cp.get(i)); } else { right.add(cp.get(i)); }}
+      if(MODE == 1) {
+        if(cp.get(i).t1 < pivot.t1) { left.add(cp.get(i)); }
+        else { right.add(cp.get(i)); }
+      }
+      else if(MODE == 2) {
+        if(cp.get(i).t2 < pivot.t2) { left.add(cp.get(i)); }
+        else { right.add(cp.get(i)); }
+      }
       cp.remove(i);
     }
     sortCurvePairs(left,MODE);

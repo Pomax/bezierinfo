@@ -237,6 +237,7 @@ class PolyBezierCurve {
       ArrayList<CurvePair> cps = other.intersects(segment, i);
       for(CurvePair cp: cps) {
         println(cp.t1 + "--" + cp.t1);
+        cp.c1 = segment;
         cp.t1 += i;
         cp.s1 = i; 
         intersections.add(cp);
@@ -259,6 +260,7 @@ class PolyBezierCurve {
       for(CurvePair cp: currentIntersections) {
         println("  -> "+ci+"/"+i);
         cp.setTValues();
+        cp.c2 = segment;
         cp.t2 += i;
         cp.s2 = i; 
         intersections.add(cp); 

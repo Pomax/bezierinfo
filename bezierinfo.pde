@@ -68,6 +68,7 @@ void drawFunction() {
 //  stroke(255,0,0);
 //  ellipse(p0.x,p0.y,7,7);
 
+  noControls();
 
   for(PolyBezierCurve pbc: bcomp.segments1) { pbc.draw(); }
   for(PolyBezierCurve pbc: bcomp.segments2) { pbc.draw(color(255,0,0)); }
