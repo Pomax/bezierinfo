@@ -308,3 +308,4 @@ class PolyBezierCurve {
   void draw() { for(BezierCurve c: segments) { c.draw(); }}
   void draw(color col) { for(BezierCurve c: segments) { c.draw(col); }}  
 }
+

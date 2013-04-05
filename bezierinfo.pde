@@ -58,23 +58,18 @@ void drawFunction() {
   
   BooleanComputer bcomp = new BooleanComputer(p, p2);
 
-  p.draw(color(0,30));
-
+//  p.draw();
 //  Point p0 = p.segments.get(0).points[0];
 //  stroke(0);
 //  ellipse(p0.x,p0.y,7,7);
 
-
-  p2.draw(color(255,0,0));
-
+//  p2.draw(color(255,0,0));
 //  p0 = p2.segments.get(0).points[0];
 //  stroke(255,0,0);
 //  ellipse(p0.x,p0.y,7,7);
 
-  translate(-50,90);
 
-//  noAdditionals();
-//  for(PolyBezierCurve pbc: bcomp.segments1) { pbc.draw(); }
+  for(PolyBezierCurve pbc: bcomp.segments1) { pbc.draw(); }
   for(PolyBezierCurve pbc: bcomp.segments2) { pbc.draw(color(255,0,0)); }
 
   PolyBezierCurve union = bcomp.getUnion(),

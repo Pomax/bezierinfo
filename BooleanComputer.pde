@@ -1,7 +1,22 @@
+/***************************************************
+ *                                                 *
+ *  A special computer class for shape operations  *
+ *                                                 *
+ ***************************************************/
+
+/**
+ *  computation class for Boolean shape operations
+ */
 class BooleanComputer {
+  // each instance operates on two shapes.
   PolyBezierCurve p1, p2;
   ArrayList<CurvePair> intersections;
+
   ArrayList<PolyBezierCurve> segments1, segments2;
+
+  /**
+   * bind poly-beziers and compute segmentation
+   */
   BooleanComputer(PolyBezierCurve _p1, PolyBezierCurve _p2) {
     p1 = _p1;
     p2 = _p2;
@@ -63,10 +78,11 @@ class BooleanComputer {
     }
     sortCurvePairs(left,MODE);
     for(CurvePair c: left) { cp.add(c); }
+    cp.add(pivot);
     sortCurvePairs(right,MODE);
     for(CurvePair c: right) { cp.add(c); }
   }
-  
+
   
   /**
    * 
