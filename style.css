@@ -74,6 +74,8 @@ canvas.loading-sketch {
 }
 
 .sketch canvas[data-preset=simple],
+.sketch canvas[data-preset=poly],
+.sketch canvas[data-preset=shapes],
 .sketch canvas[data-preset=ratios],
 .sketch canvas[data-preset=clipping],
 .sketch canvas[data-preset=abc],

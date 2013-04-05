@@ -392,6 +392,43 @@ class BezierComputer {
           ny1 = dx1*sa + dy1*ca;
     return (nx1*dx2 + ny1*dy2 < 0 ? -1 : 1);
   }
+  
+  /**
+   * Perform intersection detection between two curves
+   */
+  ArrayList<CurvePair> findIntersections(BezierCurve c1, BezierCurve c2) {
+    ArrayList<CurvePair> pairs = new ArrayList<CurvePair>();
+    ArrayList<CurvePair> finals = new ArrayList<CurvePair>();
+    pairs.add(new CurvePair(c1,c2));
+    refineIntersections(pairs, finals);
+    // Due to the way the algorithm runs, we may have multiple
+    // "final" points that actually represent the same point.
+    // Before we return, we collapse these.
+    // ... CODE GOES HERE ...
+    return finals;
+  }
+  
+  /**
+   * iterative intersection refinement based on curve pairs.
+   */
+  private void refineIntersections(ArrayList<CurvePair> pairs, ArrayList<CurvePair> finals) {
+    if(pairs.size()==0) { return; }
+    ArrayList<CurvePair> newPairs = new ArrayList<CurvePair>();
+    for(CurvePair cp: pairs) {
+      if(cp.hasOverlap()) {
+        if(cp.smallEnough()) { finals.add(cp); }
+        else {
+          CurvePair[] expanded = cp.splitAndCombine();
+          for(CurvePair ncp: expanded) {
+            newPairs.add(ncp);
+          }
+        }
+      }
+    }
+    pairs.clear();
+    for(CurvePair cp: newPairs) { pairs.add(cp); }
+    refineIntersections(pairs, finals);
+  }
 }
 
 // exception used in calculateABCRatio when there is no such ratio:

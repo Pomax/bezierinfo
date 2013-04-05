@@ -225,11 +225,86 @@ class PolyBezierCurve {
   }
 
   /**
+   *
+   */
+  ArrayList<CurvePair> getIntersections(PolyBezierCurve other) {
+    ArrayList<CurvePair> intersections = new ArrayList<CurvePair>();
+    BezierCurve segment;
+    for(int i=0; i<segments.size(); i++) {
+      segment = segments.get(i);
+      // get all curvepairs in which this segment intersects
+      // with the other PolyBezierCurve
+      ArrayList<CurvePair> cps = other.intersects(segment, i);
+      for(CurvePair cp: cps) {
+        println(cp.t1 + "--" + cp.t1);
+        cp.t1 += i;
+        cp.s1 = i; 
+        intersections.add(cp);
+      }
+    }
+    return intersections;
+  }
+  
+  /**
+   *
+   */
+  ArrayList<CurvePair> intersects(BezierCurve c, int ci) {
+    ArrayList<CurvePair> intersections = new ArrayList<CurvePair>(),
+                         currentIntersections;
+    BezierCurve segment;
+    for(int i=0; i<segments.size(); i++) {
+      segment = segments.get(i);
+      // get all curvepairs in which these two segments intersect
+      currentIntersections = comp.findIntersections(c, segment);
+      for(CurvePair cp: currentIntersections) {
+        println("  -> "+ci+"/"+i);
+        cp.setTValues();
+        cp.t2 += i;
+        cp.s2 = i; 
+        intersections.add(cp); 
+      }
+    }
+    return intersections;
+  }
+  
+  /**
+   * Split this poly curve between c1's t=t1 and c2's t=t2.
+   */
+  PolyBezierCurve split(float t1, float t2) {
+    int pos1 = (int) t1, pos2 = (int) t2;
+    BezierCurve c1 = segments.get(pos1),
+                c2 = segments.get(pos2);
+    t1 = t1 % 1;
+    t2 = t2 % 1;
+    PolyBezierCurve newPoly = new PolyBezierCurve();
+    // subcurve on a single section?
+    if(pos1==pos2) { newPoly.addCurve(c1.split(t1,t2)); }
+    else {
+      // not on a single section... more work =)
+      newPoly.addCurve(c1.split(t1)[1]);
+      while(++pos1 < pos2) { newPoly.addCurve(segments.get(pos1)); }
+      newPoly.addCurve(c2.split(t2)[0]);
+    }
+    return newPoly;
+  }
+  
+  PolyBezierCurve[] split(float t) {
+    int pos = (int) t;
+    BezierCurve c = segments.get(pos);
+    t = t % 1;
+    PolyBezierCurve[] newPolies = {new PolyBezierCurve(), new PolyBezierCurve()};
+    int i=0;
+    while(i++<pos) { newPolies[0].addCurve(segments.get(i)); }
+    BezierCurve[] bcs = segments.get(pos).split(t);
+    newPolies[0].addCurve(bcs[0]);
+    newPolies[1].addCurve(bcs[1]);
+    while(++pos<segments.size()) { newPolies[1].addCurve(segments.get(pos)); }
+    return newPolies;
+  }
+
+  /**
    * draw this poly-Bezier
    */
-  void draw() {
-    for(BezierCurve c: segments) {
-      c.draw();
-    }
-  }
+  void draw() { for(BezierCurve c: segments) { c.draw(); }}
+  void draw(color col) { for(BezierCurve c: segments) { c.draw(col); }}  
 }

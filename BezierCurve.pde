@@ -374,12 +374,6 @@ class BezierCurve {
    */
   float[] getInterval() {
     return originalInterval;
-    /*
-    float d0 = originalInterval[0],
-          v0 = (d0==0? 0 : 1.0/d0),
-          v1 = 1.0/originalInterval[1];
-    return new float[]{v0,v1};
-    */
   }
 
   /**

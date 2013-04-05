@@ -25,20 +25,25 @@ void setupCurve() {
   pts.add(new Point(35,200));
   pts.add(new Point(215,215));
   pts.add(new Point(110,96));
-*/
 
   Point[] points = new Point[pts.size()];
   for(int p=0,last=points.length; p<last; p++) { points[p] = pts.get(p); }
   curves.add(new BezierCurve(points));
+*/
   redrawOnMove();
-
-  p.addCurve(new BezierCurve(new Point[]{ new Point(50,50), new Point(50,100), new Point(200,50), new Point (200,100) }));
+  
+  p.addCurve(new BezierCurve(new Point[]{ new Point(50,50), new Point(50,50), new Point(100,0), new Point (100,0) }));
+  p.addCurve(new BezierCurve(new Point[]{ ORIGIN, ORIGIN, new Point(150,50),new Point(150,150) }));
   p.addCurve(new BezierCurve(new Point[]{ ORIGIN, ORIGIN, new Point(100,100),new Point(100,100) }));
-  p.addCurve(new BezierCurve(new Point[]{ ORIGIN, ORIGIN, new Point(20,150),new Point(20,150) }));
-  p.addCurve(new BezierCurve(new Point[]{ ORIGIN, ORIGIN, new Point(150,150),new Point(150,150) }));  
+  p.addCurve(new BezierCurve(new Point[]{ ORIGIN, ORIGIN, new Point(50,50),new Point(50,50) }));  
+
+  p2.addCurve(new BezierCurve(new Point[]{ new Point(80,50), new Point(80,50), new Point(130,0), new Point (130,0) }));
+  p2.addCurve(new BezierCurve(new Point[]{ ORIGIN, ORIGIN, new Point(180,50),new Point(180,150) }));
+  p2.addCurve(new BezierCurve(new Point[]{ ORIGIN, ORIGIN, new Point(130,100),new Point(130,100) }));
+  p2.addCurve(new BezierCurve(new Point[]{ ORIGIN, ORIGIN, new Point(0,80),new Point(80,50) }));
 }
 
-PolyBezierCurve p = new PolyBezierCurve();
+PolyBezierCurve p = new PolyBezierCurve(), p2 = new PolyBezierCurve();
 
 BezierCurve[] offset1, offset2;
 int oldOffset = 0;
@@ -47,7 +52,39 @@ int oldOffset = 0;
  * Actual draw code
  */
 void drawFunction() {
-  p.draw();
+  translate(30,30);
+  
+  int m = millis();
+  
+  BooleanComputer bcomp = new BooleanComputer(p, p2);
+
+  p.draw(color(0,30));
+
+//  Point p0 = p.segments.get(0).points[0];
+//  stroke(0);
+//  ellipse(p0.x,p0.y,7,7);
+
+
+  p2.draw(color(255,0,0));
+
+//  p0 = p2.segments.get(0).points[0];
+//  stroke(255,0,0);
+//  ellipse(p0.x,p0.y,7,7);
+
+  translate(-50,90);
+
+//  noAdditionals();
+//  for(PolyBezierCurve pbc: bcomp.segments1) { pbc.draw(); }
+  for(PolyBezierCurve pbc: bcomp.segments2) { pbc.draw(color(255,0,0)); }
+
+  PolyBezierCurve union = bcomp.getUnion(),
+                  intersection = bcomp.getIntersection(),
+                  exclusion = bcomp.getExclusion();
+
+
+  println(millis()-m);
+
+  /*
   int pt = p.overPoint(mouseX, mouseY);
   if(pt!=-1) {
     cursor(HAND);
@@ -56,6 +93,7 @@ void drawFunction() {
     } 
   }
   else { cursor(ARROW); }
+  */
 
 /*
   BezierCurve curve = curves.get(0);

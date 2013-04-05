@@ -6,6 +6,8 @@
 class CurvePair {
   boolean overlapping = false;
   BezierCurve c1, c2;
+  float t1, t2;
+  int s1, s2;
 
   CurvePair(BezierCurve _c1, BezierCurve _c2) {
     c1 = _c1;
@@ -29,6 +31,16 @@ class CurvePair {
     sc[2] = new CurvePair(c1s[0], c2s[1]);
     sc[3] = new CurvePair(c1s[1], c2s[1]);
     return sc;
+  }
+  
+  /**
+   * 
+   */
+  void setTValues() {
+    float[] t1s = c1.getInterval(),
+            t2s = c2.getInterval();
+    t1 = (t1s[0] + t1s[1])/2;
+    t2 = (t2s[0] + t2s[1])/2;
   }
 
   // Is this pair small enough to count as "done"?

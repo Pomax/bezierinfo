@@ -78,6 +78,43 @@ void setupDefaultCubic() {
   curves.add(new BezierCurve(points));
 }
 
+// the default 2nd order poly-curve
+void setupDefaultQuadraticPoly() {
+  p.addCurve(new BezierCurve(new Point[]{
+    new Point(1/3.0*dim, 2/3.0*dim),
+    new Point(1/6.0*dim, 1/2.0*dim),
+    new Point(1/3.0*dim, 1/3.0*dim)
+  }));
+  p.addCurve(new BezierCurve(new Point[]{ ORIGIN, ORIGIN, new Point(2/3.0*dim,1/3.0*dim) }));
+  p.addCurve(new BezierCurve(new Point[]{ ORIGIN, ORIGIN, new Point(2/3.0*dim,2/3.0*dim) }));
+}
+
+// the default 3rd order poly-curve
+void setupDefaultCubicPoly() {
+  int pad = dim/3;
+  float k = 0.55228;
+  p.addCurve(new BezierCurve(new Point[]{
+    new Point(dim/2, dim/2+pad),
+    new Point(dim/2 + k*pad, dim/2+pad),
+    new Point(dim/2 + pad, dim/2 + k*pad),
+    new Point(dim/2 + pad, dim/2)
+  }));
+  p.addCurve(new BezierCurve(new Point[]{
+    ORIGIN,
+    ORIGIN,
+    new Point(dim/2 + k*pad, dim/2-pad),
+    new Point(dim/2, dim/2-pad)
+  }));
+  p.addCurve(new BezierCurve(new Point[]{
+    ORIGIN,
+    ORIGIN,
+    new Point(dim/2-pad, dim/2-k*pad),
+    new Point(dim/2-pad, dim/2)
+  }));
+}
+
+
+
 int panelDim = dim;
 
 /**
