@@ -33,12 +33,13 @@ class Point {
   void moveTo(float _x, float _y) { x=_x; y=_y; d=sqrt(x*x+y*y); }
   void moveBy(float _x, float _y) { moveTo(x+_x, y+_y); }
 
-  // rotate this point wrt another point
-  void rotateOver(Point o, float angle) {
+  // rotate this point w.r.t. another point
+  Point rotateOver(Point o, float angle) {
     float nx = x-o.x, ny = y-o.y,
           mx = nx*cos(angle) - ny*sin(angle),
           my = nx*sin(angle) + ny*cos(angle);
     moveTo(mx+o.x,my+o.y);
+    return this;
   }
 
   // reflect a point through this point
@@ -65,3 +66,4 @@ class Point {
     }
   }
 }
+

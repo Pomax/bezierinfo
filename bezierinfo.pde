@@ -31,16 +31,23 @@ void setupCurve() {
   curves.add(new BezierCurve(points));
 */
   redrawOnMove();
-  
+
+/*  
   p.addCurve(new BezierCurve(new Point[]{ new Point(50,50), new Point(50,50), new Point(100,0), new Point (100,0) }));
   p.addCurve(new BezierCurve(new Point[]{ ORIGIN, ORIGIN, new Point(150,50),new Point(150,150) }));
   p.addCurve(new BezierCurve(new Point[]{ ORIGIN, ORIGIN, new Point(100,100),new Point(100,100) }));
-  p.addCurve(new BezierCurve(new Point[]{ ORIGIN, ORIGIN, new Point(50,50),new Point(50,50) }));  
+  p.addCurve(new BezierCurve(new Point[]{ ORIGIN, ORIGIN, new Point(50,50), ORIGIN }));
+  p.close();
 
   p2.addCurve(new BezierCurve(new Point[]{ new Point(80,50), new Point(80,50), new Point(130,0), new Point (130,0) }));
   p2.addCurve(new BezierCurve(new Point[]{ ORIGIN, ORIGIN, new Point(180,50),new Point(180,150) }));
-  p2.addCurve(new BezierCurve(new Point[]{ ORIGIN, ORIGIN, new Point(130,100),new Point(130,100) }));
-  p2.addCurve(new BezierCurve(new Point[]{ ORIGIN, ORIGIN, new Point(0,80),new Point(80,50) }));
+  p2.addCurve(new BezierCurve(new Point[]{ ORIGIN, ORIGIN, new Point(130,50),new Point(130,100) }));
+  p2.addCurve(new BezierCurve(new Point[]{ ORIGIN, ORIGIN, new Point(0,80), ORIGIN }));
+  p2.close();
+*/
+
+  p = setupWedge(0,0);
+  p2 = setupWedge(0,105);
 }
 
 PolyBezierCurve p = new PolyBezierCurve(), p2 = new PolyBezierCurve();
@@ -48,16 +55,25 @@ PolyBezierCurve p = new PolyBezierCurve(), p2 = new PolyBezierCurve();
 BezierCurve[] offset1, offset2;
 int oldOffset = 0;
 
+PolyBezierCurve setupWedge(float x, float y) {
+  PolyBezierCurve p = new PolyBezierCurve(false);
+  p.addCurve(new BezierCurve(new Point[]{  new Point(x+pad,y+pad),       new Point(x+2*pad,y+2*pad),         new Point(x+dim-2*pad, y+2*pad), new Point(x+dim-pad,y+pad)  }));
+  p.addCurve(new BezierCurve(new Point[]{  new Point(x+dim-pad,y+pad),   new Point(x+dim, y+2*pad),          new Point(x+dim, y+dim/2-pad),   new Point(x+dim-pad,y+dim/2)  }));
+  p.addCurve(new BezierCurve(new Point[]{  new Point(x+dim-pad,y+dim/2), new Point(x+dim-2*pad,y+dim/2-pad), new Point(x+2*pad,y+dim/2-pad),  new Point(x+pad,y+dim/2)  }));
+  p.addCurve(new BezierCurve(new Point[]{  new Point(x+pad,y+dim/2),     new Point(x+0, y+dim/2-pad),        new Point(x+0,y+2*pad),          new Point(x+pad,y+pad)  }));
+  p.close();
+  return p;
+}
+
 /**
  * Actual draw code
  */
 void drawFunction() {
-  translate(30,30);
-  
   int m = millis();
-  
+ 
   BooleanComputer bcomp = new BooleanComputer(p, p2);
-
+  println("form computer: "+ (millis()-m));
+  
 //  p.draw();
 //  Point p0 = p.segments.get(0).points[0];
 //  stroke(0);
@@ -68,17 +84,23 @@ void drawFunction() {
 //  stroke(255,0,0);
 //  ellipse(p0.x,p0.y,7,7);
 
-  noControls();
+  noAdditionals();
 
-  for(PolyBezierCurve pbc: bcomp.segments1) { pbc.draw(); }
-  for(PolyBezierCurve pbc: bcomp.segments2) { pbc.draw(color(255,0,0)); }
+  m = millis();
+  PolyBezierCurve union = bcomp.getUnion();
+  union.draw(color(0,255,0));
+  println("form union: "+ (millis()-m));
 
-  PolyBezierCurve union = bcomp.getUnion(),
-                  intersection = bcomp.getIntersection(),
-                  exclusion = bcomp.getExclusion();
+  m = millis();
+  PolyBezierCurve intersection = bcomp.getIntersection();
+  intersection.draw(color(255,0,0));
+  println("form intersection: "+ (millis()-m));
 
-
-  println(millis()-m);
+/*
+  m = millis();  
+  bcomp.getExclusion();
+  println("form exclusion: "+ (millis()-m));
+*/
 
   /*
   int pt = p.overPoint(mouseX, mouseY);

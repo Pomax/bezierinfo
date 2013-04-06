@@ -113,6 +113,16 @@ class BezierCurve {
   }
 
   /**
+   * Get the first point in this curve
+   */
+  Point getStart() { return points[0]; }
+
+  /**
+   * Get the last point in this curve
+   */
+  Point getEnd() { return points[order]; }
+
+  /**
    * find an approximate t value that acts as the control's
    * projection onto the curve, towards the origin.
    */
@@ -335,6 +345,18 @@ class BezierCurve {
       newPoints[i] = new Point(i*h/l, points[i].y);
     }
     return new BezierCurve(newPoints);
+  }
+
+  /**
+   * Reverse this curve
+   */
+  void reverse() {
+    Point[] newPoints = new Point[points.length];
+    for(int i=0; i<points.length; i++) {
+      newPoints[order-i] = points[i];
+    }
+    points = newPoints;
+    update();
   }
 
   /**
@@ -789,3 +811,4 @@ class NullBezierCurve extends BezierCurve {
   BezierCurve getDerivative() { return this; }
   float getValue(float t) { return 0; }
 }
+

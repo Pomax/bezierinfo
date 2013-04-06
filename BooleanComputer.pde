@@ -11,8 +11,10 @@ class BooleanComputer {
   // each instance operates on two shapes.
   PolyBezierCurve p1, p2;
   ArrayList<CurvePair> intersections;
-
   ArrayList<PolyBezierCurve> segments1, segments2;
+  final int UNION = 0,
+            INTERSECTION = 1,
+            EXCLUSION = 2;
 
   /**
    * bind poly-beziers and compute segmentation
@@ -22,41 +24,53 @@ class BooleanComputer {
     p2 = _p2;
     segment();
   }
-  
+
   /**
    * Split up p1 and p2 into lists of continuous sections
-   * based on the intersection points.  
+   * based on the intersection points.
    */
   void segment() {
     intersections = p.getIntersections(p2);
 
-    // make sure the curvepairs are sorted w.r.t. t values on p1
-    int MODE = 1;
-    sortCurvePairs(intersections, MODE);
-    println("\nbuilding p1");
-    segments1 = buildSegments(p1, intersections, MODE);
+    if(intersections.size()>0) {
+      // make sure the curvepairs are sorted w.r.t. t values on p1
+      if(p1.segments.size()>0) {
+        int MODE = 1;
+        sortCurvePairs(intersections, MODE);
+        segments1 = buildSegments(p1, intersections, MODE);
+      }
+      // then, make sure the curvepairs are sorted w.r.t. t values on p2
+      if(p2.segments.size()>0) {
+        int MODE = 2;
+        sortCurvePairs(intersections, MODE);
+        segments2 = buildSegments(p2, intersections, MODE);
+      }
+    }
 
-    // make sure the curvepairs are sorted w.r.t. t values on p2
-    MODE = 2;
-    println("\nbuilding p2");
-    sortCurvePairs(intersections, MODE);
-    segments2 = buildSegments(p2, intersections, MODE);
+    // no intersections means we don't segment.
+    else {
+      segments1 = new ArrayList<PolyBezierCurve>();
+      segments1.add(p1);
+      segments2 = new ArrayList<PolyBezierCurve>();
+      segments2.add(p2);
+    }
   }
-  
+
   /**
    * Split up a polybezier based on a list of intersection 't' values,
-   * encoded as part of intersection curve pairs. 
+   * encoded as part of intersection curve pairs.
    */
   private ArrayList<PolyBezierCurve> buildSegments(PolyBezierCurve p, ArrayList<CurvePair> intersections, int MODE) {
     ArrayList<PolyBezierCurve> segments = new ArrayList<PolyBezierCurve>();
     float t1=0, t2=1.0;
+    boolean open = false;
     for(CurvePair cp: intersections) {
-      println(cp.t1 + " (" + cp.s1 + "), " + cp.t2 + " (" + cp.s2 + ")");
       t2 = (MODE == 1? cp.t1 : cp.t2);
-      segments.add(p.split(t1,t2));
-      t1 = t2;
+      PolyBezierCurve pbc = p.split(t1,t2);
+      //open = (pbc.getCurveLength()<2);
+      if(!open) { t1 = t2; segments.add(pbc); }
     }
-    segments.add(p.split(t2)[1]);
+    segments.add(p.split(open?t1:t2)[1]);
     return segments;
   }
 
@@ -74,12 +88,10 @@ class BooleanComputer {
       if(i==pos) { cp.remove(i); continue; }
       if(MODE == 1) {
         if(cp.get(i).t1 < pivot.t1) { left.add(cp.get(i)); }
-        else { right.add(cp.get(i)); }
-      }
+        else { right.add(cp.get(i)); }}
       else if(MODE == 2) {
         if(cp.get(i).t2 < pivot.t2) { left.add(cp.get(i)); }
-        else { right.add(cp.get(i)); }
-      }
+        else { right.add(cp.get(i)); }}
       cp.remove(i);
     }
     sortCurvePairs(left,MODE);
@@ -89,27 +101,62 @@ class BooleanComputer {
     for(CurvePair c: right) { cp.add(c); }
   }
 
-  
   /**
-   * 
+   * Get a reference point for ray-crossings
    */
-  PolyBezierCurve getUnion() {
-    return null;
+  Point getReference(PolyBezierCurve pbc) {
+    Point s = pbc.getFirst().getStart(),
+          e = pbc.getLast().getEnd();
+    float dx = e.x - s.x,
+          dy = e.y - s.y,
+          d = dist(s.x,s.y,e.x,e.y);
+    dx/=d; dy/=dy;
+    return (new Point(dx, dy)).rotateOver(ORIGIN,PI/2).scale(10*dim);
   }
-  
+
   /**
-   * 
+   * Construct the union outline (i.e. all covered area)
    */
-  PolyBezierCurve getIntersection() {
-    return null;
-  }
-  
+  PolyBezierCurve getUnion() { return getOperation(UNION); }
+
   /**
-   * 
+   * Construct the intersection outline (i.e. the overlap only)
    */
-  PolyBezierCurve getExclusion() {
-    return null;
+  PolyBezierCurve getIntersection() { return getOperation(INTERSECTION); }
+
+  /**
+   * Construct the exclusion outline (i.e. all areas the shapes do not overlap)
+   */
+  // FIXME: implement?
+  PolyBezierCurve getExclusion() { return null; }
+
+  /**
+   * generic operator
+   */
+  PolyBezierCurve getOperation(int op) {
+    PolyBezierCurve shape = new PolyBezierCurve(false);
+    int f = 0, cross;
+    Point s, e, reference;
+    for(PolyBezierCurve pbc: segments1) {
+      cross = p2.contains(pbc, getReference(pbc));
+      if(cross % 2 == op) {
+        for(BezierCurve c: pbc.segments) {
+          shape.addCurve(c, false);
+        }
+        shape.subShape();
+      }
+    }
+    f = 0;
+    for(PolyBezierCurve pbc: segments2) {
+      cross = p.contains(pbc, getReference(pbc));
+      if(cross % 2 == op) {
+        for(BezierCurve c: pbc.segments) {
+          shape.addCurve(c, false);
+        }
+        shape.subShape();
+      }
+    }
+    return shape;
   }
-  
-  
 }
+

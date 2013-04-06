@@ -8,7 +8,6 @@
  *
  ******************************************/
 
-
 /**
  * Style object
  */
@@ -48,3 +47,4 @@ abstract class JavaScript {
   Console console;
   Document document;
 }
+

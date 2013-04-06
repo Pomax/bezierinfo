@@ -54,3 +54,4 @@ class CurvePair {
   // ye olde toStringe
   String toString() { return c1  + " -- " + c2; }
 }
+

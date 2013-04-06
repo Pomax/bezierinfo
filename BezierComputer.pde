@@ -267,7 +267,7 @@ class BezierComputer {
   }
 
   /**
-   * Rootfinding using the Newton-Raphson method
+   * Root finding using the Newton-Raphson method
    */
   float[] findAllRoots(int derivative, float[] values) {
     // Special case handling:
@@ -392,7 +392,7 @@ class BezierComputer {
           ny1 = dx1*sa + dy1*ca;
     return (nx1*dx2 + ny1*dy2 < 0 ? -1 : 1);
   }
-  
+
   /**
    * Perform intersection detection between two curves
    */
@@ -407,7 +407,7 @@ class BezierComputer {
     // ... CODE GOES HERE ...
     return finals;
   }
-  
+
   /**
    * iterative intersection refinement based on curve pairs.
    */
@@ -437,3 +437,4 @@ class NoRatioExistsException extends RuntimeException {
   NoRatioExistsException(int order) { msg = "Curve of order "+order+" has no fixed ABC ratio."; }
   String toString() { return msg; }
 }
+
