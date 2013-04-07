@@ -30,7 +30,7 @@ class BooleanComputer {
    * based on the intersection points.
    */
   void segment() {
-    intersections = p.getIntersections(p2);
+    intersections = p1.getIntersections(p2);
 
     if(intersections.size()>0) {
       // make sure the curvepairs are sorted w.r.t. t values on p1
@@ -80,7 +80,7 @@ class BooleanComputer {
   void sortCurvePairs(ArrayList<CurvePair> cp, int MODE) {
     if(cp.size()==0) return;
     if(cp.size()==1) return;
-    int pos = (int)(cp.size()-1)/2;
+    int pos = int((int)(cp.size()-1)/2);
     CurvePair pivot = cp.get(pos);
     ArrayList<CurvePair> left = new ArrayList<CurvePair>();
     ArrayList<CurvePair> right = new ArrayList<CurvePair>();
@@ -148,7 +148,7 @@ class BooleanComputer {
     }
     f = 0;
     for(PolyBezierCurve pbc: segments2) {
-      cross = p.contains(pbc, getReference(pbc));
+      cross = p1.contains(pbc, getReference(pbc));
       if(cross % 2 == op) {
         for(BezierCurve c: pbc.segments) {
           shape.addCurve(c, false);

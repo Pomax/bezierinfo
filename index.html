@@ -6,13 +6,14 @@
     <title>Bézier curve framework</title>
     <link rel="stylesheet" media="screen" href="style.css">
     <link rel="stylesheet" media="print" href="print.css">
-    <script src="referrer.js"></script>
     <script>
       // give NodeList a .forEach() and .toArray(), because: seriously.
       (function(p,n,a,f,t){n=n[p];a=a[p];n[f]=a[f];n[t]=function(){var
         r=[];this[f](function(n){r.push(n);});return r;}}
       ("prototype",NodeList,Array,"forEach","toArray"));
     </script>
+    <script src="referrer.js"></script>
+    <link rel="component" href="webcomponents/github-components.html">
   </head>
 
   <body>
@@ -1868,7 +1869,7 @@
         <p>We can apply the topics covered so far in this primer to effect boolean shape operations:
         getting the union, intersection, or exclusion, between two or more shapes that involve Bézier
         curves. For simplicity (well.. sort of, more homogeneity), we'll be looking at Poly-Bézier
-        shapes only, but a shape that consists of a mix of lines and Bézier curves is technically a 
+        shapes only, but a shape that consists of a mix of lines and Bézier curves is technically a
         simplification (although it does mean we need to write a definition for the class of shapes
         that mix lines and Bézier curves. Since poly-Bézier curves are a superset, we'll be using
         those in the following examples)</p>
@@ -1939,29 +1940,17 @@
           setupDefaultShapes();
         }
 
-        void showIntersections() {
-          for(Intersection s: intersections) {
-            s.draw();
-          }
-        }
+        void drawShapes() {
+          PolyBezierCurve union = bcomp.getUnion();
+          union.draw(color(0,255,0));
 
-        void performUnion() {
-          ArrayList<PolyBezierCurve> s1 = shape1.split(intersections);
-          ArrayList<PolyBezierCurve> s2 = shape2.split(intersections);
-          PolyBezierCurve c;
-          // remove any sections form S1 that lie inside S2
-          for(int i=s1.size()-1; i>=0; i--) {
-            c = s1.get(i);
-            if(shape2.contains(c)) {
-              s1.remove(i); }}
-          // and then remove any sections from S2 that lie inside S1
-          for(int i=ss.size()-1; i>=0; i--) {
-            c = ss.get(i);
-            if(shape1.contains(c)) {
-              ss.remove(i); }}
-          // join up the sections
-          // ...
+          PolyBezierCurve intersection = bcomp.getIntersection();
+          intersection.draw(color(255,0,0));
         }</textarea>
+
+        <div class="note">
+          <p>This section is still under construction, and will be finished in the next few days.</p>
+        </div>
 
       </section>
 
@@ -2681,8 +2670,15 @@
 
       <hr>
 
-      <section id="remaining">
-        <h2>Sections that still need to be written</h2>
+      <section id="issues">
+        <h2>Issue list</h2>
+
+<!--
+        This custom element will be used instead of a 'comment section', so that questions
+        get pulled straight from the github issue tracker.
+
+        <github-issues owner="Pomax" repo="bezierinfo"></github-issues>
+-->
 
         <ol>
           <li>Shape operations (union, intersection, exclusion)</li>
@@ -2691,7 +2687,6 @@
           <li>Other splines (Catmull-Rom, B-spline)</li>
           <li>reference and further reading</li>
         </ol>
-
         <p>If there's anything missing from this list, plase file an issue on github (link's in the
         upper right corner)</p>
       </section>
@@ -2716,6 +2711,8 @@
           document.head.appendChild(script);
         }
       }());</script>
+      <script src="webcomponents/web-components.js"></script>
+      <script src="webcomponents/custom-elements.js"></script>
     </div>
   </body>
 </html>

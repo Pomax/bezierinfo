@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Github API as custom elements instead</title>
+  </head>
+  <body>
+    <element name="github-issue" attributes="title href">
+      <template>
+        <div>
+          <content></content>
+        </div>
+      </template>
+      <script>
+        var template = this.querySelector("template");
+        this.register({
+          prototype: {
+            readyCallback: function() {
+              var element = this;
+              if(!element.href || !element.title) return;
+              element.innerHTML = template.innerHTML.replace("<content></content>",element.innerHTML);
+              element.innerHTML = "<h3>"+element.title+"</h3>" + this.innerHTML + "<a href='"+element.href+"'>issue on github</a>";
+            }
+          }
+        });
+      </script>
+    </element>
+
+    <element name="github-issues" attributes="owner repo">
+      <template>
+        <style scoped>
+        github-issue { display: block; }github-issues
+        </style>
+        <p>Github issue list</p>
+        <div class="issues">
+        </div>
+      </template>
+      <script>
+        var template = this.querySelector("template");
+        this.register({
+          prototype: {
+            readyCallback: function() {
+              var element = this;
+              element.innerHTML = template.innerHTML;
+              var issuelist = element.querySelector(".issues");
+              var owner = element.attributes.getNamedItem("owner").value;
+              var repo = element.attributes.getNamedItem("repo").value;
+              var xhr = new XMLHttpRequest();
+              var url = "https://api.github.com/repos/"+owner+"/"+repo+"/issues";
+              xhr.open("GET", url, true);
+              xhr.onreadystatechange = function() {
+                if(xhr.readyState == 4 && xhr.status == 200) {
+                  var json = xhr.responseText;
+                  var dataObj = (new Function("return {issues: " + json +"};"))();
+                  dataObj.issues.forEach(function(issue){
+                    var child = document.createElement("github-issue");
+                    child.issue = issue;
+                    child.href = issue.html_url;
+                    child.title = issue.title;
+                    child.innerHTML = issue.body;
+                    child.readyCallback();
+                    issuelist.appendChild(child);
+                  });
+                }
+              };
+              xhr.send(null);
+            }
+          }
+        });
+      </script>
+    </element>
+
+  </body>
+</html>

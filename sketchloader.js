@@ -51,7 +51,7 @@
       canvas.setAttribute("class", sketch.getAttribute("class") + " loading-sketch");
       var preset = sketch.getAttribute("data-sketch-preset");
       var dps = "presets/" + preset+".pde";
-      dps += " Point.pde BezierCurve.pde PolyBezierCurve.pde CurvePair.pde BezierComputer.pde framework.pde Interaction.pde API.pde JavaScript.pde RuntimeException.pjs";
+      dps += " Point.pde BezierCurve.pde PolyBezierCurve.pde CurvePair.pde BezierComputer.pde BooleanComputer.pde framework.pde Interaction.pde API.pde JavaScript.pde RuntimeException.pjs";
       canvas.setAttribute("data-processing-sources", dps);
       canvas.setAttribute("data-preset",preset);
       canvas.setAttribute("data-print-image","images/print/"+(figCount<10? "0":'')+figCount+".gif");
