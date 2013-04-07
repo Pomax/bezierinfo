@@ -7,7 +7,9 @@
     <element name="github-issue" attributes="title href">
       <template>
         <div>
+          <h3>{{title}}</h3>
           <content></content>
+          <a href='{{href}}'>view this issue on github</a>
         </div>
       </template>
       <script>
@@ -17,8 +19,10 @@
             readyCallback: function() {
               var element = this;
               if(!element.href || !element.title) return;
-              element.innerHTML = template.innerHTML.replace("<content></content>",element.innerHTML);
-              element.innerHTML = "<h3>"+element.title+"</h3>" + this.innerHTML + "<a href='"+element.href+"'>issue on github</a>";
+              var str = template.innerHTML.replace("<content></content>",element.innerHTML);
+              str = str.replace("{{title}}", element.title);
+              str = str.replace("{{href}}", element.href);
+              element.innerHTML = str;
             }
           }
         });
@@ -27,12 +31,7 @@
 
     <element name="github-issues" attributes="owner repo">
       <template>
-        <style scoped>
-        github-issue { display: block; }github-issues
-        </style>
-        <p>Github issue list</p>
-        <div class="issues">
-        </div>
+        <div class="issues"></div>
       </template>
       <script>
         var template = this.querySelector("template");

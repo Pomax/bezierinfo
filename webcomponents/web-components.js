@@ -76,7 +76,7 @@ scope.flags = flags;
 
 // report effective flags
 
-console.log(flags);
+//console.log(flags);
 
 // write script tags for dependencies
 
