@@ -32,7 +32,7 @@ void setupCurve() {
 */
   redrawOnMove();
 
-/*  
+/*
   p.addCurve(new BezierCurve(new Point[]{ new Point(50,50), new Point(50,50), new Point(100,0), new Point (100,0) }));
   p.addCurve(new BezierCurve(new Point[]{ ORIGIN, ORIGIN, new Point(150,50),new Point(150,150) }));
   p.addCurve(new BezierCurve(new Point[]{ ORIGIN, ORIGIN, new Point(100,100),new Point(100,100) }));
@@ -70,10 +70,10 @@ PolyBezierCurve setupWedge(float x, float y) {
  */
 void drawFunction() {
   int m = millis();
- 
+
   BooleanComputer bcomp = new BooleanComputer(p, p2);
   println("form computer: "+ (millis()-m));
-  
+
 //  p.draw();
 //  Point p0 = p.segments.get(0).points[0];
 //  stroke(0);
@@ -86,18 +86,22 @@ void drawFunction() {
 
   noAdditionals();
 
+///*
   m = millis();
   PolyBezierCurve union = bcomp.getUnion();
   union.draw(color(0,255,0));
   println("form union: "+ (millis()-m));
+//*/
 
+///*
   m = millis();
   PolyBezierCurve intersection = bcomp.getIntersection();
   intersection.draw(color(255,0,0));
   println("form intersection: "+ (millis()-m));
+//*/
 
 /*
-  m = millis();  
+  m = millis();
   bcomp.getExclusion();
   println("form exclusion: "+ (millis()-m));
 */
@@ -108,7 +112,7 @@ void drawFunction() {
     cursor(HAND);
     if(mousePressed) {
       p.movePoint(pt,mouseX,mouseY);
-    } 
+    }
   }
   else { cursor(ARROW); }
   */
@@ -163,7 +167,7 @@ void drawFunction() {
       line(abc[1].x,abc[1].y, abc[1].x - r*dx, abc[1].y - r*dy);
     } catch (NoRatioExistsException e) {}
   }
-*/  
+*/
 
 /*
   // split the curve into two subcurves at [t]

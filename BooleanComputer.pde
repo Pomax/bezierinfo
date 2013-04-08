@@ -10,8 +10,12 @@
 class BooleanComputer {
   // each instance operates on two shapes.
   PolyBezierCurve p1, p2;
+
   ArrayList<CurvePair> intersections;
   ArrayList<PolyBezierCurve> segments1, segments2;
+
+  IntersectionTracker intersectionTracker;
+
   final int UNION = 0,
             INTERSECTION = 1,
             EXCLUSION = 2;
@@ -31,19 +35,20 @@ class BooleanComputer {
    */
   void segment() {
     intersections = p1.getIntersections(p2);
+    intersectionTracker = new IntersectionTracker(intersections.size());
 
     if(intersections.size()>0) {
       // make sure the curvepairs are sorted w.r.t. t values on p1
       if(p1.segments.size()>0) {
         int MODE = 1;
         sortCurvePairs(intersections, MODE);
-        segments1 = buildSegments(p1, intersections, MODE);
+        segments1 = buildSegments(p1, intersections, MODE, intersectionTracker);
       }
       // then, make sure the curvepairs are sorted w.r.t. t values on p2
       if(p2.segments.size()>0) {
         int MODE = 2;
         sortCurvePairs(intersections, MODE);
-        segments2 = buildSegments(p2, intersections, MODE);
+        segments2 = buildSegments(p2, intersections, MODE, intersectionTracker);
       }
     }
 
@@ -60,17 +65,27 @@ class BooleanComputer {
    * Split up a polybezier based on a list of intersection 't' values,
    * encoded as part of intersection curve pairs.
    */
-  private ArrayList<PolyBezierCurve> buildSegments(PolyBezierCurve p, ArrayList<CurvePair> intersections, int MODE) {
+  private ArrayList<PolyBezierCurve> buildSegments(PolyBezierCurve p, ArrayList<CurvePair> intersections, int MODE, IntersectionTracker tracker) {
     ArrayList<PolyBezierCurve> segments = new ArrayList<PolyBezierCurve>();
     float t1=0, t2=1.0;
     boolean open = false;
-    for(CurvePair cp: intersections) {
+    PolyBezierCurve pbc;
+    CurvePair cp;
+    for(int c=0, last=intersections.size(); c<last; c++) {
+      cp = intersections.get(c);
       t2 = (MODE == 1? cp.t1 : cp.t2);
-      PolyBezierCurve pbc = p.split(t1,t2);
+      pbc = p.split(t1,t2);
       //open = (pbc.getCurveLength()<2);
-      if(!open) { t1 = t2; segments.add(pbc); }
+      if(!open) {
+        t1 = t2;
+        segments.add(pbc);
+        tracker.trackOut(c,pbc,MODE);
+        tracker.trackIn((c+1)%last,pbc,MODE);
+      }
     }
-    segments.add(p.split(open?t1:t2)[1]);
+    // merge last segment with first segment
+    pbc = p.split(open?t1:t2)[1];
+    segments.get(0).prepend(pbc);
     return segments;
   }
 
@@ -117,12 +132,20 @@ class BooleanComputer {
   /**
    * Construct the union outline (i.e. all covered area)
    */
-  PolyBezierCurve getUnion() { return getOperation(UNION); }
+  PolyBezierCurve getUnion() {
+    IntersectionTracker generator = intersectionTracker.copy();
+    PolyBezierCurve shape = getOperation(UNION, generator);
+    return generator.formShape();
+  }
 
   /**
    * Construct the intersection outline (i.e. the overlap only)
    */
-  PolyBezierCurve getIntersection() { return getOperation(INTERSECTION); }
+  PolyBezierCurve getIntersection() {
+    IntersectionTracker generator = intersectionTracker.copy();
+    PolyBezierCurve shape = getOperation(INTERSECTION, generator);
+    return generator.formShape();
+  }
 
   /**
    * Construct the exclusion outline (i.e. all areas the shapes do not overlap)
@@ -133,7 +156,7 @@ class BooleanComputer {
   /**
    * generic operator
    */
-  PolyBezierCurve getOperation(int op) {
+  PolyBezierCurve getOperation(int op, IntersectionTracker intersectionTracker) {
     PolyBezierCurve shape = new PolyBezierCurve(false);
     int f = 0, cross;
     Point s, e, reference;
@@ -144,7 +167,7 @@ class BooleanComputer {
           shape.addCurve(c, false);
         }
         shape.subShape();
-      }
+      } else { intersectionTracker.remove(pbc); }
     }
     f = 0;
     for(PolyBezierCurve pbc: segments2) {
@@ -154,7 +177,7 @@ class BooleanComputer {
           shape.addCurve(c, false);
         }
         shape.subShape();
-      }
+      } else { intersectionTracker.remove(pbc); }
     }
     return shape;
   }

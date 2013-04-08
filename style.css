@@ -73,9 +73,20 @@ canvas.loading-sketch {
   content: "Figure " attr(data-number) ": ";
 }
 
+.sketch img {
+  margin: auto; 
+  border: 1px solid black;
+}
+
+.labeled-image p:before {
+  content: "Image " attr(data-img-label) ". ";
+}
+.labeled-image p {
+  margin: 0;
+}
+
 .sketch canvas[data-preset=simple],
 .sketch canvas[data-preset=poly],
-.sketch canvas[data-preset=shapes],
 .sketch canvas[data-preset=ratios],
 .sketch canvas[data-preset=clipping],
 .sketch canvas[data-preset=abc],
@@ -86,6 +97,7 @@ canvas.loading-sketch {
 .sketch canvas[data-preset=twopanel]
 { width: 600px; }
 
+.sketch canvas[data-preset=shapes],
 .sketch canvas[data-preset=threepanel]
 { width: 900px; }
 

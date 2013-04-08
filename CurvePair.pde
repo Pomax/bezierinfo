@@ -32,9 +32,9 @@ class CurvePair {
     sc[3] = new CurvePair(c1s[1], c2s[1]);
     return sc;
   }
-  
+
   /**
-   * 
+   *
    */
   void setTValues() {
     float[] t1s = c1.getInterval(),

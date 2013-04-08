@@ -62,18 +62,41 @@ class PolyBezierCurve {
   /**
    * Close up this poly-Bezier curve
    */
+  // FIXME: this does not close subshapes yet, so technically
+  //        closed subshapes do not truly shape "start"/"end".
   void close() {
     BezierCurve c0 = segments.get(lastStart);
-    lastStart = segments.size();
-    BezierCurve cL = segments.get(lastStart-1);
+    BezierCurve cL = segments.get(segments.size()-1);
     cL.points[pointCount-1] = c0.points[0];
     closed = true;
+    lastStart = segments.size();
   }
 
   /**
    * Start a sub-shape
    */
   void subShape() { integrate = false; }
+
+  /**
+   * prepend all segments from another curve to this one
+   */
+  void prepend(PolyBezierCurve c) {
+    int pos = 0;
+    for(BezierCurve bc: c.segments) {
+      segments.add(pos++,bc);
+      length += bc.getCurveLength();
+    }
+  }
+
+  /**
+   * append all segments from another curve to this one
+   */
+  void append(PolyBezierCurve c) {
+    for(BezierCurve bc: c.segments) {
+      segments.add(bc);
+      length += bc.getCurveLength();
+    }
+  }
 
   /**
    * get Polycurve length
@@ -94,6 +117,20 @@ class PolyBezierCurve {
    */
   BezierCurve getLast() {
     return segments.get(segments.size()-1);
+  }
+
+  /**
+   * flip direction for this poly curve
+   */
+  void flip() {
+    ArrayList<BezierCurve> newSegments = new  ArrayList<BezierCurve>();
+    BezierCurve c;
+    for(int i=segments.size()-1; i>=0; i--) {
+      c = segments.get(i);
+      c.reverse();
+      newSegments.add(c);
+    }
+    segments = newSegments;
   }
 
   /**
@@ -157,11 +194,14 @@ class PolyBezierCurve {
     p.y = ny;
     segments.get(n).update();
     // update the adjacent section, if we moved an endpoint.
-    if (i==0 && n>0) {
-      segments.get(n-1).update();
+    if (i==0) {
+      if(n==0) { getLast().update(); }
+      else { segments.get(n-1).update(); }
+
     }
-    if (i==pointCount-1 && n<segments.size()-1) {
-      segments.get(n+1).update();
+    if (i==pointCount-1) {
+      if(n<segments.size()-1) { segments.get(n+1).update(); }
+      else { getFirst().update(); }
     }
   }
 
@@ -334,6 +374,8 @@ class PolyBezierCurve {
     BezierCurve segment;
     for (int i=0; i<segments.size(); i++) {
       segment = segments.get(i);
+      // if there is no bound overlap, don't bother finding intersections.
+      if(!c.hasBoundOverlapWith(segment)) continue;
       // get all curvepairs in which these two segments intersect
       currentIntersections = comp.findIntersections(c, segment);
       for (CurvePair cp: currentIntersections) {
@@ -408,8 +450,13 @@ class PolyBezierCurve {
     if(pbc.segments.size()==1) { p1 = pbc.segments.get(0).getPoint(0.5); }
     // poly-bezier? use the first segment-joint
     else { p1 = pbc.segments.get(1).points[0]; }
-    float d = dist(p1.x,p1.y,p2.x,p2.y);
     // EVEN-ODD-RULE
+    return getCrossingNumber(p1, p2);
+  }
+
+  // get the crossing number for line p1--p2
+  int getCrossingNumber(Point p1, Point p2) {
+    float d = dist(p1.x,p1.y,p2.x,p2.y);
     int crossings = 0;
     for (int s=0; s<segments.size(); s++) {
       BezierCurve segment = segments.get(s);
@@ -440,6 +487,12 @@ class PolyBezierCurve {
   void draw(color col) {
     for (BezierCurve c: segments) {
       c.draw(col);
+    }
+  }
+  void draw(color col, boolean colorify) {
+    int i = 0;
+    for (BezierCurve c: segments) {
+      c.draw(colorListing[i++]);
     }
   }
 }

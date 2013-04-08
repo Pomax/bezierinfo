@@ -18,6 +18,7 @@ void setupScreen() {
   additionals();
   noConnect();
   redrawOnMove();
+  noLabels();
 }
 
 /**
@@ -34,5 +35,9 @@ void drawFunction() {
   }
   if(pvt!=-1 && mousePressed) {
     movePoint(pvt,mouseX,mouseY);
+  }
+  if(typeof handleMouseMoved !== "undefined") {
+    if(pt==-1) { cursor(CROSS); } else { cursor(HAND); }
+    handleMouseMoved(mouseX,mouseY);
   }
 }

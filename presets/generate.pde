@@ -21,6 +21,14 @@ void setupScreen() {
 void drawFunction() {
   BezierCurve curve = curves.get(0);
   drawCurve(curve);
+  if(p1==null) {
+    pushStyle();
+    fill(255,0,0,25);
+    textAlign(CENTER,CENTER);
+    textSize(dim/9);
+    text("click to place points", width/2, height/2);
+    popStyle();
+  }
 }
 
 boolean mouseDown = false;

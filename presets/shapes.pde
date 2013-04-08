@@ -11,7 +11,7 @@ BooleanComputer bcomp;
  * set up the screen
  */
 void setupScreen() {
-  size(dim,dim);
+  size(3*dim,dim);
   labels();
   controls();
   additionals();
@@ -31,10 +31,10 @@ void setupDefaultShapes() {
  */
 PolyBezierCurve setupWedge(float x, float y) {
   PolyBezierCurve p = new PolyBezierCurve(false);
-  p.addCurve(new BezierCurve(new Point[]{  new Point(x+pad,y+pad),       new Point(x+2*pad,y+2*pad),         new Point(x+dim-2*pad, y+2*pad), new Point(x+dim-pad,y+pad)  }));
-  p.addCurve(new BezierCurve(new Point[]{  new Point(x+dim-pad,y+pad),   new Point(x+dim, y+2*pad),          new Point(x+dim, y+dim/2-pad),   new Point(x+dim-pad,y+dim/2)  }));
-  p.addCurve(new BezierCurve(new Point[]{  new Point(x+dim-pad,y+dim/2), new Point(x+dim-2*pad,y+dim/2-pad), new Point(x+2*pad,y+dim/2-pad),  new Point(x+pad,y+dim/2)  }));
-  p.addCurve(new BezierCurve(new Point[]{  new Point(x+pad,y+dim/2),     new Point(x+0, y+dim/2-pad),        new Point(x+0,y+2*pad),          new Point(x+pad,y+pad)  }));
+  p.addCurve(new BezierCurve(new Point[]{  new Point(x+2*pad,y+pad),       new Point(x+3*pad,y+2*pad),         new Point(x+dim-3*pad, y+2*pad), new Point(x+dim-2*pad,y+pad)  }));
+  p.addCurve(new BezierCurve(new Point[]{  new Point(x+dim-2*pad,y+pad),   new Point(x+dim, y+2*pad),          new Point(x+dim, y+dim/2-pad),   new Point(x+dim-2*pad,y+dim/2)  }));
+  p.addCurve(new BezierCurve(new Point[]{  new Point(x+dim-2*pad,y+dim/2), new Point(x+dim-3*pad,y+dim/2-pad), new Point(x+3*pad,y+dim/2-pad),  new Point(x+2*pad,y+dim/2)  }));
+  p.addCurve(new BezierCurve(new Point[]{  new Point(x+pad,y+dim/2),       new Point(x+0, y+dim/2-pad),        new Point(x+0,y+2*pad),          new Point(x+pad,y+pad)  }));
   p.close();
   return p;
 }
