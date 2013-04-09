@@ -1332,10 +1332,10 @@
         void setupCurve() {
           p1 = new Point(50,50);
           p2 = new Point(150,110);
-          curves.add(new BezierCurve(new Point[]{p1,p2}));
+          curves.add(new BezierCurve(new Point[]{p1,p2}, false));
           p3 = new Point(50,250);
           p4 = new Point(170,170);
-          curves.add(new BezierCurve(new Point[]{p3,p4}));
+          curves.add(new BezierCurve(new Point[]{p3,p4}, false));
         }
 
         void drawCurve(BezierCurve curve) {
@@ -1380,7 +1380,7 @@
           p2 = new Point(260,200);
           curves.add(new BezierCurve(new Point[]{
             p1, p2
-          }));
+          }, false));
           curves.add(new BezierCurve(new Point[]{
             new Point(25,150),
             new Point(180,30),
@@ -1413,7 +1413,7 @@
           p2 = new Point(195,255);
           curves.add(new BezierCurve(new Point[]{
             p1, p2
-          }));
+          }, false));
           curves.add(new BezierCurve(new Point[]{
             new Point(150,125),
             new Point(40,30),
