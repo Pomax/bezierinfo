@@ -123,32 +123,6 @@ a.ribbon {
   z-index: 999;
 }
 
-h1 { display: inline-block; }
-
-#sharebuttons {
-  position: relative;
-  z-index: 999;
-  display: inline-block;
-  opacity: 0;
-  overflow-x: hidden;
-  overflow-y: visible;
-  margin: 0 0 -10px;
-  /* fcking prefixes */
-  -ms-transform: scale(0.85);
-  -o-transform: scale(0.85);
-  -webkit-transform: scale(0.85);
-  transform: scale(0.85);
-}
-
-#sharebuttons li {
-  display: inline-block;
-  vertical-align: top;
-}
-
-#sharebuttons .socialite.facebook-like {
-  position: relative;
-}
-
 #navbar {
   float: right;
   background: white;

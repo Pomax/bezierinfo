@@ -58,21 +58,6 @@
         <div id="navbar">
           <h3>Table of Contents</h3>
           <ol></ol>
-          <ul id="sharebuttons">
-            <!-- linkedin -->
-            <li><a class="socialite linkedin-share">Share this on Linkedin</a></li>
-            <!-- twitter -->
-            <li><a class="socialite twitter-share" href="http://twitter.com/share" data-via="TheRealPomax"
-                data-text="Reading up on Bezier Curves on" data-url="http://pomax.github.io/bezierinfo"
-                data-dnt="true" data-count="none">Share on Twitter</a></li>
-            <!-- facebook -->
-            <li><a class="socialite facebook-like" data-href="http://pomax.github.io/bezierinfo"
-                data-send="false" data-layout="button_count" data-width="450"
-                data-show-faces="false">Like this on facebook</a></li>
-            <!-- google -->
-            <li><a class="socialite googleplus-share"data-size="medium" data-annotation="none"
-                data-href="http://pomax.github.io/bezierinfo">Share this on Google+</a></li>
-          </ul>
         </div>
 
         <p>In order to draw things in 2D, we usually rely on lines, which typically get classified
@@ -2849,12 +2834,6 @@
       <script src="webcomponents/web-components.js"></script>
       <script src="webcomponents/custom-elements.js"></script>
       -->
-      <script>
-        document.addEventListener("DOMContentLoaded", function(){
-          Socialite.load("#sharebuttons");
-          document.querySelector("#sharebuttons").style.opacity = 1;
-        }, false);
-      </script>
     </div>
   </body>
 </html>
