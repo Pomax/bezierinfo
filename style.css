@@ -108,7 +108,7 @@ div.note {
   margin: 1em 2em;
   padding: 1em;
   border: 1px solid grey;
-  background: rgb1(150,150,50,0.05);
+  background: rgba(150,150,50,0.05);
 }
 div.note * { margin: 0; padding: 0; }
 div.note p { margin: 1em 0; }
