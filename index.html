@@ -2,44 +2,77 @@
 <html>
 
   <head>
+    <!-- referral tracking -->
+    <script src="referrer.js"></script>
+
+    <!-- page information -->
     <meta charset="utf-8">
     <title>Bézier curve framework</title>
+
+    <!-- styling -->
     <link rel="stylesheet" media="screen" href="style.css">
     <link rel="stylesheet" media="print" href="print.css">
+
+    <!-- JS API improvements -->
     <script>
       // give NodeList a .forEach() and .toArray(), because: seriously.
       (function(p,n,a,f,t){n=n[p];a=a[p];n[f]=a[f];n[t]=function(){var
         r=[];this[f](function(n){r.push(n);});return r;}}
       ("prototype",NodeList,Array,"forEach","toArray"));
     </script>
-    <script src="referrer.js"></script>
-    <!--
-    <link rel="component" href="webcomponents/github-components.html">
-    -->
+
+    <!-- opengraph information -->
+    <meta property="og:title" content="A Primer on Bezier Curves">
+    <meta property="og:type" content="text">
+    <meta property="og:url" content="http://pomax.github.io/bezierinfo">
+    <meta property="og:description" content="A detailed explanation of Bezier curves, and how to do the many things that we commonly want to do with them.">
+    <meta property="og:locale" content="en_GB">
+    <meta property="og:type" content="article">
+    <meta property="og:published_time" content="2013-06-13 12:00:00">
+    <meta property="og:author" content="Mike 'Pomax' Kamermans">
+    <meta property="og:section" content="Bezier Curves">
+    <meta property="og:tag" content="Bezier Curve">
+
+    <!-- share button stuff -->
+    <script src="socialite.min.js"></script>
+
+    <!-- <link rel="component" href="webcomponents/github-components.html"> -->
   </head>
 
   <body>
+    <!-- link out to the github repo for this article -->
     <a class="ribbon" href="http://github.com/pomax/bezierinfo"><img
       src="images/ribbon.png"
       alt="check the code on GitHub"
       title="check out the code on GitHub"
+      border=0
     ></a>
 
+    <!-- actual article -->
     <article>
       <header>
-          <h1>A Primer on Bézier Curves</h1>
-
-          <p style="position:relative; height:0; top:-2.7em; text-align:right;"><a href="https://twitter.com/share" class="twitter-share-button" data-via="TheRealPomax"
-          data-dnt="true">[tweet this]</a><script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],
-          p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);
-          js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}
-          (document, 'script', 'twitter-wjs');</script></p>
+        <h1 style="margin-bottom: 0">A Primer on Bézier Curves</h1>
       </header>
 
       <section id="preface">
         <div id="navbar">
           <h3>Table of Contents</h3>
           <ol></ol>
+          <ul id="sharebuttons">
+            <!-- linkedin -->
+            <li><a class="socialite linkedin-share">Share this on Linkedin</a></li>
+            <!-- twitter -->
+            <li><a class="socialite twitter-share" href="http://twitter.com/share" data-via="TheRealPomax"
+                data-text="Reading up on Bezier Curves on" data-url="http://pomax.github.io/bezierinfo"
+                data-dnt="true" data-count="none">Share on Twitter</a></li>
+            <!-- facebook -->
+            <li><a class="socialite facebook-like" data-href="http://pomax.github.io/bezierinfo"
+                data-send="false" data-layout="button_count" data-width="450"
+                data-show-faces="false">Like this on facebook</a></li>
+            <!-- google -->
+            <li><a class="socialite googleplus-share"data-size="medium" data-annotation="none"
+                data-href="http://pomax.github.io/bezierinfo">Share this on Google+</a></li>
+          </ul>
         </div>
 
         <p>In order to draw things in 2D, we usually rely on lines, which typically get classified
@@ -2816,6 +2849,12 @@
       <script src="webcomponents/web-components.js"></script>
       <script src="webcomponents/custom-elements.js"></script>
       -->
+      <script>
+        document.addEventListener("DOMContentLoaded", function(){
+          Socialite.load("#sharebuttons");
+          document.querySelector("#sharebuttons").style.opacity = 1;
+        }, false);
+      </script>
     </div>
   </body>
 </html>

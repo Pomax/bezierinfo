@@ -6,7 +6,7 @@
    */
   if(isset($_GET["referrer"])) {
     // Allow the bezier article to call us.
-    header('Access-Control-Allow-Origin: http://pomax.github.com');
+    header('Access-Control-Allow-Origin: http://pomax.github.io');
     header('Access-Control-Allow-Headers: Content-Type');
   	// Form timestamps
   	$time = microtime(true);
@@ -20,6 +20,7 @@
       // it's simply part of the HTTP request you send.
 	  	$ip = $_SERVER["REMOTE_ADDR"];
 	  	$host = gethostbyaddr($ip);
+	  	if($host==$ip) { $host=""; }
 	    // Convert the data to a single line of JSON
 	    $json_line = '{time: '.$time.', stamp: "'.$stamp.'", referrer: "'.$ref.'", ip: "'.$ip.'", hostname: "'.$host.'"}' . "\n";
 	    // Finally, write the data to the log file.

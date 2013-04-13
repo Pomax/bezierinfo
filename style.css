@@ -62,7 +62,7 @@ canvas.loading-sketch {
   background: rgb(250,250,204);
 }
 .sketch canvas {
-  margin: auto; 
+  margin: auto;
   border: 1px solid black;
   height: 300px;
 }
@@ -74,7 +74,7 @@ canvas.loading-sketch {
 }
 
 .sketch img {
-  margin: auto; 
+  margin: auto;
   border: 1px solid black;
 }
 
@@ -121,6 +121,27 @@ a.ribbon {
   top: 0;
   right: 0;
   z-index: 999;
+}
+
+h1 { display: inline-block; }
+
+#sharebuttons {
+  position: relative;
+  z-index: 999;
+  display: inline-block;
+  opacity: 0;
+  overflow: hidden;
+  margin: 0;
+  padding: 2px 0;
+}
+
+#sharebuttons li {
+  display: inline-block;
+  vertical-align: top;
+}
+
+#sharebuttons .socialite.facebook-like {
+  position: relative;
 }
 
 #navbar {
