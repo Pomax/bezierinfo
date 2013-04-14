@@ -58,15 +58,15 @@
         </style>
         <!-- AddThis Button BEGIN -->
         <div class="addthis_toolbox addthis_floating_style addthis_16x16_style">
-          <a class="addthis_button_twitter"></a>
-          <a class="addthis_button_facebook"></a>
-          <a class="addthis_button_google_plusone_share"></a>
-          <a class="addthis_button_linkedin"></a>
-          <a class="addthis_button_reddit"></a>
-          <a class="addthis_button_hackernews"></a>
-          <a class="addthis_button_digg"></a>
-          <a class="addthis_button_stumbleupon"></a>
-          <a class="addthis_button_compact"></a>
+          <a addthis:title="Reading @TheRealPomax's Primer on Bézier Curves:" addthis:url="http://pomax.github.io/bezierinfo" class="addthis_button_twitter"></a>
+          <a addthis:title="A Primer on Bézier Curves" addthis:url="http://pomax.github.io/bezierinfo" class="addthis_button_facebook"></a>
+          <a addthis:title="@TheRealPomax's Primer on Bézier Curves" addthis:url="http://pomax.github.io/bezierinfo" class="addthis_button_google_plusone_share"></a>
+          <a addthis:title="A Primer on Bézier Curves" addthis:url="http://pomax.github.io/bezierinfo" class="addthis_button_linkedin"></a>
+          <a addthis:title="A Primer on Bézier Curves" addthis:url="http://pomax.github.io/bezierinfo" class="addthis_button_reddit"></a>
+          <a addthis:title="How much do you want to know about Bézier Curves?" addthis:url="http://pomax.github.io/bezierinfo" class="addthis_button_hackernews"></a>
+          <a addthis:title="How much do you want to know about Bézier Curves?" addthis:url="http://pomax.github.io/bezierinfo" class="addthis_button_digg"></a>
+          <a addthis:title="A Primer on Bézier Curves" addthis:url="http://pomax.github.io/bezierinfo" class="addthis_button_stumbleupon"></a>
+          <a addthis:title="A Primer on Bézier Curves" addthis:url="http://pomax.github.io/bezierinfo" class="addthis_button_compact"></a>
         </div>
         <!-- AddThis Button END -->
       </div>
@@ -2857,7 +2857,16 @@
       <script src="webcomponents/web-components.js"></script>
       <script src="webcomponents/custom-elements.js"></script>
       -->
-      <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=xa-516a3187281448fc" async></script>
+
+      <!--
+        no tracking info: http://support.addthis.com/customer/portal/articles/1013558-removing-all-hashtags-anchors-from-your-urls      
+      -->
+      ​<script type="text/javascript">
+        var addthis_config = addthis_config||{};
+        addthis_config.data_track_clickback = false;
+        addthis_config.data_track_addressbar = false;
+      </script>
+      <script src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=xa-516a3187281448fc" async></script>
     </div>
   </body>
 </html>
