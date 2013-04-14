@@ -45,8 +45,32 @@
       border=0
     ></a>
 
+
     <!-- actual article -->
     <article>
+
+      <!-- AddThis social buttons. Fairly unobtrusive -->
+      <div id="sidebar" style="position:relative; left:-52px">
+        <style>
+          .addthis_floating_style { position: relative!important; height:0px; top:8.25em; background:inherit!important; }
+          .addthis_toolbox a { opacity: 0.3; }
+          .addthis_toolbox a:hover { opacity: 1; }
+        </style>
+        <!-- AddThis Button BEGIN -->
+        <div class="addthis_toolbox addthis_floating_style addthis_16x16_style">
+          <a class="addthis_button_twitter"></a>
+          <a class="addthis_button_facebook"></a>
+          <a class="addthis_button_google_plusone_share"></a>
+          <a class="addthis_button_linkedin"></a>
+          <a class="addthis_button_reddit"></a>
+          <a class="addthis_button_hackernews"></a>
+          <a class="addthis_button_digg"></a>
+          <a class="addthis_button_stumbleupon"></a>
+          <a class="addthis_button_compact"></a>
+        </div>
+        <!-- AddThis Button END -->
+      </div>
+
       <header>
         <h1>A Primer on Bézier Curves</h1>
       </header>
@@ -2812,9 +2836,9 @@
     <div id="scriptblock">
       <!-- scripts can come last so they don't hold up the DOM -->
       <script>localStorage.clear();sessionStorage.clear();</script>
-      <script src="autonav.js"></script>
-      <script src="autolabel.js"></script>
-      <script src="sketchloader.js"></script>
+      <script src="autonav.js" async></script>
+      <script src="autolabel.js" async></script>
+      <script src="sketchloader.js" async></script>
       <script src="processing.patched.js"></script>
       <script type="text/x-mathjax-config">
         MathJax.Hub.Config({
@@ -2833,6 +2857,7 @@
       <script src="webcomponents/web-components.js"></script>
       <script src="webcomponents/custom-elements.js"></script>
       -->
+      <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=xa-516a3187281448fc" async></script>
     </div>
   </body>
 </html>
