@@ -71,6 +71,8 @@ PolyBezierCurve setupWedge(float x, float y) {
 void drawFunction() {
   int m = millis();
 
+  noAdditionals();
+
   BooleanComputer bcomp = new BooleanComputer(p, p2);
   println("form computer: "+ (millis()-m));
 
@@ -84,19 +86,24 @@ void drawFunction() {
 //  stroke(255,0,0);
 //  ellipse(p0.x,p0.y,7,7);
 
-  noAdditionals();
+/*
+  for(int i=0; i<dim/pad; i++) {
+    fill(colorListing[i]);
+    rect(i*pad, dim-pad, pad, pad);
+  }
+*/
 
 ///*
   m = millis();
   PolyBezierCurve union = bcomp.getUnion();
-  union.draw(color(0,255,0));
+  union.draw(color(0,255,0),true);
   println("form union: "+ (millis()-m));
 //*/
 
 ///*
   m = millis();
   PolyBezierCurve intersection = bcomp.getIntersection();
-  intersection.draw(color(255,0,0));
+  intersection.draw(color(255,0,0), true);
   println("form intersection: "+ (millis()-m));
 //*/
 

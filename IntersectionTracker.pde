@@ -44,56 +44,32 @@ class IntersectionTracker {
   PolyBezierCurve formShape() {
     PolyBezierCurve shape = new PolyBezierCurve(false);
     // initial shape
-    Intersection current = intersections[0], c2;
-    PolyBezierCurve p = current.getIn(), p2;
-    current.blank(p);
-    shape.append(p);
+    Intersection current = intersections[0];
+    PolyBezierCurve p=current.getIn(), pout;
+
     // algorithm walk to add the remaining shapes
-    boolean done = false,   // is algorithm done?
-            inCurve = true; // does "p" represent an in-curve?
+    boolean done = false;
     while(!done) {
-      if(inCurve) {
-        p = current.getOut();
-        current.blank(p);
-        inCurve = !inCurve;
-      }
-      else {
-        c2 = getAdjoint(current, p);
-        if(c2==null) {
-          shape.subShape();
-          current = getNextShape();
-          if(current==null) {
-            done = true;
-          } else {
-            inCurve = true;
-            p = current.getIn();
-            current.blank(p);
-          }
-        }
-        else {
-          current = c2;
-          p = current.getIn();
-          current.blank(p);
-          inCurve = true;
-        }
-      }
       shape.append(p);
+      current.blank(p);
+      pout = current.getOut();
+      current.blank();
+      current = getAdjoint(pout);
+      if(current == null) { done = true; }
+      else { p=current.getIn(); }
     }
     // and we're done.
     return shape;
   }
 
   // get the section that follows this one.
-  Intersection getAdjoint(Intersection it, PolyBezierCurve c) {
-    Intersection it2;
+  Intersection getAdjoint(PolyBezierCurve c) {
+    Intersection it;
     for(int i=0, pos; i<intersections.length; i++) {
-      it2 = intersections[i];
-      pos = it2.indexOf(c);
-      if(pos>-1) {
-        return it2;
-      }
+      it = intersections[i];
+      pos = it.indexOf(c);
+      if(pos>-1) { return it; }
     }
-
     // there is no adjoint.
     return null;
   }
@@ -163,6 +139,7 @@ class IntersectionTracker {
     }
 
     // blankers
+    void blank() { c1_in = null; c1_out = null; c2_in = null; c2_out = null; }
     void blank(PolyBezierCurve c) {
       if(c1_in==c)  c1_in = null;
       if(c1_out==c) c1_out = null;
@@ -173,16 +150,18 @@ class IntersectionTracker {
     // traversal getters
     PolyBezierCurve getIn() {
       if(c1_in==null && c2_in==null) return null;
-      else if(c1_in==null && c2_in!=null) return c2_in;
-      else if(c1_in!=null && c2_in==null) return c1_in;
-      /*if(c1_in!=null && c2_in!=null)*/ return null;
+      if(c1_in!=null) return c1_in;
+      if(c2_in!=null) return c2_in;
+      /* it would be interesting if we could get here */
+      return null;
     }
 
     PolyBezierCurve getOut() {
       if(c1_out==null && c2_out==null) return null;
-      else if(c1_out==null && c2_out!=null) return c2_out;
-      else if(c1_out!=null && c2_out==null) return c1_out;
-      /*if(c1_out!=null && c2_out!=null)*/ return null;
+      if(c2_out!=null) return c2_out;
+      if(c1_out!=null) return c1_out;
+      /* it would be interesting if we could get here */
+      return null;
     }
 
     PolyBezierCurve getOut(int other) {
@@ -191,8 +170,6 @@ class IntersectionTracker {
     }
 
     PolyBezierCurve getNext(PolyBezierCurve c) {
-      println(c);
-      println(toString());
       if(c1_in==c)       if (c1_out==null) { other = 1; return c2_out; } else { other = 2; return c1_out; }
       else if(c1_out==c) if (c1_in==null)  { other = 1; return c2_in;  } else { other = 2; return c1_in;  }
       else if(c2_in==c)  if (c2_out==null) { other = 2; return c1_out; } else { other = 1; return c2_out; }
@@ -231,10 +208,11 @@ class IntersectionTracker {
 
     // draw
     void draw() {
-      if(c1_in!=null)  c1_in.draw();
-      if(c1_out!=null) c1_out.draw();
-      if(c2_in!=null)  c2_in.draw();
-      if(c2_out!=null) c2_out.draw();
+      int col = colorListing[int(random(100))];
+      if(c1_in!=null)  { c1_in.draw(col);  }
+      if(c1_out!=null) { c1_out.draw(col); }
+      if(c2_in!=null)  { c2_in.draw(col);  }
+      if(c2_out!=null) { c2_out.draw(col); }
     }
 
     // tostring

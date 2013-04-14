@@ -401,10 +401,6 @@ class BezierComputer {
     ArrayList<CurvePair> finals = new ArrayList<CurvePair>();
     pairs.add(new CurvePair(c1,c2));
     refineIntersections(pairs, finals);
-    // Due to the way the algorithm runs, we may have multiple
-    // "final" points that actually represent the same point.
-    // Before we return, we collapse these.
-    // ... CODE GOES HERE ...
     return finals;
   }
 
@@ -416,7 +412,9 @@ class BezierComputer {
     ArrayList<CurvePair> newPairs = new ArrayList<CurvePair>();
     for(CurvePair cp: pairs) {
       if(cp.hasOverlap()) {
-        if(cp.smallEnough()) { finals.add(cp); }
+        if(cp.smallEnough()) {
+          finals.add(cp);
+        }
         else {
           CurvePair[] expanded = cp.splitAndCombine();
           for(CurvePair ncp: expanded) {

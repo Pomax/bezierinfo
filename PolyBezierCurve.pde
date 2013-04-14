@@ -11,7 +11,9 @@ class PolyBezierCurve {
   int pointCount = -1;
   ArrayList<BezierCurve> segments;
   float length = 0;
-  boolean constrained = true, closed = false, integrate = false;
+  boolean constrained = true,
+          closed = false,
+          integrate = false;
   int lastStart = 0;
 
   /**

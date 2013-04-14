@@ -6,6 +6,7 @@
 
 PolyBezierCurve p1, p2;
 BooleanComputer bcomp;
+int mrk;
 
 /**
  * set up the screen
@@ -39,12 +40,16 @@ PolyBezierCurve setupWedge(float x, float y) {
   return p;
 }
 
+void mark() { mrk = millis(); }
+int timeTaken() { return millis() - mrk; }
+
 /**
  * Actual draw code
  */
 void drawFunction() {
   BezierCurve curve = curves.get(0);
-  bcomp = new BooleanComputer(p1, p2);
   noAdditionals();
+  mark();
+  bcomp = new BooleanComputer(p1, p2);
   drawShapes();
 }
