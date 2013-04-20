@@ -20,20 +20,15 @@
 .EPC-list a:active  { color: #33F; }
 
 .EPC-list {
-  width: 900px;
-  margin: 0px auto;
 }
 
 .EPC-depth {
-  margin-left: 1em;
 }
 
 .EPC-entry {
 }
 
 .EPC-owner-comment {
-  margin: 1px;
-  padding: 1px;
   border: 1px solid rgba(255,0,0,40);
 }
 
