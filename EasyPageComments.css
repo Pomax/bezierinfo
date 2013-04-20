@@ -23,6 +23,7 @@
 }
 
 .EPC-depth {
+  margin-left: 0.5em;
 }
 
 .EPC-entry {
@@ -73,15 +74,9 @@
 */
 
 .EPC-form {
-  margin: 1px;
-  padding: 1px;
-  border: 1px solid rgba(0,0,0,40);
 }
 
 .EPC-form-name {
-  margin: 1px;
-  padding: 1px;
-  border: 1px solid rgba(0,0,0,40);
 }
 
 .EPC-user-name {
@@ -100,9 +95,6 @@
 }
 
 .EPC-form-email {
-  margin: 1px;
-  padding: 1px;
-  border: 1px solid rgba(0,0,0,40);
 }
 
 .EPC-user-email {
@@ -136,15 +128,10 @@
 }
 
 .EPC-security {
-  margin: 1px;
-  padding: 1px;
-  border: 1px solid rgba(0,0,0,40);
 }
 
 .EPC-security-question {
-  margin: 1px;
-  padding: 1px;
-  border: 1px solid rgba(0,0,0,40);
+  display: inline-block;
 }
 
 .EPC-security-question:before {
@@ -153,32 +140,25 @@
 }
 
 .EPC-security-answer {
-  margin: 1px;
-  padding: 1px;
   border: 1px solid rgba(0,0,0,40);
   background-color: #EEE;
   color: #333;
 }
 
 .EPC-form-buttons {
-  margin: 1px;
-  padding: 1px;
-  border: 1px solid rgba(0,0,0,40);
+  position: relative;
 }
 
 .EPC-form-buttons input {
-  margin: 1px;
-  padding: 1px;
 }
 
 .EPC-form-clear {
-  margin: 1px;
-  padding: 1px;
+  display: none;
 }
 
 .EPC-form-submit{
-  margin: 1px;
-  padding: 1px;
+  position: absolute;
+  right: 0;
 }
 
 
