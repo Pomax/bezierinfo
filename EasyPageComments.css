@@ -156,6 +156,8 @@
 .EPC-form-submit{
   position: absolute;
   right: 0;
+  top: -2em;
+  font-size: 110%;
 }
 
 .EPC-form-notify {
