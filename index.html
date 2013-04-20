@@ -40,24 +40,15 @@
     <script type="text/javascript">
       function showEasyPageComments(name, data) {
         if(name==="bezierinfo") {
-          document.getElementById('commentlist').innerHTML = data;
-        }
-      }
-
+          document.getElementById('commentlist').innerHTML = data; }}
       function showEasyPageCommentForm(name, data) {
         if(name==="bezierinfo") {
-          document.getElementById('commentform').innerHTML = data;
-        }
-      }
-
+          document.getElementById('commentform').innerHTML = data; }}
       function addEasyPageComments() {
+        document.removeEventListener("DOMContentLoaded", addEasyPageComments, false);
         EasyPageComments.createCommentsList('bezierinfo');
-        EasyPageComments.createCommentForm('bezierinfo');
-      }
-
-      if(window.location.toString().indexOf("showComments=true")>-1) {
-        document.addEventListener("DOMContentLoaded", addEasyPageComments, false)
-      }
+        EasyPageComments.createCommentForm('bezierinfo'); }
+      document.addEventListener("DOMContentLoaded", addEasyPageComments, false);
     </script>
   </head>
 
