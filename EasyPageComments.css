@@ -113,9 +113,6 @@
 }
 
 .EPC-form-comment {
-  margin: 1px;
-  padding: 1px;
-  border: 1px solid rgba(0,0,0,40);
 }
 
 .EPC-form-comment textarea {
@@ -161,6 +158,9 @@
   right: 0;
 }
 
+.EPC-form-notify {
+  font-size: 75%;
+}
 
 /*
   What happens to elements that were filling in incorrectly?
