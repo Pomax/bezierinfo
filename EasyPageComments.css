@@ -28,8 +28,8 @@
 .EPC-entry {
 }
 
-.EPC-owner-comment {
-  border: 1px solid rgba(255,0,0,40);
+.EPC-entry + .EPC-entry {
+  margin-top: 0.5em;
 }
 
 .EPC-entry-name {
@@ -54,6 +54,11 @@
   padding: 0.4em;
   background: white;
 }
+
+.EPC-owner-comment .EPC-entry-comment {
+  background: #FFE;
+}
+
 
 .EPC-entry-reply {
   float: right;
