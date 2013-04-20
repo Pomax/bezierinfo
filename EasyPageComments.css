@@ -1,0 +1,197 @@
+/*
+  Comment list and entry styling
+*/
+
+.EPC-RSS-link {
+  position: relative;
+  float: right;
+}
+
+.EPC-no-comments {
+  border: 1px solid black;
+  padding: 1em;
+  text-align: center;
+}
+
+.EPC-list a { text-decoration: none; }
+.EPC-list a:link    { color: #33F; }
+.EPC-list a:visited { color: #33F; }
+.EPC-list a:hover   { color: #007; }
+.EPC-list a:active  { color: #33F; }
+
+.EPC-list {
+  width: 900px;
+  margin: 0px auto;
+}
+
+.EPC-depth {
+  margin-left: 1em;
+}
+
+.EPC-entry {
+  margin: 1px;
+  padding: 1px;
+  border: 1px solid rgba(0,0,0,40);
+}
+
+.EPC-owner-comment {
+  margin: 1px;
+  padding: 1px;
+  border: 1px solid rgba(255,0,0,40);
+}
+
+.EPC-entry-name {
+  margin: 1px;
+  padding: 1px;
+  border: 1px solid rgba(0,0,0,40);
+}
+
+.EPC-owner-comment .EPC-entry-time a:link    { color: #009; }
+.EPC-owner-comment .EPC-entry-time a:visited { color: #009; }
+.EPC-owner-comment .EPC-entry-time a:hover   { color: #77F; }
+.EPC-owner-comment .EPC-entry-time a:active  { color: #009; }
+
+
+.EPC-entry-time {
+  margin: 1px;
+  padding: 1px;
+  border: 1px solid rgba(0,0,0,40);
+}
+
+.EPC-entry-comment {
+  margin: 1px;
+  padding: 1px;
+  border: 1px solid rgba(0,0,0,40);
+}
+
+.EPC-entry-reply {
+  margin: 1px;
+  padding: 1px;
+  border: 1px solid rgba(0,0,0,40);
+}
+
+/*
+  Comment form styling
+*/
+
+.EPC-form {
+  margin: 1px;
+  padding: 1px;
+  border: 1px solid rgba(0,0,0,40);
+}
+
+.EPC-form-name {
+  margin: 1px;
+  padding: 1px;
+  border: 1px solid rgba(0,0,0,40);
+}
+
+.EPC-user-name {
+  /* trusted user name styling */
+  margin-left: 0.3em;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.EPC-form-name input {
+  margin: 1px;
+  padding: 1px;
+  border: 1px solid rgba(0,0,0,40);
+  background-color: #EEE;
+  color: #333;
+}
+
+.EPC-form-email {
+  margin: 1px;
+  padding: 1px;
+  border: 1px solid rgba(0,0,0,40);
+}
+
+.EPC-user-email {
+  /* trusted user email styling */
+  margin-left: 0.3em;
+  font-weight: bold;
+  font-style: italic;
+}
+
+.EPC-form-email input {
+  margin: 1px;
+  padding: 1px;
+  border: 1px solid rgba(0,0,0,40);
+  background-color: #EEE;
+  color: #333;
+}
+
+.EPC-form-comment {
+  margin: 1px;
+  padding: 1px;
+  border: 1px solid rgba(0,0,0,40);
+}
+
+.EPC-form-comment textarea {
+  display: block;
+  width: 100%;
+  height: 10em;
+  margin: 1px;
+  padding: 1px;
+  border: 1px solid rgba(0,0,0,40);
+}
+
+.EPC-security {
+  margin: 1px;
+  padding: 1px;
+  border: 1px solid rgba(0,0,0,40);
+}
+
+.EPC-security-question {
+  margin: 1px;
+  padding: 1px;
+  border: 1px solid rgba(0,0,0,40);
+}
+
+.EPC-security-question:before {
+  font-style: italic;
+  content: "Security question: ";
+}
+
+.EPC-security-answer {
+  margin: 1px;
+  padding: 1px;
+  border: 1px solid rgba(0,0,0,40);
+  background-color: #EEE;
+  color: #333;
+}
+
+.EPC-form-buttons {
+  margin: 1px;
+  padding: 1px;
+  border: 1px solid rgba(0,0,0,40);
+}
+
+.EPC-form-buttons input {
+  margin: 1px;
+  padding: 1px;
+}
+
+.EPC-form-clear {
+  margin: 1px;
+  padding: 1px;
+}
+
+.EPC-form-submit{
+  margin: 1px;
+  padding: 1px;
+}
+
+
+/*
+  What happens to elements that were filling in incorrectly?
+*/
+
+.EPC-error-message {
+  color: red;
+}
+
+.EPC-error {
+  border: 2px solid red !important;
+}

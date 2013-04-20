@@ -34,6 +34,31 @@
     <meta property="og:tag" content="Bezier Curve">
 
     <!-- <link rel="component" href="webcomponents/github-components.html"> -->
+
+    <link rel="stylesheet" type="text/css" href="EasyPageComments.css"/>
+    <script type="text/javascript" src="EasyPageComments.js"></script>
+    <script type="text/javascript">
+      function showEasyPageComments(name, data) {
+        if(name==="bezierinfo") {
+          document.getElementById('commentlist').innerHTML = data;
+        }
+      }
+
+      function showEasyPageCommentForm(name, data) {
+        if(name==="bezierinfo") {
+          document.getElementById('CommentForm').innerHTML = data;
+        }
+      }
+
+      function addEasyPageComments() {
+        EasyPageComments.createCommentsList('bezierinfo');
+        EasyPageComments.createCommentForm('bezierinfo');
+      }
+
+      if(window.location.toString().indexOf("showComments=true")>-1) {
+        document.addEventListener("DOMContentLoaded", addEasyPageComments, false)
+      }
+    </script>
   </head>
 
   <body>
@@ -2831,6 +2856,13 @@
         upper right corner), and I'll add it to this list (while I write up some code to cleanly
         pull in gh-issues as a 'comment feed'... probably using web components).</p>
       </section>
+
+      <section id="comments">
+        <h2>Comments and questions</h2>
+
+        <div id="commentlist"></div>
+        <div id="commentform"></div>
+      </section>
     </article>
 
     <div id="scriptblock">
@@ -2859,7 +2891,7 @@
       -->
 
       <!--
-        no tracking info: http://support.addthis.com/customer/portal/articles/1013558-removing-all-hashtags-anchors-from-your-urls      
+        no tracking info: http://support.addthis.com/customer/portal/articles/1013558-removing-all-hashtags-anchors-from-your-urls
       -->
       ​<script type="text/javascript">
         var addthis_config = addthis_config||{};
