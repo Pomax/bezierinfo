@@ -29,9 +29,6 @@
 }
 
 .EPC-entry {
-  margin: 1px;
-  padding: 1px;
-  border: 1px solid rgba(0,0,0,40);
 }
 
 .EPC-owner-comment {
@@ -41,9 +38,9 @@
 }
 
 .EPC-entry-name {
-  margin: 1px;
-  padding: 1px;
-  border: 1px solid rgba(0,0,0,40);
+  display: inline-block;
+  margin-left: 1em;
+  font-style: italic;
 }
 
 .EPC-owner-comment .EPC-entry-time a:link    { color: #009; }
@@ -53,21 +50,22 @@
 
 
 .EPC-entry-time {
-  margin: 1px;
-  padding: 1px;
-  border: 1px solid rgba(0,0,0,40);
+  display: inline-block;
+  font-size: 90%;
 }
 
 .EPC-entry-comment {
-  margin: 1px;
-  padding: 1px;
-  border: 1px solid rgba(0,0,0,40);
+  border: 1px solid #999;
+  padding: 0.4em;
+  background: white;
 }
 
 .EPC-entry-reply {
-  margin: 1px;
-  padding: 1px;
-  border: 1px solid rgba(0,0,0,40);
+  float: right;
+  position: relative;
+  top: -1.4em;
+  margin-bottom: -1em;
+  right: 0.5em;
 }
 
 /*
