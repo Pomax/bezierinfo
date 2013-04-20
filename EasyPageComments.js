@@ -3,7 +3,7 @@ var EasyPageComments = {
   // Change this value if you don't have the
   // EasyPageComments.php file in the same
   // directory as your web page.
-  EasyPageCommentLocation: "EasyPageComments.php",
+  EasyPageCommentLocation: "http://what.inthefuck.com/bezierinfo/comments/EasyPageComments.php",
 
   /**
    * Using anchor links with JavaScript will fail
