@@ -23,7 +23,8 @@
  * github. It's in referrer/logger.php
  *
  */
-(function referrer() {
+(function referrer(l) {
+  var page = l.substring(l.lastIndexOf('/')).replace(".html",'');
   // we don't care about file or localhost, for obvious reasons
   var loc = window.location.toString();
   if(loc.indexOf("file:///")!==-1) return;
@@ -32,7 +33,7 @@
   var url = "http://what.inthefuck.com/bezierinfo/logger.php";
   // yep, I own that domain.
   var xhr = new XMLHttpRequest();
-  xhr.open("GET", url + "?" + "referrer=" + encodeURIComponent(document.referrer), true);
+  xhr.open("GET", url + "?" + "referrer=" + encodeURIComponent(document.referrer) + "&for=" + page, true);
   try { xhr.send(null); }
   catch(e) { /* you don't care about this error, and I can't see it, so why would we do anything with it? */ }
-}());
+}(window.location.toString()));
