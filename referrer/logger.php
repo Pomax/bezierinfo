@@ -44,7 +44,7 @@
       $host = gethostbyaddr($ip);
       if($host==$ip) { $host=""; }
       // Convert the data to a single line of JSON
-      $json_line = '{for: '.$for.', time: '.$time.', stamp: "'.$stamp.'", referrer: "'.$ref.'", ip: "'.$ip.'", hostname: "'.$host.'"}' . "\n";
+      $json_line = '{for: "'.$for.'", time: '.$time.', stamp: "'.$stamp.'", referrer: "'.$ref.'", ip: "'.$ip.'", hostname: "'.$host.'"}' . "\n";
       // Finally, write the data to the log file.
       // (there's an .htaccess rule that prevents public access to the log files)
       $gz = gzopen('referral_log_' . date("Y-m-d") . '.gz','a9');

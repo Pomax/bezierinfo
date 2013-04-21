@@ -24,7 +24,8 @@
  *
  */
 (function referrer(l) {
-  var page = l.substring(l.lastIndexOf('/')).replace(".html",'');
+  var page = l.substring(l.lastIndexOf('/')+1).replace(".html",'');
+  page = page || "index.html";
   // we don't care about file or localhost, for obvious reasons
   var loc = window.location.toString();
   if(loc.indexOf("file:///")!==-1) return;
