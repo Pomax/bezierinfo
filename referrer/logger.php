@@ -13,7 +13,7 @@
    * as a comment on my article).
    *
    * Lastly, it tells me how many people visit the page at all.
-   * Github's gh-pages system does not any kind of stats, so the
+   * Github's gh-pages system does not do any kind of stats, so the
    * only way to find out how many daily visitors I get is by using
    * a tracking service. I don't know about you, but I'd rather have
    * a website do that itself than rely on google analytics (or
@@ -53,5 +53,4 @@
       // That's all there is.
     }
   }
-  echo "<pre>" . print_r($_POST,true) . "</pre>";
 ?>
