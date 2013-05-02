@@ -47,7 +47,6 @@ int timeTaken() { return millis() - mrk; }
  * Actual draw code
  */
 void drawFunction() {
-  BezierCurve curve = curves.get(0);
   noAdditionals();
   mark();
   bcomp = new BooleanComputer(p1, p2);
