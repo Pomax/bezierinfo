@@ -28,8 +28,8 @@ BezierComputer comp = new BezierComputer();
 BezierComputer getComputer() { return comp; }
 
 ArrayList<BezierCurve> curves = new ArrayList<BezierCurve>();
-PolyBezierCurve p = new PolyBezierCurve();
 ArrayList<BezierCurve> getCurves() { return curves; }
+PolyBezierCurve p = new PolyBezierCurve();
 
 float t = 0, step = 0.002;
 
