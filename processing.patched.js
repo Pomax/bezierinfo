@@ -20301,7 +20301,7 @@
 
     // if not, immediately create our instance
     if (sourcesCount === 0) {
-      canvas.classList.remove("loading-sketch");     
+      canvas.classList.remove("loading-sketch");
       var sketches = new Processing(canvas, code.join("\n"));
       canvas.sketch = sketch;
       canvas.loadSketch = false;
@@ -20474,8 +20474,6 @@
               loadList.splice(i,1);
             }
           }
-        } else {
-          document.removeEventListener("scroll",loadOnScroll,false);
         }
       }
       document.addEventListener("scroll",loadOnScroll,false);

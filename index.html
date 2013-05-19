@@ -5,9 +5,12 @@
     <!-- referral tracking -->
     <script src="referrer.js"></script>
 
+    <!-- DOM manipulation, the kinder way -->
+    <script src="tiny-toolkit-min.js"></script>
+
     <!-- page information -->
     <meta charset="utf-8">
-    <title>Bézier curve framework</title>
+    <title>A Primer on Bézier Curves</title>
 
     <!-- styling -->
     <link rel="stylesheet" media="screen" href="style.css">
@@ -22,16 +25,16 @@
     </script>
 
     <!-- opengraph information -->
-    <meta property="og:title" content="A Primer on Bezier Curves">
+    <meta property="og:title" content="A Primer on Bézier Curves">
     <meta property="og:type" content="text">
     <meta property="og:url" content="http://pomax.github.io/bezierinfo">
-    <meta property="og:description" content="A detailed explanation of Bezier curves, and how to do the many things that we commonly want to do with them.">
+    <meta property="og:description" content="A detailed explanation of Bézier curves, and how to do the many things that we commonly want to do with them.">
     <meta property="og:locale" content="en_GB">
     <meta property="og:type" content="article">
     <meta property="og:published_time" content="2013-06-13 12:00:00">
     <meta property="og:author" content="Mike 'Pomax' Kamermans">
-    <meta property="og:section" content="Bezier Curves">
-    <meta property="og:tag" content="Bezier Curve">
+    <meta property="og:section" content="Bézier Curves">
+    <meta property="og:tag" content="Bézier Curve">
 
     <!-- <link rel="component" href="webcomponents/github-components.html"> -->
     <link rel="stylesheet" type="text/css" href="EasyPageComments.css"/>
@@ -347,8 +350,84 @@
 
         <p>And that's the full description for Bézier curves. Σ in this function indicates that this is
         a series of additions (using the variable listed below the Σ, starting at ...=<value> and ending
-        at the value listed on top of the Σ). So, now we know what the base function(s) look(s) like,
-        time to add in the magic that makes Bézier curves so special: control points.<p>
+        at the value listed on top of the Σ).</p>
+
+        <div class="howtocode">
+          <h3>How to implement the basis function</h3>
+
+          <p>We could naively implement the basis function as a mathematical construct,
+          using the function as our guide, like this:</p>
+
+<pre>function Bezier(n,t):
+  sum = 0
+  for(k=0; k&lt;n; k++):
+    sum += n!/(k!*(n-k)!) * (1-t)^(n-k) * t^(k)
+  return sum</pre>
+
+          <p>I say we could, because we're not going to: the factorial function is <em>incredibly</em>
+          expensive. And, as we can see from the above explanation, we can actually create Pascal's
+          triangle quite easily without it: just start at [1], then [1,1], then [1,2,1], then [1,3,3,1],
+          and so on, with each next row fitting 1 more number than the previous row, starting and
+          ending with "1", with all the numbers in between being the sum of the previous row's
+          elements on either side "above" the one we're computing.</p>
+
+          <p>We can generate this as a list of lists lightning fast, and then never have to compute
+          the binomial terms because we have a lookup table:</p>
+
+<pre>lut = [      [1],           // n=0
+            [1,1],          // n=1
+           [1,2,1],         // n=2
+          [1,3,3,1],        // n=3
+         [1,4,6,4,1],       // n=4
+        [1,5,10,10,5,1],    // n=5
+       [1,6,15,20,15,6,1]]  // n=6
+
+binomial(n,k):
+  while(n &gt;= lut.length):
+    s = lut.length
+    nextRow = new array(size=s+1)
+    nextRow[0] = 1
+    for(i=1, prev=s-1; i&ltprev; i++):
+      nextRow[i] = lut[prev][i-1] + lut[prev][i]
+    nextRow[s] = 1
+    lut.add(nextRow)
+  return lut[n][k]</pre>
+
+          <p>So what's going on here? First, we declare a lookup table with a size that's reasonably
+          large enough to accommodate most lookups. Then, we declare a function to get us the values
+          we need, and we make sure that if an n/p pair is request that isn't in the LUT yet, we
+          expand it first. Our basis function now looks like this:</p>
+
+<pre>function Bezier(n,t):
+  sum = 0
+  for(k=0; k&lt;n; k++):
+    sum += binomial(n,k) * (1-t)^(n-k) * t^(k)
+  return sum</pre>
+
+          <p>Perfect. Of course, we can optimize further. For most computer graphics purposes, we
+          don't need arbitrary curves. We need quadratic and  cubic curves (this primer actually
+          does do arbitrary curves, so you'll find code similar to shown here), which means we can
+          drastically simplify the code:</p>
+
+<pre>function Bezier(2,t):
+  t2 = t * t
+  mt = 1-t
+  mt2 = mt * mt
+  return mt2 + 2*mt*t + t2
+
+function Bezier(3,t):
+  t2 = t * t
+  t3 = t2 * t
+  mt = 1-t
+  mt2 = mt * mt
+  mt3 = mt2 * mt
+  return mt3 + 3*mt2*t + 3*mt*t2 + t3</pre>
+
+          <p>And now we know how to program the basis function. Exellent.</p>
+        </div>
+
+        <p>So, now we know what the base function(s) look(s) like, time to add in the magic that makes
+        Bézier curves so special: control points.<p>
       </section>
 
       <section id="control">
@@ -421,6 +500,196 @@
 
         <p>What else can we do with Bézier curves? Quite a lot, actually. The rest of this article covers
         a multitude of possible operations and algorithms that we can apply, and the tasks they achieve.</p>
+
+        <div class="howtocode">
+          <h3>How to implement the weighted basis function</h3>
+
+          <p>Given that we already know how to implement basis function, adding in the control points
+          is remarkably easy:</p>
+
+<pre>function Bezier(n,t,w[]):
+  sum = 0
+  for(k=0; k&lt;n; k++):
+    sum += w[k] * binomial(n,k) * (1-t)^(n-k) * t^(k)
+  return sum</pre>
+
+          <p>And for the extremely optimized versions:</p>
+
+<pre>function Bezier(2,t,w[]):
+  t2 = t * t
+  mt = 1-t
+  mt2 = mt * mt
+  return w[0]*mt2 + w[1]*2*mt*t + w[2]*t2
+
+function Bezier(3,t,w[]):
+  t2 = t * t
+  t3 = t2 * t
+  mt = 1-t
+  mt2 = mt * mt
+  mt3 = mt2 * mt
+  return w[0]*mt3 + 3*w[1]*mt2*t + 3*w[2]*mt*t2 + w[3]*t3</pre>
+
+          <p>And now we know how to program the weighted basis function.</p>
+        </div>
+      </section>
+
+      <section id="decasteljau">
+        <h2>de Casteljau's algorithm</h2>
+
+        <p>If we want to draw Bézier curves we can run through all values of <i>t</i> from 0 to 1 and then
+        compute the weighted basis function, getting the <i>x</i>/<i>y</i> values we need to plot, but the
+        more complex the curve gets, the more expensive this becomes. Instead, we can use "de Casteljau's
+        algorithm" to draw curves, which is a geometric approach to drawing curves, and really easy to
+        implement. So easy, in fact, you can do it by hand with a pencil and ruler.</p>
+
+        <p>Rather than using our calculus function to find <i>x</i>/<i>y</i> values for <i>t</i>, let's
+        do this instead:</p>
+
+        <ul>
+          <li>treat <i>t</i> as a ratio (which it is). t=0 is 0% along a line, t=1 is 100% along a line.</li>
+          <li>Take all lines between the curve's defining points. For an order <i>n</i> curve, that's <i>n</i> lines.</li>
+          <li>Place markers along each of these line, at distance <i>t</i>. So if <i>t</i> is 0.2, place the mark
+              at 20% from the start, 80% from the end.</li>
+          <li>Now form lines between <i>those</i> points. This gives <i>n-1</i> lines.</li>
+          <li>Place markers along each of these line at distance <i>t</i>.</li>
+          <li>Form lines between <i>those</i> points. This'll be <i>n-2</i> lines.</li>
+          <li>place markers, form lines, place markers, etc.</li>
+          <li>repeat this until you have only one line left. The point <i>t</i> on that line coincides with the
+              original curve point at <i>t</i>.</li>
+        </ul>
+
+        <div class="howtocode">
+          <h3>How to implement de Casteljau's algorithm</h3>
+
+          <p>Let's just use the algorithm we just specified, and implement that:</p>
+
+<pre>function drawCurve(points[], t):
+  if(points.length==1):
+    draw(points[0])
+  else:
+    newpoints=array(points.size-1)
+    for(i=0; i&lt;newpoints.length; i++):
+      newpoints[i] = (1-t) * points[i] + t * points[i+1]
+    drawCurve(newpoints, t)</pre>
+
+          <p>And done, that's the algorithm implemented. Except usually you don't get the luxury of
+          overloading the "+" operator, so let's also give the code for when you need to work with
+          <i>x</i> and <i>y</i> values:</p>
+
+<pre>function drawCurve(points[], t):
+  if(points.length==1):
+    draw(points[0])
+  else:
+    newpoints=array(points.size-1)
+    for(i=0; i&lt;newpoints.length; i++):
+      x = (1-t) * points[i].x + t * points[i+1].x
+      y = (1-t) * points[i].y + t * points[i+1].y
+      newpoints[i] = new point(x,y)
+    drawCurve(newpoints, t)</pre>
+
+          <p>So what does this do? This draws a point, if the passed list of points is only 1 point
+          long. Otherwise it will create a new list of points that sit at the <i>t</i> ratios (i.e.
+          the "markers" outlined in the above algorithm), and then call the draw function for this
+          new list.</p>
+        </div>
+
+        <p>To see this in action, click the following sketch. This sketch has a curve that can be lowered and elevated,
+        and will show de Casteljau's "skeleton" around the curve, showing how it's determining where to draw the curve's
+        point for every <i>t</i> value. To pause or resume, simply click or hit space bar (when focussed on the sketch).</p>
+
+        <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Traversing a curve using de Casteljau's algorithm">
+        void setupCurve() {
+          //setupDefaultCubic();
+          Point[] points = {
+            new Point(65,25),
+            new Point(5,150),
+            new Point(80,290),
+            new Point(220,235),
+            new Point(250,150),
+            new Point(135,125),
+          };
+          curves.add(new BezierCurve(points));
+          reorder();
+          animate();
+          pause();
+          span();
+        }
+
+        void drawCurve(BezierCurve curve) {
+          curve.draw();
+          Point p = curve.getPoint(t);
+          ellipse(p.x, p.y, 5, 5);
+          drawSpan(curve, t);
+        }</textarea>
+      </section>
+
+      <section id="splitting">
+        <h2>Splitting curves</h2>
+
+        <p>With de Casteljau's algorithm we also find all the points we need to split up a Bézier curve into two, smaller
+        curves, which taken together form the original curve. When we construct de Casteljau's skeleton for some value
+        <i>t</i>, the procedure gives us all the points we need to split a curve at that <i>t</i> value: one curve is defined
+        by all the inside skeleton points found prior to our on-curve point, with the other curve being defined by all the
+        inside skeleton points after our on-curve point.</p>
+
+        <div class="howtocode">
+          <h3>implementing curve splitting</h3>
+
+          <p>We can implement curve splitting by bolting some extra logging onto the de Casteljau function:</p>
+
+<pre>left=[]
+right=[]
+function drawCurve(points[], t):
+  if(points.length==1):
+    left.add(points[0])
+    right.add(points[0])
+    draw(points[0])
+  else:
+    newpoints=array(points.size-1)
+    for(i=0; i&lt;newpoints.length; i++):
+      if(i==0):
+        left.add(points[i])
+      if(i==newpoints.length-1):
+        right.add(points[i+1])
+      newpoints[i] = (1-t) * points[i] + t * points[i+1]
+    drawCurve(newpoints, t)</pre>
+
+          <p>After running this function for some value <i>t</i>, the <i>left</i> and <i>right</i> arrays
+          will contain all the coordinates for two new curves - one to the "left" of our <i>t</i> value,
+          the other on the "right", of the same order as the original curve, and overlayed exactly on the
+          original curve.</p>
+        </div>
+
+        <p>This is best illustrated with an animated graphic:</p>
+
+        <textarea class="sketch-code" data-sketch-preset="threepanel" data-sketch-title="Bézier curve splitting. Curve order can be lowered/elevated.">
+        void setupCurve() {
+          setupDefaultCubic();
+          reorder();
+          animate();
+          pause();
+          span();
+        }
+
+        void drawCurve(BezierCurve curve) {
+          curve.draw();
+          Point p = curve.getPoint(t);
+          ellipse(p.x, p.y, 5, 5);
+          drawSpan(curve, t);
+
+          BezierCurve[] segments = curve.split(t);
+          usePanelPadding();
+
+          nextPanel();
+          drawAxes("first curve x",0,panelDim, "first\ncurve\ny",0,panelDim);
+          drawSpan(curve, t);
+          segments[0].draw();
+
+          nextPanel();
+          drawAxes("second curve x",0,panelDim, "second\ncurve\ny",0,panelDim);
+          drawSpan(curve, t);
+          segments[1].draw();
+        }</textarea>
       </section>
 
       <section id="reordering">
@@ -1588,95 +1857,6 @@
         techniques we've not covered yet: de Casteljau's algorithm, and curve splitting.</p>
       </section>
 
-      <section id="decasteljau">
-        <h2>de Casteljau's algorithm</h2>
-
-        <p>This algorithm is the basis for drawing arbitrarily complex Bézier curves. It's really straight forward:</p>
-
-        <ul>
-          <li>treat <i>t</i> as a ratio (which it is). t=0 is 0% along a line, t=1 is 100% along a line.</li>
-          <li>Take all lines between the curve's defining points. For an order <i>n</i> curve, that's <i>n</i> lines.</li>
-          <li>Place markers along each of these line, at distance <i>t</i>. So if <i>t</i> is 0.2, place the mark
-              at 20% from the start, 80% from the end.</li>
-          <li>Now form lines between <i>those</i> points. This gives <i>n-1</i> lines.</li>
-          <li>Place markers along each of these line at distance <i>t</i>.</li>
-          <li>Form lines between <i>those</i> points. This'll be <i>n-2</i> lines.</li>
-          <li>place markers, form lines, place markers, etc.</li>
-          <li>repeat this until you have only one line left. The point <i>t</i> on that line coincides with the
-              original curve point at <i>t</i>.</li>
-        </ul>
-
-        <p>To see this in action, click the following sketch. This sketch has a curve that can be lowered and elevated,
-        and will show de Casteljau's "skeleton" around the curve, showing how it's determining where to draw the curve's
-        point for every <i>t</i> value. To pause or resume, simply click or hit space bar (when focussed on the sketch).</p>
-
-        <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Traversing a curve using de Casteljau's algorithm">
-        void setupCurve() {
-          //setupDefaultCubic();
-          Point[] points = {
-            new Point(65,25),
-            new Point(5,150),
-            new Point(80,290),
-            new Point(220,235),
-            new Point(250,150),
-            new Point(135,125),
-          };
-          curves.add(new BezierCurve(points));
-          reorder();
-          animate();
-          pause();
-          span();
-        }
-
-        void drawCurve(BezierCurve curve) {
-          curve.draw();
-          Point p = curve.getPoint(t);
-          ellipse(p.x, p.y, 5, 5);
-          drawSpan(curve, t);
-        }</textarea>
-      </section>
-
-      <section id="splitting">
-        <h2>Splitting curves</h2>
-
-        <p>With de Casteljau's algorithm we also find all the points we need to split up a Bézier curve into two, smaller
-        curves, which taken together form the original curve. When we construct de Casteljau's skeleton for some value
-        <i>t</i>, the procedure gives us all the points we need to split a curve at that <i>t</i> value: one curve is defined
-        by all the inside skeleton points found prior to our on-curve point, with the other curve being defined by all the
-        inside skeleton points after our on-curve point.</p>
-
-        <p>This is best illustrated with an animated graphic:</p>
-
-        <textarea class="sketch-code" data-sketch-preset="threepanel" data-sketch-title="Bézier curve splitting. Curve order can be lowered/elevated.">
-        void setupCurve() {
-          setupDefaultCubic();
-          reorder();
-          animate();
-          pause();
-          span();
-        }
-
-        void drawCurve(BezierCurve curve) {
-          curve.draw();
-          Point p = curve.getPoint(t);
-          ellipse(p.x, p.y, 5, 5);
-          drawSpan(curve, t);
-
-          BezierCurve[] segments = curve.split(t);
-          usePanelPadding();
-
-          nextPanel();
-          drawAxes("first curve x",0,panelDim, "first\ncurve\ny",0,panelDim);
-          drawSpan(curve, t);
-          segments[0].draw();
-
-          nextPanel();
-          drawAxes("second curve x",0,panelDim, "second\ncurve\ny",0,panelDim);
-          drawSpan(curve, t);
-          segments[1].draw();
-        }</textarea>
-      </section>
-
       <section id="curveintersection">
         <h2>Curve/curve intersection</h2>
 
@@ -1989,7 +2169,7 @@
 
         <textarea class="sketch-code" data-sketch-preset="poly" data-sketch-title="A half-constrained quadratic poly-Bézier">
         void setupCurve() {
-          setupDefaultCubicPoly();
+          setupDefaultQuadraticPoly();
         }
 
         void movePoint(int pt, int mx, int my) {
@@ -2016,7 +2196,7 @@
 
         <textarea class="sketch-code" data-sketch-preset="poly" data-sketch-title="An unconstrained quadratic poly-Bézier">
         void setupCurve() {
-          setupDefaultCubicPoly();
+          setupDefaultQuadraticPoly();
         }
 
         void movePoint(int pt, int mx, int my) {
@@ -2947,10 +3127,10 @@
 
     <div id="scriptblock">
       <!-- scripts can come last so they don't hold up the DOM -->
-      <script>localStorage.clear();sessionStorage.clear();</script>
-      <script src="autonav.js" async></script>
-      <script src="autolabel.js" async></script>
-      <script src="sketchloader.js" async></script>
+      <script src="autonav.js"></script>
+      <script src="autolabel.js"></script>
+      <script src="howtocode.js"></script>
+      <script src="sketchloader.js"></script>
       <script src="processing.patched.js"></script>
       <script type="text/x-mathjax-config">
         MathJax.Hub.Config({

@@ -1,11 +1,6 @@
-(function() {
-  var labelImages = function() {
-    document.removeEventListener("DOMContentLoaded", labelImages, false);
-    var count = 1;
-    document.querySelectorAll(".labeled-image").forEach(function(e){
-      var p = e.querySelector("p");
-      p.setAttribute("data-img-label",count++);
-    });
-  }
-  document.addEventListener("DOMContentLoaded", labelImages, false);
-}());
+schedule(function labelImages() {
+  var count = 1;
+  find(".labeled-image").forEach(function(e){
+    e.find("p").set("data-img-label", count++);
+  });
+});

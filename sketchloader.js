@@ -26,53 +26,46 @@
   window.viewSource = viewSource;
 
   function loadSketches() {
-    document.removeEventListener("DOMContentLoaded", loadSketches, false);
-
     // grab sketch divs
-    var nodelist = document.querySelectorAll("textarea[class='sketch-code']");
-    var sketches = [];
-    for(var i=0, e=nodelist.length; i<e; i++) { sketches.push(nodelist[i]); }
-
-    var figCount = 0;
+    var figCount = 0,
+        sketches = find("textarea[class='sketch-code']");
 
     // convert to sketch blocks
     sketches.forEach(function(sketch) {
       figCount++;
 
-      var sketchLabel = sketch.getAttribute("data-sketch-title");
+      var sketchLabel = sketch.get("data-sketch-title");
 
-      var script = document.createElement("script");
-      script.type = "text/processing";
-      script.innerHTML = sketch.value + "\n" +
-                         "String getSketchLabel() { return \""+ sketchLabel +"\"; }\n\n";
+      var script = create("script",
+        { type: "text/processing" },
+        sketch.value + "\n" + "String getSketchLabel() { return \""+ sketchLabel +"\"; }\n\n"
+      );
 
-      var canvas = document.createElement("canvas");
-      canvas.id = "figure"+figCount;
-      canvas.setAttribute("class", sketch.getAttribute("class") + " loading-sketch");
-      var preset = sketch.getAttribute("data-sketch-preset");
+      var canvas = create("canvas", {
+        id: "figure"+figCount,
+        "class": sketch.get("class") + " loading-sketch"
+      });
+
+      var preset = sketch.get("data-sketch-preset");
       var dps = "presets/" + preset+".pde";
       dps += " Point.pde BezierCurve.pde PolyBezierCurve.pde CurvePair.pde BezierComputer.pde BooleanComputer.pde IntersectionTracker.pde framework.pde Interaction.pde API.pde JavaScript.pde RuntimeException.pjs";
-      canvas.setAttribute("data-processing-sources", dps);
-      canvas.setAttribute("data-preset",preset);
-      canvas.setAttribute("data-print-image","images/print/"+(figCount<10? "0":'')+figCount+".gif");
+
+      canvas.set({
+        "data-processing-sources": dps,
+        "data-preset": preset,
+        "data-print-image": "images/print/" + (figCount<10? "0":'') + figCount + ".gif"
+      });
 
       dependencies[figCount] = dps.replace(" RuntimeException.pjs",'') + (preset == "abc" || preset == "moulding" ? "" : " moulding.pde");
       sourceCode[figCount] = scHeader + sketch.value.replace(/(^|\n)      /g,"\n") + "\n";
 
       var viewSource = "<span onclick=\"viewSource(" + figCount + ")\">view source</span>";
-      var label = document.createElement("span");
-      label.innerHTML = sketchLabel + "<span class='viewsource'> (" + viewSource + ")</span>";
-      label.setAttribute("class", "sketch-title");
-      label.setAttribute("data-number", ""+figCount);
+      var label = create("span", {
+        "class": "sketch-title",
+        "data-number": ""+figCount
+      }, sketchLabel + "<span class='viewsource'> (" + viewSource + ")</span>");
 
-      div = document.createElement("div");
-      div.setAttribute("class","sketch");
-      div.style.textAlign = "center";
-      div.appendChild(script);
-      div.appendChild(canvas);
-      div.appendChild(document.createElement("br"));
-      div.appendChild(label);
-      sketch.parentNode.replaceChild(div,sketch);
+      sketch.replace(create("div",{"class": "sketch"}).css("textAlign", "center").add(script,canvas,create("br"),label));
     });
 
     /**
@@ -83,7 +76,7 @@
      */
     (function(){
       var trickle = function (msg, target) {
-        var listing = document.querySelectorAll("canvas").toArray();
+        var listing = find("canvas");
 
         /**
          * try a sketch load on a canvas element
@@ -91,7 +84,7 @@
         var loadSketch = (function(list){
           return function loadSketch() {
             var canvas = list.splice(0,1)[0];
-            var label = canvas.parentNode.querySelector("canvas ~ span").textContent;
+            var label = canvas.parent().find("canvas ~ span").textContent;
             if(canvas.loadSketch) {
               canvas.loadSketch();
               return true; }
@@ -120,5 +113,5 @@
     }());
   }
 
-  document.addEventListener("DOMContentLoaded", loadSketches, false);
+  schedule(loadSketches);
 }());
