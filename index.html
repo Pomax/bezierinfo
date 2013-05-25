@@ -1112,7 +1112,7 @@ function drawCurve(points[], t):
 
         <p id="bounds_p"><i>Computing the bounding box for a Bézier curve</i></p>
         <ol>
-          <li>Find all <i>t</i> value(s) for the curve's x- and y-roots.</li>
+          <li>Find all <i>t</i> value(s) for the curve derivative's x- and y-roots.</li>
           <li>Discard any <i>t</i> value that's lower than 0 or higher than 1, because Bézier curves only use the interval [0,1].</li>
           <li>Determine the lowest and highest value when plugging the values <i>t=0</i>, <i>t=1</i> and each of the found
           roots into the original functions: the lowest value is the lower bound, and the highest value is the upper
