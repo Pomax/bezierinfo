@@ -313,7 +313,6 @@ class BezierComputer {
    * satisfactory precision.
    */
   float findRootsRecursive(int derivative, float t, float[] values, float offset, float depth) throws RuntimeException {
-   // println(derivative +", "+ t +", "+ offset +", "+ depth);
     float f = getDerivative(derivative, t, values) - offset,
           df = getDerivative(derivative+1, t, values),
           t2 = t - (f/df);
