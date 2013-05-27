@@ -580,14 +580,18 @@ class BezierCurve {
     t_values.add(1.0);
     float[] roots;
     // get first derivative roots
+//    println("1");
     roots = comp.findAllRoots(1, x_values);
     for(float t: roots) { if(0 < t && t < 1) { t_values.add(t); }}
+//    println("2");
     roots = comp.findAllRoots(1, y_values);
     for(float t: roots) { if(0 < t && t < 1) { t_values.add(t); }}
     // get second derivative roots
     if(order>2) {
+//      println("3");
       roots = comp.findAllRoots(2, x_values);
       for(float t: roots) { if(0 < t && t < 1) { t_values.add(t); }}
+//      println("4");
       roots = comp.findAllRoots(2, y_values);
       for(float t: roots) { if(0 < t && t < 1) { t_values.add(t); }}
     }

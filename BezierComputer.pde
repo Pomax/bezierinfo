@@ -286,9 +286,15 @@ class BezierComputer {
     ArrayList<Float> roots = new ArrayList<Float>();
     float root;
     for(float t=0; t<=1.0; t+= 0.01) {
-      root = round(findRoots(derivative, t, values)/NRRF_PRECISION) * NRRF_PRECISION;
-      if(roots.contains(root)) continue;
-      roots.add(root);
+      try {
+        root = round(findRoots(derivative, t, values)/NRRF_PRECISION) * NRRF_PRECISION;
+        if(roots.contains(root)) continue;
+        roots.add(root);
+      } catch (RuntimeException _e) {
+        // We don't actually care about this error,
+        // it simply indicates no satisfactory root
+        // could be found at this 't' value.
+      }
     }
     float[] ret = new float[roots.size()];
     for(int i=0, l=ret.length; i<l; i++) {
@@ -306,7 +312,8 @@ class BezierComputer {
    * until (x(n+1) - x(n)) approaches zero with a
    * satisfactory precision.
    */
-  float findRootsRecursive(int derivative, float t, float[] values, float offset, float depth) {
+  float findRootsRecursive(int derivative, float t, float[] values, float offset, float depth) throws RuntimeException {
+   // println(derivative +", "+ t +", "+ offset +", "+ depth);
     float f = getDerivative(derivative, t, values) - offset,
           df = getDerivative(derivative+1, t, values),
           t2 = t - (f/df);
@@ -317,7 +324,7 @@ class BezierComputer {
     // once we hit the recursion cap, stop
     if(depth > 12) {
       if(abs(t-t2)<NRRF_PRECISION) { return t2; }
-      return -1;
+      throw new RuntimeException("Newton-Raphson ran past recursion depth");
     }
 
     // otherwise, recurse if we've not reached the desired precision yet
