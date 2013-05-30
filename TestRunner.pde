@@ -13,6 +13,10 @@ static class TestRunner {
   }
 
   static boolean equal(float[] a, float[] b, String desc) {
+    return equal(a,b,desc,0.00001);
+  }
+
+  static boolean equal(float[] a, float[] b, String desc, float precision) {
     int testNumber = test++;
     
     if(a.length!=b.length) {
@@ -28,7 +32,7 @@ static class TestRunner {
     }
     
     for(int i=0, end=a.length; i<end; i++) {
-      if(abs(a[i]-b[i])>0.0001) {
+      if(abs(a[i]-b[i])>precision) {
         println("["+testNumber+"] test failed, "+desc); 
         println("  "+a[i]+" does not equal "+b[i]);
         println();

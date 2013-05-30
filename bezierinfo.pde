@@ -1,13 +1,18 @@
 void setupScreen() {}
+
 void setupCurve() {}
+
 void drawFunction() { test(); exit(); }
+
 void test() {
   testBezierComputer();
 }
+
 void testBezierComputer() {
   testQuadratic();
   testCubic();
 }
+
 void testQuadratic() {
   BezierComputer comp = new BezierComputer();
   float[] values = { 1., 3., 2. };
@@ -40,7 +45,8 @@ void testCubic() {
   TestRunner.equal(comp.getDerivative(2, 2./3., values), -32, "cubic'' at 2/3");
   TestRunner.equal(comp.getDerivative(2, 1,     values), -90, "cubic'' at 1");
   
-  TestRunner.equal(comp.findAllRoots(0, values), new float[]{1.1008},           "cubic root");
+  // real root is 1.1008, but this value is outside [0,1]
+  TestRunner.equal(comp.findAllRoots(0, values), new float[]{},           "cubic root");
   TestRunner.equal(comp.findAllRoots(1, values), new float[]{0.17434, 0.79118}, "cubic' roots");
   TestRunner.equal(comp.findAllRoots(2, values), new float[]{0.48276},          "cubic'' root");
 
@@ -51,8 +57,23 @@ void testCubic() {
   TestRunner.equal(comp.findAllRoots(2, values), new float[]{0.47107},          "cubic'' root (2)");
 
   values = new float[]{ 0, 0, 15, 25 };
-  TestRunner.equal(comp.findAllRoots(0, values), new float[]{0, 9./4.}, "cubic roots (3)");
-  TestRunner.equal(comp.findAllRoots(1, values), new float[]{0, 3./2.}, "cubic' roots (3)");
-  TestRunner.equal(comp.findAllRoots(2, values), new float[]{3./4.},    "cubic'' root (3)");
+  // real roots are {0, 9/4}, but second value is outside [0,1]
+  TestRunner.equal(comp.findAllRoots(0, values), new float[]{0}, "cubic roots (3)");
+  // real roots are {0, 3/2}, but second value is outside [0,1]
+  TestRunner.equal(comp.findAllRoots(1, values), new float[]{0}, "cubic' roots (3)");
+  TestRunner.equal(comp.findAllRoots(2, values), new float[]{0.75},    "cubic'' root (3)");
   
+  hewittTest();
+}
+
+void hewittTest() {
+  Point[] points = {
+    new Point(0,0),
+    new Point(-25,0),
+    new Point(7,15),
+    new Point(-25,25)
+  };
+  BezierCurve c = new BezierCurve(points);
+  float[] inflectionPoints = c.getInflections();
+  TestRunner.equal(inflectionPoints, new float[]{0,0.34738,0.47107,0.59477,0.75,1}, "Joe's curve");
 }

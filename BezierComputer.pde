@@ -270,24 +270,35 @@ class BezierComputer {
    * Root finding using the Newton-Raphson method
    */
   float[] findAllRoots(int derivative, float[] values) {
-    // Special case handling:
-    if(areLinear(values) || derivative==1 && values.length==3) {
-      // there is no second or higher derivative; no roots
-      float[] none = new float[0];
-      if(derivative>1) { return none; }
-      // no need to guess: the derivative is a linear equasion
-      float start = getDerivative(1,0,values),
-            end   = getDerivative(1,1,values);
-      if(start>0 && end>0) return none;
-      if(start<0 && end<0) return none;
-      return new float[]{map(0,start,end,0,1)};
-    }
+    float[] none = new float[0];
 
+    // Derivative is a point function. No roots.
+    if(values.length-derivative <=1) {
+      return none;
+    }
+    
+    // Derivative is a linear function: compute root directly.
+    if(values.length-derivative == 2) {
+      while(values.length>=derivative++) {
+        float[] _v = new float[values.length-1];
+        for(int k=0, n=_v.length; k<n; k++) {
+          _v[k] = n * (values[k+1] - values[k]);
+        }
+        values = _v;
+      }
+      float root = map(0,values[0],values[1],0,1);
+      if(root<0 || root>1) {
+        return none;
+      }
+      return new float[]{root};
+    }
+    
     ArrayList<Float> roots = new ArrayList<Float>();
     float root;
     for(float t=0; t<=1.0; t+= 0.01) {
       try {
         root = round(findRoots(derivative, t, values)/NRRF_PRECISION) * NRRF_PRECISION;
+        if(root<0 || root>1) continue;
         if(roots.contains(root)) continue;
         roots.add(root);
       } catch (RuntimeException _e) {
@@ -313,6 +324,7 @@ class BezierComputer {
    * satisfactory precision.
    */
   float findRootsRecursive(int derivative, float t, float[] values, float offset, float depth) throws RuntimeException {
+    // root finding should work.
     float f = getDerivative(derivative, t, values) - offset,
           df = getDerivative(derivative+1, t, values),
           t2 = t - (f/df);
@@ -322,7 +334,7 @@ class BezierComputer {
 
     // once we hit the recursion cap, stop
     if(depth > 12) {
-      if(abs(t-t2)<NRRF_PRECISION) { return t2; }
+      if(abs(t-t2)<NRRF_PRECISION) { return int(t2/NRRF_PRECISION)*NRRF_PRECISION; }
       throw new RuntimeException("Newton-Raphson ran past recursion depth");
     }
 
