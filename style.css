@@ -116,7 +116,7 @@ div.note div.MathJax_Display { margin: 1em 0; }
 
 a, a:visited { color: rgb(0,0,200); text-decoration: none; }
 
-a.ribbon {
+span.ribbon {
   position: fixed;
   top: 0;
   right: 0;

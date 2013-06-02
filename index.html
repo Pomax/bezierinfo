@@ -59,12 +59,31 @@
 
   <body>
     <!-- link out to the github repo for this article -->
-    <a class="ribbon" href="http://github.com/pomax/bezierinfo"><img
-      src="images/ribbon.png"
-      alt="check the code on GitHub"
-      title="check out the code on GitHub"
-      border=0
-    ></a>
+    <script>
+      function ribbonMouse(evt, target, mx, my) {
+        evt = evt || window.event;
+        target = evt.target;
+        mx = evt.offsetX;
+        my = evt.offsetY;
+        if(mx>=30 && my/(mx-30) <= 0.67) {
+          target.style.cursor = "pointer";
+          target.setAttribute("title","check out the code on GitHub");
+        } else {
+          target.style.cursor = "auto";
+          target.setAttribute("title","");
+        }
+      }
+
+      function ribbonClicked(evt, mx, my) {
+        evt = evt || window.event;
+        mx = evt.offsetX;
+        my = evt.offsetY;
+        if(mx>=30 && my/(mx-30) <= 0.67) {
+          window.open("http://github.com/pomax/bezierinfo");
+        }
+      }
+    </script>
+    <span class="ribbon" onclick="ribbonClicked()" onmousemove="ribbonMouse()"><img src="images/ribbon.png" alt="check the code on GitHub" border=0></span>
 
 
     <!-- actual article -->
