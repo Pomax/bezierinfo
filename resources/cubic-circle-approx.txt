@@ -10,6 +10,7 @@
         Point p1 = new Point(dim/2 + dim/f2,dim/2),
               p2 = new Point(dim/2 + dim/f2*cos((s+e)/2), dim/2 + dim/f2*sin((s+e)/2)),
               p3 = new Point(dim/2 + dim/f2*cos(ax), dim/2 + dim/f2*sin(ay));
+        if(p2==null) return;
         BezierCurve guess = comp.generateCurve(3,p1,p2,p3);
 
         Point oc1 = guess.points[1];

@@ -49,7 +49,7 @@ void drawFunction() {
     text("P"+(i+1),p.x+n.x*-15,p.y+n.y*15);
 
     if(0<=t && t<=1) {
-      Point p = c.getPoint(t);
+      p = c.getPoint(t);
       ellipse(p.x,p.y,5,5);
       text(int(map(p.y,0,panelDim,0,100))+"%",p.x+pad,p.y); }
   }

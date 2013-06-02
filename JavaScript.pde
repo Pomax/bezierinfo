@@ -46,5 +46,12 @@ abstract class Console {
 abstract class JavaScript {
   Console console;
   Document document;
+  abstract void setupClippingButton(PApplet sketch);
 }
 
+/**
+ * Bind JS reference.
+ */
+void bindJavaScript(JavaScript js) {
+  javascript = js;
+}

@@ -276,7 +276,7 @@ class BezierComputer {
     if(values.length-derivative <=1) {
       return none;
     }
-    
+
     // Derivative is a linear function: compute root directly.
     if(values.length-derivative == 2) {
       while(values.length>=derivative++) {
@@ -286,19 +286,23 @@ class BezierComputer {
         }
         values = _v;
       }
+      if(values.length<2) {
+        return none;
+      }
       float root = map(0,values[0],values[1],0,1);
       if(root<0 || root>1) {
         return none;
       }
       return new float[]{root};
     }
-    
+
     ArrayList<Float> roots = new ArrayList<Float>();
     float root;
     for(float t=0; t<=1.0; t+= 0.01) {
       try {
         root = round(findRoots(derivative, t, values)/NRRF_PRECISION) * NRRF_PRECISION;
         if(root<0 || root>1) continue;
+        if(abs(root-t)<=NRRF_PRECISION) continue;
         if(roots.contains(root)) continue;
         roots.add(root);
       } catch (RuntimeException _e) {

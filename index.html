@@ -38,7 +38,24 @@
 
     <!-- <link rel="component" href="webcomponents/github-components.html"> -->
     <link rel="stylesheet" type="text/css" href="EasyPageComments.css"/>
+
+    <script>
+    function setupClippingButton(sketch) {
+      var b = document.getElementById("clippingButton");
+      if(b) {
+        b.onclick = function() {
+          sketch.iterated = true;
+          sketch.animate();
+          sketch.play();
+          sketch.loop();
+          sketch.frameRate(2);
+          sketch.redraw();
+        };
+      }
+    }
+    </script>
   </head>
+
 
   <body>
     <!-- link out to the github repo for this article -->
@@ -331,9 +348,9 @@
         for a moment, we get this:</p>
 
         <p>\[ \begin{align*}
-          linear &= a + b \\
-          square &= a \cdot a + a \cdot b + b \cdot b \\
-          cubic &= a \cdot a \cdot a + a \cdot a \cdot b + a \cdot b \cdot b + b \cdot b \cdot b\\
+          linear &= BLUE[a] + RED[b] \\
+          square &= BLUE[a] \cdot BLUE[a] + BLUE[a] \cdot RED[b] + RED[b] \cdot RED[b] \\
+          cubic &= BLUE[a] \cdot BLUE[a] \cdot BLUE[a] + BLUE[a] \cdot BLUE[a] \cdot RED[b] + BLUE[a] \cdot RED[b] \cdot RED[b] + RED[b] \cdot RED[b] \cdot RED[b]\\
         \end{align*} \]</p>
 
         <p>It's basically just a sum of "every combination of <i>a</i> and <i>b</i>", progressively
@@ -483,8 +500,8 @@ function Bezier(3,t):
 
         <p>\[
         \left \{ \begin{matrix}
-          x = \underline{120} \cdot (1-t)^3 + \underline{35} \cdot 3 \cdot (1-t)^2 \cdot t + \underline{220} \cdot 3 \cdot (1-t) \cdot t^2 + \underline{220} \cdot t^3 \\
-          y = \underline{160} \cdot (1-t)^3 + \underline{200} \cdot 3 \cdot (1-t)^2 \cdot t + \underline{260} \cdot 3 \cdot (1-t) \cdot t^2 + \underline{40} \cdot t^3
+          x = BLUE[120] \cdot (1-t)^3 + BLUE[35] \cdot 3 \cdot (1-t)^2 \cdot t + BLUE[220] \cdot 3 \cdot (1-t) \cdot t^2 + BLUE[220] \cdot t^3 \\
+          y = BLUE[160] \cdot (1-t)^3 + BLUE[200] \cdot 3 \cdot (1-t)^2 \cdot t + BLUE[260] \cdot 3 \cdot (1-t) \cdot t^2 + BLUE[40] \cdot t^3
         \end{matrix} \right. \]</p>
 
         <p>Which gives us the curve we saw at the top of the article:</p>
@@ -710,12 +727,13 @@ function drawCurve(points[], t):
         end weights for the old curve):</p>
 
         <p>\[
-          Bézier(n+1,t) = \sum_{i=0}^{n+1}
-                        \underset{binomial\ term}{\underbrace{\binom{n+1}{i}}}
+          Bézier(k,t) = \sum_{i=0}^{k}
+                        \underset{binomial\ term}{\underbrace{\binom{k}{i}}}
                         \cdot\
-                        \underset{polynomial\ term}{\underbrace{(1-t)^{n+1-i} \cdot t^{i}}}
-                        \cdot
-                        \underset{new\ weights}{\underbrace{\left ( \frac{i}{n+1} \cdot w_{i-1} + \frac{n+1-i}{n+1} \cdot w_i \right )}}
+                        \underset{polynomial\ term}{\underbrace{(1-t)^{k-i} \cdot t^{i}}}
+                        \ \cdot \
+                        \underset{new\ weights}{\underbrace{\left ( \frac{(k-i) \cdot w_i + i \cdot w_{i-1}}{k} \right )}}
+          \ ,\ with\ k = n+1
         \]</p>
 
         <p>However, this rule also has as direct consequence that you <strong>cannot</strong> generally
@@ -782,17 +800,33 @@ function drawCurve(points[], t):
           <p>Sometimes just being told "this is the derivative" is nice, but you might want to see why
           this is indeed the case. As such, let's have a look at the proof for this derivative. First off,
           the weights are independent of the full Bézier function, so the derivative involves only the
-          derivative of the polynomial basis function. Let's find its derivative:</p>
+          derivative of the polynomial basis function. So, let's find that:</p>
+
+          <p>\[
+            B_{n,k}(t) \frac{d}{dt} = {n \choose k} t^k (1-t)^{n-k} \frac{d}{dt}
+          \]</p>
+
+          <p>Applying the <a href="http://en.wikipedia.org/wiki/Product_rule">product</a> and
+          <a href="http://en.wikipedia.org/wiki/Chain_rule">chain</a> rules gives us:</p>
 
           <p>\[\begin{array}{l}
-            B_{n,k}(t) \frac{d}{dt} &= {n \choose k} t^k (1-t)^{n-k} \frac{d}{dt} \\
-
             ... &= {n \choose k} \left (
               k \cdot t^{k-1} (1-t)^{n-k} + t^k \cdot (1-t)^{n-k-1} \cdot (n-k) \cdot -1
-            \right ) \\
+            \right )
+          \end{array}\]</p>
 
-            ... &= \frac{kn!}{k!(n-k)!} t^{k-1} (1-t)^{n-k} - \frac{(n-k)n!}{k!(n-k)!} t^k (1-t)^{n-1-k} \\
+          <p>Which is hard to work with, so let's expand that properly:</p>
 
+          <p>\[\begin{array}{l}
+            ... &= \frac{kn!}{k!(n-k)!} t^{k-1} (1-t)^{n-k} - \frac{(n-k)n!}{k!(n-k)!} t^k (1-t)^{n-1-k}
+          \end{array}\]</p>
+
+          <p>Now, the trick is to turn this expression into something that has binomial
+          coefficients again, so we want to end up with things that look like "x! over y!(x-y)!".
+          If we can do that in a way that involves terms of <i>n-1</i> and <i>k-1</i>, we'll
+          be on the right track.</p>
+
+          <p>\[\begin{array}{l}
             ... &= \frac{n!}{(k-1)!(n-k)!} t^{k-1} (1-t)^{n-k} - \frac{(n-k)n!}{k!(n-k)!} t^k (1-t)^{n-1-k} \\
 
             ... &= n \left (
@@ -801,59 +835,73 @@ function drawCurve(points[], t):
 
             ... &= n \left (
               \frac{(n-1)!}{(k-1)!((n-1)-(k-1))!} t^{(k-1)} (1-t)^{(n-1)-(k-1)} - \frac{(n-1)!}{k!((n-1)-k)!} t^k (1-t)^{(n-1)-k}
-            \right ) \\
+            \right )
+          \end{array}\]</p>
+
+          <p>And that's the first part done: the two components inside the parentheses are actually
+          regular, lower order Bezier expressions:</p>
+
+          <p>\[\begin{array}{l}
+            ... &= n \left (
+              \frac{x!}{y!(x-y)!} t^{y} (1-t)^{x-y} - \frac{x!}{k!(x-k)!} t^k (1-t)^{x-k}
+            \right )
+            \ ,\ with\ x=n-1,\ y=k-1
+            \\
+
 
             ... &= n \left ( B_{(n-1),(k-1)}(t) - B_{(n-1),k}(t) \right )
           \end{array}\]</p>
 
-          <p>Now for the trick: let's write out the curve formula, and then its derivative:</p>
+          <p>Now to apply this to our weighted Bezier curves. We'll write out the plain curve formula that
+          we saw earlier, and then work our way through to its derivative:</p>
 
           <p>\[\begin{array}{l}
             Bézier_{n,k}(t) &=& B_{n,0}(t) \cdot w_0 + B_{n,1}(t) \cdot w_1 + B_{n,2}(t) \cdot w_2 + B_{n,3}(t) \cdot w_3 + ... \\
-            Bézier_{n,k}(t) \frac{d}{dt} &=& n(B_{n-1,-1}(t) - B_{n-1,0}(t)) \cdot w_0 +
-                                       n(B_{n-1,0}(t) - B_{n-1,1}(t)) \cdot w_1 + \\
-                                       & &
-                                       n(B_{n-1,1}(t) - B_{n-1,2}(t)) \cdot w_2 +
-                                       n(B_{n-1,2}(t) - B_{n-1,3}(t)) \cdot w_3 +
-                                       ...
+            Bézier_{n,k}(t) \frac{d}{dt} &=& n(B_{n-1,-1}(t) - B_{n-1,0}(t)) \cdot w_0 + \\
+                                         & & n(B_{n-1,0}(t) - B_{n-1,1}(t)) \cdot w_1 + \\
+                                         & & n(B_{n-1,1}(t) - B_{n-1,2}(t)) \cdot w_2 + \\
+                                         & & n(B_{n-1,2}(t) - B_{n-1,3}(t)) \cdot w_3 + ...
           \end{array}\]</p>
 
-          <p>expanding this gives us:</p>
+          <p>expanding this (with some color to show how terms line up) gives us:</p>
 
           <p>\[\begin{array}{l}
-            n \cdot B_{n-1,-1}(t) \cdot w_0
-            + n \cdot B_{n-1,0}(t) \cdot w_1 - n \cdot B_{n-1,0}(t) \cdot w_0
-            + n \cdot B_{n-1,1}(t) \cdot w_2
-            \\
-            - \ n \cdot B_{n-1,1}(t) \cdot w_1
-            + n \cdot B_{n-1,2}(t) \cdot w_3 - n \cdot B_{n-1,2}(t) \cdot w_2
-            + ... - n \cdot B_{n-1,3}(t) \cdot w_3 + ...
+            ... &=& n \cdot B_{n-1,-1}(t) \cdot w_0 + \\
+                & & n \cdot B_{n-1,BLUE[0]}(t) \cdot w_1 - n \cdot B_{n-1,BLUE[0]}(t) \cdot w_0 + \\
+                & & n \cdot B_{n-1,RED[1]}(t) \cdot w_2 - \ n \cdot B_{n-1,RED[1]}(t) \cdot w_1 + \\
+                & & n \cdot B_{n-1,MAGENTA[2]}(t) \cdot w_3 - n \cdot B_{n-1,MAGENTA[2]}(t) \cdot w_2 + \\
+                & & ... - n \cdot B_{n-1,3}(t) \cdot w_3 + ...
           \end{array}\]</p>
 
-          <p>and then rearranging this gives us:</p>
+          <p>Two of these terms fall way: the first term falls away because there is no
+          -1<sup>st</sup> term in a summation. As such, it always contributes "nothing", so
+          we can safely completely ignore it for the purpose of finding the derivative function.
+          The other term is the very last term in this expansion: one involving <i>B<sub>n-1,n</sub></i>.
+          This term would have a binomial coefficient of [</i>i</i> choose <i>i+1</i>], which is
+          a non-existent binomial coefficient. Again, this term would contribute "nothing", so we
+          can ignore it, too. This means we're left with:</p>
+
+          <p>\[\begin{array}{l}
+            ... &=& n \cdot B_{n-1,BLUE[0]}(t) \cdot w_1 - n \cdot B_{n-1,BLUE[0]}(t) \cdot w_0 + \\
+                & & n \cdot B_{n-1,RED[1]}(t) \cdot w_2 - \ n \cdot B_{n-1,RED[1]}(t) \cdot w_1 + \\
+                & & n \cdot B_{n-1,MAGENTA[2]}(t) \cdot w_3 - n \cdot B_{n-1,MAGENTA[2]}(t) \cdot w_2 + \\
+                & & ...
+          \end{array}\]</p>
+
+          <p>And that's just a summation of lower order curves:</p>
 
           <p>\[
-            n \cdot B_{n-1,-1}(t) \cdot w_0
-            + n \cdot B_{n-1,0}(t) \cdot (w_1 - w_0)
-            + n \cdot B_{n-1,1}(t) \cdot (w_2 - w_1)
-            + n \cdot B_{n-1,2}(t) \cdot (w_3 - w_2)
-            - n \cdot B_{n-1,3}(t) \cdot w_3 + ...
-          \]</p>
-
-          <p>The first and last term in this expansion fall away (the first because
-          there is no -1<sup>st</sup> term in a summation, the last because we can't
-          get a binomial term of the form [</i>i</i> choose <i>i+1</i>]), which leaves us with:</p>
-
-          <p>\[
-            Bézier_{n,k}(t) \frac{d}{dt} = B_{(n-1),0}(t) \cdot n \cdot (w_1 - w_0)
-                                      + B_{(n-1),1}(t) \cdot n \cdot (w_2 - w_1)
-                                      + B_{(n-1),2}(t) \cdot n \cdot (w_3 - w_2)
+            Bézier_{n,k}(t) \frac{d}{dt} = n \cdot B_{(n-1),BLUE[0]}(t) \cdot (w_1 - w_0)
+                                      + n \cdot B_{(n-1),RED[1]}(t) \cdot (w_2 - w_1)
+                                      + n \cdot B_{(n-1),MAGENTA[2]}(t) \cdot (w_3 - w_2)
                                       + ...
           \]</p>
 
-          <p>And we can rewrite this as a normal summation:</p>
+          <p>We can rewrite this as a normal summation, and we're done:</p>
           <p>\[
-            Bézier_{n,k}(t) \frac{d}{dt} = \sum_{k=0}^{n-1} B_{n-1,k}(t) \cdot n \cdot (w_{k+1} - w_k)
+            Bézier_{n,k}(t) \frac{d}{dt} = \sum_{k=0}^{n-1} n \cdot B_{n-1,k}(t) \cdot (w_{k+1} - w_k)
+                                         = \sum_{k=0}^{n-1} B_{n-1,k}(t) \cdot \underset{derivative\ weights}
+                                           {\underbrace{n \cdot (w_{k+1} - w_k)}}
           \]</p>
         </div>
 
@@ -897,7 +945,137 @@ function drawCurve(points[], t):
         we have one weight left, the next step will see <i>k = 0</i>, and the result of our
         "Bézier function" summation is zero, because we're not adding anything at all. As such,
         a quadratic curve has no second derivative, a cubic curve has no third derivative, and
-        generalized: an <i>n<sup>th</sup></i> order curve has <i>n-1</i> (meaningful) derivatives.</p>
+        generalized: an <i>n<sup>th</sup></i> order curve has <i>n-1</i> (meaningful) derivatives,
+        with any further derivative being zero.</p>
+      </section>
+
+      <section id="pointvectors">
+        <h2>Tangents and normals</h2>
+
+        <p>If you want to move objects along a curve, or "away from" a curve, the two vectors you're most interested
+        in are the tangent vector and normal vector for curve points. These are actually really easy to find. For
+        moving, and orienting, along a curve we use the tangent, which indicates the direction travel at specific
+        points, and is literally just the first derivative of our curve:</p>
+
+        <p>\[
+        \left \{ \begin{matrix}
+          tangent_x(t) = B'_x(t) \\
+          tangent_y(t) = B'_y(t)
+        \end{matrix} \right. \]</p>
+
+        <p>This gives us the directional vector we want. We can normalize it to give us uniform directional vectors
+        (having a length of 1.0) at each point, and then do whatever it is we want to do based on those directions:</p>
+
+        <p>\[
+          d = || tangent(t) || = \sqrt{B'_x(t)^2 + B'_y(t)^2}
+        \]</p>
+
+        <p>\[
+        \left \{ \begin{matrix}
+          \hat{x}(t) = || tangent_x(t) ||
+                     =\frac{tangent_x(t)}{ || tangent(t) || }
+                     = \frac{B'_x(t)}{d} \\
+          \hat{y}(t) = || tangent_y(t) ||
+                     = \frac{tangent_y(t)}{ || tangent(t) || }
+                     = \frac{B'_y(t)}{d}
+        \end{matrix} \right. \]</p>
+
+        <p>The tangent is very useful for moving along a line, but what if we want to move away from the curve instead,
+        perpendicular to the curve at some point <i>t</i>? In that case we want the "normal" vector. This vector runs
+        at a right angle to the direction of the curve, and is typically of length 1.0, so all we have to do is rotate
+        the normalized directional vector and we're done:</p>
+
+        <p>\[
+        \left \{ \begin{array}{l}
+          normal_x(t) = \hat{x}(t) \cdot \cos{\frac{\pi}{2}} - \hat{y}(t) \cdot \sin{\frac{\pi}{2}} = - \hat{y}(t) \\
+          normal_y(t) = \underset{quarter\ circle\ rotation} {\underbrace{ \hat{x}(t) \cdot \sin{\frac{\pi}{2}} + \hat{y}(t) \cdot \cos{\frac{\pi}{2}} }} = \hat{x}(t)
+        \end{array} \right. \]</p>
+
+        <div class="note">
+          <p>Rotating coordinates is actually very easy, if you know the rule for it. You might find
+          it explained as "applying a <a href="https://en.wikipedia.org/wiki/Rotation_matrix">rotation matrix</a>",
+          which is what we'll look at here, too. Essentially, the idea is to take the circles over
+          which we can rotate, and simply "sliding the coordinates" over those circles by the desired
+          angle. If we want a quarter circle turn, we take the coordinate, slide it along the cirle
+          by a quarter turn, and done.</p>
+
+          <p>To turn any point <i>(x,y)</i> into a rotated point <i>(x',y')</i> (over 0,0) by
+          some angle φ, we apply this nicely easy computation:</p>
+
+          <p>\[\begin{array}{l}
+            x' = x \cdot \cos(\phi) - y \cdot \sin(\phi) \\
+            y' = x \cdot \sin(\phi) + y \cdot \cos(\phi)
+          \end{array}\]</p>
+
+          <p>Which is the "long" version of the following matrix transformation:</p>
+
+          <p>\[
+            \begin{bmatrix}
+              x' \\ y'
+            \end{bmatrix}
+            =
+            \begin{bmatrix}
+             \cos(\phi) & -\sin(\phi) \\
+             \sin(\phi) & \cos(\phi)
+            \end{bmatrix}
+            \begin{bmatrix}
+              x \\ y
+            \end{bmatrix}
+          \]</p>
+
+          <p>And that's all we need to rotate any coordinate. Note that for quarter, half
+          and three quarter turns these functions become even easier, since <i>sin</i> and
+          <i>cos</i> for these angles are, respectively: 0 and 1, -1 and 0, and 0 and -1.</p>
+        </div>
+
+        <p>The following two graphics show the tangent and normal along a quadratic and cubic curve, with
+        the direction vector coloured blue, and the normal vector coloured red.</p>
+
+        <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Quadratic Bézier tangents and normals">
+        void setupCurve() {
+          setupDefaultQuadratic();
+        }
+
+        void drawCurve(BezierCurve curve) {
+          curve.draw(color(0,40));
+          float t, d = 15;
+          Point p, tg, n;
+          for(int i=0; i<=10; i++) {
+            t = i/10.0;
+            p = curve.getPoint(t);
+            tg = curve.getDerivativePoint(t).normalize();
+            n = curve.getNormal(t);
+            stroke(0,0,255);
+            line(p.x, p.y, p.x+d*tg.x, p.y+d*tg.y);
+            stroke(200,0,0);
+            line(p.x, p.y, p.x+d*n.x, p.y+d*n.y);
+            stroke(0);
+            ellipse(p.x, p.y, 5, 5);
+          }
+        }</textarea>
+
+        <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Cubic Bézier tangents and normals">
+        void setupCurve() {
+          setupDefaultCubic();
+        }
+
+        void drawCurve(BezierCurve curve) {
+          curve.draw(color(0,40));
+          float t, d = 15;
+          Point p, tg, n;
+          for(int i=0; i<=10; i++) {
+            t = i/10.0;
+            p = curve.getPoint(t);
+            tg = curve.getDerivativePoint(t).normalize();
+            n = curve.getNormal(t);
+            stroke(0,0,255);
+            line(p.x, p.y, p.x+d*tg.x, p.y+d*tg.y);
+            stroke(200,0,0);
+            line(p.x, p.y, p.x+d*n.x, p.y+d*n.y);
+            stroke(0);
+            ellipse(p.x, p.y, 5, 5);
+          }
+        }</textarea>
       </section>
 
       <section id="components">
@@ -1201,8 +1379,8 @@ function drawCurve(points[], t):
 
         <p>\[
         \left \{ \begin{matrix}
-          x = \underline{120} \cdot (1-t)^3 + \underline{35} \cdot 3 \cdot (1-t)^2 \cdot t + \underline{220} \cdot 3 \cdot (1-t) \cdot t^2 + \underline{220} \cdot t^3 \\
-          y = \underline{160} \cdot (1-t)^3 + \underline{200} \cdot 3 \cdot (1-t)^2 \cdot t + \underline{260} \cdot 3 \cdot (1-t) \cdot t^2 + \underline{40} \cdot t^3
+          x = BLUE[120] \cdot (1-t)^3 BLUE[+ 35] \cdot 3 \cdot (1-t)^2 \cdot t BLUE[+ 220] \cdot 3 \cdot (1-t) \cdot t^2 BLUE[+ 220] \cdot t^3 \\
+          y = BLUE[160] \cdot (1-t)^3 BLUE[+ 200] \cdot 3 \cdot (1-t)^2 \cdot t BLUE[+ 260] \cdot 3 \cdot (1-t) \cdot t^2 BLUE[+ 40] \cdot t^3
         \end{matrix} \right. \]</p>
 
         <p>Then translating it so that the first coordinate lies on (0,0), moving all <i>x</i> coordinates
@@ -1210,8 +1388,8 @@ function drawCurve(points[], t):
 
         <p>\[
         \left \{ \begin{matrix}
-          x = \underline{0} \cdot (1-t)^3 - \underline{85} \cdot 3 \cdot (1-t)^2 \cdot t + \underline{100} \cdot 3 \cdot (1-t) \cdot t^2 + \underline{100} \cdot t^3 \\
-          y = \underline{0} \cdot (1-t)^3 + \underline{40} \cdot 3 \cdot (1-t)^2 \cdot t + \underline{100} \cdot 3 \cdot (1-t) \cdot t^2 - \underline{120} \cdot t^3
+          x = BLUE[0] \cdot (1-t)^3 BLUE[- 85] \cdot 3 \cdot (1-t)^2 \cdot t BLUE[+ 100] \cdot 3 \cdot (1-t) \cdot t^2 BLUE[+ 100] \cdot t^3 \\
+          y = BLUE[0] \cdot (1-t)^3 BLUE[+ 40] \cdot 3 \cdot (1-t)^2 \cdot t BLUE[+ 100] \cdot 3 \cdot (1-t) \cdot t^2 BLUE[- 120] \cdot t^3
         \end{matrix} \right. \]</p>
 
         <p>If we then rotate the curve so that its end point lies on the x-axis, the coordinates (integer-rounded
@@ -1219,16 +1397,16 @@ function drawCurve(points[], t):
 
         <p>\[
         \left \{ \begin{matrix}
-          x = \underline{0} \cdot (1-t)^3 + \underline{85} \cdot 3 \cdot (1-t)^2 \cdot t + \underline{12} \cdot 3 \cdot (1-t) \cdot t^2 - \underline{156} \cdot t^3 \\
-          y = \underline{0} \cdot (1-t)^3 + \underline{40} \cdot 3 \cdot (1-t)^2 \cdot t - \underline{140} \cdot 3 \cdot (1-t) \cdot t^2 + \underline{0} \cdot t^3
+          x = BLUE[0] \cdot (1-t)^3 BLUE[+ 85] \cdot 3 \cdot (1-t)^2 \cdot t BLUE[+ 12] \cdot 3 \cdot (1-t) \cdot t^2 BLUE[- 156] \cdot t^3 \\
+          y = BLUE[0] \cdot (1-t)^3 BLUE[+ 40] \cdot 3 \cdot (1-t)^2 \cdot t BLUE[- 140] \cdot 3 \cdot (1-t) \cdot t^2 BLUE[+ 0] \cdot t^3
         \end{matrix} \right. \]</p>
 
         <p>If we drop all the zero-terms, this gives us:</p>
 
         <p>\[
         \left \{ \begin{array}{l}
-          x = \underline{85} \cdot 3 \cdot (1-t)^2 \cdot t + \underline{13} \cdot 3 \cdot (1-t) \cdot t^2 - \underline{156} \cdot t^3 \\
-          y = \underline{40} \cdot 3 \cdot (1-t)^2 \cdot t - \underline{141} \cdot 3 \cdot (1-t) \cdot t^2
+          x = BLUE[85] \cdot 3 \cdot (1-t)^2 \cdot t BLUE[+ 13] \cdot 3 \cdot (1-t) \cdot t^2 BLUE[- 156] \cdot t^3 \\
+          y = BLUE[40] \cdot 3 \cdot (1-t)^2 \cdot t BLUE[- 141] \cdot 3 \cdot (1-t) \cdot t^2
         \end{array} \right. \]</p>
 
         <p>We our original curve definition has been simplified considerably. The following graphics
@@ -1315,93 +1493,6 @@ function drawCurve(points[], t):
         the best fit bounding box, but the maths is fairly gruelling and just not really worth spending time on.</p>
       </section>
 
-      <section id="pointvectors">
-        <h2>Tangents and normals</h2>
-
-        <p>If you want to move objects along a curve, or "away from" a curve, the two vectors you're most interested
-        in are the tangent vector and normal vector for curve points. These are actually really easy to find. For
-        moving, and orienting, along a curve we use the tangent, which indicates the direction travel at specific
-        points, and is literally just the first derivative of our curve:</p>
-
-        <p>\[
-        \left \{ \begin{matrix}
-          tangent_x(t) = d_x(t) = B'_x(t) \\
-          tangent_y(t) = d_y(t) = B'_y(t)
-        \end{matrix} \right. \]</p>
-
-        <p>This gives us the directional vector we want. We can normalize it to give us uniform directional vectors
-        (having a length of 1.0) at each point, and then do whatever it is we want to do based on those directions:</p>
-
-        <p>\[
-        \left \{ \begin{matrix}
-          \hat{x}(t) = || d_x(t) ||
-                     =\frac{tangent_x(t)}{ || tangent(t) || }
-                     = \frac{B'_x(t)}{\sqrt{B'_x(t)^2 + B'_y(t)^2}} \\
-          \hat{y}(t) = || d_y(t) ||
-                     = \frac{tangent_y(t)}{ || tangent(t) || }
-                     = \frac{B'_y(t)}{\sqrt{B'_x(t)^2 + B'_y(t)^2}}
-        \end{matrix} \right. \]</p>
-
-        <p>If we want to move away from the curve instead, perpendicular to the curve at some point <i>t</i>, we want
-        the "normal" vector. This vector runs at a right angle to the direction of the curve, and is typically of length
-        1.0, so all we have to do is rotate the normalized directional vector and we're done:</p>
-
-        <p>\[
-        \left \{ \begin{matrix}
-          normal_x(t) = \hat{x}(t) \cdot \cos{\frac{\pi}{2}} - \hat{y}(t) \cdot \sin{\frac{\pi}{2}}\\
-          normal_y(t) = \hat{x}(t) \cdot \sin{\frac{\pi}{2}} + \hat{y}(t) \cdot \cos{\frac{\pi}{2}}
-        \end{matrix} \right. \]</p>
-
-        <p>The following two graphics show the tangent and normal along a quadratic and cubic curve, with
-        the direction vector coloured blue, and the normal vector coloured red.</p>
-
-        <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Quadratic Bézier tangents and normals">
-        void setupCurve() {
-          setupDefaultQuadratic();
-        }
-
-        void drawCurve(BezierCurve curve) {
-          curve.draw(color(0,40));
-          float t, d = 15;
-          Point p, tg, n;
-          for(int i=0; i<=10; i++) {
-            t = i/10.0;
-            p = curve.getPoint(t);
-            tg = curve.getDerivativePoint(t).normalize();
-            n = curve.getNormal(t);
-            stroke(0,0,255);
-            line(p.x, p.y, p.x+d*tg.x, p.y+d*tg.y);
-            stroke(200,0,0);
-            line(p.x, p.y, p.x+d*n.x, p.y+d*n.y);
-            stroke(0);
-            ellipse(p.x, p.y, 5, 5);
-          }
-        }</textarea>
-
-        <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Cubic Bézier tangents and normals">
-        void setupCurve() {
-          setupDefaultCubic();
-        }
-
-        void drawCurve(BezierCurve curve) {
-          curve.draw(color(0,40));
-          float t, d = 15;
-          Point p, tg, n;
-          for(int i=0; i<=10; i++) {
-            t = i/10.0;
-            p = curve.getPoint(t);
-            tg = curve.getDerivativePoint(t).normalize();
-            n = curve.getNormal(t);
-            stroke(0,0,255);
-            line(p.x, p.y, p.x+d*tg.x, p.y+d*tg.y);
-            stroke(200,0,0);
-            line(p.x, p.y, p.x+d*n.x, p.y+d*n.y);
-            stroke(0);
-            ellipse(p.x, p.y, 5, 5);
-          }
-        }</textarea>
-      </section>
-
       <section id="arclength">
         <h2>Arc length</h2>
 
@@ -1428,7 +1519,9 @@ function drawCurve(points[], t):
         and we're simply not going to implement things that way. For cubic Bézier curves, things get even more fun, because there
         is no "closed form" solution, meaning that due to the way calculus works, there is no generic formula that allows you to
         calculate the arc length. Let me just repeat this, because it's fairly crucial: <strong><em>for cubic and higher Bézier curves,
-        there is no way to solve this function if you want to use it "for all possible coordinates". It cannot be done.</em></strong>.</p>
+        there is no way to solve this function if you want to use it "for all possible coordinates".</em></strong></p>
+
+        <p>Seriously: <a href="https://en.wikipedia.org/wiki/Abel%E2%80%93Ruffini_theorem">It cannot be done.</a>.</p>
 
         <p>So we turn to numerical approaches again. The method we'll look at here is the
         <a href="http://www.youtube.com/watch?v=unWguclP-Ds&feature=BFa&list=PLC8FC40C714F5E60F&index=1">Gauss
@@ -1449,17 +1542,63 @@ function drawCurve(points[], t):
           \sum_{i=1}^{n}{C_i \cdot f\left(t_i\right)}
         \]</p>
 
-        <p>In plain text: "we can express the length either as an integral function, which we know we cannot always solve,
-        or as an infinite sum of rectangular strips, approximated by using some finite but high number of strips
-        (with widths <i>C<sub>1</sub></i> for the first strip, <i>C<sub>2</sub></i> for the second, etc., and
-        with heights <i>f(t<sub>1</sub>)</i> for the first, <i>f(t<sub>2</sub>)</i> for the second, etc.)
-        and then simply add up the areas for all strips.</p>
+        <p>In plain text: an integral function can always be treated as the sum of an (infinite) number of
+        (infinitely thin) rectangular strips sitting "under" the function's plotted graph. To illustrate
+        this idea, the following graph shows the integral for a sinoid function. If we pick thin enough
+        strips, we'd get a "perfect" fit for all the strips from the midline to the actual function values:</p>
 
-        <p>Since computing the area for a rectangle is just width times height, this second approach is computationally
-        cheap, provided we can also cheaply come up with sensible values for those <i>C<sub>1</sub></i>, <i>C<sub>2</sub></i>,
-        etc. A naive way is to simply create <i>n</i> strips all with the same width, but there is a far better way,
-        using special values for <i>C</i> and <i>f(t)</i> depending on the value of <i>n</i>, which indicates how many
-        strips we'll use.</p>
+        <textarea class="sketch-code" data-sketch-preset="empty" data-sketch-title="A function's approximated integral">
+        void drawFunction() {
+          float x=0, y=dim/2, nx, ny;
+          stroke(0);
+          for(float t=0; t<=2*PI; t+=0.05) {
+            nx = map(t,0,2*PI,0,dim);
+            ny = map(sin(t), -1,1, pad,dim-pad);
+            line(x,y,nx,ny);
+            x=nx;y=ny;
+          }
+          stroke(255);
+          fill(0,0,255,100);
+          x=0;
+          y=dim/2;
+          for(float t=0; t<=2*PI+0.2; t+=0.2) {
+            nx = map(t,0,2*PI,0,dim);
+            ny = map(sin(t), -1,1, pad,dim-pad);
+            rect(x-(nx-x)/2,dim/2,nx-x,y-(dim/2));
+            x=nx;y=ny;
+          }
+        }</textarea>
+
+        <textarea class="sketch-code" data-sketch-preset="empty" data-sketch-title="A better approximation">
+        void drawFunction() {
+          float x=0, y=dim/2, nx, ny;
+          stroke(0);
+          for(float t=0; t<=2*PI; t+=0.05) {
+            nx = map(t,0,2*PI,0,dim);
+            ny = map(sin(t), -1,1, pad,dim-pad);
+            line(x,y,nx,ny);
+            x=nx;y=ny;
+          }
+          stroke(255);
+          fill(0,0,255,100);
+          x=0;
+          y=dim/2;
+          for(float t=0; t<=2*PI+0.1; t+=0.1) {
+            nx = map(t,0,2*PI,0,dim);
+            ny = map(sin(t), -1,1, pad,dim-pad);
+            rect(x-(nx-x)/2,dim/2,nx-x,y-(dim/2));
+            x=nx;y=ny;
+          }
+        }</textarea>
+
+        <p>Now, infinitely many terms to sum and infinitely thin rectangles are not something that computers
+        can work with, so instead we're going to approximate the infinite summation by using a sum of a finite
+        number of "just thin" rectangular strips. As long as we use a high enough number of thin enough rectangular
+        strips, this will give us an approximation that is pretty close to what the real value is.</p>
+
+        <p>So, the trick is to come up with useful rectangular strips. A naive way is to simply create <i>n</i>
+        strips, all with the same width, but there is a far better way using special values for <i>C</i> and
+        <i>f(t)</i> depending on the value of <i>n</i>, which indicates how many strips we'll use.</p>
 
         <div class="note">
 
@@ -1515,9 +1654,11 @@ function drawCurve(points[], t):
           as we know the full description for the Bézier curve functions B<sub>x</sub>(t) and B<sub>y</sub>(t).</p>
         </div>
 
-        <p>So, with this information we can determine the approximate length of a Bézier curve by computing the
-        Legendre-Gauss sum. The following graphic show a cubic curve, with its computed lengths, but the sketch
-        allows curve order elevation and lowering.</p>
+        <p>If we use the Legendre-Gauss values for our <i>C</i> values (thickness for each strip) and <i>t</i>
+        values (location of each strip), we can determine the approximate length of a Bézier curve by computing the
+        Legendre-Gauss sum. The following graphic shows a cubic curve, with its computed lengths; Go ahead and
+        change the curve, to see how its length changes (the sketch allows curve order elevation and lowering,
+        in case you want to try more complex, or simpler, curves).</p>
 
         <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Arc length for a Bézier curve">
         void setupCurve() {
@@ -1697,7 +1838,7 @@ function drawCurve(points[], t):
           noAdditionals();
           for(int m=1, last=markers.size(); m<last; m++) {
             BezierCurve segment = curve.split(markers.get(m-1), markers.get(m));
-            color c = (m%2==0 ? color(155) : color(0,0,255));
+            c = (m%2==0 ? color(155) : color(0,0,255));
             segment.draw(c);
           }
 
@@ -1709,10 +1850,12 @@ function drawCurve(points[], t):
         constantly compute for different intervals), you may simply be better off with a traditional
         lookup table (LUT).</p>
 
+<!--
         <p>That said, this is an area of Bézier curves that I've not really investigated in any
         depth, so if you think I'm missing something obvious and think I should have a look at
         [<i>whatever thing you think I need to have a look at</i>], get in touch and I shall
         try to update this section with new information.</p>
+-->
       </section>
 
       <section id="intersections">
@@ -2012,16 +2155,7 @@ function drawCurve(points[], t):
 
         <p>So, with this knowledge, let's change a curve's shape by click-dragging some part of it. The follow
         graphics let us click-drag somewhere on the curve, repositioning point <i>B</i> according to a simple
-        rule: we keep the original point <i>B</i>'s tangent, because while we're free to assign our new point
-        any tangent we like, coming up with an aesthetically pleasing new tangent is probably material for an
-        entire paper on curve design.</p>
-
-        <p>Quadratic and cubic Bézier curves have a nice property that allows curve moulding (picking
-        a point on the curve and changing the curve shape by moving it around), based on the fact that
-        there is always a line {A,C} through the on-curve point B, where C lies on the baseline (the
-        line between the curve's start and end coordinates) and the ratio between distance d1 = A-B
-        and d2 = B-C is fixed. The following to sketches illustrate this line and the three points
-        involved: click-drag on the curves to see this visualised.</p>
+        rule: we keep the original point <i>B</i>'s tangent:</p>
 
         <textarea class="sketch-code" data-sketch-preset="moulding" data-sketch-title="Moulding a quadratic Bézier curve">
         void setupCurve() {
@@ -2056,6 +2190,31 @@ function drawCurve(points[], t):
             curves.add(newcurve);
           }
         }</textarea>
+
+<!--
+        <p>For cubic curves, we can actually relax these rules a little. The closer we get to an end point, the less
+        influenced the on-curve point is by the further of the two control Points. This means we can actually cheat
+        a little by taking the original curve, the curve we're "supposed" to get if we did strict curve moulding,
+        and interpolate the control points between the old and the new curve. The closer to an end point, the more
+        we use the closer of the two new control points, and the less we use the further of the two control points:</p>
+
+        <textarea class="sketch-code" data-sketch-preset="moulding" data-sketch-title="Relaxs moulding of a cubic Bézier curve">
+        void setupCurve() {
+          setupDefaultCubic();
+          mould();
+          span();
+          additionals();
+        }
+
+        void mouldCurve(BezierCurve curve, int mx, int my) {
+          if(Bt != -1) {
+            B = new Point(mx, my);
+            BezierCurve newcurve = comp.generateCurve(curve.order, curve.points[0], B, curve.points[curve.order], Bt, tangents);
+            curves.clear();
+            curves.add(newcurve);
+          }
+        }</textarea>
+-->
       </section>
 
       <section id="pointcurves">
@@ -2701,6 +2860,7 @@ function drawCurve(points[], t):
             points[2],
             new Point(points[2].x + dx, points[2].y + dy)
           });
+          if(c==null) return;
           points[1] = c;
           BezierCurve bc = new BezierCurve(points);
           bc.draw();
@@ -3132,10 +3292,16 @@ function drawCurve(points[], t):
       <script src="howtocode.js"></script>
       <script src="sketchloader.js"></script>
       <script src="processing.patched.js"></script>
+      <script src="colorpreprocess.js"></script>
+
+      <!-- MathJax for beautiful LaTeX functions -->
       <script type="text/x-mathjax-config">
         MathJax.Hub.Config({
           displayAlign: "left",
           displayIndent: "2em",
+          TeX: {
+            extensions: ["color.js"]
+          }
         });
       </script>
       <script>(function(){
@@ -3145,6 +3311,7 @@ function drawCurve(points[], t):
           document.head.appendChild(script);
         }
       }());</script>
+
       <!--
       <script src="webcomponents/web-components.js"></script>
       <script src="webcomponents/custom-elements.js"></script>

@@ -19,7 +19,8 @@ void setupScreen() {
  * Actual draw code
  */
 void drawFunction() {
-  BezierCurve curve = curves.get(0);
+  BezierCurve curve = null;
+  if(curves.size()>0) { curve = curves.get(0); }
   drawCurve(curve);
   if(p1==null) {
     pushStyle();

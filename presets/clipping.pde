@@ -49,19 +49,9 @@ void setupCurve() {
   curves.add(c1);
   curves.add(c2);
 
-  /***************************** JAVASCRIPT **/
-    var b = document.getElementById("clippingButton");
-    if(b) {
-      b.onclick = function() {
-        iterated = true;
-        animate();
-        play();
-        loop();
-        frameRate(2);
-        redraw();
-      };
-    }
-  /***************************** JAVASCRIPT **/
+  if(javascript!=null) {
+    javascript.setupClippingButton(this);
+  }
 
 }
 

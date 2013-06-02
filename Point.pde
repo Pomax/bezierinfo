@@ -31,6 +31,7 @@ class Point {
 
   // repositioning
   void moveTo(float _x, float _y) { x=_x; y=_y; d=sqrt(x*x+y*y); }
+  void moveTo(float _x, float _y, float ratio) { x+=(_x-x)*ratio; y+=(_y-y)*ratio; d=sqrt(x*x+y*y); }
   void moveBy(float _x, float _y) { moveTo(x+_x, y+_y); }
 
   // rotate this point w.r.t. another point

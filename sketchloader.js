@@ -47,8 +47,23 @@
       });
 
       var preset = sketch.get("data-sketch-preset");
-      var dps = "presets/" + preset+".pde";
-      dps += " Point.pde BezierCurve.pde PolyBezierCurve.pde CurvePair.pde BezierComputer.pde BooleanComputer.pde IntersectionTracker.pde framework.pde Interaction.pde API.pde JavaScript.pde RuntimeException.pjs";
+      var dps = "presets/" + preset+".pde" + " ";
+      dps += ["Point.pde",
+              "BezierCurve.pde",
+              "PolyBezierCurve.pde",
+              "CurvePair.pde",
+              "BezierComputer.pde",
+              "BooleanComputer.pde",
+              "IntersectionTracker.pde",
+              "Colors.pde",
+              "Constants.pde",
+              "Defaults.pde",
+              "framework.pde",
+              "Panels.pde",
+              "Interaction.pde",
+              "API.pde",
+              "JavaScript.pde",
+              "RuntimeException.pjs"].join(" ");
 
       canvas.set({
         "data-processing-sources": dps,
