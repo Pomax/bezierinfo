@@ -47,6 +47,7 @@ abstract class JavaScript {
   Console console;
   Document document;
   abstract void setupClippingButton(PApplet sketch);
+  abstract void handleMouseMoved(PApplet sketch, PolyBezierCurve p, int mx, int my);
 }
 
 /**

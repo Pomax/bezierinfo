@@ -155,42 +155,44 @@
         in short: how do you do everything that you might want when you do with these curves? That's
         what this page is for. Prepare to be mathed.</p>
 
-        <h2 style="font-style:italic;">All Bézier graphics are interactive.</h2>
+        <div id="article-notes">
+          <h2 style="font-style:italic;">All Bézier graphics are interactive.</h2>
 
-        <p>This page uses <a href="http://processing.org">Processing</a> examples, rendering as
-        interactive graphics on the page using <a href="http://processingjs.org">Processing.js</a>,
-        which means you don't need any plugins if you're on a modern browser. (If you
-        are still using IE8 because you're on Windows XP, be aware Microsoft would rather you start
-        using something like Firefox than keep using IE8, because IE8 does not support the internet
-        anymore. It was already a little behind when it was first released, but today it literally
-        doesn't support the internet, a bit like the difference between wordpad and Word. IE8 is
-        no longer a web browser, it's a legacy application). It also uses math, in LaTeX form, which
-        is typeset using the most excellent <a href="http://mathjax.org">MathJax</a> library.</p>
+          <p>This page uses <a href="http://processing.org">Processing</a> examples, rendering as
+          interactive graphics on the page using <a href="http://processingjs.org">Processing.js</a>,
+          which means you don't need any plugins if you're on a modern browser. (If you
+          are still using IE8 because you're on Windows XP, be aware Microsoft would rather you start
+          using something like Firefox than keep using IE8, because IE8 does not support the internet
+          anymore. It was already a little behind when it was first released, but today it literally
+          doesn't support the internet, a bit like the difference between wordpad and Word. IE8 is
+          no longer a web browser, it's a legacy application). It also uses math, in LaTeX form, which
+          is typeset using the most excellent <a href="http://mathjax.org">MathJax</a> library.</p>
 
-        <h2 style="font-style:italic;">Examples have a "view source" option.</h2>
+          <h2 style="font-style:italic;">Examples have a "view source" option.</h2>
 
-        <p>Just seeing that the guy who wrote the article knows how to write the code needed to
-        demonstrate Bézier curve things is basically useless, I think you'll agree. You don't benefit
-        from me going: <em>"Look at me, I know how to program, ooooh~"</em>. So to make things <em>useful</em>,
-        all graphics on this page have "view source" links. Click them, copy the source code, fire
-        up the <a href="http://processing.org/download/">Processing PDE</a>, paste the code, and
-        hit "play". You should see the exact same thing now running on your own computer as you're
-        seeing in the browser. This is working code, and you can trace everything I do. Regardless
-        of whether you <em>want</em> to, I consider it important that you can. And the kicker is
-        this code is in the public domain. I waive all rights to it. Do with it what you want, to
-        me this is trivial code and it would be ridiculous to claim it as anything other than "I
-        just wrote this to demonstrate how things work".</p>
+          <p>Just seeing that the guy who wrote the article knows how to write the code needed to
+          demonstrate Bézier curve things is basically useless, I think you'll agree. You don't benefit
+          from me going: <em>"Look at me, I know how to program, ooooh~"</em>. So to make things <em>useful</em>,
+          all graphics on this page have "view source" links. Click them, copy the source code, fire
+          up the <a href="http://processing.org/download/">Processing PDE</a>, paste the code, and
+          hit "play". You should see the exact same thing now running on your own computer as you're
+          seeing in the browser. This is working code, and you can trace everything I do. Regardless
+          of whether you <em>want</em> to, I consider it important that you can. And the kicker is
+          this code is in the public domain. I waive all rights to it. Do with it what you want, to
+          me this is trivial code and it would be ridiculous to claim it as anything other than "I
+          just wrote this to demonstrate how things work".</p>
 
-        <h2 style="font-style:italic;">Questions, comments:</h2>
+          <h2 style="font-style:italic;">Questions, comments:</h2>
 
-        If you have suggestions for new sections, hit up the <a href="https://github.com/pomax/bezierinfo/issues">github
-        issue tracker</a> (also reachable from the repo linked to in the upper right). If you have
-        questions about the material, there's currently no comment section while I'm doing the rewrite,
-        but you can use the issue tracker for that as well. Once the rewrite is done, I'll add a general
-        comment section back in, and maybe a more topical "select this section of text and hit the
-        'question' button to ask a question about it" system. We'll see.
+          If you have suggestions for new sections, hit up the <a href="https://github.com/pomax/bezierinfo/issues">github
+          issue tracker</a> (also reachable from the repo linked to in the upper right). If you have
+          questions about the material, there's currently no comment section while I'm doing the rewrite,
+          but you can use the issue tracker for that as well. Once the rewrite is done, I'll add a general
+          comment section back in, and maybe a more topical "select this section of text and hit the
+          'question' button to ask a question about it" system. We'll see.
 
-        <p>—Pomax (or in the tweetworld, <a href="https://twitter.com/TheRealPomax">@TheRealPomax</a>)</p>
+          <p>—Pomax (or in the tweetworld, <a href="https://twitter.com/TheRealPomax">@TheRealPomax</a>)</p>
+        </div>
 
       </section>
 
@@ -2318,7 +2320,7 @@ function drawCurve(points[], t):
           setupDefaultQuadraticPoly();
         }
 
-        void movePoint(int pt, int mx, int my) {
+        void movePoint(PolyBezierCurve p, int pt, int mx, int my) {
             p.movePointConstrained(pt, mx, my);
         }</textarea>
 
@@ -2327,7 +2329,7 @@ function drawCurve(points[], t):
           setupDefaultCubicPoly();
         }
 
-        void movePoint(int pt, int mx, int my) {
+        void movePoint(PolyBezierCurve p, int pt, int mx, int my) {
             p.movePointConstrained(pt, mx, my);
         }</textarea>
 
@@ -2350,7 +2352,7 @@ function drawCurve(points[], t):
           setupDefaultQuadraticPoly();
         }
 
-        void movePoint(int pt, int mx, int my) {
+        void movePoint(PolyBezierCurve p, int pt, int mx, int my) {
             p.movePointHalfConstrained(pt, mx, my);
         }</textarea>
 
@@ -2359,7 +2361,7 @@ function drawCurve(points[], t):
           setupDefaultCubicPoly();
         }
 
-        void movePoint(int pt, int mx, int my) {
+        void movePoint(PolyBezierCurve p, int pt, int mx, int my) {
             p.movePointHalfConstrained(pt, mx, my);
         }</textarea>
 
@@ -2377,7 +2379,7 @@ function drawCurve(points[], t):
           setupDefaultQuadraticPoly();
         }
 
-        void movePoint(int pt, int mx, int my) {
+        void movePoint(PolyBezierCurve p, int pt, int mx, int my) {
           p.movePoint(pvt, mx, my);
         }</textarea>
 
@@ -2386,7 +2388,7 @@ function drawCurve(points[], t):
           setupDefaultCubicPoly();
         }
 
-        void movePoint(int pt, int mx, int my) {
+        void movePoint(PolyBezierCurve p, int pt, int mx, int my) {
           p.movePoint(pvt, mx, my);
         }</textarea>
 

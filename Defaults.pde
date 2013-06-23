@@ -21,7 +21,7 @@ void setupDefaultCubic() {
 
 // the default 2nd order poly-curve
 void setupDefaultQuadraticPoly() {
-  PolyBezierCurve p = new PolyBezierCurve(false);
+  PolyBezierCurve p = new PolyBezierCurve(true);
   p.addCurve(new BezierCurve(new Point[]{
     new Point(1/3.0*dim, 2/3.0*dim),
     new Point(1/6.0*dim, 1/2.0*dim),
@@ -36,7 +36,7 @@ void setupDefaultQuadraticPoly() {
 void setupDefaultCubicPoly() {
   int pad = dim/3;
   float k = 0.55228;
-  PolyBezierCurve p = new PolyBezierCurve(false);
+  PolyBezierCurve p = new PolyBezierCurve(true);
   p.addCurve(new BezierCurve(new Point[]{
     new Point(dim/2, dim/2+pad),
     new Point(dim/2 + k*pad, dim/2+pad),

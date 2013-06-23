@@ -6,7 +6,6 @@
 
 int pvt;
 boolean mouseDown = false;
-PolyBezierCurve p = new PolyBezierCurve();
 
 /**
  * set up the screen
@@ -25,7 +24,7 @@ void setupScreen() {
  * Actual draw code
  */
 void drawFunction() {
-  BezierCurve curve = curves.get(0);
+  PolyBezierCurve p = polycurves.get(0);
   p.draw();
   int pt = p.overPoint(mouseX, mouseY);
   cursor(pt==-1 ? ARROW : HAND);
@@ -34,10 +33,6 @@ void drawFunction() {
     pvt = mouseDown ? pt : -1;
   }
   if(pvt!=-1 && mousePressed) {
-    movePoint(pvt,mouseX,mouseY);
-  }
-  if(typeof handleMouseMoved !== "undefined") {
-    if(pt==-1) { cursor(CROSS); } else { cursor(HAND); }
-    handleMouseMoved(mouseX,mouseY);
+    movePoint(p, pvt, mouseX, mouseY);
   }
 }

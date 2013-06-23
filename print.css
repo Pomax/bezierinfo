@@ -50,7 +50,7 @@ section * h2:before {
   font-size: 80%;
   background: rgb(250,250,204);
 }
-.sketch canvas { 
+.sketch canvas {
   background: url(attr('data-print-image'));
 }
 .sketch-title span { color: rgb(0,0,200); cursor: pointer; }
@@ -70,9 +70,11 @@ td+td { margin-top: 1em;}
 td p { text-align:center; }
 
 a, a:visited { color: #000; text-decoration: none; }
-a.ribbon { display: none; }
+span.ribbon { display: none; }
 #navbar { display: none; }
 #scriptblock { display: none; }
 .viewsource { display: none; }
 
 button { background: white; border: 1px solid black;}
+
+#article-notes, #issues, #comments { display:none; }
