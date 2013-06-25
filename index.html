@@ -2514,7 +2514,11 @@ function drawCurve(points[], t):
         </textarea>
 
         <script> //  helper for the above script.
-          function handleMouseMoved(sketch, p, mx, my) { sketch.handleMouseMoved(p, mx, my); }
+          function handleMouseMoved(sketch, p, mx, my) {
+            if (sketch.handleMouseMoved) {
+              sketch.handleMouseMoved(p, mx, my);
+            }
+          }
         </script>
 
         <p>So, using this approach we can easily detect which parts of a shape to keep, and which to reject.
