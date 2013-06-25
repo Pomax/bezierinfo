@@ -35,4 +35,7 @@ void drawFunction() {
   if(pvt!=-1 && mousePressed) {
     movePoint(p, pvt, mouseX, mouseY);
   }
+  if(javascript != null) {
+    javascript.handleMouseMoved(sketch, p, mouseX, mouseY);
+  }
 }

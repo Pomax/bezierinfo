@@ -21,11 +21,13 @@ JavaScript javascript = null;
 
 // some default 't' numbers
 float t = 0, step = 0.002;
+PApplet sketch;
 
 /**
  * set up a curve, and show everything we know about it.
  */
 void setup() {
+  sketch = this;
   ellipseMode(CENTER);
   // force text engine load (only needed for Processing)
   text("",0,0);

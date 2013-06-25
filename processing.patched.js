@@ -18041,6 +18041,11 @@
           // pass a reference to the p instance for this sketch.
           curSketch.onLoad(processing);
 
+          // PATCH: auto-load javascript context
+          if (processing.bindJavaScript) {
+            processing.bindJavaScript(window);
+          }
+
           // Run void setup()
           if (processing.setup) {
             processing.setup();
