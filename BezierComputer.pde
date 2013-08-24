@@ -272,14 +272,14 @@ class BezierComputer {
   float[] findAllRoots(int derivative, float[] values) {
     float[] none = new float[0];
 
-    // Derivative is a point function. No roots.
+    // Derivative will be a point function. No roots.
     if(values.length-derivative <=1) {
       return none;
     }
 
-    // Derivative is a linear function: compute root directly.
+    // Derivative will be a linear function: compute root directly.
     if(values.length-derivative == 2) {
-      while(values.length>=derivative++) {
+      while(values.length > 2) {
         float[] _v = new float[values.length-1];
         for(int k=0, n=_v.length; k<n; k++) {
           _v[k] = n * (values[k+1] - values[k]);
