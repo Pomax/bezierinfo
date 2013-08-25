@@ -1058,6 +1058,16 @@ function drawCurve(points[], t):
           <p>And that's all we need to rotate any coordinate. Note that for quarter, half
           and three quarter turns these functions become even easier, since <i>sin</i> and
           <i>cos</i> for these angles are, respectively: 0 and 1, -1 and 0, and 0 and -1.</p>
+
+          <p>But <strong><em>why</em></strong> does this work? Why this matrix multiplication?
+          <a href="http://en.wikipedia.org/wiki/Rotation_matrix#Decomposition_into_shears">wikipedia</a>
+          (Technically, Thomas Herter and Klaus Lott) tells us that a rotation matrix can be
+          treated as a sequence of three (elementary) shear operations. When we combine this into
+          a single matrix operation (because all matrix multiplications can be collapsed), we get
+          the matrix that you see above.
+          <a href="http://datagenetics.com/blog/august32013/index.html">DataGenetics</a> have an
+          excellent article about this very thing: it's really quite cool, and I strongly recommend
+          taking a quick break from this primer to read that article.</p>
         </div>
 
         <p>The following two graphics show the tangent and normal along a quadratic and cubic curve, with
