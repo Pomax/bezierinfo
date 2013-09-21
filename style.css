@@ -215,3 +215,8 @@ github-issue a {
   margin: 0.5em;
   padding: 0.5em;
 }
+
+/* addthis nonsense */
+.at-floatingbar-inner {
+  width: 10px;
+}
