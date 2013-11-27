@@ -28,17 +28,14 @@ section p {
   text-align: justify;
 }
 
-section h2:before {
-  content: "§" attr(data-num) " — ";
-}
+section   h2:before { content: "§" attr(data-num) " — "; }
+section *+h2:before { content: ""; }
+section * h2:before { content: ""; }
 
-section *+h2:before {
-  content: "";
-}
+section   h2 { margin-top: 2em; }
+section *+h2 { margin-top: 0em; }
+section * h2 { margin-top: 0em; }
 
-section * h2:before {
-  content: "";
-}
 
 canvas.loading-sketch {
   background: url('images/ajax-loader.gif');

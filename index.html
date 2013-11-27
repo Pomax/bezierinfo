@@ -199,8 +199,9 @@
 
           <p>—Pomax (or in the tweetworld, <a href="https://twitter.com/TheRealPomax">@TheRealPomax</a>)</p>
         </div>
-
       </section>
+
+<!-- ============================================================================== -->
 
       <section id="introduction">
         <h2 data-num="1">Introduction</h2>
@@ -235,6 +236,8 @@
         (ttf/otf). A lot of things use Bézier curves, so if you want to learn more about them... prepare
         to get your learn on!</p>
       </section>
+
+<!-- ============================================================================== -->
 
       <section id="explanation">
         <h2>How do Bézier curves work?</h2>
@@ -299,7 +302,6 @@
         radius 1 around the origin (0,0). If we plot it for <i>t</i> from 0 to 5, we get this:</p>
 
         <textarea class="sketch-code" data-sketch-preset="empty" data-sketch-title="A (partial) circle: x=sin(t), y=cos(t)">
-
         void drawFunction() {
           pushStyle();
           translate(dim/2,dim/2);
@@ -482,6 +484,8 @@ function Bezier(3,t):
         Bézier curves so special: control points.<p>
       </section>
 
+<!-- ============================================================================== -->
+
       <section id="control">
         <h2>Controlling Bézier curvatures</h2>
 
@@ -585,6 +589,150 @@ function Bezier(3,t,w[]):
         </div>
       </section>
 
+<!-- ============================================================================== -->
+
+      <section id="matrix">
+        <h2>Bézier curvatures as matrix operations</h2>
+
+        <p>We can also represent Bézier as matrix operations, by expressing the Bézier formula
+        as a polynomial basis function, the weight matrix, and the actual coordinates as matrix.
+        Let's look at what this means for the cubic curve :</p>
+
+        <p>\[
+          B(t) = P_1 \cdot (1-t)^3 + P_2 \cdot 3 \cdot (1-t)^2 \cdot t + P_3 \cdot 3 \cdot (1-t) \cdot t^2 + P_4 \cdot t^3
+        \]</p>
+
+        <p>Disregarding our actual coordinates for a moment, we have:</p>
+
+        <p>\[
+          B(t) = (1-t)^3 + 3 \cdot (1-t)^2 \cdot t + 3 \cdot (1-t) \cdot t^2 + t^3
+        \]</p>
+
+        <p>We can write this as a sum of four expressions:</p>
+
+        <p>\[
+          \begin{matrix}
+           ... & = & (1-t)^3 \\
+             & + & 3 \cdot (1-t)^2 \cdot t \\
+             & + & 3 \cdot (1-t) \cdot t^2 \\
+             & + & t^3 \\
+          \end{matrix}
+        \]</p>
+
+        <p>And we can expand these expressions:</p>
+
+        <p>\[
+          \begin{matrix}
+           ... & = & ( -t^3 + 3 \cdot t^2 - 3 \cdot t + 1) \\
+             & + & (3 \cdot t^3 - 6 \cdot t^2 + 3 \cdot t) \\
+             & + & (-3 \cdot t^3 + 3 \cdot t^2) \\
+             & + & (t^3) \\
+          \end{matrix}
+        \]</p>
+
+        <p>Furthermore, we can keep all the one and zero factors in:</p>
+
+        <p>\[
+          \begin{matrix}
+           ... & = & -1 \cdot t^3 + 3 \cdot t^2 - 3 \cdot t + 1 \\
+             & + & +3 \cdot t^3 - 6 \cdot t^2 + 3 \cdot t + 0 \\
+             & + & -3 \cdot t^3 + 3 \cdot t^2 + 0 \cdot t + 0 \\
+             & + & +1 \cdot t^3 + 0 \cdot t^2 + 0 \cdot t + 0 \\
+          \end{matrix}
+        \]</p>
+
+        <p>And <em>that</em>, we can view as a series of four matrix operations:</p>
+
+        <p>\[
+          = \begin{bmatrix}t^3 & t^2 & t & 1\end{bmatrix} \cdot \begin{bmatrix}-1 \\ 3 \\ -3 \\ 1\end{bmatrix}
+          + \begin{bmatrix}t^3 & t^2 & t & 1\end{bmatrix} \cdot \begin{bmatrix}3 \\ -6 \\ 3 \\ 0\end{bmatrix}
+          + \begin{bmatrix}t^3 & t^2 & t & 1\end{bmatrix} \cdot \begin{bmatrix}-3 \\ 3 \\ 0 \\ 0\end{bmatrix}
+          + \begin{bmatrix}t^3 & t^2 & t & 1\end{bmatrix} \cdot \begin{bmatrix}1 \\ 0 \\ 0 \\ 0\end{bmatrix}
+        \]</p>
+
+        <p>If we compact this into a single matrix operation, we get:</p>
+
+        <p>\[
+          = \begin{bmatrix}t^3 & t^2 & t & 1\end{bmatrix} \cdot \begin{bmatrix}
+              -1 &  3 & -3 & 1 \\
+               3 & -6 &  3 & 0 \\
+              -3 &  3 &  0 & 0 \\
+               1 &  0 &  0 & 0
+            \end{bmatrix}
+        \]</p>
+
+        <p>This kind of polynomial basis representation is generally written with the bases in
+        increasing order, which means we need to flip our <em>t</em> matrix horizontally, and our
+        big "mixing" matrix upside down:</p>
+
+        <p>\[
+          = \begin{bmatrix}1 & t & t^2 & t^3\end{bmatrix} \cdot \begin{bmatrix}
+               1 &  0 &  0 & 0 \\
+              -3 &  3 &  0 & 0 \\
+               3 & -6 &  3 & 0 \\
+              -1 &  3 & -3 & 1
+            \end{bmatrix}
+        \]</p>
+
+        <p>And then finally, we can add in our original coordinates as a single third matrix. We can
+        either keep those P<sub>1</sub>...P<sub>n</sub>, or upside down; since Bezier curves are
+        symmetrical functions, the coordinate order isn't all that important, so for legibility we'll
+        keep them running top-down.</p>
+
+        <p>\[
+          B(t) = \begin{bmatrix}
+          1 & t & t^2 & t^3
+          \end{bmatrix}
+          \cdot
+          \begin{bmatrix}
+           1 &  0 &  0 & 0 \\
+          -3 &  3 &  0 & 0 \\
+           3 & -6 &  3 & 0 \\
+          -1 &  3 & -3 & 1
+          \end{bmatrix}
+          \cdot
+          \begin{bmatrix}
+          P_1 \\ P_2 \\ P_3 \\ P_4
+          \end{bmatrix}
+        \]</p>
+
+        <p>We can perform the same trick for the quadratic curve, in which case we end up with:</p>
+
+        <p>\[
+          B(t) = \begin{bmatrix}
+          1 & t & t^2
+          \end{bmatrix}
+          \cdot
+          \begin{bmatrix}
+           1 &  0 & 0 \\
+          -2 &  2 & 0 \\
+           1 & -2 & 1
+          \end{bmatrix}
+          \cdot
+          \begin{bmatrix}
+          P_1 \\ P_2 \\ P_3
+          \end{bmatrix}
+        \]</p>
+
+        <p>If we plug in a <em>t</em> value, and then multiply the matrices, we will
+        get exactly the same values as when we evaluate the original polynomial function.
+        <strong>So: why would we bother with matrices?</strong> Matrix representations
+        allow us to discover things about functions that would otherwise be hard to tell.
+        It turns out that the curves form <a href="https://en.wikipedia.org/wiki/Triangular_matrix">triangular
+        matrices</a>, and they have a determinant equal to the product of the actual
+        coordinates we use for our curve. It's also invertible, which means there's
+        <a href="https://en.wikipedia.org/wiki/Invertible_matrix#The_invertible_matrix_theorem">a
+        ton of properties</a> that are all satisfied. Of course, the main question is:
+        "Why is this useful to us, now?", and the answer to that is that it's not
+        immediately useful, but you'll be seeing some instances where certain curve
+        properties can be either computed via function manipulation, or via clever
+        use of matrices, and sometimes the matrix approach can be (drastically) faster.<p>
+
+        <p>so for now, just remember that we can represent curves this way, and let's move on.</p>
+      </section>
+
+<!-- ============================================================================== -->
+
       <section id="decasteljau">
         <h2>de Casteljau's algorithm</h2>
 
@@ -675,6 +823,8 @@ function Bezier(3,t,w[]):
         }</textarea>
       </section>
 
+<!-- ============================================================================== -->
+
       <section id="splitting">
         <h2>Splitting curves</h2>
 
@@ -744,6 +894,626 @@ function drawCurve(points[], t):
         }</textarea>
       </section>
 
+<!-- ============================================================================== -->
+
+      <section id="matrixsplit">
+        <h2>Splitting curves using matrices</h2>
+
+        <p>Another way to split curves is to exploit the matrix representation of
+        a Bézier curve. In <a href="#matrix">the section on matrices</a> we saw tat
+        we can represent curves as matrix multiplications. Specifically, we saw these
+        two forms for the quadratic, and cubic curves, respectively:</p>
+
+        <p>\[
+          B(t) = \begin{bmatrix}
+          1 & t & t^2
+          \end{bmatrix}
+          \cdot
+          \begin{bmatrix}
+           1 &  0 & 0 \\
+          -2 &  2 & 0 \\
+           1 & -2 & 1
+          \end{bmatrix}
+          \cdot
+          \begin{bmatrix}
+          P_1 \\ P_2 \\ P_3
+          \end{bmatrix}
+        \]</p>
+
+        <p>and</p>
+
+        <p>\[
+          B(t) = \begin{bmatrix}
+          1 & t & t^2 & t^3
+          \end{bmatrix}
+          \cdot
+          \begin{bmatrix}
+           1 &  0 &  0 & 0\\
+          -3 &  3 &  0 & 0\\
+           3 & -6 &  3 & 0\\
+          -1 &  3 & -3 & 1
+          \end{bmatrix}
+          \cdot
+          \begin{bmatrix}
+          P_1 \\ P_2 \\ P_3 \\ P_4
+          \end{bmatrix}
+        \]</p>
+
+        <p>Let's say we want to split the curve at some point <em>t = z</em>, forming
+        two new (obviously smaller) Bézier curves. To find the coordinates for these
+        two Bézier curves, we can use the matrix representation and some linear algebra.
+        First, we split out the the actual "point on the curve" information as a new matrix
+        multiplication:</p>
+
+        <p>\[
+          B(t) =
+          \begin{bmatrix}
+          1 & (z \cdot t) & (z \cdot t)^2
+          \end{bmatrix}
+          \cdot
+          \begin{bmatrix}
+           1 &  0 & 0 \\
+          -2 &  2 & 0 \\
+           1 & -2 & 1
+          \end{bmatrix}
+          \cdot
+          \begin{bmatrix}
+          P_1 \\ P_2 \\ P_3
+          \end{bmatrix}
+          =
+          \begin{bmatrix}
+          1 & t & t^2
+          \end{bmatrix}
+          \cdot
+          \begin{bmatrix}
+          1 & 0 & 0 \\
+          0 & z & 0 \\
+          0 & 0 & z^2
+          \end{bmatrix}
+          \cdot
+          \begin{bmatrix}
+           1 &  0 & 0 \\
+          -2 &  2 & 0 \\
+           1 & -2 & 1
+          \end{bmatrix}
+          \cdot
+          \begin{bmatrix}
+          P_1 \\ P_2 \\ P_3
+          \end{bmatrix}
+        \]</p>
+
+        <p>and</p>
+
+        <p>\[
+          B(t) =
+          \begin{bmatrix}
+          1 & (z \cdot t) & (z \cdot t)^2 & (z \cdot t)^3
+          \end{bmatrix}
+          \cdot
+          \begin{bmatrix}
+           1 &  0 &  0 & 0 \\
+          -3 &  3 &  0 & 0 \\
+           3 & -6 &  3 & 0 \\
+          -1 &  3 & -3 & 1
+          \end{bmatrix}
+          \cdot
+          \begin{bmatrix}
+          P_1 \\ P_2 \\ P_3 \\ P_4
+          \end{bmatrix}
+          =
+          \begin{bmatrix}
+          1 & t & t^2 & t^3
+          \end{bmatrix}
+          \cdot
+          \begin{bmatrix}
+          1 & 0 & 0   & 0\\
+          0 & z & 0   & 0\\
+          0 & 0 & z^2 & 0\\
+          0 & 0 & 0   & z^3
+          \end{bmatrix}
+          \cdot
+          \begin{bmatrix}
+           1 &  0 &  0 & 0 \\
+          -3 &  3 &  0 & 0 \\
+           3 & -6 &  3 & 0 \\
+          -1 &  3 & -3 & 1
+          \end{bmatrix}
+          \cdot
+          \begin{bmatrix}
+          P_1 \\ P_2 \\ P_3 \\ P_4
+          \end{bmatrix}
+        \]</p>
+
+        <p>If we could compact these matrices back to a form <strong>[t values] · [bezier matrix] · [column matrix]</strong>,
+        with the first two staying the same, then that column matrix on the right would be the coordinates
+        of a new Bézier curve that describes the first segment, from <em>t = 0</em> to <em>t = z</em>.
+        As it turns out, we can do this quite easily, by exploiting some simple rules of linear algebra
+        (and if you don't care about the derivations, just skip to the end of the box for the results!).</p>
+
+        <div class="note">
+          <h2>Deriving new hull coordinates</h2>
+
+          <p>Deriving the two segments upon splitting a curve takes a few steps, and the higher
+          the curve order, the more work it is, so let's look at the quadratic curve first:</p>
+
+          <p>\[
+            B(t) =
+            \begin{bmatrix}
+            1 & t & t^2
+            \end{bmatrix}
+            \cdot
+            \begin{bmatrix}
+            1 & 0 & 0 \\
+            0 & z & 0 \\
+            0 & 0 & z^2
+            \end{bmatrix}
+            \cdot
+            \begin{bmatrix}
+             1 &  0 & 0 \\
+            -2 &  2 & 0 \\
+             1 & -2 & 1
+            \end{bmatrix}
+            \cdot
+            \begin{bmatrix}
+            P_1 \\ P_2 \\ P_3
+            \end{bmatrix}
+          \]</p>
+
+          <p>\[
+            =
+            \begin{bmatrix}
+            1 & t & t^2
+            \end{bmatrix}
+            \cdot
+            \underset{we\ turn\ this...}{\underbrace{Z \cdot M}}
+            \cdot
+            \begin{bmatrix}
+            P_1 \\ P_2 \\ P_3
+            \end{bmatrix}
+          \]</p>
+
+          <p>\[
+            =
+            \begin{bmatrix}
+            1 & t & t^2
+            \end{bmatrix}
+            \cdot
+            \underset{...into\ this!}{\underbrace{ M \cdot M^{-1} \cdot Z \cdot M }}
+            \cdot
+            \begin{bmatrix}
+            P_1 \\ P_2 \\ P_3
+            \end{bmatrix}
+          \]</p>
+
+          <p>\[
+            =
+            \begin{bmatrix}
+            1 & t & t^2
+            \end{bmatrix}
+            \cdot
+            M
+            \cdot
+            Q
+            \cdot
+            \begin{bmatrix}
+            P_1 \\ P_2 \\ P_3
+            \end{bmatrix}
+          \]</p>
+
+          <p>We do this, because [<em>M · M<sup>-1</sup></em>] is the identity matrix (a bit like
+          multiplying something by x/x in calculus. It doesn't do anything to the function, but it
+          does allow you to rewrite it to something that may be easier to work with, or can be
+          broken up differently). Adding that as matrix multiplication has no effect on the total
+          formula, but it does allow us to change the matrix sequence [<em>something · M</em>] to
+          a sequence [<em>M · something</em>], and that makes a world of difference: if we know
+          what [<em>M<sup>-1</sup> · Z · M</em>] is, we can apply that to our coordinates, and be
+          left with a proper matrix representation of a quadratic Bézier curve (which is
+          [<em>T · M · P</em>]), with a new set of coordinates that represent the curve from
+          <em>t = 0</em> to <em>t = z</em>. So let's get computing:</p>
+
+          <p>\[
+            Q = M^{-1} \cdot Z \cdot M =
+            \begin{bmatrix}
+            1 & 0 & 0 \\
+            1 & \frac{1}{2} & 0 \\
+            1 & 1 & 1
+            \end{bmatrix}
+            \cdot
+            \begin{bmatrix}
+            1 & 0 & 0 \\
+            0 & z & 0 \\
+            0 & 0 & z^2
+            \end{bmatrix}
+            \cdot
+            \begin{bmatrix}
+             1 &  0 & 0 \\
+            -2 &  2 & 0 \\
+             1 & -2 & 1
+            \end{bmatrix}
+            =
+            \begin{bmatrix}
+            1 & 0 & 0 \\
+            -(z-1) & z & 0 \\
+            (z - 1)^2 & -2 \cdot (z-1) \cdot z & z^2
+            \end{bmatrix}
+          \]</p>
+
+          <p>Excellent! Now we can form our new quadratic curve:</p>
+
+          <p>\[
+            B(t) =
+            \begin{bmatrix}
+            1 & t & t^2
+            \end{bmatrix}
+            \cdot M \cdot Q \cdot
+            \begin{bmatrix}
+            P_1 \\ P_2 \\ P_3
+            \end{bmatrix}
+            =
+            \begin{bmatrix}
+            1 & t & t^2
+            \end{bmatrix}
+            \cdot
+            M
+            \cdot
+            \left (
+            Q
+            \cdot
+            \begin{bmatrix}
+            P_1 \\ P_2 \\ P_3
+            \end{bmatrix}
+            \right )
+          \]</p>
+
+          <p>\[
+            =
+            \begin{bmatrix}
+            1 & t & t^2
+            \end{bmatrix}
+            \cdot
+            \begin{bmatrix}
+             1 &  0 & 0 \\
+            -2 &  2 & 0 \\
+             1 & -2 & 1
+            \end{bmatrix}
+            \cdot
+            \left (
+            \begin{bmatrix}
+            1 & 0 & 0 \\
+            -(z-1) & z & 0 \\
+            (z - 1)^2 & -2 \cdot (z-1) \cdot z & z^2
+            \end{bmatrix}
+            \cdot
+            \begin{bmatrix}
+            P_1 \\ P_2 \\ P_3
+            \end{bmatrix}
+            \right )
+          \]</p>
+
+          <p>\[
+            =
+            \begin{bmatrix}
+            1 & t & t^2
+            \end{bmatrix}
+            \cdot
+            \begin{bmatrix}
+             1 &  0 & 0 \\
+            -2 &  2 & 0 \\
+             1 & -2 & 1
+            \end{bmatrix}
+            \cdot
+            \begin{bmatrix}
+              P_1 \\
+              z \cdot P_2 - (z-1) \cdot P_1 \\
+              z^2 \cdot P_3 - 2 \cdot z \cdot (z-1) \cdot P_2 + (z - 1)^2 \cdot P_1
+            \end{bmatrix}
+          \]</p>
+
+          <p><strong><em>Brilliant</em></strong>: if we want a subcurve from <em>t = 0</em>
+          to <em>t = z</em>, we can keep the first coordinate the same (which makes sense),
+          our control point becomes a z-ratio mixture of the original control point and the start
+          point, and the new end point is a mixture that looks oddly similar to a bernstein
+          polynomial of degree two, except it uses (z-1) rather than (1-z)... These new
+          coordinates are actually really easy to compute directly!</p>
+
+          <p>Of course, that's only one of the two curves. Getting the section from <em>t = z</em>
+          to <em>t = 1</em> requires doing this again. We first observe what what we just did is
+          actually evaluate the general interval [0,<em>z</em>], which we wrote down simplified
+          becuase of that zero, but we actually evaluated this:<p>
+
+          <p>\[
+            B(t) =
+            \begin{bmatrix}
+            1 & ( 0 + z \cdot t) & ( 0 + z \cdot t)^2
+            \end{bmatrix}
+            \cdot
+            \begin{bmatrix}
+             1 &  0 & 0 \\
+            -2 &  2 & 0 \\
+             1 & -2 & 1
+            \end{bmatrix}
+            \cdot
+            \begin{bmatrix}
+            P_1 \\ P_2 \\ P_3
+            \end{bmatrix}
+          \]</p>
+
+          <p>\[
+            =
+            \begin{bmatrix}
+            1 & t & t^2
+            \end{bmatrix}
+            \cdot
+            \begin{bmatrix}
+            1 & 0 & 0 \\
+            0 & z & 0 \\
+            0 & 0 & z^2
+            \end{bmatrix}
+            \cdot
+            \begin{bmatrix}
+             1 &  0 & 0 \\
+            -2 &  2 & 0 \\
+             1 & -2 & 1
+            \end{bmatrix}
+            \cdot
+            \begin{bmatrix}
+            P_1 \\ P_2 \\ P_3
+            \end{bmatrix}
+          \]</p>
+
+          <p>If we want the interval [<em>z</em>,1], we will be evaluating this instead:</p>
+
+          <p>\[
+            B(t) =
+            \begin{bmatrix}
+            1 & ( z + (1-z) \cdot t) & ( z + (1-z) \cdot t)^2
+            \end{bmatrix}
+            \cdot
+            \begin{bmatrix}
+             1 &  0 & 0 \\
+            -2 &  2 & 0 \\
+             1 & -2 & 1
+            \end{bmatrix}
+            \cdot
+            \begin{bmatrix}
+            P_1 \\ P_2 \\ P_3
+            \end{bmatrix}
+          \]</p>
+
+          <p>\[
+            =
+            \begin{bmatrix}
+            1 & t & t^2
+            \end{bmatrix}
+            \cdot
+            \begin{bmatrix}
+            1 & z & z^2 \\
+            0 & 1-z & 2 \cdot z \cdot (1-z) \\
+            0 & 0 & (1-z)^2
+            \end{bmatrix}
+            \cdot
+            \begin{bmatrix}
+             1 &  0 & 0 \\
+            -2 &  2 & 0 \\
+             1 & -2 & 1
+            \end{bmatrix}
+            \cdot
+            \begin{bmatrix}
+            P_1 \\ P_2 \\ P_3
+            \end{bmatrix}
+          \]</p>
+
+          <p>We're going to do the same trick, to turn <em>[something · M]</em> into <em>[M · something]</em>:</p>
+
+          <p>\[
+            Q' = M^{-1} \cdot Z' \cdot M =
+            \begin{bmatrix}
+            1 & 0 & 0 \\
+            1 & \frac{1}{2} & 0 \\
+            1 & 1 & 1
+            \end{bmatrix}
+            \cdot
+            \begin{bmatrix}
+            1 & z & z^2 \\
+            0 & 1-z & 2 \cdot z \cdot (1-z) \\
+            0 & 0 & (1-z)^2
+            \end{bmatrix}
+            \cdot
+            \begin{bmatrix}
+             1 &  0 & 0 \\
+            -2 &  2 & 0 \\
+             1 & -2 & 1
+            \end{bmatrix}
+            =
+            \begin{bmatrix}
+            (z-1)^2 & -2 \cdot z \cdot (z-1) & z^2 \\
+            0 & -(z-1) & z \\
+            0 & 0 & 1
+            \end{bmatrix}
+          \]</p>
+
+          <p>So, our final second curve looks like:</p>
+
+          <p>\[
+            B(t) =
+            \begin{bmatrix}
+            1 & t & t^2
+            \end{bmatrix}
+            \cdot M \cdot Q \cdot
+            \begin{bmatrix}
+            P_1 \\ P_2 \\ P_3
+            \end{bmatrix}
+            =
+            \begin{bmatrix}
+            1 & t & t^2
+            \end{bmatrix}
+            \cdot
+            M
+            \cdot
+            \left (
+            Q'
+            \cdot
+            \begin{bmatrix}
+            P_1 \\ P_2 \\ P_3
+            \end{bmatrix}
+            \right )
+          \]</p>
+
+          <p>\[
+            =
+            \begin{bmatrix}
+            1 & t & t^2
+            \end{bmatrix}
+            \cdot
+            \begin{bmatrix}
+             1 &  0 & 0 \\
+            -2 &  2 & 0 \\
+             1 & -2 & 1
+            \end{bmatrix}
+            \cdot
+            \left (
+            \begin{bmatrix}
+            (z-1)^2 & -2 \cdot z \cdot (z-1) & z^2 \\
+            0 & -(z-1) & z \\
+            0 & 0 & 1
+            \end{bmatrix}
+            \cdot
+            \begin{bmatrix}
+            P_1 \\ P_2 \\ P_3
+            \end{bmatrix}
+            \right )
+          \]</p>
+
+          <p>\[
+            =
+            \begin{bmatrix}
+            1 & t & t^2
+            \end{bmatrix}
+            \cdot
+            \begin{bmatrix}
+             1 &  0 & 0 \\
+            -2 &  2 & 0 \\
+             1 & -2 & 1
+            \end{bmatrix}
+            \cdot
+            \begin{bmatrix}
+              z^2 \cdot P_3 - 2 \cdot z \cdot (z-1) \cdot P_2 + (z-1)^2 \cdot P_1 \\
+              z \cdot P_3  - (z-1) \cdot P_2 \\
+              P_3
+            \end{bmatrix}
+          \]</p>
+
+          <p><strong><em>Nice</em></strong>: we see the same as before; can keep the last
+          coordinate the same (which makes sense), our control point becomes a z-ratio
+          mixture of the original control point and the end point, and the new start point
+          is a mixture that looks oddly similar to a bernstein polynomial of degree two,
+          except it uses (z-1) rather than (1-z). These new coordinates are <em>also</em>
+          really easy to compute directly!</p>
+        </div>
+
+        <p>So, using linear algebra rather than de Casteljau's algorithm, we have determined
+        that for any quadratic curve split at some value <em>t = z</em>, we get two subcurves
+        that are described as Bézier curves with coordinates:</p>
+
+        <p>\[
+          \begin{bmatrix}
+          1 & 0 & 0 \\
+          -(z-1) & z & 0 \\
+          (z - 1)^2 & -2 \cdot (z-1) \cdot z & z^2
+          \end{bmatrix}
+          \cdot
+          \begin{bmatrix}
+          P_1 \\ P_2 \\ P_3
+          \end{bmatrix}
+          =
+          \begin{bmatrix}
+            P_1 \\
+            z \cdot P_2 - (z-1) \cdot P_1 \\
+            z^2 \cdot P_3 - 2 \cdot z \cdot (z-1) \cdot P_2 + (z - 1)^2 \cdot P_1
+          \end{bmatrix}
+        \]</p>
+
+        <p>and</p>
+
+        <p>\[
+          \begin{bmatrix}
+          (z-1)^2 & -2 \cdot z \cdot (z-1) & z^2 \\
+          0 & -(z-1) & z \\
+          0 & 0 & 1
+          \end{bmatrix}
+          \cdot
+          \begin{bmatrix}
+          P_1 \\ P_2 \\ P_3
+          \end{bmatrix}
+          =
+          \begin{bmatrix}
+            z^2 \cdot P_3 - 2 \cdot z \cdot (z-1) \cdot P_2 + (z-1)^2 \cdot P_1 \\
+            z \cdot P_3  - (z-1) \cdot P_2 \\
+            P_3
+          \end{bmatrix}
+        \]</p>
+
+        <p>We can do the same for cubic curves. However, I'll spare you the actual derivation
+        (don't let that stop you from writing that out yourself, though) and simply show you
+        the resulting new coordinate sets:</p>
+
+        <p>\[
+          \begin{bmatrix}
+            1 & 0 & 0 & 0 \\
+            -(z-1) & z & 0 & 0 \\
+            (z-1)^2 & -2 \cdot (z-1) \cdot z & z^2 & 0 \\
+            -(z-1)^3 & 3 \cdot (z-1)^2 \cdot z & -3 \cdot (z-1) \cdot z^2 & z^3
+          \end{bmatrix}
+          \cdot
+          \begin{bmatrix}
+           P_1 \\ P_2 \\ P_3 \\ P_4
+          \end{bmatrix}
+          =
+          \begin{bmatrix}
+            P_1 \\
+            z \cdot P_2 - (z-1) \cdot P_1 \\
+            z^2 \cdot P_3 - 2 \cdot z \cdot (z-1) \cdot P_2 + (z-1)^2 \cdot P_1 \\
+            z^3 \cdot P_4 - 3 \cdot z^2 \cdot (z-1) \cdot P_3 + 3 \cdot z \cdot (z-1)^2 \cdot P_2 - (z-1)^3 \cdot P_1
+          \end{bmatrix}
+        \]</p>
+
+        <p>and</p>
+
+        <p>\[
+          \begin{bmatrix}
+            -(z-1)^3 & 3 \cdot (z-1)^2 \cdot z & -3 \cdot (z-1)^3 \cdot z^2 & z^3 \\
+            0 & (z-1)^2 & -2 \cdot (z-1) \cdot z & z^2 \\
+            0 & 0 & -(z-1) & z \\
+            0 & 0 & 0 & 1
+          \end{bmatrix}
+          \cdot
+          \begin{bmatrix}
+           P_1 \\ P_2 \\ P_3 \\ P_4
+          \end{bmatrix}
+          =
+          \begin{bmatrix}
+            z^3 \cdot P_4 - 3 \cdot z^2 \cdot (z-1) \cdot P_3 + 3 \cdot z \cdot (z-1)^2 \cdot P_2 - (z-1)^3 \cdot P_1 \\
+            z^2 \cdot P_4 - 2 \cdot z \cdot (z-1) \cdot P_3 + (z-1)^2 \cdot P_2 \\
+            z \cdot P_4 - (z-1) \cdot P_3 \\
+            P_4
+          \end{bmatrix}
+        \]</p>
+
+        <p>So, looking at our matrices, did we really need to compute the second segment matrix?
+        No, we didn't. Actually having one segment's matrix means we implicitly have the other:
+        push the values of each row in the matrix <strong><em>Q</em></strong> to the right, with
+        zeroes getting pushed off the right edge and appearing back on the left, and then flip
+        the matrix vertically. Presto, you just "calculated" <strong><em>Q'</em></strong>.</p>
+
+        <p>Implementing curve splitting this way requires less recursion, and is just straight
+        arithmetic with cached values, so can be cheaper on systems were recursion is expensive.
+        If you're doing computation with devices that are good at matrix multiplication, chopping
+        up a Bézier curve with this method will be a lot faster than applying de Casteljau.</p>
+
+      </section>
+
+<!-- ============================================================================== -->
+
       <section id="reordering">
         <h2>Lowering and elevating curve order</h2>
 
@@ -802,6 +1572,8 @@ function drawCurve(points[], t):
           curve.draw();
         }</textarea>
       </section>
+
+<!-- ============================================================================== -->
 
       <section id="derivatives">
         <h2>Derivatives</h2>
@@ -984,6 +1756,8 @@ function drawCurve(points[], t):
         with any further derivative being zero.</p>
       </section>
 
+<!-- ============================================================================== -->
+
       <section id="pointvectors">
         <h2>Tangents and normals</h2>
 
@@ -1123,6 +1897,8 @@ function drawCurve(points[], t):
         }</textarea>
       </section>
 
+<!-- ============================================================================== -->
+
       <section id="components">
         <h2>Component functions</h2>
 
@@ -1193,6 +1969,8 @@ function drawCurve(points[], t):
           y_only.draw();
         }</textarea>
       </section>
+
+<!-- ============================================================================== -->
 
       <section id="extremities">
         <h2>Finding extremities</h2>
@@ -1327,6 +2105,8 @@ function drawCurve(points[], t):
         }</textarea>
       </section>
 
+<!-- ============================================================================== -->
+
       <section id="boundingbox">
         <h2>Bounding boxes</h2>
 
@@ -1407,6 +2187,8 @@ function drawCurve(points[], t):
         but in order to do so we first need to look at how aligning works.</p>
       </section>
 
+<!-- ============================================================================== -->
+
       <section id="aligning">
         <h2>Aligning curves</h2>
 
@@ -1454,7 +2236,7 @@ function drawCurve(points[], t):
           y = BLUE[40] \cdot 3 \cdot (1-t)^2 \cdot t BLUE[- 141] \cdot 3 \cdot (1-t) \cdot t^2
         \end{array} \right. \]</p>
 
-        <p>We our original curve definition has been simplified considerably. The following graphics
+        <p>We can see that our original curve definition has been simplified considerably. The following graphics
         illustrate the result of aligning our example curves to the x-axis, with the cubic case using
         the coordinates that were just used in the example formulae:</p>
 
@@ -1502,6 +2284,8 @@ function drawCurve(points[], t):
         }</textarea>
       </section>
 
+<!-- ============================================================================== -->
+
       <section id="tightbounds">
         <h2>Tight boxes</h2>
 
@@ -1537,6 +2321,8 @@ function drawCurve(points[], t):
         precision is often not worth it. If there is high demand for it, I'll add a section on how to precisely compute
         the best fit bounding box, but the maths is fairly gruelling and just not really worth spending time on.</p>
       </section>
+
+<!-- ============================================================================== -->
 
       <section id="arclength">
         <h2>Arc length</h2>
@@ -1728,6 +2514,8 @@ function drawCurve(points[], t):
         }</textarea>
       </section>
 
+<!-- ============================================================================== -->
+
       <section id="tracing">
         <h2>Tracing a curve at fixed distance intervals</h2>
 
@@ -1883,7 +2671,7 @@ function drawCurve(points[], t):
           noAdditionals();
           for(int m=1, last=markers.size(); m<last; m++) {
             BezierCurve segment = curve.split(markers.get(m-1), markers.get(m));
-            c = (m%2==0 ? color(155) : color(0,0,255));
+            c = (m%2==0 ? color(0,255,120) : color(0,0,255));
             segment.draw(c);
           }
 
@@ -1902,6 +2690,8 @@ function drawCurve(points[], t):
         try to update this section with new information.</p>
 -->
       </section>
+
+<!-- ============================================================================== -->
 
       <section id="intersections">
         <h2>Intersections</h2>
@@ -2045,6 +2835,8 @@ function drawCurve(points[], t):
         techniques we've not covered yet: de Casteljau's algorithm, and curve splitting.</p>
       </section>
 
+<!-- ============================================================================== -->
+
       <section id="curveintersection">
         <h2>Curve/curve intersection</h2>
 
@@ -2101,6 +2893,8 @@ function drawCurve(points[], t):
         run exactly the same algorithm. All non-overlapping curve pairs will be removed after the first iteration,
         and the remaining steps home in on the curve's self-intersection points.</p>
       </section>
+
+<!-- ============================================================================== -->
 
       <section id="moulding">
         <h2>Curve moulding (using the projection ratio)</h2>
@@ -2235,32 +3029,9 @@ function drawCurve(points[], t):
             curves.add(newcurve);
           }
         }</textarea>
-
-<!--
-        <p>For cubic curves, we can actually relax these rules a little. The closer we get to an end point, the less
-        influenced the on-curve point is by the further of the two control Points. This means we can actually cheat
-        a little by taking the original curve, the curve we're "supposed" to get if we did strict curve moulding,
-        and interpolate the control points between the old and the new curve. The closer to an end point, the more
-        we use the closer of the two new control points, and the less we use the further of the two control points:</p>
-
-        <textarea class="sketch-code" data-sketch-preset="moulding" data-sketch-title="Relaxs moulding of a cubic Bézier curve">
-        void setupCurve() {
-          setupDefaultCubic();
-          mould();
-          span();
-          additionals();
-        }
-
-        void mouldCurve(BezierCurve curve, int mx, int my) {
-          if(Bt != -1) {
-            B = new Point(mx, my);
-            BezierCurve newcurve = comp.generateCurve(curve.order, curve.points[0], B, curve.points[curve.order], Bt, tangents);
-            curves.clear();
-            curves.add(newcurve);
-          }
-        }</textarea>
--->
       </section>
+
+<!-- ============================================================================== -->
 
       <section id="pointcurves">
         <h2>Creating a curve from three points</h2>
@@ -2308,6 +3079,8 @@ function drawCurve(points[], t):
         to a more "aesthetic" curve, but this will be left as an exercise, since there are too many,
         and aesthetics are a personal choice)</p>
       </section>
+
+<!-- ============================================================================== -->
 
       <section id="polybezier">
         <h2>Forming poly-Bézier curves</h2>
@@ -2423,6 +3196,8 @@ function drawCurve(points[], t):
         from having a curve that will let you pick what you need, when you need it, without having to start
         a new poly-Bézier curve.</p>
       </section>
+
+<!-- ============================================================================== -->
 
       <section id="shapes">
         <h2>Boolean shape operations</h2>
@@ -2586,6 +3361,8 @@ function drawCurve(points[], t):
         </div>
       </section>
 
+<!-- ============================================================================== -->
+
       <section id="projections">
         <h2>Projecting a point onto a Bézier curve</h2>
 
@@ -2646,9 +3423,9 @@ function drawCurve(points[], t):
             text("p: "+mouseX+"/"+mouseY, mouseX+10, mouseY);
           }
         }</textarea>
-
       </section>
 
+<!-- ============================================================================== -->
 
       <section id="offsetting">
         <h2>Curve offsetting</h2>
@@ -2796,6 +3573,8 @@ function drawCurve(points[], t):
         enough, this may still lead to incorrect offsets.</p>
       </section>
 
+<!-- ============================================================================== -->
+
       <section id="graduatedoffset">
         <h2>Graduated curve offsetting</h2>
 
@@ -2866,6 +3645,8 @@ function drawCurve(points[], t):
           }
         }</textarea>
       </section>
+
+<!-- ============================================================================== -->
 
       <section id="circles">
         <h2>Circles and quadratic Bézier curves</h2>
@@ -3048,6 +3829,8 @@ function drawCurve(points[], t):
         can do better, even if it's just by raising the order of our curve once. So let's try the
         same thing for cubic curves.</p>
       </section>
+
+<!-- ============================================================================== -->
 
       <section id="circles_cubic">
         <h2>Circles and cubic Bézier curves</h2>
@@ -3304,17 +4087,10 @@ function drawCurve(points[], t):
         }</textarea>
       </section>
 
-      <hr>
+<hr>  <!-- ============================================================================== -->
 
       <section id="issues">
         <h2>Todo list</h2>
-
-<!--
-        This custom element will be used instead of a 'comment section', so that questions
-        get pulled straight from the github issue tracker.
-
-        <github-issues owner="Pomax" repo="bezierinfo"></github-issues>
--->
 
         <ol>
           <li>Approximating Bézier curves with (elliptical?) arcs</li>
@@ -3328,7 +4104,7 @@ function drawCurve(points[], t):
         pull in gh-issues as a 'comment feed'... probably using web components).</p>
       </section>
 
-      <hr>
+<hr>  <!-- ============================================================================== -->
 
       <section id="comments">
         <h2>Comments and questions</h2>
@@ -3369,11 +4145,6 @@ function drawCurve(points[], t):
           document.head.appendChild(script);
         }
       }());</script>
-
-      <!--
-      <script src="webcomponents/web-components.js"></script>
-      <script src="webcomponents/custom-elements.js"></script>
-      -->
 
       <!--
         no tracking info: http://support.addthis.com/customer/portal/articles/1013558-removing-all-hashtags-anchors-from-your-urls
