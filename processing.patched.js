@@ -9251,10 +9251,6 @@
     * @see saveBytes
     */
     p.loadStrings = function(filename) {
-      if (localStorage[filename]) {
-        return localStorage[filename].split("\n");
-      }
-
       var filecontent = ajax(filename);
       if(typeof filecontent !== "string" || filecontent === "") {
         return [];
@@ -9295,6 +9291,10 @@
     * @see saveBytes
     */
     p.loadBytes = function(url) {
+      if(localStorage[url]) {
+        return localStorage[url];
+      }
+
       var string = ajax(url);
       var ret = [];
 
@@ -20231,12 +20231,6 @@
     // *
     // *
     function ajaxAsync(url, callback) {
-      // in sessionStorage?
-      if(localStorage[url]) {
-        callback(localStorage[url]);
-        return;
-      }
-
       // not in sessionStorage. Retrieve and store.
       var xhr = new XMLHttpRequest();
       xhr.onreadystatechange = function() {
@@ -20254,8 +20248,7 @@
               error = "File is empty.";
             }
           }
-          localStorage[url] = xhr.responseText;
-          callback(localStorage[url], error);
+          callback(xhr.responseText, error);
         }
       };
       xhr.open("GET", url, true);

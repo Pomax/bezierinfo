@@ -10,6 +10,15 @@ boolean iterated = false;
 BezierCurve c1, c2;
 ArrayList<CurvePair> pairs, newPairs, finals;
 
+void kickOff() {
+  iterated = true;
+  animate();
+  play();
+  loop();
+  frameRate(2);
+  redraw();
+}
+
 /**
  * set up the screen
  */
@@ -50,7 +59,7 @@ void setupCurve() {
   curves.add(c2);
 
   if(javascript!=null) {
-    javascript.setupClippingButton(this);
+    javascript.setupClippingButton(sketch);
   }
 
 }

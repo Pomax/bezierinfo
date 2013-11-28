@@ -1,0 +1,129 @@
+
+        <p>Now that we understand (well, superficially anyway) the component functions, we can find the extremities of our
+        Bézier curve by finding maxima and minima on the component functions, by solving the equations B'(t) = 0 and B''(t) = 0.
+        Although, in the case of quadratic curves there is no B''(t), so we only need to compute B'(t) = 0.</p>
+
+        <p>The problem with this is that as the order of the curve goes up, we can't actually solve those equations the normal
+        way. We can't take the function, and then work out what the solutions are. Not to mention that even solving a third
+        order derivative (for a fourth order curve) is already a royal pain in the backside. We need a better solution. We
+        need numerical approaches.</p>
+
+        <p>That's a fancy word for saying "rather than solve the function, treat the problem as a sequence of identical
+        operations, the performing of which gets us closer and closer to the real answer". Finding solutions to any
+        <i>f(t) = 0</i> is called "root finding", and there is a really nice numerical root finding algorithm, called
+        the Newton-Raphson root finding method (yes, after <strong>that</strong> Newton).</p>
+
+        <div class="note">
+          <h2><a href="http://en.wikipedia.org/wiki/Newton-Raphson">Newton-Raphson</a> root finding</h2>
+
+          <p>The Newton-Raphson approach consists of picking a value <i>t</i> (any will do), and getting the corresponding
+          value at that <i>t</i> value. For normal functions, we can treat that value as a height. If the height is zero,
+          we're done, we have found a root. If it's not, we take the tangent of the curve at that point, and extend
+          it until it passes the x-axis, which will be at some new point <i>t</i>. We then repeat the procedure with this
+          new value, and we keep doing this until we find our root.</p>
+
+          <p>Mathematically, this means that for some <i>t</i>, at step <i>n=1</i>, we perform the following calculation
+          until <i>f<sub>y</sub></i>(<i>t</i>) is zero, so that the next <i>t</i> is the same as the one we already have:</p>
+
+          <p>\[
+            t_{n+1} = t_n - \frac{f_y(t_n)}{f'_y(t_n)}
+          \]</p>
+
+          <p>(The wikipedia article has a decent animation for this process, so I'm not adding a sketch for that here)</p>
+
+          <p>Now, this works well only if we can pick good starting points, and our curve is continuously differentiable
+          and doesn't have oscillations. Glossing over the exact meaning of those terms, the curves we're dealing with
+          conform to those constraints, so as long as we pick good starting points, this will work. So the question is:
+          which starting points do we pick?</p>
+
+          <p>As it turns out, Newton-Raphson is so blindingly fast, we don't really have to pick: we simply run the
+          algorithm from <i>t=0</i> to <i>t=1</i> at small steps (say, 1/200<sup>th</sup>) and the result will be
+          all the roots we want. Of course, this may pose problems for high order Bézier curves: 200 steps for a
+          200<sup>th</sup> order Bézier curve is going to go wrong, but that's okay: there is no reason, ever, to
+          use Bézier curves of orders higher than 10, let alone 100.</p>
+        </div>
+
+        <p>With this, we can determine the first and second derivative roots for our Bézier curves, and show them
+        in our previous graphics:</p>
+
+        <textarea class="sketch-code" data-sketch-preset="threepanel" data-sketch-title="Quadratic Bézier curve components">
+        void setupCurve() {
+          setupDefaultQuadratic();
+        }
+
+        void drawCurve(BezierCurve curve) {
+          additionals();
+          curve.draw();
+
+          noAdditionals();
+          usePanelPadding();
+
+          nextPanel();
+          drawAxes("t",0,1, "x",0,panelDim);
+          BezierCurve x_only = curve.justX(dim-2*pad);
+          x_only.draw();
+
+          stroke(255,0,0);
+          float[] tx = x_only.getInflections();
+          for(float t: tx) {
+            if(t==0 || t==1) continue;
+            Point p = x_only.getPoint(t);
+            ellipse(p.x,p.y,5,5);
+            line(p.x,p.y-3,p.x,0);
+          }
+
+          nextPanel();
+          drawAxes("t",0,1, "y",0,panelDim);
+          BezierCurve y_only = curve.justY(dim-2*pad);
+          y_only.draw();
+
+          stroke(255,0,255);
+          float[] ty = y_only.getInflections();
+          for(float t: ty) {
+            if(t==0 || t==1) continue;
+            Point p = y_only.getPoint(t);
+            ellipse(p.x,p.y,5,5);
+            line(p.x,p.y-3,p.x,0);
+          }
+        }</textarea>
+
+        <textarea class="sketch-code" data-sketch-preset="threepanel" data-sketch-title="Cubic Bézier curve components">
+        void setupCurve() {
+          setupDefaultCubic();
+        }
+
+        void drawCurve(BezierCurve curve) {
+          additionals();
+          curve.draw();
+
+          noAdditionals();
+          usePanelPadding();
+
+          nextPanel();
+          drawAxes("t",0,1, "x",0,panelDim);
+          BezierCurve x_only = curve.justX(dim-2*pad);
+          x_only.draw();
+
+          stroke(255,0,0);
+          float[] tx = x_only.getInflections();
+          for(float t: tx) {
+            if(t==0 || t==1) continue;
+            Point p = x_only.getPoint(t);
+            ellipse(p.x,p.y,5,5);
+            line(p.x,p.y-3,p.x,0);
+          }
+
+          nextPanel();
+          drawAxes("t",0,1, "y",0,panelDim);
+          BezierCurve y_only = curve.justY(dim-2*pad);
+          y_only.draw();
+
+          stroke(255,0,255);
+          float[] ty = y_only.getInflections();
+          for(float t: ty) {
+            if(t==0 || t==1) continue;
+            Point p = y_only.getPoint(t);
+            ellipse(p.x,p.y,5,5);
+            line(p.x,p.y-3,p.x,0);
+          }
+        }</textarea>
