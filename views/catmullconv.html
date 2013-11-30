@@ -1,21 +1,329 @@
-        <p>Let's take a brief detour to different curves now that we've seen the general matrix description,
-          and some maths, for Bézier curves. One of the more interesting curves is the </p>
+        <p>Taking an excursion to different splines, the other common design curve is the
+          <a href="https://en.wikipedia.org/wiki/Cubic_Hermite_spline#Catmull.E2.80.93Rom_spline">Catmull-Rom
+          spline</a>. Now, a Catmull-Rom spline is a form of cubic Hermite spline, and as it so happens
+          the cubic Bézier curve is also a cubic Hermite spline, so maybe... maybe we can convert one
+          into the other, and back, with some simply substitutions?</p>
 
-          <p>\[
-            CatmullRom(t) =
-            \begin{bmatrix}
-            1 & t & t^2 & t^3
-            \end{bmatrix}
-            \cdot
-            \begin{bmatrix}
-            1 & 0 & 0 & 0 \\
-            0 & 0 & 1 & 0 \\
-            -3 & 3 & -2 & -1 \\
-            2 & -2 & 1 & 1
-            \end{bmatrix}
-            \cdot
-            \begin{bmatrix}
-            P_1 \\ P_2 \\P_3 \\ P_4
-            \end{bmatrix}
+        <p>Unlike Bézier curves, Catmull-Rom splines pass through each point used to define the curve,
+          except the first and last, which makes sense if you read the "natural language" description
+          for how a Catmull-Rom spline works: a Catmull-Rom spline is a curve that, at each point
+           P<sub>x</sub>, has a tangent along the line P<sub>x-1</sub> to P<sub>x+1</sub>. The curve
+           runs from points P<sub>2</sub> to  P<sub>n-1</sub>, and has a "tension" that determines
+           how fast the curve passes through each point. The lower the tension, the faster the curve
+           goes through each point, and the bigger its local tangent is.</p>
 
+        <p>I'll be showing the conversion to and from Catmull-Rom curves for the tension that the
+          Processing language uses for its Catmull-Rom algorithm.</p>
+
+        <p>We start with showing the Catmull-Rom matrix form:</p>
+
+        <p>\[
+          CatmullRom(t) =
+          \begin{bmatrix}
+          1 & t & t^2 & t^3
+          \end{bmatrix}
+          \cdot
+          \begin{bmatrix}
+          1 & 0 & 0 & 0 \\
+          0 & 0 & 1 & 0 \\
+          -3 & 3 & -2 & -1 \\
+          2 & -2 & 1 & 1
+          \end{bmatrix}
+          \cdot
+          \begin{bmatrix}
+          V_1 \\ V_2 \\ V'_1 \\ V'_2
+          \end{bmatrix}
+        \]
+        </p>
+
+        <p>However, there something funny going on here: the coordinate column matrix looks weird.
+          This (commonly cited) matrix representation of a Catmull-Rom curve models a curve based
+          on four sequential points, but described the curve as leaving point V1 (actually point 2),
+          arriving at point V2 (actually point 3), departing with a tangent vector V'1 (equal to the
+          tangent from point 1 to point 3) and arriving with tangent vector V'2 (equal to the tangent
+          from point 2 to point 4). If we just have plain points 1 through 4 we can transform those
+          to "V" values as:</p>
+
+        <p>\[
+          \begin{bmatrix}
+          V_1 \\ V_2 \\ V'_1 \\ V'_2
+          \end{bmatrix}
+          =
+          T
+          \cdot
+          \begin{bmatrix}
+          P_1 \\ P_2 \\ P_3 \\ P_4
+          \end{bmatrix}
+          =
+          \begin{bmatrix}
+          P_2 \\ P_3 \\ \frac{P_3 - P_1}{2} \\ \frac{P_4 - P_2}{2}
+          \end{bmatrix}
+        \]</p>
+
+        <div class="note">
+          <h2>Hold on there, you cheated!</h2>
+          <p>Sort of. Technically there is no good reason to divide the tangents by two,
+            but default tension of the Catmull-Rom curve implementation in Processing
+            requires that factor be there. Different default implementations may require
+            a different factor, but as we will see once we find the true coordinate mappings
+            to go from one curve to the other, we can tweak those values to fit any tension.</p>
+        </div>
+
+        <p>This gives us the following coordinate transform (although we won't really use it, since we're
+        actually only interested in the transformed coordinate vector):</p>
+
+        <p>\[
+          T
+          =
+          \frac{1}{2}
+          \cdot
+          \begin{bmatrix}
+           0 &  2 & 0 & 0 \\
+           0 &  0 & 2 & 0 \\
+          -1 &  0 & 1 & 0 \\
+           0 & -1 & 0 & 1
+          \end{bmatrix}
           \]</p>
+
+        <p>With our coordinate transformation in hand, we can now write out how a Catmull-Rom hermite
+          spline relates to a cubic Bézier hermite spline:</p>
+
+        <p>\[
+          \begin{bmatrix}
+          1 & t & t^2 & t^3
+          \end{bmatrix}
+          \cdot
+          \begin{bmatrix}
+          1 & 0 & 0 & 0 \\
+          0 & 0 & 1 & 0 \\
+          -3 & 3 & -2 & -1 \\
+          2 & -2 & 1 & 1
+          \end{bmatrix}
+          \cdot
+          \begin{bmatrix}
+          V_1 \\ V_2 \\V'_1 \\ V'_2
+          \end{bmatrix}
+          =
+          \begin{bmatrix}
+          1 & t & t^2 & t^3
+          \end{bmatrix}
+          \cdot
+          \begin{bmatrix}
+          1 & 0 & 0 & 0 \\
+          -3 & 3 & 0 & 0 \\
+          3 & -6 & 3 & 0 \\
+          -1 & 3 & -3 & 1
+          \end{bmatrix}
+          \cdot
+          A
+          \cdot
+          \begin{bmatrix}
+          P_2 \\ P_3 \\ \frac{P_3 - P_1}{2} \\ \frac{P_4 - P_2}{2}
+          \end{bmatrix}
+        \]</p>
+
+        <p>The difference is somewhere in the actual hermite matrix, since the <em>t</em> and coordinate
+          values are identical, so let's solve that matrix equasion:</p>
+
+        <p>\[
+          \begin{bmatrix}
+          1 & 0 & 0 & 0 \\
+          0 & 0 & 1 & 0 \\
+          -3 & 3 & -2 & -1 \\
+          2 & -2 & 1 & 1
+          \end{bmatrix}
+          =
+          \begin{bmatrix}
+          1 & 0 & 0 & 0 \\
+          -3 & 3 & 0 & 0 \\
+          3 & -6 & 3 & 0 \\
+          -1 & 3 & -3 & 1
+          \end{bmatrix}
+          \cdot
+          A
+        \]</p>
+
+        <p>We left-multiply both sides by the inverse of the Bézier matrix, to get rid of the
+        Bézier matrix on the right side of the equals sign:</p>
+
+        <p>\[
+          {
+          \begin{bmatrix}
+          1 & 0 & 0 & 0 \\
+          -3 & 3 & 0 & 0 \\
+          3 & -6 & 3 & 0 \\
+          -1 & 3 & -3 & 1
+          \end{bmatrix}
+          }^{-1}
+          \cdot
+          \begin{bmatrix}
+          1 & 0 & 0 & 0 \\
+          0 & 0 & 1 & 0 \\
+          -3 & 3 & -2 & -1 \\
+          2 & -2 & 1 & 1
+          \end{bmatrix}
+          =
+          {
+          \begin{bmatrix}
+          1 & 0 & 0 & 0 \\
+          -3 & 3 & 0 & 0 \\
+          3 & -6 & 3 & 0 \\
+          -1 & 3 & -3 & 1
+          \end{bmatrix}
+          }^{-1}
+          \cdot
+          \begin{bmatrix}
+          1 & 0 & 0 & 0 \\
+          -3 & 3 & 0 & 0 \\
+          3 & -6 & 3 & 0 \\
+          -1 & 3 & -3 & 1
+          \end{bmatrix}
+          \cdot
+          A
+          \ =\
+          I \cdot A
+          \ =\
+          A
+        \]
+        </p>
+
+        <p>Which gives us:</p>
+
+        <p>\[
+          \frac{1}{3}
+          \cdot
+          \begin{bmatrix}
+          3 & 0 & 0 & 0 \\
+          3 & 0 & 1 & 0 \\
+          0 & 3 & 0 & -1 \\
+          0 & 3 & 0 & 0
+          \end{bmatrix}
+          =
+          A
+        \]</p>
+
+        <p>Multiplying this <strong><em>A</em></strong> with our transformed coordinates
+        will give us a proper Bézier matrix expression again:<p>
+
+        <p>\[
+          \begin{bmatrix}
+          1 & t & t^2 & t^3
+          \end{bmatrix}
+          \cdot
+          \begin{bmatrix}
+          1 & 0 & 0 & 0 \\
+          -3 & 3 & 0 & 0 \\
+          3 & -6 & 3 & 0 \\
+          -1 & 3 & -3 & 1
+          \end{bmatrix}
+          \cdot
+          \frac{1}{3}
+          \cdot
+          \begin{bmatrix}
+          3 & 0 & 0 & 0 \\
+          3 & 0 & 1 & 0 \\
+          0 & 3 & 0 & -1 \\
+          0 & 3 & 0 & 0
+          \end{bmatrix}
+          \cdot
+          \begin{bmatrix}
+          P_2 \\ P_3 \\ \frac{P_3 - P_1}{2} \\ \frac{P_4 - P_2}{2}
+          \end{bmatrix}
+          =
+          \begin{bmatrix}
+          1 & t & t^2 & t^3
+          \end{bmatrix}
+          \cdot
+          \begin{bmatrix}
+          1 & 0 & 0 & 0 \\
+          -3 & 3 & 0 & 0 \\
+          3 & -6 & 3 & 0 \\
+          -1 & 3 & -3 & 1
+          \end{bmatrix}
+          \cdot
+          \begin{bmatrix}
+          P_2 \\
+          P_2 - \frac{P_3-P_1}{6} \\
+          P_3 + \frac{P_4-P_2}{6} \\
+          P_3
+          \end{bmatrix}
+        \]</p>
+
+        <p>So a Catmull-Rom to Bézier conversion, based on coordinates, simply requires the
+          following coordinate transformation:</p>
+
+        <p>\[
+          \begin{bmatrix}
+          P_1 \\
+          P_2 \\
+          P_3 \\
+          P_4
+          \end{bmatrix}_{CR}
+          \Rightarrow
+          \begin{bmatrix}
+          P_2 \\
+          P_2 - \frac{P_3-P_1}{6} \\
+          P_3 + \frac{P_4-P_2}{6} \\
+          P_3
+          \end{bmatrix}_{B}
+        \]</p>
+
+        <p>And the other way around, a Bézier to Catmull-Rom conversion, based on coordinates,
+          requires this coordinate transformation:</p>
+
+        <p>\[
+          \begin{bmatrix}
+          P_1 \\
+          P_2 \\
+          P_3 \\
+          P_4
+          \end{bmatrix}_{B}
+          \Rightarrow
+          \begin{bmatrix}
+          P_4 + 6 \cdot (P_1 - P_2) \\
+          P_1 \\
+          P_4 \\
+          P_1 + 6 \cdot (P_4 - P_3)
+          \end{bmatrix}_{CR}
+        \]</p>
+
+        <p>Done. We can now draw the curves we want using either Bézier curves or Catmull-Rom
+          splines, the choice mostly being which drawing algorithms we have natively available,
+          and what properties we want to emphasise.</p>
+
+        <p>Well... almost. Remember when I cheated? Now is when we add in the tension factor
+          so that we can map correctly:</p>
+
+        <p>\[
+          \begin{bmatrix}
+          P_1 \\
+          P_2 \\
+          P_3 \\
+          P_4
+          \end{bmatrix}_{CR}
+          \Rightarrow
+          \begin{bmatrix}
+          P_2 \\
+          P_2 - \frac{f}{6} \cdot (P_3-P_1) \\
+          P_3 + \frac{f}{6} \cdot (P_4-P_2) \\
+          P_3
+          \end{bmatrix}_{B}
+          \ and
+          \ \ \begin{bmatrix}
+          P_1 \\
+          P_2 \\
+          P_3 \\
+          P_4
+          \end{bmatrix}_{B}
+          \Rightarrow
+          \begin{bmatrix}
+          P_4 + \frac{6}{f} \cdot (P_1 - P_2) \\
+          P_1 \\
+          P_4 \\
+          P_1 + \frac{6}{f} \cdot (P_4 - P_3)
+          \end{bmatrix}_{CR}
+          \ ,
+          \ f = tension
+        \]</p>
+
+        <p>The factor <i>f</i> now lets us control the tension, and now we're really done.</p>
