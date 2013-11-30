@@ -1,0 +1,21 @@
+        <p>Let's take a brief detour to different curves now that we've seen the general matrix description,
+          and some maths, for Bézier curves. One of the more interesting curves is the </p>
+
+          <p>\[
+            CatmullRom(t) =
+            \begin{bmatrix}
+            1 & t & t^2 & t^3
+            \end{bmatrix}
+            \cdot
+            \begin{bmatrix}
+            1 & 0 & 0 & 0 \\
+            0 & 0 & 1 & 0 \\
+            -3 & 3 & -2 & -1 \\
+            2 & -2 & 1 & 1
+            \end{bmatrix}
+            \cdot
+            \begin{bmatrix}
+            P_1 \\ P_2 \\P_3 \\ P_4
+            \end{bmatrix}
+
+          \]</p>

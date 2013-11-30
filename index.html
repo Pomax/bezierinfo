@@ -3,10 +3,10 @@
 
   <head>
     <!-- referral tracking -->
-    <script src="referrer.js"></script>
+    <script src="js/referrer.js"></script>
 
     <!-- DOM manipulation, the kinder way -->
-    <script src="tiny-toolkit-min.js"></script>
+    <script src="js/tiny-toolkit-min.js"></script>
 
     <!-- page information -->
     <meta charset="utf-8">
@@ -23,6 +23,23 @@
         r=[];this[f](function(n){r.push(n);});return r;}}
       ("prototype",NodeList,Array,"forEach","toArray"));
     </script>
+
+    <!-- MathJax for beautiful LaTeX functions -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        displayAlign: "left",
+        displayIndent: "2em",
+        TeX: {
+          extensions: ["color.js"]
+        },
+        skipStartupTypeset: true
+      });
+    </script>
+
+    <script src="js/howtocode.js"></script>
+    <script src="js/sketchloader.js"></script>
+    <script src="js/colorpreprocess.js"></script>
+    <script src="js/processing.patched.js"></script>
 
     <!-- opengraph information -->
     <meta property="og:title" content="A Primer on Bézier Curves">
@@ -56,6 +73,9 @@
       }
     }
     </script>
+
+    <script src="js/nunjucks.js"></script>
+    <script src="js/sectionloading.js"></script>
   </head>
 
 
@@ -178,18 +198,6 @@
         </div>
       </section>
 
-      <script src="nunjucks.js"></script>
-      <script>
-        nunjucks.configure('views', { autoescape: false });
-        function inject(sectionname) {
-          var section = find("#" + sectionname);
-          nunjucks.render(sectionname + ".html", function(err, sectiondata) {
-            section.remove(section.find("script"));
-            section.add(sectiondata);
-          });
-        }
-      </script>
-
       <section id="introduction">
         <h2 data-num="1">Introduction</h2>
         <script> inject("introduction"); </script>
@@ -224,6 +232,14 @@
         <h2>Splitting curves using matrices</h2>
         <script> inject("matrixsplit"); </script>
       </section>
+
+<!--
+
+      <section id="catmullconv">
+        <h2>Bezier curves and Catmull-Rom curves</h2>
+        <script> inject("catmullconv"); </script>
+      </section>
+-->
 
       <section id="reordering">
         <h2>Lowering and elevating curve order</h2>
@@ -330,6 +346,7 @@
         <script> inject("circles_cubic"); </script>
       </section>
 
+
 <hr>  <!-- ============================================================================== -->
 
       <section id="issues">
@@ -364,32 +381,7 @@
 
     <div id="scriptblock">
       <!-- scripts can come last so they don't hold up the DOM -->
-      <script src="autonav.js"></script>
-      <script src="autolabel.js"></script>
-      <script src="howtocode.js"></script>
-      <script src="sketchloader.js"></script>
-      <script src="processing.patched.js"></script>
-      <script src="colorpreprocess.js"></script>
-
-
-      <!-- MathJax for beautiful LaTeX functions -->
-      <script type="text/x-mathjax-config">
-        MathJax.Hub.Config({
-          displayAlign: "left",
-          displayIndent: "2em",
-          TeX: {
-            extensions: ["color.js"]
-          }
-        });
-      </script>
-      <script>(function(){
-        if(window.location.toString().indexOf("noMathJax") === -1) {
-          var script = document.createElement("script");
-          script.src = "http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_HTML";
-          document.head.appendChild(script);
-        }
-      }());</script>
-
+      <script src="js/autonav.js"></script>
 
       <!--
         no tracking info: http://support.addthis.com/customer/portal/articles/1013558-removing-all-hashtags-anchors-from-your-urls
@@ -401,7 +393,7 @@
       </script>
       <script src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=xa-516a3187281448fc" async></script>
 
-      <script type="text/javascript" src="EasyPageComments.js"></script>
+      <script type="text/javascript" src="js/EasyPageComments.js"></script>
       <script type="text/javascript">
         if(EasyPageComments) {
           function showEasyPageComments(name, data) {
@@ -419,6 +411,7 @@
           document.addEventListener("DOMContentLoaded", addEasyPageComments, false);
         }
       </script>
+
     </div>
   </body>
 </html>

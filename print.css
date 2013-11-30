@@ -51,7 +51,7 @@ section * h2:before {
   background: rgb(250,250,204);
 }
 .sketch canvas {
-  background: url(attr('data-print-image'));
+  /*background: url(attr('data-print-image'));*/
 }
 .sketch-title span { color: rgb(0,0,200); cursor: pointer; }
 

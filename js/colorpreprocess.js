@@ -1,4 +1,4 @@
-schedule(function colorpreprocess() {
+function colorpreprocess(section) {
   var regexp = new RegExp("([A-Z]+)\\[([^\\]]+)\\]",'g');
 
   var rewriteColors = function(input) {
@@ -9,10 +9,10 @@ schedule(function colorpreprocess() {
     return output;
   };
 
-  find("p").forEach(function(p) {
+  section.find("p").forEach(function(p) {
     if(p.html().substring(0,2)=="\\[") {
       var csubbed = rewriteColors(p.html());
       p.html(csubbed);
     }
   });
-});
+}

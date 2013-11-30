@@ -32,10 +32,9 @@ section   h2:before { content: "§" attr(data-num) " — "; }
 section *+h2:before { content: ""; }
 section * h2:before { content: ""; }
 
-section   h2 { margin-top: 2em; }
-section *+h2 { margin-top: 0em; }
-section * h2 { margin-top: 0em; }
-
+section   h2 { margin-top: 2em; cursor: pointer; }
+section *+h2 { margin-top: 0em; cursor: auto; }
+section * h2 { margin-top: 0em; cursor: auto; }
 
 canvas.loading-sketch {
   background: url('images/ajax-loader.gif');
@@ -65,9 +64,6 @@ canvas.loading-sketch {
 }
 .sketch canvas:focus {
   outline: 1px solid rgba(0,0,0,0);
-}
-.sketch-title:before {
-  content: "Figure " attr(data-number) ": ";
 }
 
 .sketch img {
