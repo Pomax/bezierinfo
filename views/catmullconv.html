@@ -24,10 +24,10 @@
           \end{bmatrix}
           \cdot
           \begin{bmatrix}
-          1 & 0 & 0 & 0 \\
-          0 & 0 & 1 & 0 \\
-          -3 & 3 & -2 & -1 \\
-          2 & -2 & 1 & 1
+           1 &  0 &  0 &  0 \\
+           0 &  0 &  1 &  0 \\
+          -3 &  3 & -2 & -1 \\
+           2 & -2 &  1 &  1
           \end{bmatrix}
           \cdot
           \begin{bmatrix}
@@ -62,11 +62,13 @@
 
         <div class="note">
           <h2>Hold on there, you cheated!</h2>
+
           <p>Sort of. Technically there is no good reason to divide the tangents by two,
             but default tension of the Catmull-Rom curve implementation in Processing
             requires that factor be there. Different default implementations may require
-            a different factor, but as we will see once we find the true coordinate mappings
-            to go from one curve to the other, we can tweak those values to fit any tension.</p>
+            a different factor (although it's a reasonable expectation for it to be the
+            same), but as we will see once we find the true coordinate mappings to go from
+            one curve to the other, we can tweak those values to fit any tension.</p>
         </div>
 
         <p>This gives us the following coordinate transform (although we won't really use it, since we're
@@ -94,10 +96,10 @@
           \end{bmatrix}
           \cdot
           \begin{bmatrix}
-          1 & 0 & 0 & 0 \\
-          0 & 0 & 1 & 0 \\
-          -3 & 3 & -2 & -1 \\
-          2 & -2 & 1 & 1
+           1 &  0 &  0 &  0 \\
+           0 &  0 &  1 &  0 \\
+          -3 &  3 & -2 & -1 \\
+           2 & -2 &  1 &  1
           \end{bmatrix}
           \cdot
           \begin{bmatrix}
@@ -109,10 +111,10 @@
           \end{bmatrix}
           \cdot
           \begin{bmatrix}
-          1 & 0 & 0 & 0 \\
-          -3 & 3 & 0 & 0 \\
-          3 & -6 & 3 & 0 \\
-          -1 & 3 & -3 & 1
+           1 &  0 &  0 & 0 \\
+          -3 &  3 &  0 & 0 \\
+           3 & -6 &  3 & 0 \\
+          -1 &  3 & -3 & 1
           \end{bmatrix}
           \cdot
           A
@@ -127,17 +129,17 @@
 
         <p>\[
           \begin{bmatrix}
-          1 & 0 & 0 & 0 \\
-          0 & 0 & 1 & 0 \\
-          -3 & 3 & -2 & -1 \\
-          2 & -2 & 1 & 1
+           1 &  0 &  0 &  0 \\
+           0 &  0 &  1 &  0 \\
+          -3 &  3 & -2 & -1 \\
+           2 & -2 &  1 &  1
           \end{bmatrix}
           =
           \begin{bmatrix}
-          1 & 0 & 0 & 0 \\
-          -3 & 3 & 0 & 0 \\
-          3 & -6 & 3 & 0 \\
-          -1 & 3 & -3 & 1
+           1 &  0 &  0 & 0 \\
+          -3 &  3 &  0 & 0 \\
+           3 & -6 &  3 & 0 \\
+          -1 &  3 & -3 & 1
           \end{bmatrix}
           \cdot
           A
@@ -149,34 +151,34 @@
         <p>\[
           {
           \begin{bmatrix}
-          1 & 0 & 0 & 0 \\
-          -3 & 3 & 0 & 0 \\
-          3 & -6 & 3 & 0 \\
-          -1 & 3 & -3 & 1
+           1 &  0 &  0 & 0 \\
+          -3 &  3 &  0 & 0 \\
+           3 & -6 &  3 & 0 \\
+          -1 &  3 & -3 & 1
           \end{bmatrix}
           }^{-1}
           \cdot
           \begin{bmatrix}
-          1 & 0 & 0 & 0 \\
-          0 & 0 & 1 & 0 \\
-          -3 & 3 & -2 & -1 \\
-          2 & -2 & 1 & 1
+           1 &  0 &  0 &  0 \\
+           0 &  0 &  1 &  0 \\
+          -3 &  3 & -2 & -1 \\
+           2 & -2 &  1 &  1
           \end{bmatrix}
           =
           {
           \begin{bmatrix}
-          1 & 0 & 0 & 0 \\
-          -3 & 3 & 0 & 0 \\
-          3 & -6 & 3 & 0 \\
-          -1 & 3 & -3 & 1
+           1 &  0 &  0 & 0 \\
+          -3 &  3 &  0 & 0 \\
+           3 & -6 &  3 & 0 \\
+          -1 &  3 & -3 & 1
           \end{bmatrix}
           }^{-1}
           \cdot
           \begin{bmatrix}
-          1 & 0 & 0 & 0 \\
-          -3 & 3 & 0 & 0 \\
-          3 & -6 & 3 & 0 \\
-          -1 & 3 & -3 & 1
+           1 &  0 &  0 & 0 \\
+          -3 &  3 &  0 & 0 \\
+           3 & -6 &  3 & 0 \\
+          -1 &  3 & -3 & 1
           \end{bmatrix}
           \cdot
           A
@@ -211,10 +213,10 @@
           \end{bmatrix}
           \cdot
           \begin{bmatrix}
-          1 & 0 & 0 & 0 \\
-          -3 & 3 & 0 & 0 \\
-          3 & -6 & 3 & 0 \\
-          -1 & 3 & -3 & 1
+           1 &  0 &  0 & 0 \\
+          -3 &  3 &  0 & 0 \\
+           3 & -6 &  3 & 0 \\
+          -1 &  3 & -3 & 1
           \end{bmatrix}
           \cdot
           \frac{1}{3}
@@ -229,16 +231,19 @@
           \begin{bmatrix}
           P_2 \\ P_3 \\ \frac{P_3 - P_1}{2} \\ \frac{P_4 - P_2}{2}
           \end{bmatrix}
+        \]</p>
+
+        <p>\[
           =
           \begin{bmatrix}
           1 & t & t^2 & t^3
           \end{bmatrix}
           \cdot
           \begin{bmatrix}
-          1 & 0 & 0 & 0 \\
-          -3 & 3 & 0 & 0 \\
-          3 & -6 & 3 & 0 \\
-          -1 & 3 & -3 & 1
+           1 &  0 &  0 & 0 \\
+          -3 &  3 &  0 & 0 \\
+           3 & -6 &  3 & 0 \\
+          -1 &  3 & -3 & 1
           \end{bmatrix}
           \cdot
           \begin{bmatrix}
@@ -289,41 +294,3 @@
 
         <p>Done. We can now draw the curves we want using either Bézier curves or Catmull-Rom
           splines, the choice mostly being which drawing algorithms we have natively available,
-          and what properties we want to emphasise.</p>
-
-        <p>Well... almost. Remember when I cheated? Now is when we add in the tension factor
-          so that we can map correctly:</p>
-
-        <p>\[
-          \begin{bmatrix}
-          P_1 \\
-          P_2 \\
-          P_3 \\
-          P_4
-          \end{bmatrix}_{CR}
-          \Rightarrow
-          \begin{bmatrix}
-          P_2 \\
-          P_2 - \frac{f}{6} \cdot (P_3-P_1) \\
-          P_3 + \frac{f}{6} \cdot (P_4-P_2) \\
-          P_3
-          \end{bmatrix}_{B}
-          \ and
-          \ \ \begin{bmatrix}
-          P_1 \\
-          P_2 \\
-          P_3 \\
-          P_4
-          \end{bmatrix}_{B}
-          \Rightarrow
-          \begin{bmatrix}
-          P_4 + \frac{6}{f} \cdot (P_1 - P_2) \\
-          P_1 \\
-          P_4 \\
-          P_1 + \frac{6}{f} \cdot (P_4 - P_3)
-          \end{bmatrix}_{CR}
-          \ ,
-          \ f = tension
-        \]</p>
-
-        <p>The factor <i>f</i> now lets us control the tension, and now we're really done.</p>
