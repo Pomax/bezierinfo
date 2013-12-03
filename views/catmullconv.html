@@ -301,7 +301,7 @@
           A
         \]</p>
 
-        <p>Multiplying this <strong><em>A</em></strong> with our transformed coordinates
+        <p>Multiplying this <strong><em>A</em></strong> with our coordinates
         will give us a proper Bézier matrix expression again:<p>
 
         <p>\[
@@ -351,8 +351,9 @@
           \end{bmatrix}
         \]</p>
 
-        <p>So a Catmull-Rom to Bézier conversion, based on coordinates, simply requires the
-          following coordinate transformation (with τ being our tension factor):</p>
+        <p>So a Catmull-Rom to Bézier conversion, based on coordinates, requires the
+          turning the Catmull-Rom coordinates on the left into the Bézier coordinates
+          on the right (with τ being our tension factor):</p>
 
         <p>\[
           CatmullRom
@@ -372,8 +373,11 @@
           \end{bmatrix}
         \]</p>
 
-        <p>And the other way around, a Bézier to Catmull-Rom conversion, based on coordinates,
-          requires this coordinate transformation:</p>
+        <p>And the other way around, a Bézier to Catmull-Rom conversion requires turning
+        the Bézier coordinates on the left this time into the Catmull-Rom coordinates
+        on the right. Note that there is no tension this time, because Bézier curves
+        don't have any. Converting from Bézier to Catmull-Rom is simply a default-tension
+        Catmull-Rom curve:</p>
 
         <p>\[
           Bézier
@@ -386,10 +390,10 @@
           \Rightarrow
           CatmullRom
           \begin{bmatrix}
-          P_4 + 6 \cdot τ \cdot (P_1 - P_2) \\
+          P_4 + 6 \cdot (P_1 - P_2) \\
           P_1 \\
           P_4 \\
-          P_1 + 6 \cdot τ \cdot (P_4 - P_3)
+          P_1 + 6 \cdot (P_4 - P_3)
           \end{bmatrix}
         \]</p>
 
