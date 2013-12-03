@@ -37,12 +37,13 @@
         </p>
 
         <p>However, there something funny going on here: the coordinate column matrix looks weird.
-          This (commonly cited) matrix representation of a Catmull-Rom curve models a curve based
-          on four sequential points, but described the curve as leaving point V1 (actually point 2),
-          arriving at point V2 (actually point 3), departing with a tangent vector V'1 (equal to the
-          tangent from point 1 to point 3) and arriving with tangent vector V'2 (equal to the tangent
-          from point 2 to point 4). If we just have plain points 1 through 4 we can transform those
-          to "V" values as:</p>
+          The reason is that Catmull-Rom curves are actually curve segments that are described by two
+          points, and two tangents; the curve leaves a point V1 (if we have four coordinates instead,
+          this is coordinate 2), arriving at a point V2 (coordinate 3), with the curve departing V1
+          with a tangent vector V'1 (equal to the tangent from coordinate 1 to coordinate 3) and
+          arriving at V2 with tangent vector V'2 (equal to the tangent from coordinate 2 to coordinate
+          4). So if we want to express this as a matrix form based on four coordinates, we get this
+          representation instead:</p>
 
         <p>\[
           \begin{bmatrix}
@@ -58,23 +59,7 @@
           \begin{bmatrix}
           P_2 \\ P_3 \\ \frac{P_3 - P_1}{2} \\ \frac{P_4 - P_2}{2}
           \end{bmatrix}
-        \]</p>
-
-        <div class="note">
-          <h2>Hold on there, you cheated!</h2>
-
-          <p>Sort of. Technically there is no good reason to divide the tangents by two,
-            but default tension of the Catmull-Rom curve implementation in Processing
-            requires that factor be there. Different default implementations may require
-            a different factor (although it's a reasonable expectation for it to be the
-            same), but as we will see once we find the true coordinate mappings to go from
-            one curve to the other, we can tweak those values to fit any tension.</p>
-        </div>
-
-        <p>This gives us the following coordinate transform (although we won't really use it, since we're
-        actually only interested in the transformed coordinate vector):</p>
-
-        <p>\[
+          \ \Rightarrow \
           T
           =
           \frac{1}{2}
@@ -85,10 +70,46 @@
           -1 &  0 & 1 & 0 \\
            0 & -1 & 0 & 1
           \end{bmatrix}
+        \]</p>
+
+        <div class="note">
+          <h2>Where did that 2 come from?</h2>
+
+          <p>Catmull-Rom splines are based on the concept of tension: the higher the tensions,
+            the shorter the tangents at the departure and arrival points. The basic Catmull-Rom
+            curve arrives and departs with tangents equal to half the distance between the two
+            adjacent points, so that's where that 2 came from.</p>
+
+          <p>However, the "real" matrix is this:</p>
+
+          <p>\[
+            T
+            \cdot
+            \begin{bmatrix}
+            P_1 \\ P_2 \\ P_3 \\ P_4
+            \end{bmatrix}
+            =
+            \begin{bmatrix}
+            P_2 \\ P_3 \\ \frac{P_3 - P_1}{2 \cdot τ} \\ \frac{P_4 - P_2}{2 \cdot τ}
+            \end{bmatrix}
+            \Rightarrow \
+            T
+            =
+            \frac{1}{2}
+            \cdot
+            \begin{bmatrix}
+             0 &  2 & 0 & 0 \\
+             0 &  0 & 2 & 0 \\
+            -τ &  0 & τ & 0 \\
+             0 & -τ & 0 & τ
+            \end{bmatrix}
           \]</p>
 
-        <p>With our coordinate transformation in hand, we can now write out how a Catmull-Rom hermite
-          spline relates to a cubic Bézier hermite spline:</p>
+          <p>This bakes in the tension factor τ explicitly.</p>
+        </div>
+
+        <p>Plugging this into the "two coordinates and two tangent vectors" matrix form,
+          we get:</p>
 
         <p>\[
           \begin{bmatrix}
@@ -103,7 +124,77 @@
           \end{bmatrix}
           \cdot
           \begin{bmatrix}
-          V_1 \\ V_2 \\V'_1 \\ V'_2
+          V_1 \\ V_2 \\ V'_1 \\ V'_2
+          \end{bmatrix}
+        \]</p>
+
+        <p>\[
+          =
+          \begin{bmatrix}
+          1 & t & t^2 & t^3
+          \end{bmatrix}
+          \cdot
+          \begin{bmatrix}
+           1 &  0 &  0 &  0 \\
+           0 &  0 &  1 &  0 \\
+          -3 &  3 & -2 & -1 \\
+           2 & -2 &  1 &  1
+          \end{bmatrix}
+          \cdot
+          \left (
+          \frac{1}{2}
+          \cdot
+          \begin{bmatrix}
+           0 &  2 & 0 & 0 \\
+           0 &  0 & 2 & 0 \\
+          -τ &  0 & τ & 0 \\
+           0 & -τ & 0 & τ
+          \end{bmatrix}
+          \right )
+          \cdot
+          \begin{bmatrix}
+          P_1 \\ P_2 \\ P_3 \\ P_4
+          \end{bmatrix}
+        \]</p>
+
+       <p>\[
+          =
+          \begin{bmatrix}
+          1 & t & t^2 & t^3
+          \end{bmatrix}
+          \cdot
+          \frac{1}{2}
+          \cdot
+          \begin{bmatrix}
+            0 &    2 &       0 &  0 \\
+           -τ &    0 &       τ &  0 \\
+           2τ &  τ-6 & -2(τ-3) & -τ \\
+           -τ &  4-τ &     τ-4 &  τ
+          \end{bmatrix}
+          \cdot
+          \begin{bmatrix}
+          P_1 \\ P_2 \\ P_3 \\ P_4
+          \end{bmatrix}
+        \]</p>
+
+        <p>So let's find out which transformation matrix we need to convert from Catmull-Rom to Bézier:</p>
+
+        <p>\[
+          \begin{bmatrix}
+          1 & t & t^2 & t^3
+          \end{bmatrix}
+          \cdot
+          \frac{1}{2}
+          \cdot
+          \begin{bmatrix}
+            0 &    2 &       0 &  0 \\
+           -τ &    0 &       τ &  0 \\
+           2τ &  τ-6 & -2(τ-3) & -τ \\
+           -τ &  4-τ &     τ-4 &  τ
+          \end{bmatrix}
+          \cdot
+          \begin{bmatrix}
+          P_1 \\ P_2 \\ P_3 \\ P_4
           \end{bmatrix}
           =
           \begin{bmatrix}
@@ -120,7 +211,7 @@
           A
           \cdot
           \begin{bmatrix}
-          P_2 \\ P_3 \\ \frac{P_3 - P_1}{2} \\ \frac{P_4 - P_2}{2}
+          P_1 \\ P_2 \\ P_3 \\ P_4
           \end{bmatrix}
         \]</p>
 
@@ -128,12 +219,15 @@
           values are identical, so let's solve that matrix equasion:</p>
 
         <p>\[
+          \frac{1}{2}
+          \cdot
           \begin{bmatrix}
-           1 &  0 &  0 &  0 \\
-           0 &  0 &  1 &  0 \\
-          -3 &  3 & -2 & -1 \\
-           2 & -2 &  1 &  1
+            0 &    2 &       0 &  0 \\
+           -τ &    0 &       τ &  0 \\
+           2τ &  τ-6 & -2(τ-3) & -τ \\
+           -τ &  4-τ &     τ-4 &  τ
           \end{bmatrix}
+          \cdot
           =
           \begin{bmatrix}
            1 &  0 &  0 & 0 \\
@@ -158,12 +252,15 @@
           \end{bmatrix}
           }^{-1}
           \cdot
+          \frac{1}{2}
+          \cdot
           \begin{bmatrix}
-           1 &  0 &  0 &  0 \\
-           0 &  0 &  1 &  0 \\
-          -3 &  3 & -2 & -1 \\
-           2 & -2 &  1 &  1
+            0 &    2 &       0 &  0 \\
+           -τ &    0 &       τ &  0 \\
+           2τ &  τ-6 & -2(τ-3) & -τ \\
+           -τ &  4-τ &     τ-4 &  τ
           \end{bmatrix}
+          \cdot
           =
           {
           \begin{bmatrix}
@@ -192,13 +289,13 @@
         <p>Which gives us:</p>
 
         <p>\[
-          \frac{1}{3}
+          \frac{1}{6}
           \cdot
           \begin{bmatrix}
-          3 & 0 & 0 & 0 \\
-          3 & 0 & 1 & 0 \\
-          0 & 3 & 0 & -1 \\
-          0 & 3 & 0 & 0
+           0 & 6 & 0 &  0 \\
+          -τ & 6 & τ &  0 \\
+           0 & τ & 0 & -τ \\
+           0 & 0 & 6 &  0
           \end{bmatrix}
           =
           A
@@ -219,17 +316,17 @@
           -1 &  3 & -3 & 1
           \end{bmatrix}
           \cdot
-          \frac{1}{3}
+          \frac{1}{6}
           \cdot
           \begin{bmatrix}
-          3 & 0 & 0 & 0 \\
-          3 & 0 & 1 & 0 \\
-          0 & 3 & 0 & -1 \\
-          0 & 3 & 0 & 0
+           0 & 6 & 0 &  0 \\
+          -τ & 6 & τ &  0 \\
+           0 & τ & 0 & -τ \\
+           0 & 0 & 6 &  0
           \end{bmatrix}
           \cdot
           \begin{bmatrix}
-          P_2 \\ P_3 \\ \frac{P_3 - P_1}{2} \\ \frac{P_4 - P_2}{2}
+          P_1 \\ P_2 \\ P_3 \\ P_4
           \end{bmatrix}
         \]</p>
 
@@ -248,48 +345,52 @@
           \cdot
           \begin{bmatrix}
           P_2 \\
-          P_2 - \frac{P_3-P_1}{6} \\
-          P_3 + \frac{P_4-P_2}{6} \\
+          P_2 - \frac{P_3-P_1}{6 \cdot τ} \\
+          P_3 + \frac{P_4-P_2}{6 \cdot τ} \\
           P_3
           \end{bmatrix}
         \]</p>
 
         <p>So a Catmull-Rom to Bézier conversion, based on coordinates, simply requires the
-          following coordinate transformation:</p>
+          following coordinate transformation (with τ being our tension factor):</p>
 
         <p>\[
+          CatmullRom
           \begin{bmatrix}
           P_1 \\
           P_2 \\
           P_3 \\
           P_4
-          \end{bmatrix}_{CR}
+          \end{bmatrix}
           \Rightarrow
+          Bézier
           \begin{bmatrix}
           P_2 \\
-          P_2 - \frac{P_3-P_1}{6} \\
-          P_3 + \frac{P_4-P_2}{6} \\
+          P_2 - \frac{P_3-P_1}{6 \cdot τ} \\
+          P_3 + \frac{P_4-P_2}{6 \cdot τ} \\
           P_3
-          \end{bmatrix}_{B}
+          \end{bmatrix}
         \]</p>
 
         <p>And the other way around, a Bézier to Catmull-Rom conversion, based on coordinates,
           requires this coordinate transformation:</p>
 
         <p>\[
+          Bézier
           \begin{bmatrix}
           P_1 \\
           P_2 \\
           P_3 \\
           P_4
-          \end{bmatrix}_{B}
+          \end{bmatrix}
           \Rightarrow
+          CatmullRom
           \begin{bmatrix}
-          P_4 + 6 \cdot (P_1 - P_2) \\
+          P_4 + 6 \cdot τ \cdot (P_1 - P_2) \\
           P_1 \\
           P_4 \\
-          P_1 + 6 \cdot (P_4 - P_3)
-          \end{bmatrix}_{CR}
+          P_1 + 6 \cdot τ \cdot (P_4 - P_3)
+          \end{bmatrix}
         \]</p>
 
         <p>Done. We can now draw the curves we want using either Bézier curves or Catmull-Rom
