@@ -32,7 +32,6 @@ function inject(sectionname) {
       var sl = function() {
         if(visible(section)) {
           window.removeEventListener("scroll", sl);
-          console.log("removing");
           loadSketches(section);
           loadSectionMath(section, callback);
         }
@@ -40,6 +39,5 @@ function inject(sectionname) {
       window.addEventListener("scroll", sl);
     });
   };
-  //section.find("h2").listen("click", reveal);
   reveal();
 }
