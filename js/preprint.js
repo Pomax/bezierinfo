@@ -9,6 +9,7 @@
                          "Note: if you do, you will have to cancel your current print.");
     if(res) {
       scanning = true;
+      window.scrollTo(0,0);
       (function scrollDown() {
         if(window.innerHeight + window.scrollY < window.document.body.offsetHeight) {
           window.scrollBy(0, window.innerHeight / 2);

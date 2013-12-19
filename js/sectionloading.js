@@ -1,8 +1,7 @@
-function loadSectionMath(element, forced) {
+function loadSectionMath(element) {
   if(window.location.toString().indexOf("noMathJax") === -1) {
     var typeset = function() {
-      if (forced) { MathJax.Hub.Typeset(element); }
-      else { MathJax.Hub.Queue(["Typeset", MathJax.Hub, element]); }
+      MathJax.Hub.Queue(["Typeset", MathJax.Hub, element, false]);
     };
     if(!window.MathJax) {
       var script = document.createElement("script");
@@ -20,8 +19,6 @@ function visible(element) {
   return rect.top <= window.innerHeight && rect.bottom > 0;
 }
 
-var sectionLoaders = [];
-
 function inject(sectionname) {
   var section = find("#" + sectionname);
   var reveal = function() {
@@ -31,17 +28,14 @@ function inject(sectionname) {
       section.find("h2").css("cursor","auto");
       colorpreprocess(section);
       foldCode(section);
-      var sl = function(forced) {
-        var pos = sectionLoaders.indexOf(sl);
-        if(pos>-1) { sectionLoaders.splice(pos,1); }
-        if(forced===true || visible(section)) {
+      var sl = function() {
+        if(visible(section)) {
           window.removeEventListener("scroll", sl);
           loadSketches(section);
-          loadSectionMath(section, forced);
+          loadSectionMath(section);
         }
       };
       window.addEventListener("scroll", sl);
-      sectionLoaders.push(sl);
     });
   };
   reveal();
