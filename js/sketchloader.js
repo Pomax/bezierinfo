@@ -48,8 +48,11 @@ function loadSketches(section) {
                 "framework/Panels.pde",
                 "framework/Interaction.pde",
                 "framework/API.pde",
-                "framework/JavaScript.pde",
-                "framework/moulding.pde"];
+                "framework/JavaScript.pde"];
+
+    if (preset.indexOf("abc")===-1 && preset.indexOf("mould")===-1) {
+      dps.push("framework/moulding.pde");
+    }
 
     canvas.set({
       "data-print-image": "images/print/" + (figCount<10? "0":'') + figCount + ".gif"
