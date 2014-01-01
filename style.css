@@ -209,6 +209,12 @@ github-issue a {
   padding: 0.5em;
 }
 
+footer {
+  font-style: italic;
+  margin: 2em 0 0 0;
+  background: inherit;
+}
+
 /* addthis nonsense */
 .at-floatingbar-inner {
   width: 10px;
