@@ -2,7 +2,7 @@ This repository houses "A Primer on Bezier Curves",
 written using LaTeX formulae for the mathy bits, and
 Processing.js sketches for the interactive graphics.
 
-The article itself is (c) 2011-2013 to me, Mike "Pomax"
+The article itself is (c) 2011-2014 to me, Mike "Pomax"
 Kamermans, but all the .pde source code is in the
 public domain. If you want to use it, for whatever
 purpose, go for it. Although if you make several
