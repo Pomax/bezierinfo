@@ -229,7 +229,6 @@
            2τ &  τ-6 & -2(τ-3) & -τ \\
            -τ &  4-τ &     τ-4 &  τ
           \end{bmatrix}
-          \cdot
           =
           \begin{bmatrix}
            1 &  0 &  0 & 0 \\
@@ -262,7 +261,6 @@
            2τ &  τ-6 & -2(τ-3) & -τ \\
            -τ &  4-τ &     τ-4 &  τ
           \end{bmatrix}
-          \cdot
           =
           {
           \begin{bmatrix}
@@ -353,26 +351,24 @@
           \end{bmatrix}
         \]</p>
 
-        <p>So a Catmull-Rom to Bézier conversion, based on coordinates, requires the
-          turning the Catmull-Rom coordinates on the left into the Bézier coordinates
-          on the right (with τ being our tension factor):</p>
+        <p>So a Catmull-Rom to Bézier conversion, based on coordinates, requires turning
+          the Catmull-Rom coordinates on the left into the Bézier coordinates on the right
+          (with τ being our tension factor):</p>
 
         <p>\[
-          CatmullRom
           \begin{bmatrix}
           P_1 \\
           P_2 \\
           P_3 \\
           P_4
-          \end{bmatrix}
+          \end{bmatrix}_{CatmullRom}
           \Rightarrow
-          Bézier
           \begin{bmatrix}
           P_2 \\
           P_2 - \frac{P_3-P_1}{6 \cdot τ} \\
           P_3 + \frac{P_4-P_2}{6 \cdot τ} \\
           P_3
-          \end{bmatrix}
+          \end{bmatrix}_{Bézier}
         \]</p>
 
         <p>And the other way around, a Bézier to Catmull-Rom conversion requires turning
@@ -382,21 +378,19 @@
         Catmull-Rom curve:</p>
 
         <p>\[
-          Bézier
           \begin{bmatrix}
           P_1 \\
           P_2 \\
           P_3 \\
           P_4
-          \end{bmatrix}
+          \end{bmatrix}_{Bézier}
           \Rightarrow
-          CatmullRom
           \begin{bmatrix}
           P_4 + 6 \cdot (P_1 - P_2) \\
           P_1 \\
           P_4 \\
           P_1 + 6 \cdot (P_4 - P_3)
-          \end{bmatrix}
+          \end{bmatrix}_{CatmullRom}
         \]</p>
 
         <p>Done. We can now draw the curves we want using either Bézier curves or Catmull-Rom
