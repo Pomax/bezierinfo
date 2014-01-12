@@ -58,11 +58,22 @@
     <link rel="stylesheet" type="text/css" href="EasyPageComments.css"/>
 
     <script>
+      var debug = (function() {
+        if ("console" in window) {
+          return function(msg) {
+            window.console.log(msg);
+          };
+        }
+        return function(){};
+      }());
+    </script>
+
+    <script>
     function setupClippingButton(sketch) {
       var b = document.getElementById("clippingButton");
       if(b) {
         b.onclick = function() {
-          console.log("clipping...");
+          debug("clipping...");
           sketch.kickOff();
         };
       }
@@ -405,7 +416,7 @@
             try {
               EasyPageComments.createCommentsList('bezierinfo');
               EasyPageComments.createCommentForm('bezierinfo');
-            } catch(e) { console.log("could not connect to EPC"); }}
+            } catch(e) { debug("could not connect to EPC"); }}
           document.addEventListener("DOMContentLoaded", addEasyPageComments, false);
         }
       </script>

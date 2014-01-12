@@ -20220,6 +20220,18 @@
   var loadSketchFromSources = function(canvas, sources, code) {
     if(window.location.toString().indexOf("noProcessing")!==-1) return;
 
+    // shim for IE9 .classList property (I only call .remove);
+    if(!canvas.classList) {
+      canvas.classList = {
+        remove: function(className) {
+          var cl = canvas.getAttribute("class");
+          cl.replace(className, '');
+          cl.replace(/\s+/g, ' ');
+          canvas.setAttribute("class", cl);
+        }
+      };
+    }
+
     var errors = [],
         sourcesCount = sources.length,
         loaded = 0;
@@ -20259,6 +20271,9 @@
       xhr.send(null);
     }
 
+    // **
+    // *
+    // *
     function loadBlock(index, filename) {
       function callback(block, error) {
         code[index] = block;
