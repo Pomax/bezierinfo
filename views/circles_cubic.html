@@ -193,16 +193,26 @@
           \end{array}\right.
         \end{array}\]</p>
 
-        <p>And that's it, we have all four points now for an arbitrary circular arc with angle φ.
-        To make life just that little bit easier, I'll also throw in the standard coordinates
+        <p>And that's it, we have all four points now for an approximation of an arbitrary
+          circular arc with angle φ.</p>
+
+        <p>To make life just that little bit easier, I'll also throw in the standard coordinates
         if you want to approximate a circle with cubic Bézier curves, assuming a unit circle:</p>
 
         <p>\[\begin{array}{l}
           S = (1, 0) \ , \
-          C_1 = \left ( 1, \frac{4\sqrt{2}-4}{3} ≈ 0.55228 \right ) \ , \
-          C_2 = \left ( \frac{4\sqrt{2}-4}{3} ≈ 0.55228 , 1 \right ) \ , \
+          C_1 = \left ( 1, \frac{4\sqrt{2}-4}{3} \right ) \ , \
+          C_2 = \left ( \frac{4\sqrt{2}-4}{3} , 1 \right ) \ , \
           E = (0, 1)
+        \end{array}\]</p>
 
+        <p>Or, in decimal values, rounded to six significant digits:</p>
+
+        <p>\[\begin{array}{l}
+          S = (1, 0) \ , \
+          C_1 = (1, 0.55228) \ , \
+          C_2 = (0.55228 , 1) \ , \
+          E = (0, 1)
         \end{array}\]</p>
 
         <p>Forming the full curve is then a matter of mirroring these coordinates about the origin:</p>
