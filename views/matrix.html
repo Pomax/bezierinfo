@@ -79,9 +79,10 @@
         \]</p>
 
         <p>And then finally, we can add in our original coordinates as a single third matrix. We can
-        either keep those P<sub>1</sub>...P<sub>n</sub>, or upside down; since Bezier curves are
-        symmetrical functions, the coordinate order isn't all that important, so for legibility we'll
-        keep them running top-down.</p>
+        keep those P<sub>1</sub>...P<sub>n</sub>, and then they'll represent the "reversed" coordinates
+        in a curve (with P<sub>1</sub> being the coefficient for t<sup>n</sup> on an <i>n</i><sup>th</sup>
+        other curve, instead of for (1-t)<sup>n</sup>), or we can flip them to match the coordinate ordering
+        that we're using throughout this primer.</p>
 
         <p>\[
           B(t) = \begin{bmatrix}
@@ -95,9 +96,28 @@
           -1 &  3 & -3 & 1
           \end{bmatrix}
           \cdot
+          \underset{t^n \to (1-t)^n}{
+            \begin{bmatrix}
+            P_1 \\ P_2 \\ P_3 \\ P_4
+            \end{bmatrix}
+          }
+          =
           \begin{bmatrix}
-          P_1 \\ P_2 \\ P_3 \\ P_4
+          1 & t & t^2 & t^3
           \end{bmatrix}
+          \cdot
+          \begin{bmatrix}
+           1 &  0 &  0 & 0 \\
+          -3 &  3 &  0 & 0 \\
+           3 & -6 &  3 & 0 \\
+          -1 &  3 & -3 & 1
+          \end{bmatrix}
+          \cdot
+          \underset{(1-t)^n \to t^n}{
+            \begin{bmatrix}
+            P_4 \\ P_3 \\ P_2 \\ P_1
+            \end{bmatrix}
+          }
         \]</p>
 
         <p>We can perform the same trick for the quadratic curve, in which case we end up with:</p>
@@ -113,9 +133,27 @@
            1 & -2 & 1
           \end{bmatrix}
           \cdot
+          \underset{t^n \to (1-t)^n}{
+            \begin{bmatrix}
+            P_1 \\ P_2 \\ P_3
+            \end{bmatrix}
+          }
+          =
           \begin{bmatrix}
-          P_1 \\ P_2 \\ P_3
+          1 & t & t^2
           \end{bmatrix}
+          \cdot
+          \begin{bmatrix}
+           1 &  0 & 0 \\
+          -2 &  2 & 0 \\
+           1 & -2 & 1
+          \end{bmatrix}
+          \cdot
+          \underset{(1-t)^n \to t^n}{
+            \begin{bmatrix}
+            P_3 \\ P_2 \\ P_1
+            \end{bmatrix}
+          }
         \]</p>
 
         <p>If we plug in a <em>t</em> value, and then multiply the matrices, we will
