@@ -28,14 +28,16 @@ function inject(sectionname) {
       section.find("h2").css("cursor","auto");
       colorpreprocess(section);
       foldCode(section);
-      var sl = function() {
-        if(visible(section)) {
-          window.removeEventListener("scroll", sl);
-          loadSketches(section);
-          loadSectionMath(section);
-        }
-      };
-      window.addEventListener("scroll", sl);
+      setTimeout(function(){
+        var sl = function() {
+          if(visible(section)) {
+            window.removeEventListener("scroll", sl);
+            loadSketches(section);
+            loadSectionMath(section);
+          }
+        };
+        window.addEventListener("scroll", sl);
+      },200);
     });
   };
   reveal();
