@@ -785,17 +785,21 @@ class BezierCurve {
       oy=ny;
     }
     if(showAdditionals) {
-      for(int i=0; i<=order; i++) {
-        stroke(0,0,200);
-        Point p = points[i];
-        if(i==0 || i==order) {
-          fill(0,0,255);
-          p.draw("p"+(i+1)+": ");
-        } else {
-          noFill();
-          if(showControlPoints) { p.draw("p"+(i+1)+": "); }
-        }
-      }
+      drawPoints();
+    }
+  }
+
+	void drawPoints() {
+		for(int i=0; i<=order; i++) {
+			stroke(0,0,200);
+			Point p = points[i];
+			if(i==0 || i==order) {
+				fill(0,0,255);
+				p.draw("p"+(i+1)+": ");
+			} else {
+				noFill();
+				if(showControlPoints) { p.draw("p"+(i+1)+": "); }
+			}
     }
   }
 

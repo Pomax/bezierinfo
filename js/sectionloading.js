@@ -37,6 +37,7 @@ function inject(sectionname) {
           }
         };
         window.addEventListener("scroll", sl);
+        sl();
       },200);
     });
   };
