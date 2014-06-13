@@ -1,0 +1,24 @@
+        <p>Now that we know how to approximate circles with Bézier curves, let's look at doing the reverse:
+          approximating Bézier curves using circles. Or, parts of circles at least. We've already seen that
+          it's impossible to make a Bézier curve model a circle, or even a circular arc, so it would be
+          silly to expect the reverse to suddenly work, but much like we can approximate a Bézier curve by
+          flattening it to a series of straight lines (as long as we use enough of them) we can approximate
+          a Bézier curve by "flattening" it to a sequence of circular arcs. Now before we continue:</p>
+
+        <ol>
+          <li>Are we losing precision? Yes.</li>
+          <li>Is this expensive? Yes.</li>
+          <li>Does the math become easier? Not necessarily?</li>
+        </ol>
+
+        <p>So, why would we do this? As a lossy operation, nothing we do after the approximation is going to
+          be "correct". It's impossible to directly compute the arc length of a Bézier curve, but using
+          Newton-Raphson to get arbitrarily close is going to be far more precise than approximating the curve
+          with circular arcs and simply computing the sum of their arc lengths (which is just a matter of looking
+          at the angle Φ -in radians- of the arc section at distance r from the center, and its arclength is Φr.
+          Done), and it costs quite a bit on computation to find the appropriate number of arc segments to get a
+          decent approximation. So why would we do this?</p>
+
+        <p>two points on curve == two points on circle -> intersection of normals is center, distance from
+          center to p1 and p2 should be close to identical; bezier must be cut up on its inflection points
+          or we might get false arcs.</p>
