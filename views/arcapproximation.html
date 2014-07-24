@@ -3,22 +3,26 @@
           it's impossible to make a Bézier curve model a circle, or even a circular arc, so it would be
           silly to expect the reverse to suddenly work, but much like we can approximate a Bézier curve by
           flattening it to a series of straight lines (as long as we use enough of them) we can approximate
-          a Bézier curve by "flattening" it to a sequence of circular arcs. Now before we continue:</p>
+          a Bézier curve by "flattening" it to a sequence of circular arcs.</p>
 
-        <ol>
-          <li>Are we losing precision? Yes.</li>
-          <li>Is this expensive? Yes.</li>
-          <li>Does the math become easier? Not necessarily?</li>
-        </ol>
+        <p>However, if you do the math on it, you reach some interesting conclusions:</p>
 
-        <p>So, why would we do this? As a lossy operation, nothing we do after the approximation is going to
-          be "correct". It's impossible to directly compute the arc length of a Bézier curve, but using
-          Newton-Raphson to get arbitrarily close is going to be far more precise than approximating the curve
-          with circular arcs and simply computing the sum of their arc lengths (which is just a matter of looking
-          at the angle Φ -in radians- of the arc section at distance r from the center, and its arclength is Φr.
-          Done), and it costs quite a bit on computation to find the appropriate number of arc segments to get a
-          decent approximation. So why would we do this?</p>
+        <dl>
+          <dt>◦ Are we losing precision?</dt><dd><em>quite a bit</em></dd>
+          <dt>◦ Is this expensive?</dt><dd><em>Very</em>.</dd>
+          <dt>◦ Does the math become easier?</dt><dd> <em>Not really</em>.</dd>
+          <dt>◦ Do we end up with less data?</dt><dd> <em>Actually, much, much more</em>.</dd>
+          <dt>◦ Can we compute certain properties easier now?</dt><dd> <em>Due to loss of precision, most of the resulting numbers would be wrong</em>.</dd>
+        </dl>
 
-        <p>two points on curve == two points on circle -> intersection of normals is center, distance from
-          center to p1 and p2 should be close to identical; bezier must be cut up on its inflection points
-          or we might get false arcs.</p>
+        <p>It turns out that not only this a bad idea, it's an <strong><em>exceptionally</em></strong>
+          bad idea to try to do this. You are literally better off writing code to deal with Bézier
+          curvatures than you are to convert it to circular arcs and then working with those.</p>
+
+        <p>In a surprise turn of events, I'm not even going to show you the maths to back this up. It's
+          simply such a bad idea that I don't actually want to encourage you to take the maths and code
+          I'd normally write, and actually use that somewhere, even just for fun. If you want to see why
+          it's such a idea, you'll have to do the work yourself, but you'll literally be wasting time
+          (I know, that sounds like devil's advocate. The text preceding it should make it pretty obvious
+          it's not. Don't even pretend this is a challenge. You've made it pretty far into this primer
+          on Bézier curves, so we both know you're more intelligent than that.)</p>
