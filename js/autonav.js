@@ -10,9 +10,6 @@ schedule(function() {
       id = e.id,
       titular = find("#"+id+" > h2:first-child"),
       titular.set("data-num", sectionId++);
-      entry = create("li");
-      entry.innerHTML = "<a href='#" + id + "'>" +titular.innerHTML + "</a>";
-      nav.add(entry);
     }
   };
 });
