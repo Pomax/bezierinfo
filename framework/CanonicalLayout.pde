@@ -49,7 +49,7 @@ static class CanonicalLayout {
     // single inflection area
     buffer.stroke(120, 120, 160);
     buffer.fill(0, 255, 0, 50);
-    buffer.rect(-w, s, 2*w, h-s);
+    buffer.rect(-w-1, s, 2*w+2, h-s);
 
     // Loop region
     buffer.fill(255, 0, 0, 50);
