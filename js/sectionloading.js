@@ -1,5 +1,5 @@
 function loadSectionMath(element) {
-  if(window.location.toString().indexOf("noMathJax") === -1) {
+  if(window.location.toString().toLowerCase().indexOf("nomathjax") === -1) {
     var typeset = function() {
       MathJax.Hub.Queue(["Typeset", MathJax.Hub, element, false]);
     };
