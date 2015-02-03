@@ -62,7 +62,7 @@ class Point {
     draw();
     if(showLabels) {
       fill(0);
-      text(label+(int)x+"/"+(int)y,x+10,y);
+      text(label+"("+(int)x+","+(int)y+")",x+10,y);
       noFill();
     }
   }
