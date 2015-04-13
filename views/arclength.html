@@ -160,26 +160,36 @@
         values (location of each strip), we can determine the approximate length of a Bézier curve by computing the
         Legendre-Gauss sum. The following graphic shows a cubic curve, with its computed lengths; Go ahead and
         change the curve, to see how its length changes (the sketch allows curve order elevation and lowering,
-        in case you want to try more complex, or simpler, curves).</p>
+        in case you want to try more complex, or simpler, curves), and use your "+" and "-" keys to change the number
+        of intervals the Legendre-Gauss integral is approximated with (to a maximum of 23, with the sketch always
+        telling you the result of a 24 interval arc length computation).</p>
 
         <textarea class="sketch-code" data-sketch-preset="simple" data-sketch-title="Arc length for a Bézier curve">
         void setupCurve() {
           setupDefaultCubic();
-          reorder();
+          offsetting();
+          offset = 20;
         }
 
         void drawCurve(BezierCurve curve) {
+          if(offset<1) { offset = 1; }
+          if(offset>23) { offset = 23; }
+          int resolution = 100000;
           curve.draw();
           pushStyle();
           fill(0);
-          float f = curve.getCurveLength();
+          float ref = curve.getCurveLength();
+          float f = curve.getCurveLength(offset);
           if (f<0) {
             curves.clear();
             curves.add(curve.lower());
             redraw();
             return;
           }
-          f = int(1000*f)/1000;
-          text("curve length: "+f+"px", 15, 15);
+          f = int(resolution*f)/resolution;
+          text("curve length using "+offset+" intervals: "+f+"px", 5, 15);
+
+          f = int(resolution*ref)/resolution;
+          text("curve length using 24 intervals 24: "+f, 5, dim-5);
           popStyle();
         }</textarea>

@@ -376,6 +376,7 @@ class BezierCurve {
    * return the arc length for this curve.
    */
   float getCurveLength() { return curveLength; }
+  float getCurveLength(int n) { return comp.getArcLength(1, n, x_values, y_values); }
 
   /**
    * Get the A/B/C points for this curve. These are only

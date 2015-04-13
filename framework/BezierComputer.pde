@@ -176,7 +176,7 @@ class BezierComputer {
    * to signify "I cannot compute this value for you".
    */
   float getArcLength(float[] x_values, float[] y_values) { return getArcLength(1, x_values, y_values); }
-  float getArcLength(float t, float[] x_values, float[] y_values) { return getArcLength(t, 20, x_values, y_values); }
+  float getArcLength(float t, float[] x_values, float[] y_values) { return getArcLength(t, 24, x_values, y_values); }
   float getArcLength(float t, int n, float[] x_values, float[] y_values) {
     if(x_values.length-1 >= Tvalues.length) return -1; // errp
     float z = t/2;
