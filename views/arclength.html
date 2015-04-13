@@ -186,10 +186,12 @@
             redraw();
             return;
           }
-          f = int(resolution*f)/resolution;
-          text("curve length using "+offset+" intervals: "+f+"px", 5, 15);
+          float fo = int(resolution*f)/resolution;
+          text("curve length using "+offset+" intervals: "+fo+"px", 5, 15);
 
-          f = int(resolution*ref)/resolution;
-          text("curve length using 24 intervals 24: "+f, 5, dim-5);
+          float fn = int(resolution*ref)/resolution;
+          float fe = 100*abs(ref-f)/ref;
+          fe = int(resolution*fe)/resolution;
+          text("24 interval arc length: "+fn+" (error: "+fe+"%)", 5, dim-5);
           popStyle();
         }</textarea>
