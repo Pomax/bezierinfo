@@ -33,18 +33,18 @@ Point getCCenter(Point p1, Point p2, Point p3) {
          e = atan2(p3.y - i.y, p3.x - i.x);
 
   // determine arc direction (cw/ccw correction)
-  double _;
+  double __;
   if (s<e) {
     // if s<m<e, arc(s,e)
     // if m<s<e, arc(e,s+tau)
     // if s<e<m, arc(e,s+tau)
     if (s>m || m>e) { s += TAU; }
-    if (s>e) { _=e; e=s; s=_; }
+    if (s>e) { __=e; e=s; s=__; }
   } else {
     // if e<m<s, arc(e,s)
     // if m<e<s, arc(s,e+tau)
     // if e<s<m, arc(s,e+tau)
-    if (e<m && m<s) { _=e; e=s; s=_; } else { e += TAU; }
+    if (e<m && m<s) { __=e; e=s; s=__; } else { e += TAU; }
   }
   
   // assign and done.
@@ -52,12 +52,6 @@ Point getCCenter(Point p1, Point p2, Point p3) {
   i.e = e;
   i.r = r;
   return i;
-}
-
-double signedAngle(double v1x, double v1y, double v2x, double v2y) {
-  double dot = v1x * v2x + v1y * v2y;
-  double perpDot = v1x * v2y - v1y * v2x;
-  return atan2(perpDot, dot);
 }
 
 Point lli(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4) {

@@ -1,6 +1,6 @@
 Point[] points = new Point[4];
 Point p1, p2, p3, p4, pc;
-double pad = 100;
+double pad = 50;
 double errorThreshold = 0.5;
 
 void setup() {

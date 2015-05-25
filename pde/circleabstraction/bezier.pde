@@ -1,4 +1,4 @@
-Point get(double t) {
+Point getCurve(double t) {
   return new Point( getX(t), getY(t) );
 }
 

@@ -2,8 +2,8 @@ double getError(Point pc, Point np1, double s, double e) {
   double q = (e - s) / 4;
   
   // get an error estimate baesd on the quarter points
-  Point c1 = get(s + q),
-        c2 = get(e - q);
+  Point c1 = getCurve(s + q),
+        c2 = getCurve(e - q);
   
   // distance from pc to c1/c2
   double ref = dist(pc, np1),
