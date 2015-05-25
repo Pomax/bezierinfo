@@ -1,10 +1,7 @@
 Point[] points = new Point[4];
 Point p1, p2, p3, p4, pc;
-float startratio = 0.003;
-boolean badarc = false;
-ArrayList<Point> circles = new ArrayList<Point>();
 double pad = 100;
-Mark current;
+double errorThreshold = 0.5;
 
 void setup() {
   size(800,800);
@@ -13,7 +10,17 @@ void setup() {
 }
 
 void keyPressed() {
-  loop();
+  if (keyCode==38) {
+    errorThreshold += (errorThreshold>100 ? 3 : errorThreshold>10 ? 1 : 0.1);
+  }
+  else if (keyCode==40) {
+    errorThreshold -=  (errorThreshold>100 ? 3 : errorThreshold>10 ? 1 : 0.1);  
+    if (errorThreshold < 0.1) {
+      errorThreshold = 0.1;
+    }
+  }
+  else { newPoints(); }
+  redraw();
 }
 
 void newPoints() {
@@ -24,41 +31,17 @@ void newPoints() {
   p2 = points[1];
   p3 = points[2];
   p4 = points[3];
-  /*
-    p1 = new Point(300,100);
-    p2 = new Point(500,500);
-    p3 = new Point(0,500);
-    p4 = new Point(100,0);
-  */
-  current = new Mark(p1, startratio, 0);
 }
 
 void draw() {
   background(255);
- 
-  if(current.t+current.ratio >1) {
-    noLoop();
-    circles.add(pc);
-  } else {
-    stroke(0);
-    noFill();
-    drawCurve();
-
-    current.ratio += startratio;
-  
-    Point np1 = current.p;
-    Point np2 = get(current.t + current.ratio/2);
-    Point np3 = get(current.t + current.ratio);
-    pc  = getCCenter(np1, np2, np3);
-    double error = getError(pc, np1);
-    boolean badarc = (error > 0.5);
-    drawCircle(pc, np1, np2, np3);
-  
-    if(badarc) {
-      circles.add(pc);
-      current = new Mark(np3, startratio, current.t + current.ratio);
+  drawCurve();
+  ArrayList<Point> circles = iterate(errorThreshold);
+  if(circles != null) {
+    for(Point c: circles) {
+      drawCircle(c);
     }
   }
-
-  for(Point c: circles) { drawCircle(c); }
+  fill(0);
+  text(circles.size() + " arcs, using error threshold: "+errorThreshold, 15, 15);
 }
