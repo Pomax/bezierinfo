@@ -3,10 +3,19 @@
   <head>
     <meta charset="utf-8">
     <title>Test runner</title>
-    <script src="processing.min.js"></script>
+    <script src="processing.js"></script>
+    <style>
+    canvas {
+      border: 1px solid grey;
+    }
+    canvas:Active, canvas:focus {
+      border: 1px solid black;
+    }
+    </style>
   </head>
   <body>
-    <p>focus on the canvas: up/down error = change the error threshold. Any other key: generate a new curve.</p>
+    <h2>Arc approximation of Bezier curves</h2>
+    <p>Instructions: up/down cursor keys = change the error threshold. Any other key: generate a new curve.</p>
     <canvas id="test" data-processing-sources="
       bezier.pde
       circleabstraction.pde

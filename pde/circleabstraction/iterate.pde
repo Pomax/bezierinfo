@@ -21,17 +21,14 @@ ArrayList<Point> __iterate(double errorThreshold, ArrayList<Point> circles) {
       prev_pc = pc;
       m = (s + e)/2;
       step++;
-      
-      if (step > 10) {
-        println("something went seriously wrong");
-        return circles;
-      }
 
       np2 = getCurve(m);
       np3 = getCurve(e);
       pc = getCCenter(np1, np2, np3);
       double error = getError(pc, np1, s, e);
       curr_good = error <= errorThreshold;
+
+      //println("params:",s,m,e,prev_e,error);
 
       done = prev_good && !curr_good;
       if(!done) prev_e = e;
@@ -47,8 +44,9 @@ ArrayList<Point> __iterate(double errorThreshold, ArrayList<Point> circles) {
     }
     while(!done);
 
+    //println("arc found:",s,",",prev_e,":",prev_pc.s+","+prev_pc.e);
+
     prev_pc = prev_pc == null ? pc : prev_pc;
-    //println("arc found:",s,",",prev_e);
     circles.add(prev_pc);
     s = prev_e;
   }
