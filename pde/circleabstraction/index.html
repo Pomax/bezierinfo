@@ -6,7 +6,7 @@
     <script src="processing.js"></script>
     <style>
     canvas {
-      border: 1px solid grey;
+      border: 1px solid lightgrey;
     }
     canvas:Active, canvas:focus {
       border: 1px solid black;
@@ -15,7 +15,9 @@
   </head>
   <body>
     <h2>Arc approximation of Bezier curves</h2>
+    
     <p>Instructions: up/down cursor keys = change the error threshold. Any other key: generate a new curve.</p>
+    
     <canvas id="test" data-processing-sources="
       bezier.pde
       circleabstraction.pde
@@ -28,10 +30,12 @@
     "></canvas>
     
     <p>The code that makes this work:</p>
+
     <ul>
       <li><a href="circles.pde">find the arc between two points over a third</a>.</li>
       <li><a href="iterate.pde">find all arcs along a Bezier curve</a>.</li>
       <li><a href="errorThreshold.pde">the super simple error threshold function</a>.</li>
     </ul>
+
   </body>
 </html>
