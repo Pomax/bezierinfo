@@ -17,6 +17,6 @@ void drawCircle(Point c) {
   ellipse(c.x, c.y, 5, 5);
   // ellipse(c.x, c.y, 2*c.r, 2*c.r);
   stroke(255,0,0);
-  fill(0,0,0,20);
+  fill(random(0,100),random(0,100),random(0,100),50);
   arc(c.x, c.y, 2*c.r, 2*c.r, c.s, c.e);
 }

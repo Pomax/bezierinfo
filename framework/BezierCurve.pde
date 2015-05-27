@@ -766,12 +766,7 @@ class BezierCurve {
   void draw() { draw(30); }
   void draw(int c) {
     if(showAdditionals && showControlPoints && showPointPoly) {
-      stroke(0,100);
-      for(int i=1; i<=order; i++) {
-        Point p1 = points[i-1];
-        Point p2 = points[i];
-        line(p1.x,p1.y,p2.x,p2.y);
-      }
+      drawControlLines();
     }
     float t=0;
     int nx, ny, ox = draw_x[0], oy = draw_y[0];
@@ -787,6 +782,15 @@ class BezierCurve {
     }
     if(showAdditionals) {
       drawPoints();
+    }
+  }
+
+  void drawControlLines() {
+    stroke(0,100);
+    for(int i=1; i<=order; i++) {
+      Point p1 = points[i-1];
+      Point p2 = points[i];
+      line(p1.x,p1.y,p2.x,p2.y);
     }
   }
 

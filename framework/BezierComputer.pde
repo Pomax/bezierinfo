@@ -45,7 +45,7 @@ class BezierComputer {
       binomial_coefficients = update_coefficients;
     }
     return binomial_coefficients[n][k];
-  };
+  }
 
   // compute a polynomial term {n,k} at t
   private float polyterm(int n, int k, float t) {

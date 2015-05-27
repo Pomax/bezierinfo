@@ -43,6 +43,7 @@ function loadSketches(section) {
                 "framework/IntersectionTracker.pde",
                 "framework/CanonicalLayout.pde",
                 "framework/CanonicalValues.pde",
+                "framework/CircleAbstractor.pde",
                 "framework/BezierCurve.pde",
                 "framework/Colors.pde",
                 "framework/Constants.pde",

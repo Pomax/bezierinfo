@@ -13865,33 +13865,36 @@
           vr = height / 2,
           centerX = x + hr,
           centerY = y + vr,
-          startLUT = 0 | (0.5 + start * p.RAD_TO_DEG * 2),
-          stopLUT  = 0 | (0.5 + stop * p.RAD_TO_DEG * 2),
-          i, j;
+          step = 1/(hr+vr);
+
+      var drawSlice = (function(x, y, start, step, stop) {
+        return function(p, closed, i, a, e) {
+          i = 0;
+          a = start;
+          e = stop + step;
+          p.beginShape();
+          if(closed) { p.vertex(x-0.5, y-0.5); }
+          for (; a < e; i++, a = i*step + start) {
+            p.vertex(
+              (x + Math.cos(a) * hr)|0,
+              (y + Math.sin(a) * vr)|0
+            );
+          }
+          p.endShape(closed ? PConstants.CLOSE : undefined);
+        };
+      }(centerX+0.5, centerY+0.5, start, step, stop));
+
       if (doFill) {
-        // shut off stroke for a minute
         var savedStroke = doStroke;
         doStroke = false;
-        p.beginShape();
-        p.vertex(centerX, centerY);
-        for (i = startLUT; i <= stopLUT; i++) {
-          j = i % PConstants.SINCOS_LENGTH;
-          p.vertex(centerX + cosLUT[j] * hr, centerY + sinLUT[j] * vr);
-        }
-        p.endShape(PConstants.CLOSE);
+        drawSlice(p, true);
         doStroke = savedStroke;
       }
 
       if (doStroke) {
-        // and doesn't include the first (center) vertex.
         var savedFill = doFill;
         doFill = false;
-        p.beginShape();
-        for (i = startLUT; i <= stopLUT; i++) {
-          j = i % PConstants.SINCOS_LENGTH;
-          p.vertex(centerX + cosLUT[j] * hr, centerY + sinLUT[j] * vr);
-        }
-        p.endShape();
+        drawSlice(p);
         doFill = savedFill;
       }
     };

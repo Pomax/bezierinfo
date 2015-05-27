@@ -1,11 +1,11 @@
-static class CanonicalLayout {
+class CanonicalLayout {
 
-  static CanonicalValues getCanonicalValues(Point B3, float s) {
+  CanonicalValues getCanonicalValues(Point B3, float s) {
     return new CanonicalValues(B3, s);
   }
 
   // we along translate the past point, because we know what the other three points will be, by convention.
-  static Point forwardTransform(Point p1, Point p2, Point p3, Point p4, float s) {
+  Point forwardTransform(Point p1, Point p2, Point p3, Point p4, float s) {
     float xn = -p1.x + p4.x - (-p1.x+p2.x)*(-p1.y+p4.y)/(-p1.y+p2.y);
     float xd = -p1.x + p3.x - (-p1.x+p2.x)*(-p1.y+p3.y)/(-p1.y+p2.y);
     float np4x = s*xn/xd;
@@ -19,14 +19,14 @@ static class CanonicalLayout {
   }
 
   // the back-translation is equally easy, since we already know the first three coordinates. we just convert point 4.
-  static Point backwardTransform(Point p1, Point p2, Point p3, Point p4, float dx, float dy, float s) {
+  Point backwardTransform(Point p1, Point p2, Point p3, Point p4, float dx, float dy, float s) {
     return new Point(
       (-dy * p1.x + (-dx+dy)*p2.x + dx*p3.x + s*p4.x) / s,
       (-dy * p1.y + (-dx+dy)*p2.y + dx*p3.y + s*p4.y) / s
     );
   }
 
-  static PGraphics create(PApplet sketch, int width, int height, float s) {
+  PGraphics create(PApplet sketch, int width, int height, float s) {
     int w = width / 2;
     int h = height / 2;
     float f = s/100;

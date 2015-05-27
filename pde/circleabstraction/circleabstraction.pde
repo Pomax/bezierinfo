@@ -37,8 +37,13 @@ void newPoints() {
   p2 = points[1];
   p3 = points[2];
   p4 = points[3];
-
-  //println(p1, p2, p3, p4);
+/*
+  println("---");
+  println(p1);
+  println(p2);
+  println(p3);
+  println(p4);
+*/
 }
 
 void draw() {
