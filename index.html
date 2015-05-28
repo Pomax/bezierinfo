@@ -132,8 +132,9 @@
           <div id="navbar">
           <h3>Table of Contents</h3>
           <ol>
-            <li><a href="#introduction">Introduction</a></li>
-            <li><a href="#explanation">How do Bézier curves work?</a></li>
+            <li><a href="#introduction">A lightning introduction</a></li>
+            <li><a href="#whatis">What is a Bézier curve?</a></li>
+            <li><a href="#explanation">The basics of Bézier curves</a></li>
             <li><a href="#control">Controlling Bézier curvatures</a></li>
             <li><a href="#matrix">Bézier curvatures as matrix operations</a></li>
             <li><a href="#decasteljau">de Casteljau's algorithm</a></li>
@@ -234,6 +235,15 @@
           me this is trivial code and it would be ridiculous to claim it as anything other than "I
           just wrote this to demonstrate how things work".</p>
 
+          <h2 style="font-style:italic;">How complicated is the maths going to be?</h2>
+
+          <p>Most of the mathematics in this Primer are early high school maths. If you understand basic
+          arithmetic, and you know how to read English, you should be able to get by just fine. There
+          will at times be <em>far</em> more complicated maths, but if you don't feel like digesting
+          them, you can safely skip over them by either skipping over the "detail boxes" in section
+          or by just jumping to the end of a section with maths that looks too involving. The end of
+          sections typically simply list the conclusions so you can just work with those values directly.</p>
+
           <h2 style="font-style:italic;">Questions, comments:</h2>
 
           If you have suggestions for new sections, hit up the <a href="https://github.com/pomax/bezierinfo/issues">github
@@ -248,12 +258,17 @@
       </section>
 
       <section id="introduction">
-        <h2 data-num="1">Introduction</h2>
+        <h2>A lightning introduction</h2>
         <script> inject("introduction"); </script>
       </section>
 
+      <section id="whatis">
+        <h2>What <em>is</em> a Bézier curve</h2>
+        <script> inject("whatis"); </script>
+      </section>
+
       <section id="explanation">
-        <h2>How do Bézier curves work?</h2>
+        <h2>The basics of Bézier curves</h2>
         <script> inject("explanation"); </script>
       </section>
 
