@@ -26,7 +26,7 @@ static class CanonicalLayout {
     );
   }
 
-  PGraphics create(PApplet sketch, int width, int height, float s) {
+  static PGraphics create(PApplet sketch, int width, int height, float s) {
     int w = width / 2;
     int h = height / 2;
     float f = s/100;
