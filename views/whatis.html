@@ -5,18 +5,27 @@
         but one of them uses complicated maths, and the other uses really simple maths. So... let's start
         with the simple explanation:<p>
 
-        <p>Bezier curves are the result of linear interpolations. That sounds complicated but you've been doing
-        linear interpolation since you were very young: any time you had to point at something between two
-        other things, you've been applying linear interpolation. It's simply "picking a point between two,
-        points". If we call the distance btween those two points <em>d</em>, and we want a point that is,
-        say, 20% the distance away from the first point (and thus 80% the distance away from the second point)
-        then we can compute that really simply: <em>n = p1 + percentage/100 * d</em>. So let's just look at that.</p>
+        <p>Bezier curves are the result of <a href="https://en.wikipedia.org/wiki/Linear_interpolation">linear
+        interpolations</a>. That sounds complicated but you've been doing linear interpolation since you were
+        very young: any time you had to point at something between two other things, you've been applying
+        linear interpolation. It's simply "picking a point between two, points". If we call the distance
+        between those two points <em>d</em>, and we want a point that is, say, 20% the distance away from
+        the first point (and thus 80% the distance away from the second point) then we can compute that
+        really simply:<p>
 
-        <p>The following graphic is interactive in that you can use your '+' and '-' keys to increase or decrease
-        the interpolation distance, to see what happens. We start with three points, which gives us two lines.
-        Linear interpolation over those lines gives use two points, between which we can again perform linear
-        interpolation, yielding a single point. And that point, and all points we can form in this way for
-        all distances taken together, form our Bézier curve:</p>
+        <p>\[
+          p_1 = (x_1,y_1), \\
+          p_2 = (x_2,y_2), \\
+          distance = (p_2 - p_1), \\
+          ratio = \frac{percentage}{100}, \\
+          interpolated\ point = p_1 + distance \cdot ratio
+        \]</p>
+
+        <p>So let's look at that in action: the following graphic is interactive in that you can use your
+        '+' and '-' keys to increase or decrease the interpolation distance, to see what happens. We start
+        with three points, which gives us two lines. Linear interpolation over those lines gives use two
+        points, between which we can again perform linear interpolation, yielding a single point. And that
+        point, and all points we can form in this way for all distances taken together, form our Bézier curve:</p>
 
         <textarea class="sketch-code" data-sketch-preset="threepanel" data-sketch-title="Quadratic Bézier curves">
         void setupCurve() {
@@ -45,10 +54,10 @@
 
           ellipse(pr2x, pr2y, 5, 5);
 
-          stroke(200);
-          line(pr1x, pr1y, pr2x, pr2y);
+//          stroke(200);
+//          line(pr1x, pr1y, pr2x, pr2y);
 
-          stroke(0);
+          stroke(0,0,200);
           strokeWeight(2);
           line(p[0].x, p[0].y, pr1x, pr1y);
           line(p[1].x, p[1].y, pr2x, pr2y);
@@ -56,7 +65,8 @@
           text("linear interpolation distance: " + offset + "%", 5, 15);
           text("linear interpolation between the first set of points", 5, dim-5);
 
-          nextPanel();
+        nextPanel();
+
           stroke(0);
           strokeWeight(1);
           line(0,0,0,dim);
@@ -72,17 +82,22 @@
 
           ellipse(pr3x, pr3y, 5, 5);
 
-          stroke(100);
+          stroke(150);
           line(pr1x, pr1y, pr2x, pr2y);
 
-          stroke(0);
+          strokeWeight(4);
+          stroke(0,0,200, 50);
+          line(p[0].x, p[0].y, pr1x, pr1y);
+          line(p[1].x, p[1].y, pr2x, pr2y);
+
           strokeWeight(2);
+          stroke(0,0,200);
           line(pr1x, pr1y, pr3x, pr3y);
 
           text("same linear interpolation distance: " + offset + "%", 5, 15);
           text("linear interpolation between the second set of points", 5, dim-5);
 
-          nextPanel();
+        nextPanel();
 
           stroke(0);
           strokeWeight(1);
