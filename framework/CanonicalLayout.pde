@@ -1,4 +1,4 @@
-class CanonicalLayout {
+static class CanonicalLayout {
 
   CanonicalValues getCanonicalValues(Point B3, float s) {
     return new CanonicalValues(B3, s);
