@@ -8,17 +8,17 @@
         <p>Bezier curves are the result of <a href="https://en.wikipedia.org/wiki/Linear_interpolation">linear
         interpolations</a>. That sounds complicated but you've been doing linear interpolation since you were
         very young: any time you had to point at something between two other things, you've been applying
-        linear interpolation. It's simply "picking a point between two, points". If we call the distance
-        between those two points <em>d</em>, and we want a point that is, say, 20% the distance away from
+        linear interpolation. It's simply "picking a point between two, points". If we know the distance
+        between those two points, and we want a new point that is, say, 20% the distance away from
         the first point (and thus 80% the distance away from the second point) then we can compute that
-        really simply:<p>
+        really easily:<p>
 
         <p>\[
-          p_1 = (x_1,y_1), \\
-          p_2 = (x_2,y_2), \\
+          p_1 = some\ point, \\
+          p_2 = some\ other\ point, \\
           distance = (p_2 - p_1), \\
           ratio = \frac{percentage}{100}, \\
-          interpolated\ point = p_1 + distance \cdot ratio
+          new\ point = p_1 + distance \cdot ratio
         \]</p>
 
         <p>So let's look at that in action: the following graphic is interactive in that you can use your
