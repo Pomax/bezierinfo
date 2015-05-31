@@ -328,6 +328,7 @@
           Point[] p = curve.points;
           Point np4 = CanonicalLayout.forwardTransform(p[0], p[1], p[2], p[3], s);
           bezier(0,0, 0,s, s,s, np4.x, np4.y);
+          console.log(0,0,0,s,s,s,np4.x,np4.y);
           ellipse(np4.x, np4.y, 4, 4);
           String label = nf(np4.x/s,1,3) + "," + nf(np4.y/s,1,3);
           text(label, np4.x, np4.y);
