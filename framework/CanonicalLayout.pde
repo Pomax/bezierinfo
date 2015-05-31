@@ -6,14 +6,21 @@ static class CanonicalLayout {
 
   // we along translate the past point, because we know what the other three points will be, by convention.
   Point forwardTransform(Point p1, Point p2, Point p3, Point p4, float s) {
+
+    console.log("a");
+
     float xn = -p1.x + p4.x - (-p1.x+p2.x)*(-p1.y+p4.y)/(-p1.y+p2.y);
     float xd = -p1.x + p3.x - (-p1.x+p2.x)*(-p1.y+p3.y)/(-p1.y+p2.y);
     float np4x = s*xn/xd;
+
+    console.log("b");
 
     float yt1 = s*(-p1.y+p4.y) / (-p1.y+p2.y);
     float yt2 = s - (s*(-p1.y+p3.y)/(-p1.y+p2.y));
     float yp = yt2 * xn / xd;
     float np4y = yt1 + yp;
+
+    console.log("c");
 
     return new Point(np4x, np4y);
   }
