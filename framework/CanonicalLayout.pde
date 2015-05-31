@@ -5,28 +5,21 @@ static class CanonicalLayout {
   }
 
   // we along translate the past point, because we know what the other three points will be, by convention.
-  Point forwardTransform(Point p1, Point p2, Point p3, Point p4, float s) {
-
-    console.log("a");
-
+  static Point forwardTransform(Point p1, Point p2, Point p3, Point p4, float s) {
     float xn = -p1.x + p4.x - (-p1.x+p2.x)*(-p1.y+p4.y)/(-p1.y+p2.y);
     float xd = -p1.x + p3.x - (-p1.x+p2.x)*(-p1.y+p3.y)/(-p1.y+p2.y);
     float np4x = s*xn/xd;
-
-    console.log("b");
 
     float yt1 = s*(-p1.y+p4.y) / (-p1.y+p2.y);
     float yt2 = s - (s*(-p1.y+p3.y)/(-p1.y+p2.y));
     float yp = yt2 * xn / xd;
     float np4y = yt1 + yp;
 
-    console.log("c");
-
     return new Point(np4x, np4y);
   }
 
   // the back-translation is equally easy, since we already know the first three coordinates. we just convert point 4.
-  Point backwardTransform(Point p1, Point p2, Point p3, Point p4, float dx, float dy, float s) {
+  static Point backwardTransform(Point p1, Point p2, Point p3, Point p4, float dx, float dy, float s) {
     return new Point(
       (-dy * p1.x + (-dx+dy)*p2.x + dx*p3.x + s*p4.x) / s,
       (-dy * p1.y + (-dx+dy)*p2.y + dx*p3.y + s*p4.y) / s
