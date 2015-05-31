@@ -322,11 +322,16 @@
         void drawCurve(BezierCurve curve) { try {
           curve.draw();
           nextPanel();
+
           image(mapping,0,0,dim,dim);
+
           int w=dim/2, h=dim/2;
           translate(w,h);
           Point[] p = curve.points;
+          console.log("pre");
           Point np4 = CanonicalLayout.forwardTransform(p[0], p[1], p[2], p[3], s);
+          console.log("post");
+
           bezier(0,0, 0,s, s,s, np4.x, np4.y);
           console.log(0,0,0,s,s,s,np4.x,np4.y);
           ellipse(np4.x, np4.y, 4, 4);
