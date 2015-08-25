@@ -304,8 +304,8 @@
             \cdot
             \begin{bmatrix}
               P_1 \\
-              z \cdot P_2 - (z-1) \cdot P_1 \\
-              z^2 \cdot P_3 + 2 \cdot (1-z) \cdot z \cdot P_2 + (1-z)^2 \cdot P_1
+              (1-z) \cdot P_1   + z \cdot P_2 \\
+              (1-z)^2 \cdot P_1 + 2 \cdot (1-z) \cdot z \cdot P_2 + z^2 \cdot P_3
             \end{bmatrix}
           \]</p>
 
@@ -387,7 +387,7 @@
             \cdot
             \begin{bmatrix}
             1 & z & z^2 \\
-            0 & 1-z & 2 \cdot z \cdot (1-z) \\
+            0 & 1-z & 2 \cdot (1-z) \cdot z \\
             0 & 0 & (1-z)^2
             \end{bmatrix}
             \cdot
@@ -414,7 +414,7 @@
             \cdot
             \begin{bmatrix}
             1 & z & z^2 \\
-            0 & 1-z & 2 \cdot z \cdot (1-z) \\
+            0 & 1-z & 2 \cdot (1-z) \cdot z \\
             0 & 0 & (1-z)^2
             \end{bmatrix}
             \cdot
@@ -496,9 +496,9 @@
             \end{bmatrix}
             \cdot
             \begin{bmatrix}
-              z^2 \cdot P_3 2 \cdot (1-z) \cdot z \cdot P_2 + (1-z)^2 \cdot P_1 \\
-              z \cdot P_3 (1-z) \cdot P_2 \\
-              P_3
+              (1-z)^2 \cdot P_1 + 2 \cdot (1-z) \cdot z \cdot P_2 + z^2 \cdot P_3  \\
+                                  (1-z) \cdot P_2                 + z \cdot P_3 \\
+                                                                    P_3
             \end{bmatrix}
           \]</p>
 
@@ -591,7 +591,7 @@
           =
           \begin{bmatrix}
             (1-z)^3 \cdot P_1 + 3 \cdot (1-z)^2 \cdot z \cdot P_2 + 3 \cdot (1-z) \cdot z^2 \cdot P_3 + z^3 \cdot P_4 \\
-                                (1-z)^2 \cdot P2                  + 2 \cdot (1-z) \cdot z \cdot P_3   + z^2 \cdot P_4 \\
+                                (1-z)^2 \cdot P_2                 + 2 \cdot (1-z) \cdot z \cdot P_3   + z^2 \cdot P_4 \\
                                                                     (1-z) \cdot P_3                   + z \cdot P_4 \\
                                                                                                         P_4
           \end{bmatrix}
