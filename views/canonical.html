@@ -61,7 +61,7 @@
             to "having a loop", for the general cubic curve, is actually mirrored over x=1, but for Bézier curves
             this right half doesn't apply, so we don't need to pay attention to it. Similarly, the boundaries for
             t=0 and t=1 loops are also nice clean curves but get "cut off" when we only look at what the general
-            curve does over the internval t=0 to t=1.</p>
+            curve does over the interval t=0 to t=1.</p>
 
           <p>For the full details, head over to the paper and read through sections 3 and 4. If you still remember
             your high school precalculus, you can probably follow along with this paper, although you might have
@@ -70,7 +70,7 @@
 
         <p>So now the question becomes: how do we manipulate our curve so that it fits this canonical form,
           with three fixed points, and one "free" point? Enter linear algerba. Don't worry, I'll be doing all
-          the math for you, as well as show you what the effect is on our curves, but basically we're going
+          the math for you, as well as showing you what the effect is on our curves, but basically we're going
           to be using linear algebra, rather than calculus, because "it's way easier". Sometimes a calculus
           approach is very hard to work with, when the equivalent geometrical solution is super obvious.</p>
 
@@ -203,7 +203,7 @@
         \right ]
         \]</p>
 
-        <p>Now, running this on all our points generates a new set of coordinates, let's call those V, which now have point 1 on (0,0) and point 2 on (0, some-value), and we wanted it at (0,1), so we need to [do some scaling](https://en.wikipedia.org/wiki/Scaling_%28geometry%29) to make sure it ends up at (0,1). Additionally, we want point 3 to end up on (1,1), so we can also scale x to make sure its x-coordinate will be 1 after we run the transform. That means we'll be x-scaling by 1/point3<sub>x</sub>, and y-scaling by point2<sub>y</sub>. This is really easy:</p>
+        <p>Now, running this on all our points generates a new set of coordinates, let's call those V, which now have point 1 on (0,0) and point 2 on (0, some-value), and we wanted it at (0,1), so we need to <a href="https://en.wikipedia.org/wiki/Scaling_%28geometry%29">do some scaling</a> to make sure it ends up at (0,1). Additionally, we want point 3 to end up on (1,1), so we can also scale x to make sure its x-coordinate will be 1 after we run the transform. That means we'll be x-scaling by 1/point 3<sub>x</sub>, and y-scaling by point 2<sub>y</sub>. This is really easy:</p>
 
         <p>\[ T_3 =
         \left [

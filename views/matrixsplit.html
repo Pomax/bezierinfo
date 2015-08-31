@@ -606,6 +606,6 @@
         the matrix vertically. Presto, you just "calculated" <strong><em>Q'</em></strong>.</p>
 
         <p>Implementing curve splitting this way requires less recursion, and is just straight
-        arithmetic with cached values, so can be cheaper on systems were recursion is expensive.
+        arithmetic with cached values, so it can be cheaper on systems where recursion is expensive.
         If you're doing computation with devices that are good at matrix multiplication, chopping
         up a Bézier curve with this method will be a lot faster than applying de Casteljau.</p>
