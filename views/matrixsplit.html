@@ -233,13 +233,20 @@
             =
             \begin{bmatrix}
             1 & 0 & 0 \\
-            (1-z) & z & 0 \\
-            (1 - z)^2 & 2 \cdot (1-z) \cdot z & z^2
+            1 - z & z & 0 \\
+            1 - 2 \cdot z + z^2 & 2 \cdot z - 2 \cdot z^2 & z^2
             \end{bmatrix}
           \]</p>
-
+          <p>The last step can be simplified as follows:</p>
+          <p>\[
+            Q = 
+            \begin{bmatrix}
+            1 & 0 & 0 \\
+            (1 - z) & z & 0 \\
+            (1 - z)^2 & 2 \cdot (1 - z) \cdot z & z^2
+            \end{bmatrix}
+          \]</p>          
           <p>Excellent! Now we can form our new quadratic curve:</p>
-
           <p>\[
             B(t) =
             \begin{bmatrix}
