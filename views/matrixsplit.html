@@ -233,13 +233,20 @@
             =
             \begin{bmatrix}
             1 & 0 & 0 \\
-            (1-z) & z & 0 \\
-            (1 - z)^2 & 2 \cdot (1-z) \cdot z & z^2
+            1 - z & z & 0 \\
+            1 - 2 \cdot z + z^2 & 2 \cdot z - 2 \cdot z^2 & z^2
             \end{bmatrix}
           \]</p>
-
+          <p>And we can simplify this matrix, to reveal a Bernstein form:</p>
+          <p>\[
+            Q = 
+            \begin{bmatrix}
+            1 & 0 & 0 \\
+            (1 - z) & z & 0 \\
+            (1 - z)^2 & 2 \cdot (1 - z) \cdot z & z^2
+            \end{bmatrix}
+          \]</p>
           <p>Excellent! Now we can form our new quadratic curve:</p>
-
           <p>\[
             B(t) =
             \begin{bmatrix}
@@ -312,7 +319,7 @@
           <p><strong><em>Brilliant</em></strong>: if we want a subcurve from <em>t = 0</em>
           to <em>t = z</em>, we can keep the first coordinate the same (which makes sense),
           our control point becomes a z-ratio mixture of the original control point and the start
-          point, and the new end point is the bernstein polynomial of degree two calculated at z...
+          point, and the new end point is the Bernstein polynomial of degree two calculated at z...
           These new coordinates are actually really easy to compute directly!</p>
 
           <p>Of course, that's only one of the two curves. Getting the section from <em>t = z</em>
@@ -425,8 +432,17 @@
             \end{bmatrix}
             =
             \begin{bmatrix}
-            (1-z)^2 & 2 \cdot (1-z) \cdot z & z^2 \\
-            0 & (1-z) & z \\
+            1 - 2 \cdot z + z^2 & 2 \cdot z - 2 \cdot z^2 & z^2 \\
+            0 & 1 - z & z \\
+            0 & 0 & 1
+            \end{bmatrix}
+          \]</p>
+          <p>Again, we can simplify this matrix to reveal a Bernstein form:</p>
+          <p>\[
+            Q' =
+            \begin{bmatrix}
+            (1 - z)^2 & 2 \cdot (1 - z) \cdot z & z^2 \\
+            0 & (1 - z) & z \\
             0 & 0 & 1
             \end{bmatrix}
           \]</p>
@@ -505,7 +521,7 @@
           <p><strong><em>Nice</em></strong>: we see the same as before; can keep the last
           coordinate the same (which makes sense), our control point becomes a z-ratio
           mixture of the original control point and the end point, and the new start point
-          is the bernstein polynomial of degree two calculated at z. These new coordinates
+          is the Bernstein polynomial of degree two calculated at z. These new coordinates
           are <em>also</em> really easy to compute directly!</p>
         </div>
 
