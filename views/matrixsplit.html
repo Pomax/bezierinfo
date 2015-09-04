@@ -233,8 +233,17 @@
             =
             \begin{bmatrix}
             1 & 0 & 0 \\
-            -(z-1) & z & 0 \\
-            (z - 1)^2 & -2 \cdot (z-1) \cdot z & z^2
+            1 - z & z & 0 \\
+            1 - 2 \cdot z + z^2 & 2 \cdot z - 2 \cdot z^2 & z^2
+            \end{bmatrix}
+          \]</p>
+          <p>And we can simplify this matrix, to reveal a Bernstein form:</p>
+          <p>\[
+            Q =
+            \begin{bmatrix}
+            1 & 0 & 0 \\
+            (1 - z) & z & 0 \\
+            (1 - z)^2 & 2 \cdot (1 - z) \cdot z & z^2
             \end{bmatrix}
           \]</p>
 
@@ -280,8 +289,8 @@
             \left (
             \begin{bmatrix}
             1 & 0 & 0 \\
-            -(z-1) & z & 0 \\
-            (z - 1)^2 & -2 \cdot (z-1) \cdot z & z^2
+            (1-z) & z & 0 \\
+            (1 - z)^2 & 2 \cdot (1-z) \cdot z & z^2
             \end{bmatrix}
             \cdot
             \begin{bmatrix}
@@ -304,17 +313,16 @@
             \cdot
             \begin{bmatrix}
               P_1 \\
-              z \cdot P_2 - (z-1) \cdot P_1 \\
-              z^2 \cdot P_3 - 2 \cdot z \cdot (z-1) \cdot P_2 + (z - 1)^2 \cdot P_1
+              (1-z) \cdot P_1   + z \cdot P_2 \\
+              (1-z)^2 \cdot P_1 + 2 \cdot (1-z) \cdot z \cdot P_2 + z^2 \cdot P_3
             \end{bmatrix}
           \]</p>
 
           <p><strong><em>Brilliant</em></strong>: if we want a subcurve from <em>t = 0</em>
           to <em>t = z</em>, we can keep the first coordinate the same (which makes sense),
           our control point becomes a z-ratio mixture of the original control point and the start
-          point, and the new end point is a mixture that looks oddly similar to a bernstein
-          polynomial of degree two, except it uses (z-1) rather than (1-z)... These new
-          coordinates are actually really easy to compute directly!</p>
+          point, and the new end point is the Bernstein polynomial of degree two calculated at z...
+          These new coordinates are actually really easy to compute directly!</p>
 
           <p>Of course, that's only one of the two curves. Getting the section from <em>t = z</em>
           to <em>t = 1</em> requires doing this again. We first observe what what we just did is
@@ -388,7 +396,7 @@
             \cdot
             \begin{bmatrix}
             1 & z & z^2 \\
-            0 & 1-z & 2 \cdot z \cdot (1-z) \\
+            0 & 1-z & 2 \cdot (1-z) \cdot z \\
             0 & 0 & (1-z)^2
             \end{bmatrix}
             \cdot
@@ -415,7 +423,7 @@
             \cdot
             \begin{bmatrix}
             1 & z & z^2 \\
-            0 & 1-z & 2 \cdot z \cdot (1-z) \\
+            0 & 1-z & 2 \cdot (1-z) \cdot z \\
             0 & 0 & (1-z)^2
             \end{bmatrix}
             \cdot
@@ -426,8 +434,17 @@
             \end{bmatrix}
             =
             \begin{bmatrix}
-            (z-1)^2 & -2 \cdot z \cdot (z-1) & z^2 \\
-            0 & -(z-1) & z \\
+            1 - 2 \cdot z + z^2 & 2 \cdot z - 2 \cdot z^2 & z^2 \\
+            0 & 1 - z & z \\
+            0 & 0 & 1
+            \end{bmatrix}
+          \]</p>
+          <p>Again, we can simplify this matrix to reveal a Bernstein form:</p>
+          <p>\[
+            Q' =
+            \begin{bmatrix}
+            (1 - z)^2 & 2 \cdot (1 - z) \cdot z & z^2 \\
+            0 & (1 - z) & z \\
             0 & 0 & 1
             \end{bmatrix}
           \]</p>
@@ -473,8 +490,8 @@
             \cdot
             \left (
             \begin{bmatrix}
-            (z-1)^2 & -2 \cdot z \cdot (z-1) & z^2 \\
-            0 & -(z-1) & z \\
+            (1-z)^2 & 2 \cdot (1-z) \cdot z & z^2 \\
+            0 & (1-z) & z \\
             0 & 0 & 1
             \end{bmatrix}
             \cdot
@@ -497,8 +514,8 @@
             \end{bmatrix}
             \cdot
             \begin{bmatrix}
-              z^2 \cdot P_3 - 2 \cdot z \cdot (z-1) \cdot P_2 + (z-1)^2 \cdot P_1 \\
-              z \cdot P_3  - (z-1) \cdot P_2 \\
+              (1-z)^2 \cdot P_1 + 2 \cdot (1-z) \cdot z \cdot P_2 + z^2 \cdot P_3  \\
+              (1-z) \cdot P_2 + z \cdot P_3 \\
               P_3
             \end{bmatrix}
           \]</p>
@@ -506,9 +523,8 @@
           <p><strong><em>Nice</em></strong>: we see the same as before; can keep the last
           coordinate the same (which makes sense), our control point becomes a z-ratio
           mixture of the original control point and the end point, and the new start point
-          is a mixture that looks oddly similar to a bernstein polynomial of degree two,
-          except it uses (z-1) rather than (1-z). These new coordinates are <em>also</em>
-          really easy to compute directly!</p>
+          is the Bernstein polynomial of degree two calculated at z. These new coordinates
+          are <em>also</em> really easy to compute directly!</p>
         </div>
 
         <p>So, using linear algebra rather than de Casteljau's algorithm, we have determined
@@ -518,8 +534,8 @@
         <p>\[
           \begin{bmatrix}
           1 & 0 & 0 \\
-          -(z-1) & z & 0 \\
-          (z - 1)^2 & -2 \cdot (z-1) \cdot z & z^2
+          (1-z) & z & 0 \\
+          (1-z)^2 & 2 \cdot (1-z) \cdot z & z^2
           \end{bmatrix}
           \cdot
           \begin{bmatrix}
@@ -528,8 +544,8 @@
           =
           \begin{bmatrix}
             P_1 \\
-            z \cdot P_2 - (z-1) \cdot P_1 \\
-            z^2 \cdot P_3 - 2 \cdot z \cdot (z-1) \cdot P_2 + (z - 1)^2 \cdot P_1
+            (1-z) \cdot P_1   + z \cdot P_2 \\
+            (1-z)^2 \cdot P_1 + 2 \cdot (1-z) \cdot z \cdot P_2 + z^2 \cdot P_3
           \end{bmatrix}
         \]</p>
 
@@ -537,8 +553,8 @@
 
         <p>\[
           \begin{bmatrix}
-          (z-1)^2 & -2 \cdot z \cdot (z-1) & z^2 \\
-          0 & -(z-1) & z \\
+          (1-z)^2 & 2 \cdot (1-z) \cdot z & z^2 \\
+          0 & (1-z) & z \\
           0 & 0 & 1
           \end{bmatrix}
           \cdot
@@ -547,8 +563,8 @@
           \end{bmatrix}
           =
           \begin{bmatrix}
-            z^2 \cdot P_3 - 2 \cdot z \cdot (z-1) \cdot P_2 + (z-1)^2 \cdot P_1 \\
-            z \cdot P_3  - (z-1) \cdot P_2 \\
+            (1-z)^2 \cdot P_1 + 2 \cdot (1-z) \cdot z \cdot P_2 + z^2 \cdot P_3 \\
+            (1-z) \cdot P_2   + z \cdot P_3 \\
             P_3
           \end{bmatrix}
         \]</p>
@@ -560,9 +576,9 @@
         <p>\[
           \begin{bmatrix}
             1 & 0 & 0 & 0 \\
-            -(z-1) & z & 0 & 0 \\
-            (z-1)^2 & -2 \cdot (z-1) \cdot z & z^2 & 0 \\
-            -(z-1)^3 & 3 \cdot (z-1)^2 \cdot z & -3 \cdot (z-1) \cdot z^2 & z^3
+            (1-z) & z & 0 & 0 \\
+            (1-z)^2 & 2 \cdot (1-z) \cdot z & z^2 & 0 \\
+            (1-z)^3 & 3 \cdot (1-z)^2 \cdot z & 3 \cdot (1-z) \cdot z^2 & z^3
           \end{bmatrix}
           \cdot
           \begin{bmatrix}
@@ -571,9 +587,9 @@
           =
           \begin{bmatrix}
             P_1 \\
-            z \cdot P_2 - (z-1) \cdot P_1 \\
-            z^2 \cdot P_3 - 2 \cdot z \cdot (z-1) \cdot P_2 + (z-1)^2 \cdot P_1 \\
-            z^3 \cdot P_4 - 3 \cdot z^2 \cdot (z-1) \cdot P_3 + 3 \cdot z \cdot (z-1)^2 \cdot P_2 - (z-1)^3 \cdot P_1
+            (1-z) \cdot P_1   + z \cdot P_2 \\
+            (1-z)^2 \cdot P_1 + 2 \cdot (1-z) \cdot z \cdot P_2   + z^2 \cdot P_3 \\
+            (1-z)^3 \cdot P_1 + 3 \cdot (1-z)^2 \cdot z \cdot P_2 + 3 \cdot (1-z) \cdot z^2 \cdot P_3 + z^3 \cdot P_4
           \end{bmatrix}
         \]</p>
 
@@ -581,9 +597,9 @@
 
         <p>\[
           \begin{bmatrix}
-            -(z-1)^3 & 3 \cdot (z-1)^2 \cdot z & -3 \cdot (z-1) \cdot z^2 & z^3 \\
-            0 & (z-1)^2 & -2 \cdot (z-1) \cdot z & z^2 \\
-            0 & 0 & -(z-1) & z \\
+            (1-z)^3 & 3 \cdot (1-z)^2 \cdot z & 3 \cdot (1-z) \cdot z^2 & z^3 \\
+            0 & (1-z)^2 & 2 \cdot (1-z) \cdot z & z^2 \\
+            0 & 0 & (1-z) & z \\
             0 & 0 & 0 & 1
           \end{bmatrix}
           \cdot
@@ -592,9 +608,9 @@
           \end{bmatrix}
           =
           \begin{bmatrix}
-            z^3 \cdot P_4 - 3 \cdot z^2 \cdot (z-1) \cdot P_3 + 3 \cdot z \cdot (z-1)^2 \cdot P_2 - (z-1)^3 \cdot P_1 \\
-            z^2 \cdot P_4 - 2 \cdot z \cdot (z-1) \cdot P_3 + (z-1)^2 \cdot P_2 \\
-            z \cdot P_4 - (z-1) \cdot P_3 \\
+            (1-z)^3 \cdot P_1 + 3 \cdot (1-z)^2 \cdot z \cdot P_2 + 3 \cdot (1-z) \cdot z^2 \cdot P_3 + z^3 \cdot P_4 \\
+            (1-z)^2 \cdot P_2 + 2 \cdot (1-z) \cdot z \cdot P_3   + z^2 \cdot P_4 \\
+            (1-z) \cdot P_3 + z \cdot P_4 \\
             P_4
           \end{bmatrix}
         \]</p>
