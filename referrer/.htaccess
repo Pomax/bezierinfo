@@ -1,4 +1,0 @@
-<Files ~ "referral_log_.*\.gz">
-  order allow,deny
-  deny from all
-</Files>
