@@ -1,0 +1,41 @@
+figure {
+  display: inline-block;
+  border: 1px solid grey;
+  background: #F0F0F0;
+  @psize: 0.5em;
+  padding: @psize @psize 0 @psize;
+  text-align: center;
+
+  &.inline {
+    border: none;
+    margin: 0;
+  }
+
+  canvas {
+    display: inline-block;
+    background: white;
+    border: 1px solid lightgrey;
+
+    &:focus {
+      border: 1px solid grey;
+      outline: none;
+    }
+  }
+
+  figcaption {
+    text-align: center;
+    padding: 0.5em 0;
+    font-style: italic;
+    font-size: 90%;
+  }
+
+  &:not([class=inline]) + figure:not([class=inline]) {
+    margin-top: 2em;
+  }
+}
+
+div.figure {
+  display: inline-block;
+  border: 1px solid grey;
+  text-align: center;
+}
