@@ -27,6 +27,9 @@
     <link rel="stylesheet" href="stylesheets/style.css">
   </head>
   <body>
+    <!-- referral tracking, because I like knowing who's linking to my book -->
+    <script src="lib/site/referrer.js" async></script>
+    
     <article>
       <div id="article">
         <!-- these rules will get overwritten by the style in the article.js React bundle -->
@@ -48,7 +51,9 @@
 
     <script src="article.js" async></script>
 
-    <!-- referral tracking, because I like knowing who's linking to my book -->
-    <script src="lib/site/referrer.js" async></script>
+    <div id="disqus_thread"></div>    
+
+    <!-- Disqus commenting -->
+    <script src="lib/site/disqus.js" async></script>
   </body>
 </html>
