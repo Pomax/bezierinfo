@@ -5,7 +5,7 @@
     <script>
       var loc = window.location.toString();
       if (loc.indexOf('localhost') === -1 && loc.indexOf('http://') !== -1) {
-        window.location = window.location.replace('http://', 'https://');
+        window.location = loc.replace('http://', 'https://');
       }
     </script>
     
