@@ -1,14 +1,17 @@
 <!doctype html>
 <html>
   <head>
-    <!-- Seriously. Step 1, before ANYTHING: are we on https? No? Go to https -->
+    <!-- referral tracking, because I like knowing who's linking to my book -->
+    <script src="lib/site/referrer.js"></script>
+
+    <!-- Move us to https if we're on http -->
     <script>
       var loc = window.location.toString();
       if (loc.indexOf('localhost') === -1 && loc.indexOf('http://') !== -1) {
         window.location = loc.replace('http://', 'https://');
       }
     </script>
-    
+
     <!-- k, now we can do real page things -->
     <meta charset="utf-8">
     <title>A Primer on Bézier Curves</title>
@@ -36,9 +39,6 @@
     <link rel="stylesheet" href="stylesheets/style.css">
   </head>
   <body>
-
-    <!-- referral tracking, because I like knowing who's linking to my book -->
-    <script src="lib/site/referrer.js" async></script>
 
     <!-- share buttons as plain links, because I don't want social media to do behavioural tracking -->
     <div class="sharebuttons">
