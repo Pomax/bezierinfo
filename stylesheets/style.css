@@ -1,6 +1,3 @@
-/**
-  updated: 2016-02-01-11-00
-**/
 html,
 body {
   font-family: Verdana;
@@ -320,4 +317,23 @@ footer {
 }
 .relatives tbody tr td:nth-child(3) {
   text-align: right;
+}
+.bspline-graphic {
+  border: 1px solid black;
+  background: white;
+}
+.two-column {
+  display: flex;
+  flex-direction: row-reverse;
+}
+.two-column canvas {
+  flex: none;
+}
+.two-column section {
+  margin-top: 0;
+  padding-left: 2em;
+}
+code {
+  background: #DDE;
+  padding: 1px 3px;
 }
