@@ -158,6 +158,22 @@
     </article>
 
     <!-- the actual article is a JS bundle -->
-    <script src="article.js" async></script>
+    <script>
+      (function() {
+        var lang = window.location.search;
+        var ms = '?locale=';
+        var lpos = lang.indexOf(ms);
+        var linfix = '';
+        if (lpos !== -1) {
+          let lcode = lang.substring(lpos + ms.length);
+          if (lcode !== 'en-GB') {
+            linfix = "." + lcode
+          }
+        }
+        var s = document.createElement("script");
+        s.src = "article" + linfix+ ".js?ts=" + Date.now();
+        document.head.appendChild(s);
+      }());
+    </script>
   </body>
 </html>
