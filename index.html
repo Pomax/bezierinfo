@@ -67,9 +67,8 @@
           "for=" + page
         ].filter(v => v).join('&');
 
-        fetch(url)
-          .then(_ => console.log("The following URL was called for statistics purposes during page load:", url))
-          .catch(e => console.log("No page visit was recorded."));
+        fetch(url).then(_ => {}).catch(_ => {});
+        console.log("The following URL was called for page view stat purposes:", url))
       }
 
       setTimeout(referrer, 100);
