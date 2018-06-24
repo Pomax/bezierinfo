@@ -49,7 +49,29 @@
     <link rel="stylesheet" href="stylesheets/style.css">
 
     <!-- referral tracking, because I like knowing who's linking to my book -->
-    <script src="https://pomax.github.io/bezierinfo/lib/site/referrer.js"></script>
+    <script>
+      function referrer(l) {
+        var page = l.substring(l.lastIndexOf('/')+1).replace(".html",'');
+        page = page || "index.html";
+
+        // we don't care about file or localhost, for obvious reasons
+        var loc = window.location.toString();
+        if(loc.indexOf("file:///")!==-1) return;
+        if(loc.indexOf("localhost")!==-1) return;
+
+        // right, continue
+        var url = "//pomax.nihongoresources.com/pages/bezierinfo/logger.php";
+        url = url + "?" + "referrer=" + encodeURIComponent(document.referrer) + "&for=" + page;
+
+        // visit that link
+        var script = document.createElement('script');
+        script.url = url;
+        document.body.appendChild(script);
+        console.log("The following URL was called for statistics purposes during page load:", url);
+      }
+
+      setTimeout(() => referrer(window.location.toString()), 100);
+    </script>
   </head>
   <body>
     <div class="dev" style="display:none;">
