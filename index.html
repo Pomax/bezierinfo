@@ -61,7 +61,10 @@
 
         // right, continue
         var url = "//pomax.nihongoresources.com/pages/bezierinfo/logger.php";
-        url = url + "?" + "referrer=" + encodeURIComponent(document.referrer) + "&for=" + page;
+        url = url + "?" + [
+          (document.referrer) ? "referrer=" + encodeURIComponent(document.referrer) : false,
+          "for=" + page
+        ].filter(v => v).join('&');
 
         // visit that link
         var script = document.createElement('script');
