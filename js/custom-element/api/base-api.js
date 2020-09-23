@@ -77,8 +77,8 @@ class BaseAPI {
     this.addListeners();
     this.setSize(width, height);
     this.currentPoint = false;
-    this.setup();
     this.frame = 0;
+    this.setup();
     this.draw();
   }
 
