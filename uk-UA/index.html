@@ -39,7 +39,7 @@
 		<meta property="og:locale" content="uk-UA" />
 		<meta property="og:type" content="article" />
 		<meta property="og:published_time" content="2013-06-13T12:00:00+00:00" />
-		<meta property="og:updated_time" content="2020-11-06T19:31:57+00:00" />
+		<meta property="og:updated_time" content="2020-11-21T01:19:44+00:00" />
 		<meta property="og:author" content="Mike 'Pomax' Kamermans" />
 		<meta property="og:section" content="Bézier Curves" />
 		<meta property="og:tag" content="Bézier Curves" />
@@ -220,6 +220,7 @@
 					<li><a href="uk-UA/index.html#abc">The projection identity</a></li>
 					<li><a href="uk-UA/index.html#pointcurves">Creating a curve from three points</a></li>
 					<li><a href="uk-UA/index.html#projections">Projecting a point onto a Bézier curve</a></li>
+					<li><a href="uk-UA/index.html#circleintersection">Intersections with a circle</a></li>
 					<li><a href="uk-UA/index.html#molding">Molding a curve</a></li>
 					<li><a href="uk-UA/index.html#curvefitting">Curve fitting</a></li>
 					<li><a href="uk-UA/index.html#catmullconv">Bézier curves and Catmull-Rom curves</a></li>
@@ -335,6 +336,10 @@
 				<label for="changelogtoggle">Перемкнути зміни</label>
 				<input type="checkbox" id="changelogtoggle" />
 				<section>
+					<h2>November 2020</h2>
+					<ul>
+						<li><p>Added a section on finding curve/circle intersections</p></li>
+					</ul>
 					<h2>October 2020</h2>
 					<ul>
 						<li><p>Added the Ukranian locale! Help out in getting its localization to 100%!</p></li>
@@ -5833,10 +5838,10 @@ function kappa(t, B):
 						The reason you have a problem is that Bézier curves are parametric functions with non-linear behaviour, whereas moving a train along a
 						track is about as close to a practical example of linear behaviour as you can get. The problem we're faced with is that we can't just pick
 						<code>t</code> values at some fixed interval and expect the Bézier functions to generate points that are spaced a fixed distance apart. In
-						fact, let's look at the relation between "distance long a curve" and "<code>t</code> value", by plotting them against one another.
+						fact, let's look at the relation between "distance along a curve" and "<code>t</code> value", by plotting them against one another.
 					</p>
 					<p>
-						The following graphic shows a particularly illustrative curve, and it's distance-for-t plot. For linear traversal, this line needs to be
+						The following graphic shows a particularly illustrative curve, and its distance-for-t plot. For linear traversal, this line needs to be
 						straight, running from (0,0) to (length,1). That is, it's safe to say, not what we'll see: we'll see something very wobbly, instead. To
 						make matters even worse, the distance-for-t function is also of a much higher order than our curve is: while the curve we're using for
 						this exercise is a cubic curve, which can switch concave/convex form twice at best, the distance function is our old friend the arc length
@@ -6548,7 +6553,7 @@ lli = function(line1, line2):
 				</section>
 				<section id="projections">
 					<h1>
-						<div class="nav"><a href="uk-UA/index.html#pointcurves">попередній</a><a href="uk-UA/index.html#molding">наступний</a></div>
+						<div class="nav"><a href="uk-UA/index.html#pointcurves">попередній</a><a href="uk-UA/index.html#circleintersection">наступний</a></div>
 						<a href="uk-UA/index.html#projections">Projecting a point onto a Bézier curve</a>
 					</h1>
 					<p>
@@ -6640,13 +6645,305 @@ for (coordinate, index) in LUT:
 					>
 						<fallback-image>
 							<span class="view-source">Скрипти вимкнено. показує резервний.</span>
-							<img width="400px" height="400px" src="./images/chapters/projections/3cc334d0ebc01cc5352e23ed47bc5414.png" loading="lazy" />
+							<img width="400px" height="400px" src="./images/chapters/projections/536a94885dc1637c066d0ef4f6e4e650.png" loading="lazy" />
 							<label></label> </fallback-image
 					></graphics-element>
 				</section>
+				<section id="circleintersection">
+					<h1>
+						<div class="nav"><a href="uk-UA/index.html#projections">попередній</a><a href="uk-UA/index.html#molding">наступний</a></div>
+						<a href="uk-UA/index.html#circleintersection">Intersections with a circle</a>
+					</h1>
+					<p>
+						It might seem odd to cover this subject so much later than the line/line, line/curve, and curve/curve intersection topics from several
+						sections earlier, but the reason we can't cover circle/curve intersections is that we can't really discuss circle/curve intersection until
+						we've covered the kind of lookup table (LUT) walking that the section on projecting a point onto a curve uses. To see why, let's look at
+						what we would have to do if we wanted to find the intersections between a curve and a circle using calculus.
+					</p>
+					<p>
+						First, we observe that "finding intersections" in this case means that, given a circle defined by a center point
+						<code>c = (x,y)</code> and a radius <code>r</code>, we want to find all points on the Bezier curve for which the distance to the circle's
+						center point is equal to the circle radius, which by definition means those points lie on the circle, and so count as intersections. In
+						maths, that means we're trying to solve:
+					</p>
+					<!--
+\setmainfont[Ligatures=TeX]TeX Gyre Pagella \setmathfontTeX Gyre Pagella Math
+ 
+                                                             dist(B(t), c) = r
+-->
+					<img
+						class="LaTeX SVG"
+						src="./images/chapters/circleintersection/674c42035da16a426ef7fe23277eea11.svg"
+						width="108px"
+						height="16px"
+						loading="lazy"
+					/>
+					<p>Which seems simple enough. Unfortunately, when we expand that <code>dist</code> function, things get a lot more problematic:</p>
+					<!--
+\setmainfont[Ligatures=TeX]TeX Gyre Pagella \setmathfontTeX Gyre Pagella Math
+ 
+      r = dist(B(t), c)                                                                                                               
+           ┌─────────────────────────┐
+           │          2             2
+        =  │(B t - c )  + (B t - c )                                                                                                  
+          ⟍│  x     x       y     y                                                                                                   
+           ┌─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+           │╭         3             2                 2       3      ╮2   ╭         3             2                 2       3      ╮2
+        =  ││ x  (1-t)  + 3 x  (1-t)  t + 2 x  (1-t) t  + x  t  - c  │  + │ y  (1-t)  + 3 y  (1-t)  t + 2 y  (1-t) t  + y  t  - c  │  
+          ⟍│╰  1             2               3             4       x ╯    ╰  1             2               3             4       y ╯
+-->
+					<img
+						class="LaTeX SVG"
+						src="./images/chapters/circleintersection/699e6ea5bffbe8fe377af21a2bd28532.svg"
+						width="819px"
+						height="92px"
+						loading="lazy"
+					/>
+					<p>
+						And now we have a problem because that's a sixth degree polynomial inside the square root. So, thanks to the
+						<a href="https://en.wikipedia.org/wiki/Abel%E2%80%93Ruffini_theorem">Abel-Ruffini theorem</a> that we saw before, we can't solve this by
+						just going "square both sides because we don't care about signs"... we can't solve a sixth degree polynomial. So, we're going to have to
+						actually evaluate that expression. We can "simplify" this by translating all our coordinates so that the center of the circle is (0,0) and
+						all our coordinates are shifted accordingly, which makes the c<sub>x</sub> and c<sub>y</sub> terms fall away, but then we're still left
+						with a monstrous function to solve.
+					</p>
+					<p>
+						So instead, we turn to the same kind of "LUT walking" that we saw for projecting points onto a curve, with a twist: instead of finding the
+						on-curve point with the smallest distance to our projection point, we want to find the on-curve point that has the exact distance
+						<code>r</code> to our projection point (namely, our circle center). Of course, there can be more than one such point, so there's also a
+						bit more code to make sure we find all of them, but let's look at the steps involved:
+					</p>
+
+					<table class="code">
+						<tr>
+							<td>1</td>
+							<td rowspan="9">
+								<textarea disabled rows="9" role="doc-example">
+c = our circle's center point
+r = our circle's radius
+d = some initially huge value
+i = 0
+for (coordinate, index) in LUT:
+  q = abs(distance(coordinate, p) - r)
+  if q < d:
+    d = q
+    i = index</textarea
+								>
+							</td>
+						</tr>
+						<tr>
+							<td>2</td>
+						</tr>
+						<tr>
+							<td>3</td>
+						</tr>
+						<tr>
+							<td>4</td>
+						</tr>
+						<tr>
+							<td>5</td>
+						</tr>
+						<tr>
+							<td>6</td>
+						</tr>
+						<tr>
+							<td>7</td>
+						</tr>
+						<tr>
+							<td>8</td>
+						</tr>
+						<tr>
+							<td>9</td>
+						</tr>
+					</table>
+
+					<p>
+						This is <em>very</em> similar to the code in the previous section, but adapted so that we home in on points with an exact distance, rather
+						than "the smallest distance". So far so good. However, we also want to make sure we find <em>all</em> the points, not just a single one,
+						so we need a little more code for that:
+					</p>
+
+					<table class="code">
+						<tr>
+							<td>1</td>
+							<td rowspan="11">
+								<textarea disabled rows="11" role="doc-example">
+c = our circle's center point
+r = our circle's radius
+d = some initially huge value
+start = 0
+values = []
+run:
+    i = findClosest(start, x, y, r, LUT)
+    if (i < start) stop
+    if (i>0 && i === start) stop
+    values.add(i);
+    start = i + 2;</textarea
+								>
+							</td>
+						</tr>
+						<tr>
+							<td>2</td>
+						</tr>
+						<tr>
+							<td>3</td>
+						</tr>
+						<tr>
+							<td>4</td>
+						</tr>
+						<tr>
+							<td>5</td>
+						</tr>
+						<tr>
+							<td>6</td>
+						</tr>
+						<tr>
+							<td>7</td>
+						</tr>
+						<tr>
+							<td>8</td>
+						</tr>
+						<tr>
+							<td>9</td>
+						</tr>
+						<tr>
+							<td>10</td>
+						</tr>
+						<tr>
+							<td>11</td>
+						</tr>
+					</table>
+
+					<p>
+						After running this code, <code>values</code> will be the list of all LUT coordinates that are closest to the distance <code>r</code>: we
+						can use those values to run the same kind of refinement lookup we used for point projection (with the caveat that we're now
+						<em>not</em> checking for smallest distance, but for "distance closest to <code>r</code>"), and we'll have all our intersection points. Of
+						course, that does require explaining what <code>findClosest</code> does: rather than looking for a global minimum, we're now interested in
+						finding a <em>local</em> minimum, so instead of checking a single point and looking at its distance value, we check <em>three</em> points
+						("current", "previous" and "before previous") and then check whether they form a local minimum:
+					</p>
+
+					<table class="code">
+						<tr>
+							<td>1</td>
+							<td rowspan="20">
+								<textarea disabled rows="20" role="doc-example">
+findClosest(start, x, y, r, LUT):
+    D = some very large number
+    pd2 = LUT[start-2], if it exists. Otherwise use D
+    pd1 = LUT[start-1], if it exists. Otherwise use D
+    slice = LUT.subset(start, LUT.length)
+    epsilon = the largest point-to-point distance in our LUT
+    i = -1;
+
+    for (point, index) in slice:
+        q = abs(dist(point, (x,y)) - r);
+        if pd1 < epsilon && pd2 > pd1 && pd1 < q:
+            i = index - 1
+            break
+
+        if q < D: D = q
+
+        pd2 = pd1
+        pd1 = q
+
+  return start + i</textarea
+								>
+							</td>
+						</tr>
+						<tr>
+							<td>2</td>
+						</tr>
+						<tr>
+							<td>3</td>
+						</tr>
+						<tr>
+							<td>4</td>
+						</tr>
+						<tr>
+							<td>5</td>
+						</tr>
+						<tr>
+							<td>6</td>
+						</tr>
+						<tr>
+							<td>7</td>
+						</tr>
+						<tr>
+							<td>8</td>
+						</tr>
+						<tr>
+							<td>9</td>
+						</tr>
+						<tr>
+							<td>10</td>
+						</tr>
+						<tr>
+							<td>11</td>
+						</tr>
+						<tr>
+							<td>12</td>
+						</tr>
+						<tr>
+							<td>13</td>
+						</tr>
+						<tr>
+							<td>14</td>
+						</tr>
+						<tr>
+							<td>15</td>
+						</tr>
+						<tr>
+							<td>16</td>
+						</tr>
+						<tr>
+							<td>17</td>
+						</tr>
+						<tr>
+							<td>18</td>
+						</tr>
+						<tr>
+							<td>19</td>
+						</tr>
+						<tr>
+							<td>20</td>
+						</tr>
+					</table>
+
+					<p>
+						In words: given a <code>start</code> index, the circles <code>x</code>, <code>y</code>, and <code>r</code> values, and our LUT, we check
+						where, closest to out <code>start</code> index, we can find a local minimum for the difference between the distance to the circle center,
+						and the circle's radius value. We track this over three points, and we know we've found a local minimum if the distances
+						<code>{pd2, pd1, index}</code> show that the middle value (<code>pd1</code>) is lower than the values on either side. When we do, we can
+						set our "best guess related to <code>start</code>" as the index that belongs to that <code>pd1</code>. Of course, since we're not checking
+						values relative to some <code>start</code> value, we might not find another candidate value at all, in which case we return
+						<code>start - 1</code>, so that a simple "is the result less than <code>start</code>?" lets us determine that there are no more
+						intersections to find.
+					</p>
+					<p>
+						So, the following graphic shows this off for the standard cubic curve (which you can move the coordinates around for, of course) and a
+						circle with a controllable radius centered on the graphic's center, using the code approach described above.
+					</p>
+					<graphics-element
+						title="circle intersection"
+						width="275"
+						height="275"
+						src="./chapters/circleintersection/circle.js"
+						reset="скинути"
+						viewSource="view source"
+					>
+						<fallback-image>
+							<span class="view-source">Скрипти вимкнено. показує резервний.</span>
+							<img width="275px" height="275px" src="./images/chapters/circleintersection/ee119fad4c48f5e17871ff31268cf8cc.png" loading="lazy" />
+							<label>circle intersection</label>
+						</fallback-image>
+						<input type="range" min="1" max="150" step="1" value="70" class="slide-control" />
+					</graphics-element>
+					<p>And of course, for the full details, click that "view source" link.</p>
+				</section>
 				<section id="molding">
 					<h1>
-						<div class="nav"><a href="uk-UA/index.html#projections">попередній</a><a href="uk-UA/index.html#curvefitting">наступний</a></div>
+						<div class="nav"><a href="uk-UA/index.html#circleintersection">попередній</a><a href="uk-UA/index.html#curvefitting">наступний</a></div>
 						<a href="uk-UA/index.html#molding">Molding a curve</a>
 					</h1>
 					<p>
