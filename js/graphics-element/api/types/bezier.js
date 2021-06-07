@@ -145,7 +145,7 @@ class Bezier extends Original {
 
     let s = this.points.length;
     let n = this.points.length;
-    while (--n > 0) {
+    while (--n > 1) {
       api.start();
       for (let i = 0; i < n; i++) {
         let pt = p[s + i];

@@ -9,7 +9,7 @@ setup() {
       { x: w - pad, y: h/2},
       { x: w - pad, y: h/2}
     );
-    setSlider(`.slide-control`, `angle`, 1.4);
+    setSlider(`.slide-control`, `angle`, -PI/4, v => this.updateCurve(v));
 }
 
 draw() {
@@ -27,7 +27,6 @@ draw() {
   let a = this.angle;
   wedge(w/2, h/2, r, a < 0 ? a : 0, a < 0 ? 0 : a);
 
-  this.updateCurve(this.angle)
   curve.drawSkeleton();
   curve.drawCurve();
 
@@ -38,19 +37,20 @@ draw() {
   });
 }
 
-updateCurve(angle) {
+updateCurve(a) {
+  let angle = -a;
   let b = (cos(angle) - 1 ) / sin(angle);
 
   // new control point
   curve.points[1] = {
     x: w/2 + r * (cos(angle) - b * sin(angle) ),
-    y: h/2 + r * (sin(angle) + b * cos(angle) )
+    y: w/2 + r * (sin(angle) + b * cos(angle) )
   };
 
   // new endpoint
   curve.points[2] = {
     x: w/2 + r * cos(angle),
-    y: h/2 + r * sin(angle)
+    y: w/2 + r * sin(angle)
   };
 
   return angle;
