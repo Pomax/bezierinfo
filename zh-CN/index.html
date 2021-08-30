@@ -41,7 +41,7 @@
 		<meta property="og:locale" content="zh-CN" />
 		<meta property="og:type" content="article" />
 		<meta property="og:published_time" content="2013-06-13T12:00:00+00:00" />
-		<meta property="og:updated_time" content="2021-07-11T16:48:57+00:00" />
+		<meta property="og:updated_time" content="2021-08-30T15:07:53+00:00" />
 		<meta property="og:author" content="Mike 'Pomax' Kamermans" />
 		<meta property="og:section" content="Bézier Curves" />
 		<meta property="og:tag" content="Bézier Curves" />
@@ -1617,14 +1617,14 @@ function RationalBezier(3,t,w[],r[]):
 								<td>1</td>
 								<td rowspan="8">
 									<textarea disabled rows="8" role="doc-example">
-function drawCurve(points[], t):
+function drawCurvePoint(points[], t):
   if(points.length==1):
     draw(points[0])
   else:
     newpoints=array(points.size-1)
     for(i=0; i<newpoints.length; i++):
       newpoints[i] = (1-t) * points[i] + t * points[i+1]
-    drawCurve(newpoints, t)</textarea
+    drawCurvePoint(newpoints, t)</textarea
 									>
 								</td>
 							</tr>
@@ -1658,7 +1658,7 @@ function drawCurve(points[], t):
 								<td>1</td>
 								<td rowspan="10">
 									<textarea disabled rows="10" role="doc-example">
-function drawCurve(points[], t):
+function drawCurvePoint(points[], t):
   if(points.length==1):
     draw(points[0])
   else:
@@ -1667,7 +1667,7 @@ function drawCurve(points[], t):
       x = (1-t) * points[i].x + t * points[i+1].x
       y = (1-t) * points[i].y + t * points[i+1].y
       newpoints[i] = new point(x,y)
-    drawCurve(newpoints, t)</textarea
+    drawCurvePoint(newpoints, t)</textarea
 									>
 								</td>
 							</tr>
@@ -1870,7 +1870,7 @@ function drawFlattenedCurve(curve, segmentCount):
 									<textarea disabled rows="16" role="doc-example">
 left=[]
 right=[]
-function drawCurve(points[], t):
+function drawCurvePoint(points[], t):
   if(points.length==1):
     left.add(points[0])
     right.add(points[0])
@@ -1883,7 +1883,7 @@ function drawCurve(points[], t):
       if(i==newpoints.length-1):
         right.add(points[i+1])
       newpoints[i] = (1-t) * points[i] + t * points[i+1]
-    drawCurve(newpoints, t)</textarea
+    drawCurvePoint(newpoints, t)</textarea
 									>
 								</td>
 							</tr>
@@ -6210,30 +6210,30 @@ lli = function(line1, line2):
 					<!--
 \setmainfont[Ligatures=TeX]TeX Gyre Pagella \setmathfontTeX Gyre Pagella Math
  
-                                                            ╭          A' - e 
-                                                            │                1
-                                                            │ v = A' - ───────
-                                                            ╡  1        1 - t  
-                                                            │          A' - e 
-                                                            │                2
-                                                            │ v = A' - ───────
-                                                            ╰  2          t
+                                                             ╭         A - e 
+                                                             │              1
+                                                             │ v = A - ──────
+                                                             ╡  1      1 - t  
+                                                             │         A - e 
+                                                             │              2
+                                                             │ v = A - ──────
+                                                             ╰  2        t
 -->
-					<img class="LaTeX SVG" src="./images/chapters/abc/eccc1bdb9423bbfe2d42418fc8a7dd24.svg" width="132px" height="75px" loading="lazy" />
+					<img class="LaTeX SVG" src="./images/chapters/abc/68a25507037f1a9420c60a5cd3d10f47.svg" width="121px" height="73px" loading="lazy" />
 					<p>And then reverse engineer the curve's control points:</p>
 					<!--
 \setmainfont[Ligatures=TeX]TeX Gyre Pagella \setmathfontTeX Gyre Pagella Math
  
-                                                        ╭               v  -  start
-                                                        │                1
-                                                        │ C '=  start + ───────────
-                                                        ╡  1                 t      
-                                                        │             v  -  end
-                                                        │              2
-                                                        │ C '=  end + ─────────    
-                                                        ╰  2            1 - t
+                                                        ╭              v  -  start
+                                                        │               1
+                                                        │ C =  start + ───────────
+                                                        ╡  1                t      
+                                                        │            v  -  end
+                                                        │             2
+                                                        │ C =  end + ─────────    
+                                                        ╰  2           1 - t
 -->
-					<img class="LaTeX SVG" src="./images/chapters/abc/634d373310711268cc188f45e5699d8d.svg" width="163px" height="73px" loading="lazy" />
+					<img class="LaTeX SVG" src="./images/chapters/abc/2184aa2a897df864b3a67984be18ef27.svg" width="163px" height="73px" loading="lazy" />
 					<p>
 						So: if we have a curve's start and end points, then for any <code>t</code> value we implicitly know all the ABC values, which (combined
 						with an educated guess on appropriate <code>e1</code> and <code>e2</code> coordinates for cubic curves) gives us the necessary information
@@ -6405,7 +6405,7 @@ lli = function(line1, line2):
 						us:
 					</p>
 					<graphics-element
-						title="Fitting a quadratic Bézier curve"
+						title="Fitting a cubic Bézier curve"
 						width="275"
 						height="275"
 						src="./chapters/pointcurves/cubic.js"
@@ -6415,7 +6415,7 @@ lli = function(line1, line2):
 						<fallback-image>
 							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
 							<img width="275px" height="275px" src="./images/chapters/pointcurves/eab6ea46fa93030e03ec0ef7deb571dc.png" loading="lazy" />
-							<label>Fitting a quadratic Bézier curve</label>
+							<label>Fitting a cubic Bézier curve</label>
 						</fallback-image></graphics-element
 					>
 					<p>That looks perfectly serviceable!</p>
