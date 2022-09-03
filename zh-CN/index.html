@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>贝塞尔曲线底漆</title>
+		<title>贝塞尔曲线入门</title>
 
 		<base href=".." />
 
@@ -24,24 +24,18 @@
 		<link rel="stylesheet" href="style.css" />
 
 		<!-- And a slew of SEO related meta elements, because being discoverable is important -->
-		<meta
-			name="description"
-			content="A detailed explanation of Bézier curves, and how to do the many things that we commonly want to do with them."
-		/>
+		<meta name="description" content="关于贝塞尔曲线的详细解释，以及如何用它做许多我们经常要做的事情。" />
 
 		<!-- opengraph information -->
-		<meta property="og:title" content="贝塞尔曲线底漆" />
+		<meta property="og:title" content="贝塞尔曲线入门" />
 		<meta property="og:image" content="https://pomax.github.io/bezierinfo/images/og-image.png" />
 		<meta property="og:type" content="text" />
 		<meta property="og:url" content="https://pomax.github.io/bezierinfo/zh-CN" />
-		<meta
-			property="og:description"
-			content="A detailed explanation of Bézier curves, and how to do the many things that we commonly want to do with them."
-		/>
+		<meta property="og:description" content="关于贝塞尔曲线的详细解释，以及如何用它做许多我们经常要做的事情。" />
 		<meta property="og:locale" content="zh-CN" />
 		<meta property="og:type" content="article" />
 		<meta property="og:published_time" content="2013-06-13T12:00:00+00:00" />
-		<meta property="og:updated_time" content="2022-01-08T18:14:03+00:00" />
+		<meta property="og:updated_time" content="2022-09-03T16:57:50+00:00" />
 		<meta property="og:author" content="Mike 'Pomax' Kamermans" />
 		<meta property="og:section" content="Bézier Curves" />
 		<meta property="og:tag" content="Bézier Curves" />
@@ -52,10 +46,7 @@
 		<meta name="twitter:creator" content="@TheRealPomax" />
 		<meta name="twitter:image" content="https://pomax.github.io/bezierinfo/images/og-image.png" />
 		<meta name="twitter:url" content="https://pomax.github.io/bezierinfo/zh-CN" />
-		<meta
-			name="twitter:description"
-			content="A detailed explanation of Bézier curves, and how to do the many things that we commonly want to do with them."
-		/>
+		<meta name="twitter:description" content="关于贝塞尔曲线的详细解释，以及如何用它做许多我们经常要做的事情。" />
 
 		<!-- my own referral/page hit tracker, because Google knows enough -->
 		<script src="./js/site/referrer.js" type="module" async></script>
@@ -128,59 +119,58 @@
 
 		<header>
 			<h1>
-				贝塞尔曲线底漆<a class="rss-link" href="news/rss.xml"><img src="images/rss.png" /></a>
+				贝塞尔曲线入门<a class="rss-link" href="news/rss.xml"><img src="images/rss.png" /></a>
 			</h1>
-			<h2>A free, online book for when you really need to know how to do Bézier things.</h2>
+			<h2>一本免费的在线书籍，供你在非常需要了解如何处理贝塞尔相关的事情。</h2>
 			<div>
-				<span>Read this in your own language:</span>
+				<span>用母语阅读该资源：</span>
 				<ul class="lang-switcher">
 					<li><a href="./index.html">English</a> &nbsp;</li>
 					<li><a href="./ja-JP/index.html">日本語</a> <span class="localisation-progress">(24%)</span></li>
-					<li><a href="./zh-CN/index.html">中文</a> <span class="localisation-progress">(22%)</span></li>
+					<li><a href="./zh-CN/index.html">中文</a> <span class="localisation-progress">(35%)</span></li>
 					<li><a href="./ru-RU/index.html">Русский</a> <span class="localisation-progress">(24%)</span></li>
 					<li><a href="./uk-UA/index.html">Українська</a> <span class="localisation-progress">(2%)</span></li>
-					<li><a href="./ko-KR/index.html">한국어</a> <span class="localisation-progress">(7%)</span></li>
+					<li><a href="./ko-KR/index.html">한국어</a> <span class="localisation-progress">(9%)</span></li>
 				</ul>
 				<p>
-					(Don't see your language listed, or want to see it reach 100%?
-					<a href="https://github.com/Pomax/BezierInfo-2/wiki/help-localize-the-primer-on-bezier-curves">Help translate this content!</a>)
+					(没有看到你的语言被列出，或者想看到它达到100%翻译？
+					<a href="https://github.com/Pomax/BezierInfo-2/wiki/help-localize-the-primer-on-bezier-curves">帮助翻译本资源！</a>)
 				</p>
 			</div>
 
 			<p>
-				Welcome to the Primer on Bezier Curves. This is a free website/ebook dealing with both the maths and programming aspects of Bezier Curves,
-				covering a wide range of topics relating to drawing and working with that curve that seems to pop up everywhere, from Photoshop paths to CSS
-				easing functions to Font outline descriptions.
+				欢迎来到贝塞尔曲线入门。这是一个免费的网站/电子书，涉及贝塞尔曲线的数学和编程的的部分，涵盖的
+				主题很多，包括绘制和处理那条似乎无处不在的曲线，从 Photoshop 的路径到 CSS 缓动函数，再到字体 轮廓描述。
 			</p>
 			<p>
-				If this is your first time here: welcome! Let me know if you were looking for anything in particular that the primer doesn't cover over on the
-				<a href="https://github.com/Pomax/BezierInfo-2/issues">issue tracker</a>!
+				如果这是你第一次来到这里，那么欢迎你！告诉我任何你想要在这里找到但却没有涵盖的内容，请通过
+				<a href="https://github.com/Pomax/BezierInfo-2/issues">issue tracker</a> 反馈!
 			</p>
 
-			<h2>Donations and sponsorship</h2>
+			<h2>捐款和赞助</h2>
 
 			<p>
-				If this is a resource that you're using for research, as work reference, or even writing your own software, please consider
-				<a href="https://www.paypal.com/donate/?cmd=_s-xclick&hosted_button_id=3BNHGHZAS3DP6&locale.x=en_CA">donating</a> (any amount helps) or
-				signing up as <a href="https://www.patreon.com/bezierinfo">a patron on Patreon</a>. I don't get paid to work on this, so if you find this site
-				valuable, and you'd like it to stick around for a long time to come, a lot of coffee went into writing this over the years, and a lot more
-				coffee will need to go into it yet: if you can spare a coffee, you'd be helping keep a resource alive and well.
+				如果将此资源用于你的研究，作为工作参考，甚至是你编写的软件，可以考虑
+				<a href="https://www.paypal.com/donate/?cmd=_s-xclick&hosted_button_id=3BNHGHZAS3DP6&locale.x=en_CA">捐款</a> （任何数额都可）或注册成为
+				<a href="https://www.patreon.com/bezierinfo">Patreon 上的资助人</a>。
+				我在这方面的工作是没有报酬的，所以如果你觉得这个网站有价值，并且希望它能长期存在下去，那么在过去的几年
+				里，我喝了大量的咖啡来编写这个网站。如果你能捐助出一杯咖啡，你就在帮助保持这个资源的生存下去并良好发展。
 			</p>
 			<p>
-				Also, if you are a company and your staff uses this book as a resource, or you use it as an onboarding resource, then please: consider
-				sponsoring the site! I am more than happy to work with your finance department on sponsorship invoicing and recognition.
+				此外，如果你是一家公司，你的员工使用这本书作为资源，或者你把它作为一个入职培训资源，那么请：考虑赞助此网站！
+				我很高兴与您合作。我非常乐意和财务部门合作，提供赞助发票和表彰。
 			</p>
 
 			<!--
 <div class="btcfh">
     <div>
         <h3>
-            Bitcoin donations:
+            捐赠比特币：
         </h3>
         <p>
-        If you prefer to donate via Bitcoin, you can donate either directly to
+        如果你想通过比特币捐赠，你可以直接捐赠给
         <a class="btclk" href="bitcoin:3GY1HbQ2cH9V4xBLnRYdEfc42Nd1ZyjLZu?label=Primer%20on%20Bezier%20Curves">3GY1HbQ2cH9V4xBLnRYdEfc42Nd1ZyjLZu</a>
-        or use the QR code on the right, if that's the kind of convenience you prefer =)
+        或者使用右边的二维码，如果你倾向于这种便利的方式 =)
       </p>
     
     </div>
@@ -221,9 +211,9 @@
 				<h4>前言</h4>
 				<ol class="preamble">
 					<li><a href="zh-CN/index.html#preface">序言 </a></li>
-					<li><a href="zh-CN/index.html#changelog">What's new</a></li>
+					<li><a href="zh-CN/index.html#changelog">变更日志</a></li>
 				</ol>
-				<h4>Main content</h4>
+				<h4>目录</h4>
 				<ol>
 					<li><a href="zh-CN/index.html#introduction">简单介绍</a></li>
 					<li><a href="zh-CN/index.html#whatis">什么构成了贝塞尔曲线？</a></li>
@@ -235,12 +225,12 @@
 					<li><a href="zh-CN/index.html#decasteljau">de Casteljau's 算法</a></li>
 					<li><a href="zh-CN/index.html#flattening">简化绘图</a></li>
 					<li><a href="zh-CN/index.html#splitting">分割曲线</a></li>
-					<li><a href="zh-CN/index.html#matrixsplit">Splitting curves using matrices</a></li>
-					<li><a href="zh-CN/index.html#reordering">Lowering and elevating curve order</a></li>
-					<li><a href="zh-CN/index.html#derivatives">Derivatives</a></li>
-					<li><a href="zh-CN/index.html#pointvectors">Tangents and normals</a></li>
-					<li><a href="zh-CN/index.html#pointvectors3d">Working with 3D normals</a></li>
-					<li><a href="zh-CN/index.html#components">Component functions</a></li>
+					<li><a href="zh-CN/index.html#matrixsplit">用矩阵分割曲线</a></li>
+					<li><a href="zh-CN/index.html#reordering">曲线的升次与降次</a></li>
+					<li><a href="zh-CN/index.html#derivatives">导数</a></li>
+					<li><a href="zh-CN/index.html#pointvectors">切线与法线</a></li>
+					<li><a href="zh-CN/index.html#pointvectors3d">三维法向量</a></li>
+					<li><a href="zh-CN/index.html#components">分量函数</a></li>
 					<li><a href="zh-CN/index.html#extremities">Finding extremities: root finding</a></li>
 					<li><a href="zh-CN/index.html#boundingbox">Bounding boxes</a></li>
 					<li><a href="zh-CN/index.html#aligning">Aligning curves</a></li>
@@ -330,17 +320,13 @@
 				</div>
 			</section>
 			<section id="changelog">
-				<h1>What's new?</h1>
+				<h1>变更日志</h1>
 				<p>
-					This primer is a living document, and so depending on when you last look at it, there may be new content. Click the following link to expand
-					this section to have a look at what got added, when, or click through to the <a href="./news">News posts</a> for more detailed updates. (<a
-						href="./news/rss.xml"
-						>RSS feed</a
-					>
-					available)
+					本入门是一份活动文档，因此它可能会有新的内容，这取决于你上次查看的时间。单击以下链接以展开，查看添加的内容、时间，或点击浏览
+					<a href="./news">News posts</a> 获取更多更新信息。 (<a href="./news/rss.xml">RSS feed</a> 可用)
 				</p>
 				<!-- non-JS content reveals are nice -->
-				<label for="changelogtoggle">Toggle changes</label>
+				<label for="changelogtoggle">隐藏/显示变更日志</label>
 				<input type="checkbox" id="changelogtoggle" />
 				<section>
 					<h2>November 2020</h2>
@@ -483,7 +469,7 @@
 			<section id="chapters">
 				<section id="introduction">
 					<h1>
-						<div class="nav"><a href="#toc">目录</a><a href="zh-CN/index.html#whatis">下</a></div>
+						<div class="nav"><a href="#toc">目录</a><a href="zh-CN/index.html#whatis">下一节</a></div>
 						<a href="zh-CN/index.html#introduction">简单介绍</a>
 					</h1>
 					<p>
@@ -495,11 +481,11 @@
 							width="275"
 							height="275"
 							src="./chapters/introduction/quadratic.js"
-							reset="重启"
-							viewSource="view source"
+							reset="重置"
+							viewSource="查看源码"
 						>
 							<fallback-image>
-								<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+								<span class="view-source">脚本被禁用。显示备用图片。</span>
 								<img width="275px" height="275px" src="./images/chapters/introduction/54e9ec0600ac436b0e6f0c6b5005cf03.png" loading="lazy" />
 								<label>二次贝塞尔曲线</label>
 							</fallback-image></graphics-element
@@ -509,11 +495,11 @@
 							width="275"
 							height="275"
 							src="./chapters/introduction/cubic.js"
-							reset="重启"
-							viewSource="view source"
+							reset="重置"
+							viewSource="查看源码"
 						>
 							<fallback-image>
-								<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+								<span class="view-source">脚本被禁用。显示备用图片。</span>
 								<img width="275px" height="275px" src="./images/chapters/introduction/8d158a13e9a86969b99c64057644cbc6.png" loading="lazy" />
 								<label>三次贝塞尔曲线</label>
 							</fallback-image></graphics-element
@@ -527,7 +513,9 @@
 				</section>
 				<section id="whatis">
 					<h1>
-						<div class="nav"><a href="zh-CN/index.html#introduction">前</a><a href="#toc">目录</a><a href="zh-CN/index.html#explanation">下</a></div>
+						<div class="nav">
+							<a href="zh-CN/index.html#introduction">上一节</a><a href="#toc">目录</a><a href="zh-CN/index.html#explanation">下一节</a>
+						</div>
 						<a href="zh-CN/index.html#whatis">什么构成了贝塞尔曲线？</a>
 					</h1>
 					<p>
@@ -552,25 +540,23 @@ Given │  distance= (p  - p )         │,  our new point = p  +  distance  · 
 -->
 					<img class="LaTeX SVG" src="./images/chapters/whatis/c7f8cdd755d744412476b87230d0400d.svg" width="493px" height="103px" loading="lazy" />
 					<p>
-						让我们来通过实际操作看一下：下面的图形都是可交互的，因此你可以通过上下键来增加或减少插值距离，来观察图形的变化。我们从三个点构成的两条线段开始。通过对各条线段进行线性插值得到两个点，对点之间的线段再进行线性插值，产生一个新的点。最终这些点——所有的点都可以通过选取不同的距离插值产生——构成了贝塞尔曲线
-						：
-						<graphics-element
-							title="Linear Interpolation leading to Bézier curves"
-							width="825"
-							height="275"
-							src="./chapters/whatis/interpolation.js"
-							reset="重启"
-							viewSource="view source"
-						>
-							<fallback-image>
-								<span class="view-source">Scripts are disabled. Showing fallback image.</span>
-								<img width="825px" height="275px" src="./images/chapters/whatis/524dd296e96c0fe2281fb95146f8ea65.png" loading="lazy" />
-								<label></label>
-							</fallback-image>
-							<input type="range" min="10" max="90" step="1" value="25" class="slide-control" />
-						</graphics-element>
+						让我们来通过实际操作看一下：下面的图形都是可交互的，因此你可以通过上下键来增加或减少插值距离，来观察图形的变化。我们从三个点构成的两条线段开始。通过对各条线段进行线性插值得到两个点，对点之间的线段再进行线性插值，产生一个新的点。最终这些点——所有的点都可以通过选取不同的距离插值产生——构成了贝塞尔曲线：
 					</p>
-
+					<graphics-element
+						title="Linear Interpolation leading to Bézier curves"
+						width="825"
+						height="275"
+						src="./chapters/whatis/interpolation.js"
+						reset="重置"
+						viewSource="查看源码"
+					>
+						<fallback-image>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
+							<img width="825px" height="275px" src="./images/chapters/whatis/524dd296e96c0fe2281fb95146f8ea65.png" loading="lazy" />
+							<label></label>
+						</fallback-image>
+						<input type="range" min="10" max="90" step="1" value="25" class="slide-control" />
+					</graphics-element>
 					<p>这为我们引出了复杂的数学：微积分。</p>
 					<p>
 						虽然我们刚才好像没有用到这个，我们实际上只是逐步地画了一条二次曲线，而不是一次画好。贝塞尔曲线的一个很棒的特性就是它们可以通过多项式方程表示，也可以用很简单的插值形式表示。因此，反过来说，我们可以基于“真正的数学”（检查方程式，导数之类的东西），也可以通过观察曲线的“机械”构成（比如说，可以得知曲线永远不会延伸超过我们用来构造它的点），来看看这些曲线能够做什么。
@@ -579,7 +565,7 @@ Given │  distance= (p  - p )         │,  our new point = p  +  distance  · 
 				</section>
 				<section id="explanation">
 					<h1>
-						<div class="nav"><a href="zh-CN/index.html#whatis">前</a><a href="#toc">目录</a><a href="zh-CN/index.html#control">下</a></div>
+						<div class="nav"><a href="zh-CN/index.html#whatis">上一节</a><a href="#toc">目录</a><a href="zh-CN/index.html#control">下一节</a></div>
 						<a href="zh-CN/index.html#explanation">贝塞尔曲线的数学原理</a>
 					</h1>
 					<p>
@@ -635,11 +621,11 @@ f(b) = sin (b)
 						width="275"
 						height="275"
 						src="./chapters/explanation/circle.js"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="275px" height="275px" src="./images/chapters/explanation/959762e39ae32407e914a687d804ff3a.png" loading="lazy" />
 							<label>(一部分的)圆: x=sin(t), y=cos(t)</label>
 						</fallback-image>
@@ -952,7 +938,9 @@ function Bezier(3,t):
 				</section>
 				<section id="control">
 					<h1>
-						<div class="nav"><a href="zh-CN/index.html#explanation">前</a><a href="#toc">目录</a><a href="zh-CN/index.html#weightcontrol">下</a></div>
+						<div class="nav">
+							<a href="zh-CN/index.html#explanation">上一节</a><a href="#toc">目录</a><a href="zh-CN/index.html#weightcontrol">下一节</a>
+						</div>
 						<a href="zh-CN/index.html#control">控制贝塞尔的曲率</a>
 					</h1>
 					<p>
@@ -968,11 +956,11 @@ function Bezier(3,t):
 							height="275"
 							src="./chapters/control/lerp.js"
 							data-degree="3"
-							reset="重启"
-							viewSource="view source"
+							reset="重置"
+							viewSource="查看源码"
 						>
 							<fallback-image>
-								<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+								<span class="view-source">脚本被禁用。显示备用图片。</span>
 								<img width="275px" height="275px" src="./images/chapters/control/8332e5d34b7344bbee2a2e1f4521ce46.png" loading="lazy" />
 								<label>二次插值</label>
 							</fallback-image>
@@ -984,11 +972,11 @@ function Bezier(3,t):
 							height="275"
 							src="./chapters/control/lerp.js"
 							data-degree="4"
-							reset="重启"
-							viewSource="view source"
+							reset="重置"
+							viewSource="查看源码"
 						>
 							<fallback-image>
-								<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+								<span class="view-source">脚本被禁用。显示备用图片。</span>
 								<img width="275px" height="275px" src="./images/chapters/control/1b8c5e574dc67bfb0afc3fb0a8727378.png" loading="lazy" />
 								<label>三次插值</label>
 							</fallback-image>
@@ -1000,11 +988,11 @@ function Bezier(3,t):
 							height="275"
 							src="./chapters/control/lerp.js"
 							data-degree="15"
-							reset="重启"
-							viewSource="view source"
+							reset="重置"
+							viewSource="查看源码"
 						>
 							<fallback-image>
-								<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+								<span class="view-source">脚本被禁用。显示备用图片。</span>
 								<img width="275px" height="275px" src="./images/chapters/control/c26d2655e8741ef7e2eeb4f6554fc7a5.png" loading="lazy" />
 								<label>15次插值</label>
 							</fallback-image>
@@ -1137,7 +1125,7 @@ function Bezier(3,t,w[]):
 				</section>
 				<section id="weightcontrol">
 					<h1>
-						<div class="nav"><a href="zh-CN/index.html#control">前</a><a href="#toc">目录</a><a href="zh-CN/index.html#extended">下</a></div>
+						<div class="nav"><a href="zh-CN/index.html#control">上一节</a><a href="#toc">目录</a><a href="zh-CN/index.html#extended">下一节</a></div>
 						<a href="zh-CN/index.html#weightcontrol">Controlling Bézier curvatures, part 2: Rational Béziers</a>
 					</h1>
 					<p>
@@ -1203,11 +1191,11 @@ Rational  Bézier(n,t) = ──────────────────�
 						width="275"
 						height="275"
 						src="./chapters/weightcontrol/rational.js"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="275px" height="275px" src="./images/chapters/weightcontrol/3d71e2b9373684eebcb0dc8563f70b18.png" loading="lazy" />
 							<label>Our rational cubic Bézier curve</label>
 						</fallback-image>
@@ -1342,7 +1330,9 @@ function RationalBezier(3,t,w[],r[]):
 				</section>
 				<section id="extended">
 					<h1>
-						<div class="nav"><a href="zh-CN/index.html#weightcontrol">前</a><a href="#toc">目录</a><a href="zh-CN/index.html#matrix">下</a></div>
+						<div class="nav">
+							<a href="zh-CN/index.html#weightcontrol">上一节</a><a href="#toc">目录</a><a href="zh-CN/index.html#matrix">下一节</a>
+						</div>
 						<a href="zh-CN/index.html#extended">贝塞尔区间[0,1]</a>
 					</h1>
 					<p>
@@ -1383,11 +1373,11 @@ m = a  ·  value  + (1 - a)  ·  value
 							height="275"
 							src="./chapters/extended/extended.js"
 							data-type="quadratic"
-							reset="重启"
-							viewSource="view source"
+							reset="重置"
+							viewSource="查看源码"
 						>
 							<fallback-image>
-								<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+								<span class="view-source">脚本被禁用。显示备用图片。</span>
 								<img width="275px" height="275px" src="./images/chapters/extended/37948bde4bf0d25bde85f172bf55b9fb.png" loading="lazy" />
 								<label>二次无限区间贝塞尔曲线</label>
 							</fallback-image></graphics-element
@@ -1398,11 +1388,11 @@ m = a  ·  value  + (1 - a)  ·  value
 							height="275"
 							src="./chapters/extended/extended.js"
 							data-type="cubic"
-							reset="重启"
-							viewSource="view source"
+							reset="重置"
+							viewSource="查看源码"
 						>
 							<fallback-image>
-								<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+								<span class="view-source">脚本被禁用。显示备用图片。</span>
 								<img width="275px" height="275px" src="./images/chapters/extended/2d17acb381ebdd28f0ff43be00d723c4.png" loading="lazy" />
 								<label>三次无限区间贝塞尔曲线</label>
 							</fallback-image></graphics-element
@@ -1422,7 +1412,9 @@ m = a  ·  value  + (1 - a)  ·  value
 				</section>
 				<section id="matrix">
 					<h1>
-						<div class="nav"><a href="zh-CN/index.html#extended">前</a><a href="#toc">目录</a><a href="zh-CN/index.html#decasteljau">下</a></div>
+						<div class="nav">
+							<a href="zh-CN/index.html#extended">上一节</a><a href="#toc">目录</a><a href="zh-CN/index.html#decasteljau">下一节</a>
+						</div>
 						<a href="zh-CN/index.html#matrix">用矩阵运算来表示贝塞尔曲率</a>
 					</h1>
 					<p>
@@ -1546,7 +1538,7 @@ B(t) = ┌      2 ┐  · │ -2  2 0 │  · │ P  │
 				</section>
 				<section id="decasteljau">
 					<h1>
-						<div class="nav"><a href="zh-CN/index.html#matrix">前</a><a href="#toc">目录</a><a href="zh-CN/index.html#flattening">下</a></div>
+						<div class="nav"><a href="zh-CN/index.html#matrix">上一节</a><a href="#toc">目录</a><a href="zh-CN/index.html#flattening">下一节</a></div>
 						<a href="zh-CN/index.html#decasteljau">de Casteljau's 算法</a>
 					</h1>
 					<p>
@@ -1573,11 +1565,11 @@ B(t) = ┌      2 ┐  · │ -2  2 0 │  · │ P  │
 						width="275"
 						height="275"
 						src="./chapters/decasteljau/decasteljau.js"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="275px" height="275px" src="./images/chapters/decasteljau/df92f529841f39decf9ad62b0967855a.png" loading="lazy" />
 							<label>用de Casteljau算法来遍历曲线</label>
 						</fallback-image>
@@ -1683,7 +1675,9 @@ function drawCurvePoint(points[], t):
 				</section>
 				<section id="flattening">
 					<h1>
-						<div class="nav"><a href="zh-CN/index.html#decasteljau">前</a><a href="#toc">目录</a><a href="zh-CN/index.html#splitting">下</a></div>
+						<div class="nav">
+							<a href="zh-CN/index.html#decasteljau">上一节</a><a href="#toc">目录</a><a href="zh-CN/index.html#splitting">下一节</a>
+						</div>
 						<a href="zh-CN/index.html#flattening">简化绘图</a>
 					</h1>
 					<p>
@@ -1699,11 +1693,11 @@ function drawCurvePoint(points[], t):
 							height="275"
 							src="./chapters/flattening/flatten.js"
 							data-type="quadratic"
-							reset="重启"
-							viewSource="view source"
+							reset="重置"
+							viewSource="查看源码"
 						>
 							<fallback-image>
-								<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+								<span class="view-source">脚本被禁用。显示备用图片。</span>
 								<img width="275px" height="275px" src="./images/chapters/flattening/6813bfc608aea11df1dda444b9f18123.png" loading="lazy" />
 								<label>拉平一条二次曲线</label>
 							</fallback-image>
@@ -1715,11 +1709,11 @@ function drawCurvePoint(points[], t):
 							height="275"
 							src="./chapters/flattening/flatten.js"
 							data-type="cubic"
-							reset="重启"
-							viewSource="view source"
+							reset="重置"
+							viewSource="查看源码"
 						>
 							<fallback-image>
-								<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+								<span class="view-source">脚本被禁用。显示备用图片。</span>
 								<img width="275px" height="275px" src="./images/chapters/flattening/0e0e4a2ee46bd89bcfde9f75cfe43292.png" loading="lazy" />
 								<label>拉平一条三次曲线</label>
 							</fallback-image>
@@ -1811,7 +1805,9 @@ function drawFlattenedCurve(curve, segmentCount):
 				</section>
 				<section id="splitting">
 					<h1>
-						<div class="nav"><a href="zh-CN/index.html#flattening">前</a><a href="#toc">目录</a><a href="zh-CN/index.html#matrixsplit">下</a></div>
+						<div class="nav">
+							<a href="zh-CN/index.html#flattening">上一节</a><a href="#toc">目录</a><a href="zh-CN/index.html#matrixsplit">下一节</a>
+						</div>
 						<a href="zh-CN/index.html#splitting">分割曲线</a>
 					</h1>
 					<p>
@@ -1819,16 +1815,9 @@ function drawFlattenedCurve(curve, segmentCount):
 						Casteljau 算法时，该过程会给到我们在 <code>t</code> 点分割曲线的所有点:
 						一条曲线包含该曲线上点之前的所有点，另一条曲线包含该曲线上点之后的所有点。
 					</p>
-					<graphics-element
-						title="分割一条曲线"
-						width="825"
-						height="275"
-						src="./chapters/splitting/splitting.js"
-						reset="重启"
-						viewSource="view source"
-					>
+					<graphics-element title="分割一条曲线" width="825" height="275" src="./chapters/splitting/splitting.js" reset="重置" viewSource="查看源码">
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="825px" height="275px" src="./images/chapters/splitting/fce5eb16dfcd103797c5e17bd77f1437.png" loading="lazy" />
 							<label></label>
 						</fallback-image>
@@ -1917,13 +1906,14 @@ function drawCurvePoint(points[], t):
 				</section>
 				<section id="matrixsplit">
 					<h1>
-						<div class="nav"><a href="zh-CN/index.html#splitting">前</a><a href="#toc">目录</a><a href="zh-CN/index.html#reordering">下</a></div>
-						<a href="zh-CN/index.html#matrixsplit">Splitting curves using matrices</a>
+						<div class="nav">
+							<a href="zh-CN/index.html#splitting">上一节</a><a href="#toc">目录</a><a href="zh-CN/index.html#reordering">下一节</a>
+						</div>
+						<a href="zh-CN/index.html#matrixsplit">用矩阵分割曲线</a>
 					</h1>
 					<p>
-						Another way to split curves is to exploit the matrix representation of a Bézier curve. In <a href="#matrix">the section on matrices</a>,
-						we saw that we can represent curves as matrix multiplications. Specifically, we saw these two forms for the quadratic and cubic curves
-						respectively: (we'll reverse the Bézier coefficients vector for legibility)
+						另一种分割曲线的方法是利用贝塞尔曲线的矩阵表示。<a href="#matrix">矩阵一章</a
+						>已经说明可以用矩阵乘法表示曲线，尤其是以下两种分别表示二次曲线和三次曲线的形式（为提高可读性，贝塞尔曲线的系数向量已被倒转次序）：
 					</p>
 					<!--
  
@@ -1936,12 +1926,12 @@ B(t) = ┌      2 ┐  · │ -2  2 0 │  · │ P  │
 -->
 					<img
 						class="LaTeX SVG"
-						src="./images/chapters/matrixsplit/1bae50fefa43210b3a6259d1984f6cbc.svg"
-						width="263px"
+						src="./images/chapters/matrixsplit/68dc5729d950ae8b19343df4bf9db6ec.svg"
+						width="269px"
 						height="55px"
 						loading="lazy"
 					/>
-					<p>and</p>
+					<p>和</p>
 					<!--
  
                                           ┌ P  ┐
@@ -1955,15 +1945,14 @@ B(t) = ┌      2  3 ┐  · │ -3  3  0 0 │  · │  2 │
 -->
 					<img
 						class="LaTeX SVG"
-						src="./images/chapters/matrixsplit/f690ff0502d9fd7d4697cc43d98afd5d.svg"
-						width="323px"
-						height="73px"
+						src="./images/chapters/matrixsplit/41771b04ff6a3dd2cb9532c1abb96b66.svg"
+						width="329px"
+						height="75px"
 						loading="lazy"
 					/>
 					<p>
-						Let's say we want to split the curve at some point <code>t = z</code>, forming two new (obviously smaller) Bézier curves. To find the
-						coordinates for these two Bézier curves, we can use the matrix representation and some linear algebra. First, we separate out the actual
-						"point on the curve" information into a new matrix multiplication:
+						假设要在点<code>t = z</code
+						>处分割曲线得到两条新的（且显然更小的）贝塞尔曲线，则可以用矩阵表示和一点线性代数求出这两条贝塞尔曲线的坐标。首先将实际的“线上点”信息分离到新的矩阵乘法中：
 					</p>
 					<!--
  
@@ -1976,12 +1965,12 @@ B(t) = ┌                    2 ┐  · │ -2  2 0 │  · │ P  │ = ┌    
 -->
 					<img
 						class="LaTeX SVG"
-						src="./images/chapters/matrixsplit/f565e66677138927335535d009409c3d.svg"
-						width="648px"
+						src="./images/chapters/matrixsplit/b40a928e34c6ebefb6d41d8ad6e6dde9.svg"
+						width="667px"
 						height="55px"
 						loading="lazy"
 					/>
-					<p>and</p>
+					<p>以及</p>
 					<!--
  
                                                                ┌ P  ┐                                                       ┌ P  ┐
@@ -1995,23 +1984,19 @@ B(t) = ┌                    2         3 ┐  · │ -3  3  0 0 │  · │  2 
 -->
 					<img
 						class="LaTeX SVG"
-						src="./images/chapters/matrixsplit/ebf8d72c6056476172deeb89726b75c8.svg"
-						width="805px"
-						height="75px"
+						src="./images/chapters/matrixsplit/d95cc044a282d8bae130e767a69b6e68.svg"
+						width="809px"
+						height="73px"
 						loading="lazy"
 					/>
 					<p>
-						If we could compact these matrices back to the form <strong>[t values] · [Bézier matrix] · [column matrix]</strong>, with the first two
-						staying the same, then that column matrix on the right would be the coordinates of a new Bézier curve that describes the first segment,
-						from <code>t = 0</code> to <code>t = z</code>. As it turns out, we can do this quite easily, by exploiting some simple rules of linear
-						algebra (and if you don't care about the derivations, just skip to the end of the box for the results!).
+						如果可以将这些矩阵组合成**[t值] · [贝塞尔矩阵] · [列矩阵]**的形式且前两项保持不变，那么右侧的列矩阵即为描述从<code>t = 0</code>到<code
+							>t = z</code
+						>的第一段新的贝塞尔曲线的坐标。利用线性代数的一些简单的法则可以很轻松地做到这一点。（如果不在乎推导过程，那么可以直接跳到方框底部得到结果！）
 					</p>
 					<div class="note">
-						<h2>Deriving new hull coordinates</h2>
-						<p>
-							Deriving the two segments upon splitting a curve takes a few steps, and the higher the curve order, the more work it is, so let's look
-							at the quadratic curve first:
-						</p>
+						<h2>推导新的凸包坐标</h2>
+						<p>推导分割曲线后所得两段曲线的坐标要花上几步，而且曲线次数越高，花的工夫越多，因此先看二次曲线：</p>
 						<!--
  
                                                   ┌ P  ┐
@@ -2023,69 +2008,69 @@ B(t) = ┌      2 ┐  · │ 0 z 0  │  · │ -2  2 0 │  · │ P  │
 -->
 						<img
 							class="LaTeX SVG"
-							src="./images/chapters/matrixsplit/c32007be095224e0d157a8f71c62c90e.svg"
-							width="348px"
+							src="./images/chapters/matrixsplit/5333e73efdac309bfbf4e39538a66faf.svg"
+							width="360px"
 							height="55px"
 							loading="lazy"
 						/>
 						<!--
  
-                                                                                        ┌ P  ┐
-                                                                                        │  1 │
-= ┌      2 ┐  · \underset we turn this...\underbrace\kern 2.25em Z  · M \kern 2.25em  · │ P  │
-  └ 1 t t  ┘                                                                            │  2 │
-                                                                                        │ P  │
-                                                                                        └  3 ┘
+                                                                      ┌ P  ┐
+                                                                      │  1 │
+= ┌      2 ┐  · \underbrace\kern 2.25em Z  · M \kern 2.25em         · │ P  │
+  └ 1 t t  ┘                                                将这一项……    │  2 │
+                                                                      │ P  │
+                                                                      └  3 ┘
 -->
 						<img
 							class="LaTeX SVG"
-							src="./images/chapters/matrixsplit/aa17f7e82cf50498f90deb6a21a2489a.svg"
-							width="247px"
+							src="./images/chapters/matrixsplit/d121ff468b0cdfb08195970a7c8040e9.svg"
+							width="248px"
 							height="55px"
 							loading="lazy"
 						/>
 						<!--
  
-                                                                         ┌ P  ┐
-                                                        -1               │  1 │
-= ┌      2 ┐  · \underset into this...\underbrace M  · M    · Z  · M   · │ P  │
-  └ 1 t t  ┘                                                             │  2 │
-                                                                         │ P  │
-                                                                         └  3 ┘
+                                                            ┌ P  ┐
+                                  -1                        │  1 │
+= ┌      2 ┐  · \underbrace M  · M    · Z  · M            · │ P  │
+  └ 1 t t  ┘                                    变为这一项后……    │  2 │
+                                                            │ P  │
+                                                            └  3 ┘
 -->
 						<img
 							class="LaTeX SVG"
-							src="./images/chapters/matrixsplit/4549b95450db3c73479e8902e4939427.svg"
-							width="247px"
+							src="./images/chapters/matrixsplit/0e679db8322dc1f458c19678a46624f5.svg"
+							width="249px"
 							height="55px"
 							loading="lazy"
 						/>
 						<!--
  
-                                                                                                                   ┌ P  ┐
-                                                                                                                   │  1 │
-= ┌      2 ┐  · M \underset ...to get this!\underbrace \kern 1.25em  · \kern 1.25em Q \kern 1.25em  · \kern 1.25em │ P  │
-  └ 1 t t  ┘                                                                                                       │  2 │
-                                                                                                                   │ P  │
-                                                                                                                   └  3 ┘
+                                                                                                   ┌ P  ┐
+                                                                                                   │  1 │
+= ┌      2 ┐  · M \underbrace \kern 1.25em  · \kern 1.25em Q \kern 1.25em  · \kern 1.25em          │ P  │
+  └ 1 t t  ┘                                                                              ……得到这一项！ │  2 │
+                                                                                                   │ P  │
+                                                                                                   └  3 ┘
 -->
 						<img
 							class="LaTeX SVG"
-							src="./images/chapters/matrixsplit/266b71339b55ad3a312a9f41e6bcf988.svg"
-							width="252px"
+							src="./images/chapters/matrixsplit/a70fc8eed71a1a96dac44d8d6dcf0f66.svg"
+							width="257px"
 							height="55px"
 							loading="lazy"
 						/>
 						<p>
-							We can do this because [<em>M · M<sup>-1</sup></em
-							>] is the identity matrix. It's a bit like multiplying something by x/x in calculus: it doesn't do anything to the function, but it does
-							allow you to rewrite it to something that may be easier to work with, or can be broken up differently. In the same way, multiplying our
-							matrix by [<em>M · M<sup>-1</sup></em
-							>] has no effect on the total formula, but it does allow us to change the matrix sequence [<em>something · M</em>] to a sequence [<em
-								>M · something</em
-							>], and that makes a world of difference: if we know what [<em>M<sup>-1</sup> · Z · M</em>] is, we can apply that to our coordinates,
-							and be left with a proper matrix representation of a quadratic Bézier curve (which is [<em>T · M · P</em>]), with a new set of
-							coordinates that represent the curve from <em>t = 0</em> to <em>t = z</em>. So let's get computing:
+							以上变形可行是因为[<em>M</em> · <em>M</em
+							><sup>-1</sup
+							>]为单位矩阵。这有点像在计算中让某项乘以x/x——不改变函数本身，却可以将函数改写为更好处理的形式或者得到不同的分解。类似地将上式中的矩阵左乘以[<em
+								>M</em
+							>
+							· <em>M</em><sup>-1</sup>]不会影响整个式子，却可以将矩阵序列[某项 · <em>M</em>]变为[<em>M</em> · 某项]，而这至关重要——如果知道了[<em
+								>M</em
+							><sup>-1</sup> · <em>Z</em> · <em>M</em>]是什么，那就可以将其施加到已有坐标上得到一条二次贝塞尔曲线的标准矩阵表示（即[<em>T</em> ·
+							<em>M</em> · <em>P</em>]）)和表示从<em>t = 0</em>到<em>t = z</em>的曲线的一系列新坐标。计算如下：
 						</p>
 						<!--
  
@@ -2097,12 +2082,12 @@ Q = M    · Z  · M = │ 1 ─ 0 │  · │ 0 z 0  │  · │ -2  2 0 │ = �
 -->
 						<img
 							class="LaTeX SVG"
-							src="./images/chapters/matrixsplit/5e008143622c66bb5e9cc4d5d6a8ea62.svg"
-							width="627px"
-							height="56px"
+							src="./images/chapters/matrixsplit/2019b3c8df11fcbc686e05f0be22c800.svg"
+							width="649px"
+							height="55px"
 							loading="lazy"
 						/>
-						<p>Excellent! Now we can form our new quadratic curve:</p>
+						<p>很好！现在得出新的二次曲线：</p>
 						<!--
  
                                ┌ P  ┐                      ╭      ┌ P  ┐ ╮
@@ -2114,8 +2099,8 @@ B(t) = ┌      2 ┐  · M  · Q  · │ P  │ = ┌      2 ┐  · M  · │ 
 -->
 						<img
 							class="LaTeX SVG"
-							src="./images/chapters/matrixsplit/dceed84990aaf6878bcc67ddbaa8d8d9.svg"
-							width="417px"
+							src="./images/chapters/matrixsplit/588d882a29d43956da023a0250dd7233.svg"
+							width="431px"
 							height="55px"
 							loading="lazy"
 						/>
@@ -2130,8 +2115,8 @@ B(t) = ┌      2 ┐  · M  · Q  · │ P  │ = ┌      2 ┐  · M  · │ 
 -->
 						<img
 							class="LaTeX SVG"
-							src="./images/chapters/matrixsplit/f63067c2c3042c374a58dfa7f692309e.svg"
-							width="479px"
+							src="./images/chapters/matrixsplit/945310125de20eb26b81752633e61b83.svg"
+							width="496px"
 							height="55px"
 							loading="lazy"
 						/>
@@ -2147,22 +2132,22 @@ B(t) = ┌      2 ┐  · M  · Q  · │ P  │ = ┌      2 ┐  · M  · │ 
 -->
 						<img
 							class="LaTeX SVG"
-							src="./images/chapters/matrixsplit/e58196b82b78f584779208cce88137f5.svg"
-							width="492px"
+							src="./images/chapters/matrixsplit/baf6bba0cc1815cac9820f4ac437231a.svg"
+							width="499px"
 							height="55px"
 							loading="lazy"
 						/>
 						<p>
-							<strong><em>Brilliant</em></strong
-							>: if we want a subcurve from <code>t = 0</code> to <code>t = z</code>, we can keep the first coordinate the same (which makes sense),
-							our control point becomes a z-ratio mixture of the original control point and the start point, and the new end point is a mixture that
-							looks oddly similar to a <a href="https://en.wikipedia.org/wiki/Bernstein_polynomial">Bernstein polynomial</a> of degree two. These new
-							coordinates are actually really easy to compute directly!
+							<strong><em>非常好</em></strong
+							>——如果需要从<code>t = 0</code>到<code>t = z</code
+							>的子曲线，那么只需保持第一个坐标不变（很合理），控制点变为原有控制点和起点关于z的分比的平均点，而且新的终点为平均点，其比例与二次<a
+								href="https://en.wikipedia.org/wiki/Bernstein_polynomial"
+								>伯恩斯坦多项式</a
+							>莫名地相似。这些新坐标其实非常容易直接计算得到！
 						</p>
 						<p>
-							Of course, that's only one of the two curves. Getting the section from <code>t = z</code> to <code>t = 1</code> requires doing this
-							again. We first observe that in the previous calculation, we actually evaluated the general interval [0,<code>z</code>]. We were able to
-							write it down in a more simple form because of the zero, but what we <em>actually</em> evaluated, making the zero explicit, was:
+							当然这只是两条曲线中的一条，得到从<code>t = z</code>到<code>t = 1</code
+							>的一段需要再算一次。首先注意到之前的计算其实是在一般的区间[0,<em>z</em>]上进行的。之所以可以写成更简单的形式是因为0为端点，但将0显式地写出可知<em>真正</em>所计算的是：
 						</p>
 						<!--
  
@@ -2175,8 +2160,8 @@ B(t) = ┌                              2 ┐  · │ -2  2 0 │  · │ P  │
 -->
 						<img
 							class="LaTeX SVG"
-							src="./images/chapters/matrixsplit/6a22184e6ca869d28f4a252b64f23eff.svg"
-							width="381px"
+							src="./images/chapters/matrixsplit/1aea275759b0b02b3bb1c038b75c0a8b.svg"
+							width="388px"
 							height="55px"
 							loading="lazy"
 						/>
@@ -2191,12 +2176,12 @@ B(t) = ┌                              2 ┐  · │ -2  2 0 │  · │ P  │
 -->
 						<img
 							class="LaTeX SVG"
-							src="./images/chapters/matrixsplit/3b5e41808b6c3bc66f3da2f40651410e.svg"
-							width="313px"
+							src="./images/chapters/matrixsplit/8d4504d0a518898056d9bf7fd9ac2aa8.svg"
+							width="324px"
 							height="55px"
 							loading="lazy"
 						/>
-						<p>If we want the interval [<em>z</em>,1], we will be evaluating this instead:</p>
+						<p>如果需要[<em>z</em>,1]区间，那么计算如下：</p>
 						<!--
  
                                                                     ┌ P  ┐
@@ -2208,8 +2193,8 @@ B(t) = ┌                                      2 ┐  · │ -2  2 0 │  · �
 -->
 						<img
 							class="LaTeX SVG"
-							src="./images/chapters/matrixsplit/e079f44b56e07c8d7f83c17c8ebf1ecf.svg"
-							width="461px"
+							src="./images/chapters/matrixsplit/3a09363f9be918af61c128cde7bb238b.svg"
+							width="468px"
 							height="55px"
 							loading="lazy"
 						/>
@@ -2224,15 +2209,12 @@ B(t) = ┌                                      2 ┐  · │ -2  2 0 │  · �
 -->
 						<img
 							class="LaTeX SVG"
-							src="./images/chapters/matrixsplit/4764868f43815e471bb1ea95a81e1633.svg"
-							width="412px"
+							src="./images/chapters/matrixsplit/c0d460cb2be55bba1165a92f44a41990.svg"
+							width="423px"
 							height="57px"
 							loading="lazy"
 						/>
-						<p>
-							We're going to do the same trick of multiplying by the identity matrix, to turn <code>[something · M]</code> into
-							<code>[M · something]</code>:
-						</p>
+						<p>用同样的技巧左乘单位矩阵将<code>[某项 · M]</code>变为<code>[M · 某项]</code>：</p>
 						<!--
  
                       ┌ 1 0 0 ┐    ┌              2        ┐
@@ -2243,12 +2225,12 @@ Q' = M    · Z'  · M = │ 1 ─ 0 │  · │ 0 1-z 2  · z  · (1-z) │  · 
 -->
 						<img
 							class="LaTeX SVG"
-							src="./images/chapters/matrixsplit/c341532f693c2c1adfd298597bbfb5b5.svg"
-							width="729px"
+							src="./images/chapters/matrixsplit/c96b720a7e0cdaaab7dc14afb480a2f5.svg"
+							width="755px"
 							height="57px"
 							loading="lazy"
 						/>
-						<p>So, our final second curve looks like:</p>
+						<p>那么最终第二条曲线为：</p>
 						<!--
  
                                ┌ P  ┐                      ╭       ┌ P  ┐ ╮
@@ -2260,8 +2242,8 @@ B(t) = ┌      2 ┐  · M  · Q  · │ P  │ = ┌      2 ┐  · M  · │ 
 -->
 						<img
 							class="LaTeX SVG"
-							src="./images/chapters/matrixsplit/e2622175dadafecc015f15c79ddf3002.svg"
-							width="421px"
+							src="./images/chapters/matrixsplit/0eaf7d027467b18bda51588acbe4c55e.svg"
+							width="436px"
 							height="55px"
 							loading="lazy"
 						/>
@@ -2276,8 +2258,8 @@ B(t) = ┌      2 ┐  · M  · Q  · │ P  │ = ┌      2 ┐  · M  · │ 
 -->
 						<img
 							class="LaTeX SVG"
-							src="./images/chapters/matrixsplit/4ce218bc968cbd98da0ca6ab66d415ed.svg"
-							width="473px"
+							src="./images/chapters/matrixsplit/7680eb0a64f614a0761e142b377120b6.svg"
+							width="491px"
 							height="57px"
 							loading="lazy"
 						/>
@@ -2293,23 +2275,20 @@ B(t) = ┌      2 ┐  · M  · Q  · │ P  │ = ┌      2 ┐  · M  · │ 
 -->
 						<img
 							class="LaTeX SVG"
-							src="./images/chapters/matrixsplit/9a4899b69e03cd4ad02c5eedffaa6a2f.svg"
-							width="492px"
+							src="./images/chapters/matrixsplit/3c8971b2b959f32e1f28e8f87251b370.svg"
+							width="499px"
 							height="57px"
 							loading="lazy"
 						/>
 						<p>
-							<strong><em>Nice</em></strong
-							>. We see the same thing as before: we can keep the last coordinate the same (which makes sense); our control point becomes a z-ratio
-							mixture of the original control point and the end point, and the new start point is a mixture that looks oddly similar to a bernstein
-							polynomial of degree two, except this time it uses (z-1) rather than (1-z). These new coordinates are <em>also</em> really easy to
-							compute directly!
+							<strong><em>很好。</em></strong
+							>出现了与之前相同的情形：保持最后一个坐标不变（很合理），控制点变为原有控制点和终点关于z的分比的平均点，而且新的终点为平均点，其比例与二次伯恩斯坦多项式莫名地相似，只不过这次用的是z-1而不是1-z。这些新坐标<em>也</em>非常容易直接计算得到！
 						</p>
 					</div>
 
 					<p>
-						So, using linear algebra rather than de Casteljau's algorithm, we have determined that, for any quadratic curve split at some value
-						<code>t = z</code>, we get two subcurves that are described as Bézier curves with simple-to-derive coordinates:
+						因此，不用德•卡斯特如算法而用线性代数可知在点<code>t = z</code
+						>处分割一条二次曲线可得两条子曲线，它们均为用容易求得的坐标所描述的贝塞尔曲线：
 					</p>
 					<!--
  
@@ -2323,12 +2302,12 @@ B(t) = ┌      2 ┐  · M  · Q  · │ P  │ = ┌      2 ┐  · M  · │ 
 -->
 					<img
 						class="LaTeX SVG"
-						src="./images/chapters/matrixsplit/480ebd0234e2fe1adc94926e8ed4339c.svg"
-						width="576px"
+						src="./images/chapters/matrixsplit/d3385e39a74e8bd0f8884a7cc05bf131.svg"
+						width="587px"
 						height="55px"
 						loading="lazy"
 					/>
-					<p>and</p>
+					<p>和</p>
 					<!--
  
                                            ┌  2                                      2       ┐
@@ -2341,15 +2320,12 @@ B(t) = ┌      2 ┐  · M  · Q  · │ P  │ = ┌      2 ┐  · M  · │ 
 -->
 					<img
 						class="LaTeX SVG"
-						src="./images/chapters/matrixsplit/17e308aa6d459b1d06d3160cc8e2e786.svg"
-						width="571px"
+						src="./images/chapters/matrixsplit/fbc0f9eb21c72bd20d19b81d6e5e8c7c.svg"
+						width="581px"
 						height="57px"
 						loading="lazy"
 					/>
-					<p>
-						We can do the same for cubic curves. However, I'll spare you the actual derivation (don't let that stop you from writing that out
-						yourself, though) and simply show you the resulting new coordinate sets:
-					</p>
+					<p>虽然三次曲线可以同理推导，但此处省略实际的推导过程（读者可自行写出）并直接展示所得的新坐标集：</p>
 					<!--
  
                                                               ┌                                    P                                      ┐
@@ -2365,12 +2341,12 @@ B(t) = ┌      2 ┐  · M  · Q  · │ P  │ = ┌      2 ┐  · M  · │ 
 -->
 					<img
 						class="LaTeX SVG"
-						src="./images/chapters/matrixsplit/11505e0215ef026f2e49383ebb4a1abb.svg"
-						width="841px"
+						src="./images/chapters/matrixsplit/8fbf1fa4994c2c836364a41899c2bace.svg"
+						width="855px"
 						height="75px"
 						loading="lazy"
 					/>
-					<p>and</p>
+					<p>和</p>
 					<!--
  
                                                               ┌  3               2                                 2              3       ┐
@@ -2386,88 +2362,66 @@ B(t) = ┌      2 ┐  · M  · Q  · │ P  │ = ┌      2 ┐  · M  · │ 
 -->
 					<img
 						class="LaTeX SVG"
-						src="./images/chapters/matrixsplit/a899891096d82b7fdb23a90e6106b6df.svg"
-						width="837px"
-						height="77px"
+						src="./images/chapters/matrixsplit/a40d603c43ecca7ea62ee588acef6385.svg"
+						width="849px"
+						height="76px"
 						loading="lazy"
 					/>
 					<p>
-						So, looking at our matrices, did we really need to compute the second segment matrix? No, we didn't. Actually having one segment's matrix
-						means we implicitly have the other: push the values of each row in the matrix <strong><em>Q</em></strong> to the right, with zeroes
-						getting pushed off the right edge and appearing back on the left, and then flip the matrix vertically. Presto, you just "calculated"
-						<strong><em>Q'</em></strong
-						>.
+						对于以上矩阵而言，是否真的有必要计算第二段的矩阵？其实不然。有了第一段的矩阵就意味着有了第二段的：将矩阵<strong>Q</strong>每行的非零值推到右侧，左侧的空位补零，再将矩阵上下翻转，**Q'**就“计算”出来了。搞定！
 					</p>
 					<p>
-						Implementing curve splitting this way requires less recursion, and is just straight arithmetic with cached values, so can be cheaper on
-						systems where recursion is expensive. If you're doing computation with devices that are good at matrix multiplication, chopping up a
-						Bézier curve with this method will be a lot faster than applying de Casteljau.
+						如此实现曲线分割需要的迭代更少，且只用缓存值直接进行四则运算，因此对于迭代耗费较大的系统更为划算。如果使用擅长矩阵操作的设备进行计算，那么用这种方法切割贝塞尔曲线会比使用德•卡斯特如算法快得多。
 					</p>
 				</section>
 				<section id="reordering">
 					<h1>
-						<div class="nav"><a href="zh-CN/index.html#matrixsplit">前</a><a href="#toc">目录</a><a href="zh-CN/index.html#derivatives">下</a></div>
-						<a href="zh-CN/index.html#reordering">Lowering and elevating curve order</a>
+						<div class="nav">
+							<a href="zh-CN/index.html#matrixsplit">上一节</a><a href="#toc">目录</a><a href="zh-CN/index.html#derivatives">下一节</a>
+						</div>
+						<a href="zh-CN/index.html#reordering">曲线的升次与降次</a>
 					</h1>
+					<p>贝塞尔曲线有一个有意思的性质——<em>n</em>阶曲线总可通过给出<em>n+1</em>阶曲线对应的控制点而用高一阶的曲线精确表示。</p>
 					<p>
-						One interesting property of Bézier curves is that an <em>n<sup>th</sup></em> order curve can always be perfectly represented by an
-						<em>(n+1)<sup>th</sup></em> order curve, by giving the higher-order curve specific control points.
+						如果有一条二次曲线，那么可以如下构造三次曲线精确重现原来的曲线：首先选择相同的起点和终点，然后两个控制点分别选为“1/3<em>起点+2/3</em>终点”和“2/3<em>起点+1/3</em>终点”。所得曲线与原来的相同，只不过表示为了三次曲线而不是二次曲线。
 					</p>
-					<p>
-						If we have a curve with three points, then we can create a curve with four points that exactly reproduces the original curve. First, we
-						give it the same start and end points, and for its two control points we pick "1/3<sup>rd</sup> start + 2/3<sup>rd</sup> control" and
-						"2/3<sup>rd</sup> control + 1/3<sup>rd</sup> end". Now we have exactly the same curve as before, except represented as a cubic curve
-						rather than a quadratic curve.
-					</p>
-					<p>
-						The general rule for raising an <em>n<sup>th</sup></em> order curve to an <em>(n+1)<sup>th</sup></em> order curve is as follows (observing
-						that the start and end weights are the same as the start and end weights for the old curve):
-					</p>
+					<p>将<em>n</em>次曲线升为<em>n+1</em>次曲线的一般规则如下（注意起点和终点的权重与旧曲线的相同）：</p>
 					<!--
  
-              __ k                                                                                            k-i     i
-Bézier(k,t) = ❯      \underset binomial term\underbrace\binomki  · \ \underset polynomial term\underbrace(1-t)     · t    · \ \underset new
-              ‾‾ i=0
-                                                ╭ (k-i)  · w  + i  · w    ╮
-                                                │           i         i-1 │
-                              weights\underbrace│ ─────────────────────── │  ,  with k = n+1  and w   =0 when i = 0
-                                                ╰            k            ╯                        i-1
+                                                                                                       ╭ (k-i)  · w  + i  · w    ╮
+              __ k                      i                             k-i     i                        │           i         i-1 │
+Bézier(k,t) = ❯      \underbrace\mathrmC          · \ \underbrace(1-t)     · t       \  · \ \underbrace│ ─────────────────────── │      ，其中\ k=n+1  
+              ‾‾ i=0                    k 二项式系数项                                多项式项                   ╰            k            ╯ 新权重
+                                                                     ， w  =0
+                                                                        -1
 -->
-					<img class="LaTeX SVG" src="./images/chapters/reordering/74e038deabd9e240606fa3f07ba98269.svg" width="755px" height="61px" loading="lazy" />
+					<img class="LaTeX SVG" src="./images/chapters/reordering/649574c4876d3a61a8060265c2f8b985.svg" width="680px" height="61px" loading="lazy" />
 					<p>
-						However, this rule also has as direct consequence that you <strong>cannot</strong> generally safely lower a curve from
-						<em>n<sup>th</sup></em> order to <em>(n-1)<sup>th</sup></em> order, because the control points cannot be "pulled apart" cleanly. We can
-						try to, but the resulting curve will not be identical to the original, and may in fact look completely different.
+						然而这一规则也直接意味着通常<strong>无法</strong>将<em>n</em>次曲线稳妥地降到<em>n-1</em>次，这是因为控制点无法被简洁地“拆开”。可以做些尝试，但所得曲线不会与原曲线重合，而且其实还可能看起来完全不同。
 					</p>
 					<p>
-						However, there is a surprisingly good way to ensure that a lower order curve looks "as close as reasonably possible" to the original
-						curve: we can optimise the "least-squares distance" between the original curve and the lower order curve, in a single operation (also
-						explained over on <a href="https://www.sirver.net/blog/2011/08/23/degree-reduction-of-bezier-curves/">Sirver's Castle</a>). However, to
-						use it, we'll need to do some calculus work and then switch over to linear algebra. As mentioned in the section on matrix representations,
-						some things can be done much more easily with matrices than with calculus functions, and this is one of those things. So... let's go!
+						不过有一种好得出人意料的方法可以保证低次曲线看起来与原曲线“尽可能地接近”——用仅仅一次操作优化低次曲线与原曲线之间的“最小二乘法距离”（<a
+							href="https://www.sirver.net/blog/2011/08/23/degree-reduction-of-bezier-curves/"
+							>Sirver's Castle</a
+						>中亦有解释），但是为了用上这种方法，需要先做些变形再转用线性代数。正如矩阵表示一章所言，有些东西用矩阵去做比用函数方便得多，而这就是一例。那么……开始吧！
 					</p>
-					<p>We start by taking the standard Bézier function, and condensing it a little:</p>
+					<p>先将标准的贝塞尔函数写得紧凑一些：</p>
 					<!--
  
-              __ n       n               n                       n-i     i
-Bézier(n,t) = ❯      w  B (t)  , where  B (t) = \binomni  · (1-t)     · t 
-              ‾‾ i=0  i  i               i
+              __ n       n           n              i         n-i     i
+Bézier(n,t) = ❯      w  B (t)  ，其中\ B (t) = \mathrmC   · (1-t)     · t 
+              ‾‾ i=0  i  i           i              n
 -->
-					<img class="LaTeX SVG" src="./images/chapters/reordering/9fc4ecc087d389dd0111bcba165cd5d0.svg" width="408px" height="41px" loading="lazy" />
+					<img class="LaTeX SVG" src="./images/chapters/reordering/ec952f600305895ccf637fc428b31dfd.svg" width="413px" height="41px" loading="lazy" />
 					<p>
-						Then, we apply one of those silly (actually, super useful) calculus tricks: since our <code>t</code> value is always between zero and one
-						(inclusive), we know that <code>(1-t)</code> plus <code>t</code> always sums to 1. As such, we can express any value as a sum of
-						<code>t</code> and <code>1-t</code>:
+						然后用一个朴素（其实极其有用）的变形技巧：既然<code>t</code>值总在0到1之间（含端点），且<code>1-t</code>加<code>t</code>恒等于1，那么任何数都可表示为<code>t</code>与<code>1-t</code>的和：
 					</p>
 					<!--
  
 x = 1 x = ((1-t) + t) x = (1-t) x + t x = x (1-t) + x t
 -->
-					<img class="LaTeX SVG" src="./images/chapters/reordering/ff224ded6bbbc94b43130f5f8eeb5d29.svg" width="379px" height="16px" loading="lazy" />
-					<p>
-						So, with that seemingly trivial observation, we rewrite that Bézier function by splitting it up into a sum of a <code>(1-t)</code> and
-						<code>t</code> component:
-					</p>
+					<img class="LaTeX SVG" src="./images/chapters/reordering/ea6c8636e76ce935064fc85c692e7b4d.svg" width="384px" height="17px" loading="lazy" />
+					<p>于是用这一看似平凡的性质可将贝塞尔函数拆分为<code>1-t</code>和<code>t</code>两部分之和：</p>
 					<!--
  
 Bézier(n,t)= (1-t) B(n,t) + t B(n,t)                    
@@ -2475,107 +2429,91 @@ Bézier(n,t)= (1-t) B(n,t) + t B(n,t)
            = ❯      w  (1 - t) B (t) + ❯      w  t B (t)
              ‾‾ i=0  i          i      ‾‾ i=0  i    i
 -->
-					<img class="LaTeX SVG" src="./images/chapters/reordering/0cf0d5f856ec204dc32e0e42691cc70a.svg" width="316px" height="67px" loading="lazy" />
-					<p>
-						So far so good. Now, to see why we did this, let's write out the <code>(1-t)</code> and <code>t</code> parts, and see what that gives us.
-						I promise, it's about to make sense. We start with <code>(1-t)</code>:
-					</p>
+					<img class="LaTeX SVG" src="./images/chapters/reordering/fcfc5f7e3341a7494341d5cd42d9b60d.svg" width="332px" height="68px" loading="lazy" />
+					<p>目前一切顺利。现在为了理解为什么这么做，将<code>1-t</code>和<code>t</code>两部分具体写出并观察结果。首先是<code>1-t</code>：</p>
 					<!--
  
          n              n!         n-i  i
-(1 - t) B (t)= (1-t) ──────── (1-t)    t                  
+(1 - t) B (t)= (1-t) ──────── (1-t)    t             
          i           (n-i)!i!
                n+1-i   (n+1)!        n+1-i  i
-             = ───── ────────── (1-t)      t              
-                n+1  (n+1-i)!i!                           
+             = ───── ────────── (1-t)      t         
+                n+1  (n+1-i)!i!                      
                k-i    k!         k-i  i
-             = ─── ──────── (1-t)    t ,  where  k = n + 1
+             = ─── ──────── (1-t)    t ，其中\ k = n + 1
                 k  (k-i)!i!
                k-i  k
-             = ─── B (t)                                  
+             = ─── B (t)                             
                 k   i
 -->
 					<img
 						class="LaTeX SVG"
-						src="./images/chapters/reordering/0f5698b31598b2390e966fc5e43ab53e.svg"
-						width="387px"
-						height="160px"
+						src="./images/chapters/reordering/4d7f29b041d912df5ca99ff23cb77a70.svg"
+						width="403px"
+						height="163px"
 						loading="lazy"
 					/>
 					<p>
-						So by using this seemingly silly trick, we can suddenly express part of our n<sup>th</sup> order Bézier function in terms of an (n+1)<sup
-							>th</sup
-						>
-						order Bézier function. And that sounds a lot like raising the curve order! Of course we need to be able to repeat that trick for the
-						<code>t</code> part, but that's not a problem:
+						用这一看似朴素的技巧瞬间就将n次贝塞尔函数的一个部分用n+1次贝塞尔函数表示出来了，这非常像曲线升次！当然<code>t</code>的部分也要表示出来，但这不是问题：
 					</p>
 					<!--
  
    n          n!         n-i  i
-t B (t)= t ──────── (1-t)    t                                    
+t B (t)= t ──────── (1-t)    t                               
    i       (n-i)!i!
          i+1        (n+1)!             (n+1)-(i+1)  i+1
-       = ─── ──────────────────── (1-t)            t              
-         n+1 ((n+1)-(i+1))!(i+1)!                                 
+       = ─── ──────────────────── (1-t)            t         
+         n+1 ((n+1)-(i+1))!(i+1)!                            
          i+1        k!             k-(i+1)  i+1
-       = ─── ──────────────── (1-t)        t   ,  where  k = n + 1
+       = ─── ──────────────── (1-t)        t   ，其中\ k = n + 1
           k  (k-(i+1))!(i+1)!
          i+1  k
-       = ─── B   (t)                                              
+       = ─── B   (t)                                         
           k   i+1
 -->
 					<img
 						class="LaTeX SVG"
-						src="./images/chapters/reordering/ab7c087f7c070d43a42f3f03010a7427.svg"
-						width="471px"
-						height="159px"
+						src="./images/chapters/reordering/d3b88143515b7f137c42e816d4cbdc2d.svg"
+						width="481px"
+						height="161px"
 						loading="lazy"
 					/>
 					<p>
-						So, with both of those changed from an order <code>n</code> expression to an order <code>(n+1)</code> expression, we can put them back
-						together again. Now, where the order <code>n</code> function had a summation from 0 to <code>n</code>, the order <code>n+1</code> function
-						uses a summation from 0 to <code>n+1</code>, but this shouldn't be a problem as long as we can add some new terms that "contribute
-						nothing". In the next section on derivatives, there is a discussion about why "higher terms than there is a binomial for" and "lower than
-						zero terms" both "contribute nothing". So as long as we can add terms that have the same form as the terms we need, we can just include
-						them in the summation, they'll sit there and do nothing, and the resulting function stays identical to the lower order curve.
+						将<code>n</code>次的表达式变为<code>n+1</code>次的之后再将其重新合并。虽然<code>n</code>次函数是从0到<code>n</code>求和，<code>n+1</code>次函数是从0到<code>n+1</code>求和，但补上“贡献为零”的项即可。下一章“导数”会论述为什么“没有对应的二项式系数的更高次项”和“低于零次的项”都“贡献为零”，因此需要什么形式的项就可以加上什么项。将这些项包含在和式中没有影响，而所得函数与低次曲线依然相等：
 					</p>
-					<p>Let's do this:</p>
 					<!--
  
              __ n+1             n      __ n+1       n
-Bézier(n,t)= ❯      w  (1 - t) B (t) + ❯      w  t B (t)                   
+Bézier(n,t)= ❯      w  (1 - t) B (t) + ❯      w  t B (t)               
              ‾‾ i=0  i          i      ‾‾ i=0  i    i
              __ n+1    k-i  k      __ n+1    i+1  k
-           = ❯      w  ─── B (t) + ❯      w  ─── B   (t),  where  k = n + 1
+           = ❯      w  ─── B (t) + ❯      w  ─── B   (t) ，其中\ k = n + 1
              ‾‾ i=0  i  k   i      ‾‾ i=0  i  k   i+1
              __ n+1    k-i  k      __ n+1      i  k
-           = ❯      w  ─── B (t) + ❯      p    ─ B (t)                     
+           = ❯      w  ─── B (t) + ❯      p    ─ B (t)                 
              ‾‾ i=0  i  k   i      ‾‾ i=0  i-1 k  i
              __ n+1 ╭    k-i        i ╮  k
-           = ❯      │ w  ─── + p    ─ │ B (t)                              
+           = ❯      │ w  ─── + p    ─ │ B (t)                          
              ‾‾ i=0 ╰  i  k     i-1 k ╯  i
-             __ n+1                      k                 i
-           = ❯      (w  (1-s) + p    s) B (t),  where  s = ─               
-             ‾‾ i=0   i          i-1     i                 k
+             __ n+1                      k             i
+           = ❯      (w  (1-s) + p    s) B (t) ，其中\ s = ─               
+             ‾‾ i=0   i          i-1     i             k
 -->
 					<img
 						class="LaTeX SVG"
-						src="./images/chapters/reordering/4ff41e183d60d5fd10a5d3d30dd63358.svg"
-						width="465px"
+						src="./images/chapters/reordering/a81ac8ec82d7fbe2ce094b2a90d24769.svg"
+						width="483px"
 						height="257px"
 						loading="lazy"
 					/>
-					<p>
-						And this is where we switch over from calculus to linear algebra, and matrices: we can now express this relation between Bézier(n,t) and
-						Bézier(n+1,t) as a very simple matrix multiplication:
-					</p>
+					<p>接下来从变形转到线性代数（矩阵）——现在Bézier(n,t)和Bézier(n+1,t)之间的关系可用非常简单的矩阵乘法表示：</p>
 					<!--
  
 M B  = B 
    n    k
 -->
-					<img class="LaTeX SVG" src="./images/chapters/reordering/1f5b60d190a1c7099b3411e4cc477291.svg" width="71px" height="16px" loading="lazy" />
-					<p>where the matrix <strong>M</strong> is an <code>n+1</code> by <code>n</code> matrix, and looks like:</p>
+					<img class="LaTeX SVG" src="./images/chapters/reordering/d71f7c4a43620dd15be7816e2a335b24.svg" width="77px" height="17px" loading="lazy" />
+					<p>其中矩阵<strong>M</strong>为<code>(n+1)×n</code>阶的矩阵，其形如：</p>
 					<!--
  
     ┌ 1  0   .   .   .   .    .    .  ┐
@@ -2600,23 +2538,21 @@ M = │        k   k                    │
 -->
 					<img
 						class="LaTeX SVG"
-						src="./images/chapters/reordering/056e25c397c524d80f378ce3823c7e78.svg"
-						width="336px"
-						height="187px"
+						src="./images/chapters/reordering/cc293416bf824d94dd12aca70281d8f7.svg"
+						width="340px"
+						height="172px"
 						loading="lazy"
 					/>
 					<p>
-						That might look unwieldy, but it's really just a mostly-zeroes matrix, with a very simply fraction on the diagonal, and an even simpler
-						fraction to the left of it. Multiplying a list of coordinates with this matrix means we can plug the resulting transformed coordinates
-						into the one-order-higher function and get an identical looking curve.
+						这虽然看似庞杂，但真的只是几乎全为零的矩阵，而且对角线上为很简单的分数，其左侧为更简单的分数。这意味着将一列坐标乘以这一矩阵，再将所得变形之后的坐标代入高一次的函数即可得到与原曲线一模一样的曲线。
 					</p>
-					<p>Not too bad!</p>
+					<p>还不错！</p>
 					<p>
-						Equally interesting, though, is that with this matrix operation established, we can now use an incredibly powerful and ridiculously simple
-						way to find out a "best fit" way to reverse the operation, called
-						<a href="https://mathworld.wolfram.com/NormalEquation.html">the normal equation</a>. What it does is minimize the sum of the square
-						differences between one set of values and another set of values. Specifically, if we can express that as some function
-						<strong>A x = b</strong>, we can use it. And as it so happens, that's exactly what we're dealing with, so:
+						同样有意思的一点是，在建立这一矩阵操作之后即可利用非常强大又极其简单的方法求出“最优拟合”倒转操作——即<a
+							href="https://mathworld.wolfram.com/NormalEquation.html"
+							>法方程组</a
+						>，这种方法将一组数与另一组数的平方差之和最小化。具体而言，对于超定方程组<strong>A x = b</strong
+						>，利用法方程组可以求出使方程两侧之差长度最小的<code>x</code>。既然现在面临的问题即为如此，那么：
 					</p>
 					<!--
  
@@ -2637,62 +2573,55 @@ M = │        k   k                    │
 -->
 					<img
 						class="LaTeX SVG"
-						src="./images/chapters/reordering/46e64dc07502e14217ec83d755f736ee.svg"
-						width="272px"
-						height="116px"
+						src="./images/chapters/reordering/c49f71f865f3cccfa35fa335142a0837.svg"
+						width="288px"
+						height="109px"
 						loading="lazy"
 					/>
-					<p>The steps taken here are:</p>
+					<p>其中的步骤为：</p>
 					<ol>
-						<li>We have a function in a form that the normal equation can be used with, so</li>
-						<li>apply the normal equation!</li>
+						<li>既然有一个具有法方程组可以处理的形式的方程组，那么</li>
+						<li>使用法方程组！</li>
 						<li>
-							Then, we want to end up with just B<sub>n</sub> on the left, so we start by left-multiply both sides such that we'll end up with lots of
-							stuff on the left that simplified to "a factor 1", which in matrix maths is the
-							<a href="https://en.wikipedia.org/wiki/Identity_matrix">identity matrix</a>.
+							然后因为左侧只需保留B<sub>n</sub>，所以在两侧左乘矩阵使左侧的很多东西化为“因数1”（在矩阵语言中即为<a
+								href="https://en.wikipedia.org/wiki/Identity_matrix"
+								>单位矩阵</a
+							>）。
 						</li>
-						<li>
-							In fact, by left-multiplying with the inverse of what was already there, we've effectively "nullified" (but really, one-inified) that
-							big, unwieldy block into the identity matrix <strong>I</strong>. So we substitute the mess with <strong>I</strong>, and then
-						</li>
-						<li>
-							because multiplication with the identity matrix does nothing (like multiplying by 1 does nothing in regular algebra), we just drop it.
-						</li>
+						<li>具体而言，左乘左侧已有项的逆可以将这个庞大的矩阵约简为单位矩阵<strong>I</strong>。于是将这一大堆替换为<strong>I</strong>，然后</li>
+						<li>因为矩阵与单位矩阵相乘不会发生变化（就像在四则运算中数与1相乘不会发生变化），所以略去单位矩阵。</li>
 					</ol>
 					<p>
-						And we're done: we now have an expression that lets us approximate an <code>n+1</code><sup>th</sup> order curve with a lower <code>n</code
-						><sup>th</sup> order curve. It won't be an exact fit, but it's definitely a best approximation. So, let's implement these rules for
-						raising and lowering curve order to a (semi) random curve, using the following graphic. Select the sketch, which has movable control
-						points, and press your up and down arrow keys to raise or lower the curve order.
+						此即用<code>n</code>次曲线逼近<code>n+1</code>次曲线的表达式。这虽然不是精确拟合，但却是非常好的近似。下图对一条（半）随机的曲线实现了这些升次和降次的规则，图上的控制点可以移动，点击按钮可以升高或降低曲线的次数。
 					</p>
 					<graphics-element
-						title="A variable-order Bézier curve"
+						title="可变次数贝塞尔曲线"
 						width="275"
 						height="275"
 						src="./chapters/reordering/reorder.js"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="275px" height="275px" src="./images/chapters/reordering/c4874e1205aabe624e5504abe154eae9.png" loading="lazy" />
-							<label>A variable-order Bézier curve</label>
+							<label>可变次数贝塞尔曲线</label>
 						</fallback-image>
-						<button class="raise">raise</button>
-						<button class="lower">lower</button>
+						<button class="raise">升次</button>
+						<button class="lower">降次</button>
 					</graphics-element>
 				</section>
 				<section id="derivatives">
 					<h1>
-						<div class="nav"><a href="zh-CN/index.html#reordering">前</a><a href="#toc">目录</a><a href="zh-CN/index.html#pointvectors">下</a></div>
-						<a href="zh-CN/index.html#derivatives">Derivatives</a>
+						<div class="nav">
+							<a href="zh-CN/index.html#reordering">上一节</a><a href="#toc">目录</a><a href="zh-CN/index.html#pointvectors">下一节</a>
+						</div>
+						<a href="zh-CN/index.html#derivatives">导数</a>
 					</h1>
 					<p>
-						There's a number of useful things that you can do with Bézier curves based on their derivative, and one of the more amusing observations
-						about Bézier curves is that their derivatives are, in fact, also Bézier curves. In fact, the differentiation of a Bézier curve is
-						relatively straightforward, although we do need a bit of math.
+						利用贝塞尔函数的导数可以对贝塞尔曲线做一些有用的事，而贝塞尔函数较为有趣的一个性质是其导数也为贝塞尔函数。其实贝塞尔函数的求导相对而言比较直接，只是需要一点数学运算。
 					</p>
-					<p>First, let's look at the derivative rule for Bézier curves, which is:</p>
+					<p>首先观察贝塞尔函数的求导法则，即：</p>
 					<!--
  
                     __ n-1
@@ -2701,15 +2630,12 @@ Bézier'(n,t) = n  · ❯      (b   -b )  ·   Bézier(n-1,t)
 -->
 					<img
 						class="LaTeX SVG"
-						src="./images/chapters/derivatives/a7b79877822a8f60e45552dcafc0815d.svg"
-						width="333px"
+						src="./images/chapters/derivatives/9a0f17ecc520e05ad571d02a196182af.svg"
+						width="341px"
 						height="44px"
 						loading="lazy"
 					/>
-					<p>
-						which we can also write (observing that <i>b</i> in this formula is the same as our <i>w</i> weights, and that <i>n</i> times a summation
-						is the same as a summation where each term is multiplied by <i>n</i>) as:
-					</p>
+					<p>上式可改写为（注意式中的<em>b</em>即权重<em>w</em>，且<em>n</em>乘以一个和式等于每个求和项乘以<em>n</em>再求和）：</p>
 					<!--
  
                __ n-1
@@ -2718,137 +2644,131 @@ Bézier'(n,t) = ❯        Bézier(n-1,t)   · n  · (w   -w )
 -->
 					<img
 						class="LaTeX SVG"
-						src="./images/chapters/derivatives/8f78fdb9ef54b1bc4dbc00f07263cc97.svg"
-						width="343px"
+						src="./images/chapters/derivatives/c1e13183f8bb938665e401fc3cebfe31.svg"
+						width="352px"
 						height="44px"
 						loading="lazy"
 					/>
 					<p>
-						Or, in plain text: the derivative of an n<sup>th</sup> degree Bézier curve is an (n-1)<sup>th</sup> degree Bézier curve, with one fewer
-						term, and new weights w'<sub>0</sub>...w'<sub>n-1</sub> derived from the original weights as n(w<sub>i+1</sub> - w<sub>i</sub>). So for a
-						3<sup>rd</sup> degree curve, with four weights, the derivative has three new weights: w'<sub>0</sub> = 3(w<sub>1</sub>-w<sub>0</sub>),
-						w'<sub>1</sub> = 3(w<sub>2</sub>-w<sub>1</sub>) and w'<sub>2</sub> = 3(w<sub>3</sub>-w<sub>2</sub>).
+						直白地说，<em>n</em>次贝塞尔函数的导数为<em>n</em>-1次贝塞尔函数，少了一项，而且新的权重<em>w'</em><sub>0</sub>、……、<em>w'</em
+						><sub><em>n</em>-1</sub>可用旧的权重通过<em>n</em>(<em>w</em><sub><em>i</em>+1</sub> - <em>w</em><sub><em>i</em></sub
+						>)求得。对于带四个权重的三次函数，其导数的三个新权重为：<em>w'</em><sub>0</sub> = 3(<em>w</em><sub>1</sub>-<em>w</em><sub>0</sub>)，<em
+							>w'</em
+						><sub>1</sub> = 3(<em>w</em><sub>2</sub>-<em>w</em><sub>1</sub>)和<em>w'</em><sub>2</sub> = 3(<em>w</em><sub>3</sub>-<em>w</em
+						><sub>2</sub>)。
 					</p>
 					<div class="note">
-						<h3>"Slow down, why is that true?"</h3>
+						<h3>“慢着，为什么这是对的？”</h3>
 						<p>
-							Sometimes just being told "this is the derivative" is nice, but you might want to see why this is indeed the case. As such, let's have a
-							look at the proof for this derivative. First off, the weights are independent of the full Bézier function, so the derivative involves
-							only the derivative of the polynomial basis function. So, let's find that:
+							虽然有时候有人告诉说“这是导数”就行，但还是可能想一探究竟。既然如此，就来看看这个导数的证明。首先，因为权重不影响完整的贝塞尔函数的求导，所以求导只涉及多项式基函数的导数。基函数的导数为：
 						</p>
 						<!--
  
-        d    ╭ n ╮  k      n-k d
-B   (t) ── = │   │ t  (1-t)    ──
- n,k    dt   ╰ k ╯             dt
+\mathrmd            \mathrmd  ╭         k  k      n-k ╮
+───────── B   (t) = ───────── │ \mathrmC  t  (1-t)    │
+\mathrmdt  n,k      \mathrmdt ╰         n             ╯
 -->
 						<img
 							class="LaTeX SVG"
-							src="./images/chapters/derivatives/a992185a346518b5ca159484019b6917.svg"
-							width="209px"
-							height="36px"
+							src="./images/chapters/derivatives/d3d2c3d668be7a43b9ec08a639c8657c.svg"
+							width="223px"
+							height="35px"
 							loading="lazy"
 						/>
 						<p>
-							Applying the <a href="https://en.wikipedia.org/wiki/Product_rule">product</a> and
-							<a href="https://en.wikipedia.org/wiki/Chain_rule">chain</a> rules gives us:
+							使用<a href="https://en.wikipedia.org/wiki/Product_rule">乘积求导法则</a>和<a href="https://en.wikipedia.org/wiki/Chain_rule"
+								>复合函数求导法则</a
+							>得到：
 						</p>
 						<!--
  
-      ╭ n ╮        k-1      n-k    k         n-k-1
-... = │   │ (k  · t    (1-t)    + t   · (1-t)       · (n-k)  · -1)
-      ╰ k ╯
+           k        k-1      n-k    k         n-k-1
+⋯= \mathrmC  (k  · t    (1-t)    + t   · (1-t)       · (n-k)  · -1)
+           n
 -->
 						<img
 							class="LaTeX SVG"
-							src="./images/chapters/derivatives/c3ac18fe4ba0606a15bc111e52b17a9a.svg"
-							width="412px"
-							height="28px"
+							src="./images/chapters/derivatives/5a9ccc4f099fbdd4e64760c8e7099193.svg"
+							width="408px"
+							height="20px"
 							loading="lazy"
 						/>
-						<p>Which is hard to work with, so let's expand that properly:</p>
+						<p>上式不易处理，因此打开括号：</p>
 						<!--
  
-        kn!     k-1      n-k   (n-k)n!   k      n-1-k
-... = ──────── t    (1-t)    - ──────── t  (1-t)     
-      k!(n-k)!                 k!(n-k)!
+     kn!     k-1      n-k   (n-k)n!   k      n-1-k
+⋯= ──────── t    (1-t)    - ──────── t  (1-t)     
+   k!(n-k)!                 k!(n-k)!
 -->
 						<img
 							class="LaTeX SVG"
-							src="./images/chapters/derivatives/12fa7f83f055ef2078cc9f04e1468663.svg"
-							width="344px"
-							height="27px"
+							src="./images/chapters/derivatives/ca58832a6776fe2722597b96bc53afe0.svg"
+							width="389px"
+							height="39px"
 							loading="lazy"
 						/>
 						<p>
-							Now, the trick is to turn this expression into something that has binomial coefficients again, so we want to end up with things that
-							look like "x! over y!(x-y)!". If we can do that in a way that involves terms of <i>n-1</i> and <i>k-1</i>, we'll be on the right track.
+							现在技巧性的一步是将上式再次化为含二项式系数的形式，需要得到形如“x!/y!(x-y)!”的项。如果得到关于<em>n</em>-1和<em>k</em>-1的项，那么说明方向是对的。
 						</p>
 						<!--
  
-           n!       k-1      n-k   (n-k)n!   k      n-1-k
-... = ──────────── t    (1-t)    - ──────── t  (1-t)                                   
-      (k-1)!(n-k)!                 k!(n-k)!
-        ╭    (n-1)!     k-1      n-k   (n-k)(n-1)!  k      n-1-k ╮
-... = n │ ──────────── t    (1-t)    - ─────────── t  (1-t)      │                     
-        ╰ (k-1)!(n-k)!                  k!(n-k)!                 ╯
-        ╭        (n-1)!         (k-1)      (n-1)-(k-1)      (n-1)!     k      (n-1)-k ╮
-... = n │ ──────────────────── t      (1-t)            - ──────────── t  (1-t)        │
-        ╰ (k-1)!((n-1)-(k-1))!                           k!((n-1)-k)!                 ╯
+        n!       k-1      n-k   (n-k)n!   k      n-1-k
+⋯= ──────────── t    (1-t)    - ──────── t  (1-t)                                 
+   (k-1)!(n-k)!                 k!(n-k)!
+     ╭    (n-1)!     k-1      n-k   (n-k)(n-1)!  k      n-1-k ╮
+⋯= n │ ──────────── t    (1-t)    - ─────────── t  (1-t)      │                   
+     ╰ (k-1)!(n-k)!                  k!(n-k)!                 ╯
+     ╭        (n-1)!         k-1      (n-1)-(k-1)      (n-1)!     k      (n-1)-k ╮
+⋯= n │ ──────────────────── t    (1-t)            - ──────────── t  (1-t)        │
+     ╰ (k-1)!((n-1)-(k-1))!                         k!((n-1)-k)!                 ╯
 -->
 						<img
 							class="LaTeX SVG"
-							src="./images/chapters/derivatives/64c06c61727d0912a67c0f287a395e47.svg"
-							width="545px"
-							height="76px"
+							src="./images/chapters/derivatives/3de9c86a05a3b828b878af7f87b1d0cd.svg"
+							width="524px"
+							height="73px"
 							loading="lazy"
 						/>
-						<p>And that's the first part done: the two components inside the parentheses are actually regular, lower-order Bézier expressions:</p>
+						<p>这是第一步。上式括号里的两项其实为标准的、低一次的贝塞尔函数：</p>
 						<!--
  
-        ╭    x!     y      x-y      x!     k      x-k ╮
-... = n │ ──────── t  (1-t)    - ──────── t  (1-t)    │  , with x=n-1, y=k-1
-        ╰ y!(x-y)!               k!(x-k)!             ╯                     
-... = n (B           (t) - B       (t))                                     
-          (n-1),(k-1)       (n-1),k
+     ╭    x!     y      x-y      x!     k      x-k ╮
+⋯= n │ ──────── t  (1-t)    - ──────── t  (1-t)    │  ，其中\ x=n-1  ， y=k-1
+     ╰ y!(x-y)!               k!(x-k)!             ╯                     
+⋯= n (B       (t) - B     (t))                                           
+       n-1,k-1       n-1,k
 -->
 						<img
 							class="LaTeX SVG"
-							src="./images/chapters/derivatives/6a3672344bb571eadb72669f60a93ff4.svg"
-							width="533px"
-							height="48px"
+							src="./images/chapters/derivatives/7d40ba12784e40c8dd9bc1ddbc407519.svg"
+							width="547px"
+							height="45px"
 							loading="lazy"
 						/>
-						<p>
-							Now to apply this to our weighted Bézier curves. We'll write out the plain curve formula that we saw earlier, and then work our way
-							through to its derivative:
-						</p>
+						<p>现在将上式应用于已有的加权贝塞尔函数。先写出之前所见的平面曲线公式，再逐步求出导数：</p>
 						<!--
  
-Bézier   (t)    = B   (t)  · w  + B   (t)  · w  + B   (t)  · w  + B   (t)  · w  + ...
-      n,k          n,0        0    n,1        1    n,2        2    n,3        3
-             d
-Bézier   (t) ── = n  · (B      (t) - B     (t))  · w  +                              
-      n,k    dt          n-1,-1       n-1,0         0
-                  n  · (B     (t) - B     (t))  · w  +                               
-                         n-1,0       n-1,1         1
-                  n  · (B     (t) - B     (t))  · w  +                               
-                         n-1,1       n-1,2         2
-                  n  · (B     (t) - B     (t))  · w  +                               
-                         n-1,2       n-1,3         3
-                  ...                                                                
+  Bézier   (t)           = B   (t)  · w  + B   (t)  · w  + B   (t)  · w  + B   (t)  · w  + ⋯
+        n,k                 n,0        0    n,1        1    n,2        2    n,3        3
+\mathrmd
+─────────   Bézier   (t) = n  · (B      (t) - B     (t))  · w  +                            
+\mathrmdt         n,k             n-1,-1       n-1,0         0
+                           n  · (B     (t) - B     (t))  · w  +                             
+                                  n-1,0       n-1,1         1
+                           n  · (B     (t) - B     (t))  · w  +                             
+                                  n-1,1       n-1,2         2
+                           n  · (B     (t) - B     (t))  · w  +                             
+                                  n-1,2       n-1,3         3
+                           ⋯                                                                
 -->
 						<img
 							class="LaTeX SVG"
-							src="./images/chapters/derivatives/02cecadc92b8ff681edc8edb0ace53ce.svg"
-							width="527px"
-							height="112px"
+							src="./images/chapters/derivatives/981f7eb4406d8952e6fe5076fa687b63.svg"
+							width="539px"
+							height="109px"
 							loading="lazy"
 						/>
-						<p>
-							If we expand this (with some color to show how terms line up), and reorder the terms by increasing values for <i>k</i> we see the
-							following:
-						</p>
+						<p>如果打开上式的括号（用颜色表示相匹配的项），再按递增的<em>k</em>值重排各项，那么有：</p>
 						<!--
  
 n  · B      (t)  · w               +                                     
@@ -2859,144 +2779,129 @@ n  · B               (t)  · w      - n  · B               (t)  · w      +
       n-1,\colorred 1        2             n-1,\colorred 1        1      
 n  · B                   (t)  · w  - n  · B                   (t)  · w  +
       n-1,\colormagenta 2        3         n-1,\colormagenta 2        2
-...                                - n  · B     (t)  · w                +
+⋯                                  - n  · B     (t)  · w                +
                                            n-1,3        3
-...                                                                      
+⋯                                                                        
 -->
 						<img
 							class="LaTeX SVG"
-							src="./images/chapters/derivatives/87403e5b0da3dcc4ceca74fae058fe69.svg"
-							width="300px"
-							height="109px"
+							src="./images/chapters/derivatives/a10dfaa20f01a2169e97046c2611614f.svg"
+							width="304px"
+							height="108px"
 							loading="lazy"
 						/>
 						<p>
-							Two of these terms fall way: the first term falls away because there is no -1<sup>st</sup> term in a summation. As such, it always
-							contributes "nothing", so we can safely completely ignore it for the purpose of finding the derivative function. The other term is the
-							very last term in this expansion: one involving <i>B<sub>n-1,n</sub></i
-							>. This term would have a binomial coefficient of [<i>i</i> choose <i>i+1</i>], which is a non-existent binomial coefficient. Again,
-							this term would contribute "nothing", so we can ignore it, too. This means we're left with:
+							上式中有两项会消失掉：因为任意和式都没有第-1项，所以上式第一项消失。既然这一项总是贡献为零，那么求导时就可以放心地将其完全无视。消失的另外一项为展开式的最后一项——包含<em
+								>B</em
+							><sub><em>n</em>-1,<em>n</em></sub
+							>的一项。这一项含有二项式系数C<sub><em>i</em></sub
+							><sup><em>i</em>+1</sup>，而这一系数通常约定等于0。因此这一项贡献为零，也可被略去。这意味着剩下的项为：
 						</p>
 						<!--
  
 n  · B                (t)  · w     - n  · B                (t)  · w     +
       n-1,\colorblue 0        1            n-1,\colorblue 0        0
-n  · B               (t)  · w      -  n  · B               (t)  · w     +
-      n-1,\colorred 1        2              n-1,\colorred 1        1     
+n  · B               (t)  · w      - n  · B               (t)  · w      +
+      n-1,\colorred 1        2             n-1,\colorred 1        1      
 n  · B                   (t)  · w  - n  · B                   (t)  · w  +
       n-1,\colormagenta 2        3         n-1,\colormagenta 2        2
-...                                
+⋯                                  
 -->
 						<img
 							class="LaTeX SVG"
-							src="./images/chapters/derivatives/f00423aaceac6ade478aba2a761664d8.svg"
+							src="./images/chapters/derivatives/7e29caedfb6b82f06c2ba70fafa0a3cd.svg"
 							width="295px"
-							height="71px"
+							height="69px"
 							loading="lazy"
 						/>
-						<p>And that's just a summation of lower order curves:</p>
+						<p>此即低次函数之和：</p>
 						<!--
  
-             d
-Bézier   (t) ── = n  · B                  (t)  · (w  - w ) + n  · B                 (t)  · (w  - w ) + n  · B                     (t)  · (w  - w )  
-      n,k    dt         (n-1),\colorblue 0         1    0          (n-1),\colorred 1         2    1          (n-1),\colormagenta 2         3    2
-                                                                      +  ...
+\mathrmd
+─────────   Bézier   (t) = n  · B                (t)  · (w  - w ) + n  · B               (t)  · (w  - w ) + n  · B                   (t)  · (w  - w )
+\mathrmdt         n,k            n-1,\colorblue 0         1    0          n-1,\colorred 1         2    1          n-1,\colormagenta 2         3    2
++ ⋯
 -->
 						<img
 							class="LaTeX SVG"
-							src="./images/chapters/derivatives/de486728b41299269cc990ed09d5d286.svg"
-							width="716px"
-							height="36px"
+							src="./images/chapters/derivatives/92683b35a94f50bc390a0f5281f3fdec.svg"
+							width="685px"
+							height="35px"
 							loading="lazy"
 						/>
-						<p>We can rewrite this as a normal summation, and we're done:</p>
+						<p>将上式改写为正常的和式即可：</p>
 						<!--
  
-             d    __ n-1                                 __ n-1
-Bézier   (t) ── = ❯      n  · B     (t)  · (w    - w ) = ❯      B     (t)  · \underset derivative weights \underbracen  · (w    - w )
-      n,k    dt   ‾‾ k=0       n-1,k         k+1    k    ‾‾ k=0  n-1,k                                                      k+1    k
+\mathrmd                   __ n-1                                 __ n-1
+─────────   Bézier   (t) = ❯      n  · B     (t)  · (w    - w ) = ❯      B     (t)  · \underbracen  · (w    - w )      
+\mathrmdt         n,k      ‾‾ k=0       n-1,k         k+1    k    ‾‾ k=0  n-1,k                         k+1    k  导数的权重
 -->
 						<img
 							class="LaTeX SVG"
-							src="./images/chapters/derivatives/4eeb75f5de2d13a39f894625d3222443.svg"
-							width="545px"
-							height="51px"
+							src="./images/chapters/derivatives/557dbd54f60ba895e1b5bb3efa2715e3.svg"
+							width="555px"
+							height="52px"
 							loading="lazy"
 						/>
 					</div>
 
+					<p>将上式改写为与原式相似的形式有助于看出它们的区别。先写出原式，再写出导数：</p>
+					<!--
+ 
+              __ n                      i                             n-i     i
+Bézier(n,t) = ❯      \underbrace\mathrmC          · \ \underbrace(1-t)     · t        · \ \underbracew    
+              ‾‾ i=0                    n 二项式系数项                                多项式项                  i 权重
+-->
+					<img
+						class="LaTeX SVG"
+						src="./images/chapters/derivatives/9c90e59048b0f5db6d926acdab756506.svg"
+						width="333px"
+						height="48px"
+						loading="lazy"
+					/>
+					<!--
+ 
+               __ k                      i                             k-i     i
+Bézier'(n,t) = ❯      \underbrace\mathrmC          · \ \underbrace(1-t)     · t        · \ \underbracen  · (w    - w )        ，其中\ k=n-1
+               ‾‾ i=0                    k 二项式系数项                                多项式项                        i+1    i  导数的权重
+-->
+					<img
+						class="LaTeX SVG"
+						src="./images/chapters/derivatives/72933f4b71b28c560b45618f519fc5e4.svg"
+						width="539px"
+						height="52px"
+						loading="lazy"
+					/>
 					<p>
-						Let's rewrite that in a form similar to our original formula, so we can see the difference. We will first list our original formula for
-						Bézier curves, and then the derivative:
+						有什么区别？对于实际的贝塞尔曲线而言几乎没有区别！虽然次数降低了（从<em>n</em>次变为<em>n</em>-1次），但是贝塞尔函数没有改变。唯一的真正的区别在于推导表示曲线的函数时权重如何变化。如果有A、B、C、D四个点，那么导数有三个点，二阶导数有两个点，三阶导数有一个点：
 					</p>
 					<!--
  
-              __ n                                                                                            n-i     i
-Bézier(n,t) = ❯      \underset binomial term\underbrace\binomni  · \ \underset polynomial term\underbrace(1-t)     · t   · \ \underset 
-              ‾‾ i=0
-                                                               weight\underbracew 
-                                                                                 i
+B(n,t)，           w    = {A,B,C,D}  
+B'(n,t)，   n = 3， w'   = {A',B',C'} = {3  · (B-A),\ 3  · (C-B),\ 3  · (D-C)}
+B''(n,t)，  n = 2， w''  = {A'',B''}  = {2  · (B'-A'),\ 2  · (C'-B')}         
+B'''(n,t)， n = 1， w''' = {A'''}     = {1  · (B''-A'')}                      
 -->
 					<img
 						class="LaTeX SVG"
-						src="./images/chapters/derivatives/153d99ce571bd664945394a1203a9eba.svg"
-						width="336px"
-						height="55px"
-						loading="lazy"
-					/>
-					<!--
- 
-               __ k                                                                                            k-i     i
-Bézier'(n,t) = ❯      \underset binomial term\underbrace\binomki  · \ \underset polynomial term\underbrace(1-t)     · t   · \ \underset derivative
-               ‾‾ i=0
-                                                weight\underbracen  · (w    - w )  ,  with  k=n-1
-                                                                        i+1    i
--->
-					<img
-						class="LaTeX SVG"
-						src="./images/chapters/derivatives/2368534c6e964e6d4a54904cc99b8986.svg"
-						width="520px"
-						height="59px"
+						src="./images/chapters/derivatives/5821cdc680d91ce5650e713854e5201a.svg"
+						width="595px"
+						height="76px"
 						loading="lazy"
 					/>
 					<p>
-						What are the differences? In terms of the actual Bézier curve, virtually nothing! We lowered the order (rather than <i>n</i>, it's now
-						<i>n-1</i>), but it's still the same Bézier function. The only real difference is in how the weights change when we derive the curve's
-						function. If we have four points A, B, C, and D, then the derivative will have three points, the second derivative two, and the third
-						derivative one:
-					</p>
-					<!--
- 
-B(n,t),           w = {A,B,C,D}   
-B'(n,t),   n = 3, w' = {A',B',C'} = {3  · (B-A),   3  · (C-B),   3  · (D-C)}
-B''(n,t),  n = 2, w'' = {A'',B''} = {2  · (B'-A'),   2  · (C'-B')}          
-B'''(n,t), n = 1, w''' = {A'''}   = {1  · (B''-A'')}                        
--->
-					<img
-						class="LaTeX SVG"
-						src="./images/chapters/derivatives/2d733684f81b65a42c4cdb3f1e589c8b.svg"
-						width="523px"
-						height="73px"
-						loading="lazy"
-					/>
-					<p>
-						We can keep performing this trick for as long as we have more than one weight. Once we have one weight left, the next step will see
-						<i>k = 0</i>, and the result of our "Bézier function" summation is zero, because we're not adding anything at all. As such, a quadratic
-						curve has no second derivative, a cubic curve has no third derivative, and generalized: an <i>n<sup>th</sup></i> order curve has
-						<i>n-1</i> (meaningful) derivatives, with any further derivative being zero.
+						只要有多于一个权重即可运用这一方法。只剩一个权重时，下一步会出现<em>k</em>=0，而贝塞尔函数的和式因为无项可加而化为零。因此二次函数没有二阶导数，三次函数没有三阶导数，更一般地有<em>n</em>次函数有<em>n</em>-1阶（有意义的）导数，其更高阶导数为零。
 					</p>
 				</section>
 				<section id="pointvectors">
 					<h1>
 						<div class="nav">
-							<a href="zh-CN/index.html#derivatives">前</a><a href="#toc">目录</a><a href="zh-CN/index.html#pointvectors3d">下</a>
+							<a href="zh-CN/index.html#derivatives">上一节</a><a href="#toc">目录</a><a href="zh-CN/index.html#pointvectors3d">下一节</a>
 						</div>
-						<a href="zh-CN/index.html#pointvectors">Tangents and normals</a>
+						<a href="zh-CN/index.html#pointvectors">切线与法线</a>
 					</h1>
 					<p>
-						If you want to move objects along a curve, or "away from" a curve, the two vectors you're most interested in are the tangent vector and
-						normal vector for curve points. These are actually really easy to find. For moving and orienting along a curve, we use the tangent, which
-						indicates the direction of travel at specific points, and is literally just the first derivative of our curve:
+						如果要将物体沿曲线移动或者从曲线附近“移向远处”，那么与之最相关的两个向量为曲线的切向量和法向量，而这两者都非常容易求得。切向量用于沿曲线移动或者对准曲线方向，它标志着曲线在指定点的行进方向，而且就是曲线函数的一阶导数：
 					</p>
 					<!--
  
@@ -3008,15 +2913,12 @@ tangent (t) = B' (t)
 -->
 					<img
 						class="LaTeX SVG"
-						src="./images/chapters/pointvectors/da069c7d6cbdb516c5454371dae84e7f.svg"
-						width="132px"
-						height="61px"
+						src="./images/chapters/pointvectors/24fcd90641a3a352f373f4e68fe5c004.svg"
+						width="133px"
+						height="60px"
 						loading="lazy"
 					/>
-					<p>
-						This gives us the directional vector we want. We can normalize it to give us uniform directional vectors (having a length of 1.0) at each
-						point, and then do whatever it is we want to do based on those directions:
-					</p>
+					<p>此即所需的方向向量。可以在每一点将方向向量规范化后得到单位方向向量（即长度为1.0），再根据这些方向进行所需的操作：</p>
 					<!--
  
                            ┌─────────────────┐
@@ -3036,43 +2938,38 @@ y(t) = \| tangent (t)\| = ─────────────── = ──
 -->
 					<img
 						class="LaTeX SVG"
-						src="./images/chapters/pointvectors/33afd1a141ec444989c393b3e51ec9ca.svg"
-						width="273px"
-						height="121px"
+						src="./images/chapters/pointvectors/ff94b5f90ced1a388a70cae2bfbabded.svg"
+						width="276px"
+						height="120px"
 						loading="lazy"
 					/>
 					<p>
-						The tangent is very useful for moving along a line, but what if we want to move away from the curve instead, perpendicular to the curve at
-						some point <i>t</i>? In that case we want the <em>normal</em> vector. This vector runs at a right angle to the direction of the curve, and
-						is typically of length 1.0, so all we have to do is rotate the normalized directional vector and we're done:
+						切向量对于沿曲线移动很有用，但如果要从曲线附近“移向远处”，而且移动方向与曲线在某点<em>t</em>处垂直，那该怎么办？这时需要的是<em>法</em>向量。这一向量与曲线的方向保持垂直，且长度通常为1.0，因此只需旋转单位方向向量即可：
 					</p>
 					<!--
  
              ^           \pi   ^           \pi     ^
-normal (t) = x(t)  · cos ─── - y(t)  · sin ─── = - y(t)                                             
+normal (t) = x(t)  · cos ─── - y(t)  · sin ─── = - y(t)                   
       x                   2                 2
-                                                                                                    
-                                                           ^           \pi   ^           \pi    ^
-normal (t) = \underset quarter circle rotation \underbrace x(t)  · sin ─── + y(t)  · cos ───  = x(t)
-      y                                                                 2                 2
+                                                                          
+                         ^           \pi   ^           \pi            ^
+normal (t) = \underbrace x(t)  · sin ─── + y(t)  · cos ───          = x(t)
+      y                               2                 2     o 
+                                                           90    旋转
 -->
 					<img
 						class="LaTeX SVG"
-						src="./images/chapters/pointvectors/c3d5f3506b763b718e567f90dbb78324.svg"
-						width="324px"
-						height="79px"
+						src="./images/chapters/pointvectors/35683edb9348be942f78b01d8de13759.svg"
+						width="317px"
+						height="77px"
 						loading="lazy"
 					/>
 					<div class="note">
 						<p>
-							Rotating coordinates is actually very easy, if you know the rule for it. You might find it explained as "applying a
-							<a href="https://en.wikipedia.org/wiki/Rotation_matrix">rotation matrix</a>, which is what we'll look at here, too. Essentially, the
-							idea is to take the circles over which we can rotate, and simply "sliding the coordinates" over these circles by the desired angle. If
-							we want a quarter circle turn, we take the coordinate, slide it along the circle by a quarter turn, and done.
+							其实旋转坐标只要知道方法就非常简单——“施加<a href="https://en.wikipedia.org/wiki/Rotation_matrix">旋转矩阵</a
+							>”，以下即采用这种方法。本质上这一做法是先选取用于旋转的圆，再将坐标沿着圆“滑动所需的角度”。如果需要转动90度，那么将坐标沿着圆滑动90度即可。
 						</p>
-						<p>
-							To turn any point <i>(x,y)</i> into a rotated point <i>(x',y')</i> (over 0,0) by some angle φ, we apply this nice and easy computation:
-						</p>
+						<p>为了将点(<em>x</em>,<em>y</em>)（绕(0,0)）旋转<em>φ</em>度得到点(<em>x'</em>,<em>y'</em>)，可以使用以下简洁的计算式：</p>
 						<!--
  
 x' = x  · cos (\phi) - y  · sin (\phi)
@@ -3080,12 +2977,12 @@ y' = x  · sin (\phi) + y  · cos (\phi)
 -->
 						<img
 							class="LaTeX SVG"
-							src="./images/chapters/pointvectors/1df6c055ae8e41a46bfdebc55a4f17c0.svg"
-							width="183px"
+							src="./images/chapters/pointvectors/5ad898109abeb8e035abe47325bb5fa0.svg"
+							width="179px"
 							height="37px"
 							loading="lazy"
 						/>
-						<p>Which is the "long" version of the following matrix transformation:</p>
+						<p>对应“短”版本的矩阵变换为：</p>
 						<!--
  
 ┌ x' ┐ = ┌ cos (\phi) -sin (\phi) ┐ ┌ x ┐
@@ -3093,471 +2990,251 @@ y' = x  · sin (\phi) + y  · cos (\phi)
 -->
 						<img
 							class="LaTeX SVG"
-							src="./images/chapters/pointvectors/f02e359a5e47667919738fff69d2625b.svg"
-							width="211px"
+							src="./images/chapters/pointvectors/99a4919e874959c4506ecd3598bd498d.svg"
+							width="205px"
 							height="40px"
 							loading="lazy"
 						/>
+						<p>注意对于90度、180度和270度旋转，因为这些角度的<em>正弦</em>和<em>余弦</em>分别为0和1、-1和0、0和-1，所以上式可以更简。</p>
 						<p>
-							And that's all we need to rotate any coordinate. Note that for quarter, half, and three-quarter turns these functions become even
-							easier, since <em>sin</em> and <em>cos</em> for these angles are, respectively: 0 and 1, -1 and 0, and 0 and -1.
-						</p>
-						<p>
-							But <strong><em>why</em></strong> does this work? Why this matrix multiplication?
-							<a href="https://en.wikipedia.org/wiki/Rotation_matrix#Decomposition_into_shears">Wikipedia</a> (technically, Thomas Herter and Klaus
-							Lott) tells us that a rotation matrix can be treated as a sequence of three (elementary) shear operations. When we combine this into a
-							single matrix operation (because all matrix multiplications can be collapsed), we get the matrix that you see above.
-							<a href="https://datagenetics.com/blog/august32013/index.html">DataGenetics</a> have an excellent article about this very thing: it's
-							really quite cool, and I strongly recommend taking a quick break from this primer to read that article.
+							但是**<em>为什么**</em>可以这样做？为什么用这一矩阵乘法？这是因为旋转变换可以表示为三个（初等）剪切变换的复合，而将三个变换合成一个变换（因为所有矩阵变换都可以复合）即得上述矩阵表示。<a
+								href="https://datagenetics.com/blog/august32013/index.html"
+								>DataGenetics</a
+							>对此进行了很好的解释，非常推荐读者一读。
 						</p>
 					</div>
 
 					<p>
-						The following two graphics show the tangent and normal along a quadratic and cubic curve, with the direction vector coloured blue, and the
-						normal vector coloured red (the markers are spaced out evenly as <em>t</em>-intervals, not spaced equidistant).
+						以下两图展示了二次和三次贝塞尔曲线在各点的切线和法线，其中蓝色的为方向向量，红色的为法向量（标记按<em>t</em>值的等分区间放置，并非等距放置）。
 					</p>
 					<div class="figure">
 						<graphics-element
-							title="Quadratic Bézier tangents and normals"
+							title="二次贝塞尔曲线的切线和法线"
 							width="275"
 							height="275"
 							src="./chapters/pointvectors/pointvectors.js"
 							data-type="quadratic"
-							reset="重启"
-							viewSource="view source"
+							reset="重置"
+							viewSource="查看源码"
 						>
 							<fallback-image>
-								<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+								<span class="view-source">脚本被禁用。显示备用图片。</span>
 								<img width="275px" height="275px" src="./images/chapters/pointvectors/d0b09bb338bd42d4164ced871d1f77ba.png" loading="lazy" />
-								<label>Quadratic Bézier tangents and normals</label>
+								<label>二次贝塞尔曲线的切线和法线</label>
 							</fallback-image></graphics-element
 						>
 						<graphics-element
-							title="Cubic Bézier tangents and normals"
+							title="三次贝塞尔曲线的切线和法线"
 							width="275"
 							height="275"
 							src="./chapters/pointvectors/pointvectors.js"
 							data-type="cubic"
-							reset="重启"
-							viewSource="view source"
+							reset="重置"
+							viewSource="查看源码"
 						>
 							<fallback-image>
-								<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+								<span class="view-source">脚本被禁用。显示备用图片。</span>
 								<img width="275px" height="275px" src="./images/chapters/pointvectors/b8285282b8a0ce28fc2cc0392e9b607a.png" loading="lazy" />
-								<label>Cubic Bézier tangents and normals</label>
+								<label>三次贝塞尔曲线的切线和法线</label>
 							</fallback-image></graphics-element
 						>
 					</div>
 				</section>
 				<section id="pointvectors3d">
 					<h1>
-						<div class="nav"><a href="zh-CN/index.html#pointvectors">前</a><a href="#toc">目录</a><a href="zh-CN/index.html#components">下</a></div>
-						<a href="zh-CN/index.html#pointvectors3d">Working with 3D normals</a>
+						<div class="nav">
+							<a href="zh-CN/index.html#pointvectors">上一节</a><a href="#toc">目录</a><a href="zh-CN/index.html#components">下一节</a>
+						</div>
+						<a href="zh-CN/index.html#pointvectors3d">三维法向量</a>
 					</h1>
 					<p>
-						Before we move on to the next section we need to spend a little bit of time on the difference between 2D and 3D. While for many things
-						this difference is irrelevant and the procedures are identical (for instance, getting the 3D tangent is just doing what we do for 2D, but
-						for x, y, and z, instead of just for x and y), when it comes to normals things are a little more complex, and thus more work. Mind you,
-						it's not "super hard", but there are more steps involved and we should have a look at those.
+						在进入下一章之前需要花点时间探究二维和三维的区别。尽管这一区别影响的范围不大无关且两种情形的做法相同（比如求三维切向量与二维情形所做的一样，不过所求为x、y、z而不只是x、y），但是法向量的情况有点复杂，所做的也就更多。尽管不是“极其困难”，但是所需的步骤更多，需要仔细看看。
 					</p>
 					<p>
-						Getting normals in 3D is in principle the same as in 2D: we take the normalised tangent vector, and then rotate it by a quarter turn.
-						However, this is where things get that little more complex: we can turn in quite a few directions, since "the normal" in 3D is a plane,
-						not a single vector, so we basically need to define what "the" normal is in the 3D case.
+						三维法向量的求法原则上与二维一样——将规范化的切向量旋转90度。然而这就是情况变得略微复杂的地方：因为三维的“法向量”是法平面上的任意一个向量，所以可以旋转的方向并不唯一，因此需要定义三维情形中“唯一的”法向量是什么。
 					</p>
 					<p>
-						The "naïve" approach is to construct what is known as the
-						<a href="https://en.wikipedia.org/wiki/Frenet%E2%80%93Serret_formulas">Frenet normal</a>, where we follow a simple recipe that works in
-						many cases (but does super bizarre things in some others). The idea is that even though there are infinitely many vectors that are
-						perpendicular to the tangent (i.e. make a 90 degree angle with it), the tangent itself sort of lies on its own plane already: since each
-						point on the curve (no matter how closely spaced) has its own tangent vector, we can say that each point lies in the same plane as the
-						local tangent, as well as the tangents "right next to it".
+						“朴素”的方法是构造<a href="https://en.wikipedia.org/wiki/Frenet%E2%80%93Serret_formulas">弗勒内法向量</a
+						>，而以下采用的简单做法在很多情况下都可行（但在其他情况下会得到极其怪异的结果）。思路是虽然有无穷多个向量与切向量垂直（即与之成90度角），但是切向量本身已差不多位于自带的平面上——因为曲线上的每一点（无论间隔多小）都有自己的切向量，所以可以说每个点都位于此处的切向量和“近旁”的切向量所在的平面上。
 					</p>
 					<p>
-						Even if that difference in tangent vectors is minute, "any difference" is all we need to find out what that plane is - or rather, what the
-						vector perpendicular to that plane is. Which is what we need: if we can calculate that vector, and we have the tangent vector that we know
-						lies on a plane, then we can rotate the tangent vector over the perpendicular, and presto. We have computed the normal using the same
-						logic we used for the 2D case: "just rotate it 90 degrees".
+						即使这两个切向量的差微乎其微，只要“有差”就可求出这一平面，或者说求出垂直于平面的向量。计算出这一向量之后，因为切向量在平面上，所以将切向量绕垂直向量旋转即可。计算这一法向量的逻辑与二维情形相同——“直接旋转90度”。
 					</p>
-					<p>So let's do that! And in a twist surprise, we can do this in four lines:</p>
+					<p>那么开始吧！令人意外的是四行就做完了：</p>
 					<ul>
-						<li><strong>a</strong> = normalize(B'(t))</li>
-						<li><strong>b</strong> = normalize(<strong>a</strong> + B''(t))</li>
+						<li><strong>a</strong> = normalize(<em>B'</em>(<em>t</em>))</li>
+						<li><strong>b</strong> = normalize(<strong>a</strong> + <em>B''</em>(<em>t</em>))</li>
 						<li><strong>r</strong> = normalize(<strong>b</strong> × <strong>a</strong>)</li>
 						<li><strong>normal</strong> = normalize(<strong>r</strong> × <strong>a</strong>)</li>
 					</ul>
-					<p>Let's unpack that a little:</p>
+					<p>展开说几句：</p>
 					<ul>
 						<li>
-							We start by taking the <a href="https://en.wikipedia.org/wiki/Unit_vector">normalized vector</a> for the derivative at some point on the
-							curve. We normalize it so the maths is less work. Less work is good.
+							先将曲线上一点的导数规范化得到<a href="https://en.wikipedia.org/wiki/Unit_vector">单位向量</a>。规范化可以减少计算量，而计算量越少越好。
 						</li>
+						<li>再计算<strong>b</strong>。假如曲线从这个点开始不再变化，保持导数和二阶导数不变，则<strong>b</strong>表示下一个点处的切向量。</li>
 						<li>
-							Then, we compute <strong>b</strong> which represents what a next point's tangent would be if the curve stopped changing at our point and
-							just had the same derivative and second derivative from that point on.
+							得到两个共面向量后（导数、导数与二阶导数的和），用<a href="https://en.wikipedia.org/wiki/Cross_product">叉积</a
+							>这一基本的向量运算可以求出与这一平面垂直的向量。（注意这一运算使用的符号×绝非乘法运算！）叉积所得向量可以当做“旋转轴”，像二维情形一样将切向量旋转90度得到法向量。
 						</li>
-						<li>
-							This lets us find two vectors (the derivative, and the second derivative added to the derivative) that lie on the same plane, which
-							means we can use them to compute a vector perpendicular to that plane, using an elementary vector operation called the
-							<a href="https://en.wikipedia.org/wiki/Cross_product">cross product</a>. (Note that while that operation uses the × operator, it's most
-							definitely not a multiplication!) The result of that gives us a vector that we can use as the "axis of rotation" for turning the tangent
-							a quarter circle to get our normal, just like we did in the 2D case.
-						</li>
-						<li>
-							Since the cross product lets us find a vector that is perpendicular to some plane defined by two other vectors, and since the normal
-							vector should be perpendicular to the plane that the tangent and the axis of rotation lie in, we can use the cross product a second
-							time, and immediately get our normal vector.
-						</li>
+						<li>既然由叉积可得垂直于由两个向量所确定的平面的另一向量，而法向量又与切向量和旋转轴所在平面垂直，那么再用一次叉积即得法向量。</li>
 					</ul>
 					<p>
-						And then we're done, we found "the" normal vector for a 3D curve. Let's see what that looks like for a sample curve, shall we? You can
-						move your cursor across the graphic from left to right, to show the normal at a point with a t value that is based on your cursor
-						position: all the way on the left is 0, all the way on the right = 1, midway is t=0.5, etc:
+						这样就求出了三维曲线“唯一”的法向量。以一条曲线为例看看效果如何？从左往右拖动滚动条，根据鼠标位置所确定的<em>t</em>值显示在此处的法向量——最左为0，最右为1，中间为0.5，等等：
 					</p>
 					<graphics-element
-						title="Some known and unknown vectors"
+						title="一些已知和未知向量"
 						width="350"
 						height="300"
 						src="./chapters/pointvectors3d/frenet.js"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="350px" height="300px" src="./images/chapters/pointvectors3d/11c1da2357004bb51cf0c591fc492115.png" loading="lazy" />
 							<label></label>
 						</fallback-image>
 						<input type="range" min="0" max="1" step="0.01" value="0" class="slide-control" />
 					</graphics-element>
+					<p>然而摆弄图像一阵之后可能会察觉到异样——法向量似乎在t=0.65和t=0.75之间“绕着曲线急转弯”……为什么会这样？</p>
 					<p>
-						However, if you've played with that graphic a bit, you might have noticed something odd. The normal seems to "suddenly twist around the
-						curve" between t=0.65 and t=0.75... Why is it doing that?
+						其实出现这种现象是因为数学公式就是这样推导的，所以弗勒内法向量的问题就在于此：虽然“从数学上看”是对的，但是“从实际上看”有问题。因此为了让任何图像都不出问题，所真正需要的是只要……看起来不错就好的方法。
 					</p>
 					<p>
-						As it turns out, it's doing that because that's how the maths works, and that's the problem with Frenet normals: while they are
-						"mathematically correct", they are "practically problematic", and so for any kind of graphics work what we really want is a way to compute
-						normals that just... look good.
-					</p>
-					<p>Thankfully, Frenet normals are not our only option.</p>
-					<p>
-						Another option is to take a slightly more algorithmic approach and compute a form of
-						<a href="https://www.microsoft.com/en-us/research/wp-content/uploads/2016/12/Computation-of-rotation-minimizing-frames.pdf"
-							>Rotation Minimising Frame</a
-						>
-						(also known as "parallel transport frame" or "Bishop frame") instead, where a "frame" is a set made up of the tangent, the rotational
-						axis, and the normal vector, centered on an on-curve point.
+						还好不只有弗勒内法向量这一种选择。另一种选择是采用稍微偏算法的方式计算一种形式的<a
+							href="https://www.microsoft.com/en-us/research/wp-content/uploads/2016/12/Computation-of-rotation-minimizing-frames.pdf"
+							>旋转最小化标架</a
+						>（亦称“平行输运标架”或“比舍标架”），此处“标架”是以线上点为原点，由切向量、旋转轴和法向量构成的集合。
 					</p>
 					<p>
-						These type of frames are computed based on "the previous frame", so we cannot simply compute these "on demand" for single points, as we
-						could for Frenet frames; we have to compute them for the entire curve. Thankfully, the procedure is pretty simple, and can be performed at
-						the same time that you're building lookup tables for your curve.
+						因为计算这种类型的标架依赖于“上一个标架”，所以无法像弗勒内标架一样“按需”对单独的点直接计算，而是需要对整条曲线进行计算。好在计算过程相当简单，而且可以与曲线查询表的构建同时进行。
 					</p>
 					<p>
-						The idea is to take a starting "tangent/rotation axis/normal" frame at t=0, and then compute what the next frame "should" look like by
-						applying some rules that yield a good looking next frame. In the case of the RMF paper linked above, those rules are:
+						思路是在t=0处取一个由切向量、旋转轴、法向量构成的初始标架，再使用一定的规则计算下一标架“应有”的形式。上文链接的旋转最小化标架论文给出的规则为：
 					</p>
 					<ul>
-						<li>Take a point on the curve for which we know the RM frame already,</li>
-						<li>take a next point on the curve for which we don't know the RM frame yet, and</li>
-						<li>
-							reflect the known frame onto the next point, by treating the plane through the curve at the point exactly between the next and previous
-							points as a "mirror".
-						</li>
-						<li>
-							This gives the next point a tangent vector that's essentially pointing in the opposite direction of what it should be, and a normal
-							that's slightly off-kilter, so:
-						</li>
-						<li>
-							reflect the vectors of our "mirrored frame" a second time, but this time using the plane through the "next point" itself as "mirror".
-						</li>
-						<li>Done: the tangent and normal have been fixed, and we have a good looking frame to work with.</li>
+						<li>取曲线上已经求出旋转最小化标架的一个点，</li>
+						<li>取曲线上尚未求出旋转最小化标架的下一个点，</li>
+						<li>再以上一个点和下一个点的中垂面为镜面，将已有标架翻转到下一个点上。</li>
+						<li>翻转后的切向量方向与下一个点的切向量方向大致相反，而且法向量也略有歪斜。</li>
+						<li>于是再以翻转后的切向量和下一个点的切向量所确定的平面为镜面，将翻转后的标架再次翻转。</li>
+						<li>切向量和法向量修正完毕，所得即为好用的标架。</li>
 					</ul>
-					<p>So, let's write some code for that!</p>
+					<p>来写点代码吧！</p>
 					<div class="howtocode">
-						<h3>Implementing Rotation Minimising Frames</h3>
-						<p>
-							We first assume we have a function for calculating the Frenet frame at a point, which we already discussed above, inn a way that it
-							yields a frame with properties:
-						</p>
-
-						<table class="code">
-							<tr>
-								<td>1</td>
-								<td rowspan="6">
-									<textarea disabled rows="6" role="doc-example">
-{
-  o: origin of all vectors, i.e. the on-curve point,
-  t: tangent vector,
-  r: rotational axis vector,
-  n: normal vector
-}</textarea
-									>
-								</td>
-							</tr>
-							<tr>
-								<td>2</td>
-							</tr>
-							<tr>
-								<td>3</td>
-							</tr>
-							<tr>
-								<td>4</td>
-							</tr>
-							<tr>
-								<td>5</td>
-							</tr>
-							<tr>
-								<td>6</td>
-							</tr>
-						</table>
-
-						<p>Then, we can write a function that generates a sequence of RM frames in the following manner:</p>
-
-						<table class="code">
-							<tr>
-								<td>1</td>
-								<td rowspan="36">
-									<textarea disabled rows="36" role="doc-example">
-generateRMFrames(steps) -> frames:
+						<h3>实现旋转最小化标架</h3>
+						<p>首先假设已有函数用于计算上文提及的指定点的弗勒内标架，输出的标架具有如下性质：</p>
+						<pre><code>{
+  o：所有向量的起点，即线上点；
+  t：切向量；
+  r：旋转轴向量；
+  n：法向量
+}</code></pre>
+						<p>再如下写出生成一系列旋转最小化标架的函数：</p>
+						<pre><code>generateRMFrames(steps) -&gt; frames:
   step = 1.0/steps
-
-  // Start off with the standard tangent/axis/normal frame
-  // associated with the curve at t=0:
+  // 从曲线上t=0处标准的切向量/旋转轴/法向量标架开始：
   frames.add(getFrenetFrame(0))
-
-  // start constructing RM frames:
-  for t0 = 0, t0 < 1.0, t0 += step:
-    // start with the previous, known frame
+  // 开始构造旋转最小化标架：
+  for t0 = 0, t0 &lt; 1.0, t0 += step:
+    // 从已有的上一标架开始
     x0 = frames.last
-
-    // get the next frame: we're going to keep its position and tangent,
-    // but we're going to recompute the axis and normal.
+    // 求出下一标架：要保留它的位置和切向量，
+    // 但要重新计算轴向量和法向量。
     t1 = t0 + step
     x1 = { o: getPoint(t1), t: getDerivative(t) }
-
-    // First we reflect x0's tangent and axis of rotation onto x1,
-    // through/ the plane of reflection at the point between x0 x1
+    // 首先以x0和x1的中垂面为镜面，
+    // 将x0的切向量和旋转轴翻转到x1处
     v1 = x1.o - x0.o
     c1 = v1 · v1
     riL = x0.r - v1 * 2/c1 * v1 · x0.r
     tiL = x0.t - v1 * 2/c1 * v1 · x0.t
-
-    // note that v1 is a vector, but 2/c1 and (v1 · ...) are just
-    // plain numbers, so we're just scaling v1 by some constant.
-
-    // Then we reflect a second time, over a plane at x1, so that
-    // the frame tangent is aligned with the curve tangent again:
+    // 注意到v1为向量，而2/c1和v1 · ……就是数，
+    // 因此上述代码只是对v1进行一定倍数的缩放。
+    // 然后再以过x1的平面为镜面再次翻转，
+    // 标架向量的方向即重新与曲线切向量一致：
     v2 = x1.t - tiL
     c2 = v2 · v2
-
-    // and we're done here:
+    // 收尾工作：
     x1.r = riL - v2 * 2/c2 * v2 · riL
     x1.n = x1.r × x1.t
-    frames.add(x1)</textarea
-									>
-								</td>
-							</tr>
-							<tr>
-								<td>2</td>
-							</tr>
-							<tr>
-								<td>3</td>
-							</tr>
-							<tr>
-								<td>4</td>
-							</tr>
-							<tr>
-								<td>5</td>
-							</tr>
-							<tr>
-								<td>6</td>
-							</tr>
-							<tr>
-								<td>7</td>
-							</tr>
-							<tr>
-								<td>8</td>
-							</tr>
-							<tr>
-								<td>9</td>
-							</tr>
-							<tr>
-								<td>10</td>
-							</tr>
-							<tr>
-								<td>11</td>
-							</tr>
-							<tr>
-								<td>12</td>
-							</tr>
-							<tr>
-								<td>13</td>
-							</tr>
-							<tr>
-								<td>14</td>
-							</tr>
-							<tr>
-								<td>15</td>
-							</tr>
-							<tr>
-								<td>16</td>
-							</tr>
-							<tr>
-								<td>17</td>
-							</tr>
-							<tr>
-								<td>18</td>
-							</tr>
-							<tr>
-								<td>19</td>
-							</tr>
-							<tr>
-								<td>20</td>
-							</tr>
-							<tr>
-								<td>21</td>
-							</tr>
-							<tr>
-								<td>22</td>
-							</tr>
-							<tr>
-								<td>23</td>
-							</tr>
-							<tr>
-								<td>24</td>
-							</tr>
-							<tr>
-								<td>25</td>
-							</tr>
-							<tr>
-								<td>26</td>
-							</tr>
-							<tr>
-								<td>27</td>
-							</tr>
-							<tr>
-								<td>28</td>
-							</tr>
-							<tr>
-								<td>29</td>
-							</tr>
-							<tr>
-								<td>30</td>
-							</tr>
-							<tr>
-								<td>31</td>
-							</tr>
-							<tr>
-								<td>32</td>
-							</tr>
-							<tr>
-								<td>33</td>
-							</tr>
-							<tr>
-								<td>34</td>
-							</tr>
-							<tr>
-								<td>35</td>
-							</tr>
-							<tr>
-								<td>36</td>
-							</tr>
-						</table>
-
-						<p>
-							Ignoring comments, this is certainly more code than when we were just computing a single Frenet frame, but it's not a crazy amount more
-							code to get much better looking normals.
-						</p>
+    frames.add(x1)</code></pre>
+						<p>即使忽略注释，代码也明显比计算单个弗勒内标架的多，但也没有多得离谱，而且得到了长得更好的法向量。</p>
 					</div>
 
-					<p>
-						Speaking of better looking, what does this actually look like? Let's revisit that earlier curve, but this time use rotation minimising
-						frames rather than Frenet frames:
-					</p>
+					<p>提到长得更好，这样的标架到底是什么样子？下面回顾之前的那条曲线，但这次用的不是弗勒内标架而是旋转最小化标架：</p>
 					<graphics-element
-						title="Some known and unknown vectors"
+						title="一些已知和未知向量"
 						width="350"
 						height="300"
 						src="./chapters/pointvectors3d/rotation-minimizing.js"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="350px" height="300px" src="./images/chapters/pointvectors3d/f4a2fa1e0204c890b2bff07228ba678d.png" loading="lazy" />
 							<label></label>
 						</fallback-image>
 						<input type="range" min="0" max="1" step="0.01" value="0" class="slide-control" />
 					</graphics-element>
-					<p>That looks so much better!</p>
+					<p>看起来好多了！</p>
 					<p>
-						For those reading along with the code: we don't even strictly speaking need a Frenet frame to start with: we could, for instance, treat
-						the z-axis as our initial axis of rotation, so that our initial normal is <strong>(0,0,1) × tangent</strong>, and then take things from
-						there, but having that initial "mathematically correct" frame so that the initial normal seems to line up based on the curve's orientation
-						in 3D space is just nice.
+						给看过代码的读者的话：严格来说一开始甚至不需要弗勒内标架。比方说可以将z轴当作初始旋转轴，于是初始法向量为 <strong>(0,0,1)</strong> ×
+						<strong>切向量</strong
+						>，然后再继续下去。不过求出“数学上正确”的初始标架，从而让初始法向量的方向符合曲线在三维空间中的定向，这总归是不错的。
 					</p>
 				</section>
 				<section id="components">
 					<h1>
 						<div class="nav">
-							<a href="zh-CN/index.html#pointvectors3d">前</a><a href="#toc">目录</a><a href="zh-CN/index.html#extremities">下</a>
+							<a href="zh-CN/index.html#pointvectors3d">上一节</a><a href="#toc">目录</a><a href="zh-CN/index.html#extremities">下一节</a>
 						</div>
-						<a href="zh-CN/index.html#components">Component functions</a>
+						<a href="zh-CN/index.html#components">分量函数</a>
 					</h1>
 					<p>
-						One of the first things people run into when they start using Bézier curves in their own programs is "I know how to draw the curve, but
-						how do I determine the bounding box?". It's actually reasonably straightforward to do so, but it requires having some knowledge on
-						exploiting math to get the values we need. For bounding boxes, we aren't actually interested in the curve itself, but only in its
-						"extremities": the minimum and maximum values the curve has for its x- and y-axis values. If you remember your calculus (provided you ever
-						took calculus, otherwise it's going to be hard to remember) we can determine function extremities using the first derivative of that
-						function, but this poses a problem, since our function is parametric: every axis has its own function.
+						当人们开始在自己的程序中使用贝塞尔曲线时，首先遇到的问题之一是：“我虽然知道怎么画曲线，但是怎么确定包围盒？”其实做法颇为直接，但需要知道如何利用一些数学知识得到所需的值。对于包围盒而言，所需的其实并不是曲线本身，而只是曲线的“极值”——曲线的x轴和y轴分量的最小值和最大值。如果还记得微积分的话（前提是学过微积分，否则更难记），那么函数的极值可以用函数的一阶导数所确定，但由于“曲线函数”有不只一个分量，这就产生了一个问题——每个分量都有自己的函数。
 					</p>
+					<p>解决办法：对每个分量分别计算导数，再按照原来的分量顺序重新拼在一起。</p>
 					<p>
-						The solution: compute the derivative for each axis separately, and then fit them back together in the same way we do for the original.
+						以下演示参数化的贝塞尔曲线如何“分解”为两个正常的函数，一个对应于x轴，一个对应于y轴。注意左侧的图像依然是可交互的曲线，但没有标出坐标轴（坐标显示在图中）；中间和右侧的图像是分量函数，分别对应于指定<em>t</em>值（介于0和1之间，含端点）后求出的x轴和y轴分量。
 					</p>
-					<p>
-						Let's look at how a parametric Bézier curve "splits up" into two normal functions, one for the x-axis and one for the y-axis. Note the
-						leftmost figure is again an interactive curve, without labeled axes (you get coordinates in the graph instead). The center and rightmost
-						figures are the component functions for computing the x-axis value, given a value for <i>t</i> (between 0 and 1 inclusive), and the y-axis
-						value, respectively.
-					</p>
-					<p>
-						If you move points in a curve sideways, you should only see the middle graph change; likewise, moving points vertically should only show a
-						change in the right graph.
-					</p>
+					<p>如果水平移动曲线上的点，那么应当只有中间的图像在变化；同样，如果竖直移动曲线上的点，那么应当只有右侧的图像在变化。</p>
 					<graphics-element
-						title="Quadratic Bézier curve components"
+						title="二次贝塞尔曲线的分量"
 						width="825"
 						height="275"
 						src="./chapters/components/components.js"
 						data-type="quadratic"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="825px" height="275px" src="./images/chapters/components/1e6e38f6403dbe4c8b80295a94fc6748.png" loading="lazy" />
 							<label></label> </fallback-image
 					></graphics-element>
-					<p>&nbsp;</p>
 					<graphics-element
-						title="Cubic Bézier curve components"
+						title="三次贝塞尔曲线的分量"
 						width="825"
 						height="275"
 						src="./chapters/components/components.js"
 						data-type="cubic"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="825px" height="275px" src="./images/chapters/components/348694339257428a260144da4bbf80fc.png" loading="lazy" />
 							<label></label> </fallback-image
 					></graphics-element>
 				</section>
 				<section id="extremities">
 					<h1>
-						<div class="nav"><a href="zh-CN/index.html#components">前</a><a href="#toc">目录</a><a href="zh-CN/index.html#boundingbox">下</a></div>
+						<div class="nav">
+							<a href="zh-CN/index.html#components">上一节</a><a href="#toc">目录</a><a href="zh-CN/index.html#boundingbox">下一节</a>
+						</div>
 						<a href="zh-CN/index.html#extremities">Finding extremities: root finding</a>
 					</h1>
 					<p>
@@ -4169,11 +3846,11 @@ x    = x  - ───────
 						height="275"
 						src="./chapters/extremities/extremities.js"
 						data-type="quadratic"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="825px" height="275px" src="./images/chapters/extremities/fd68347a917c9b703ff8005287ac6ca4.png" loading="lazy" />
 							<label></label> </fallback-image
 					></graphics-element>
@@ -4184,18 +3861,20 @@ x    = x  - ───────
 						height="275"
 						src="./chapters/extremities/extremities.js"
 						data-type="cubic"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="825px" height="275px" src="./images/chapters/extremities/fbfe9464c9653f5efcd04411e683faf9.png" loading="lazy" />
 							<label></label> </fallback-image
 					></graphics-element>
 				</section>
 				<section id="boundingbox">
 					<h1>
-						<div class="nav"><a href="zh-CN/index.html#extremities">前</a><a href="#toc">目录</a><a href="zh-CN/index.html#aligning">下</a></div>
+						<div class="nav">
+							<a href="zh-CN/index.html#extremities">上一节</a><a href="#toc">目录</a><a href="zh-CN/index.html#aligning">下一节</a>
+						</div>
 						<a href="zh-CN/index.html#boundingbox">Bounding boxes</a>
 					</h1>
 					<p>
@@ -4223,11 +3902,11 @@ x    = x  - ───────
 							height="275"
 							src="./chapters/boundingbox/bbox.js"
 							data-type="quadratic"
-							reset="重启"
-							viewSource="view source"
+							reset="重置"
+							viewSource="查看源码"
 						>
 							<fallback-image>
-								<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+								<span class="view-source">脚本被禁用。显示备用图片。</span>
 								<img width="275px" height="275px" src="./images/chapters/boundingbox/12ec4a5039de2e2cc06611db5e826282.png" loading="lazy" />
 								<label>Quadratic Bézier bounding box</label>
 							</fallback-image></graphics-element
@@ -4238,11 +3917,11 @@ x    = x  - ───────
 							height="275"
 							src="./chapters/boundingbox/bbox.js"
 							data-type="cubic"
-							reset="重启"
-							viewSource="view source"
+							reset="重置"
+							viewSource="查看源码"
 						>
 							<fallback-image>
-								<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+								<span class="view-source">脚本被禁用。显示备用图片。</span>
 								<img width="275px" height="275px" src="./images/chapters/boundingbox/daad01218ba430e2355d151811aa971b.png" loading="lazy" />
 								<label>Cubic Bézier bounding box</label>
 							</fallback-image></graphics-element
@@ -4256,7 +3935,9 @@ x    = x  - ───────
 				</section>
 				<section id="aligning">
 					<h1>
-						<div class="nav"><a href="zh-CN/index.html#boundingbox">前</a><a href="#toc">目录</a><a href="zh-CN/index.html#tightbounds">下</a></div>
+						<div class="nav">
+							<a href="zh-CN/index.html#boundingbox">上一节</a><a href="#toc">目录</a><a href="zh-CN/index.html#tightbounds">下一节</a>
+						</div>
 						<a href="zh-CN/index.html#aligning">Aligning curves</a>
 					</h1>
 					<p>
@@ -4322,11 +4003,11 @@ x    = x  - ───────
 						height="275"
 						src="./chapters/aligning/aligning.js"
 						data-type="quadratic"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="550px" height="275px" src="./images/chapters/aligning/28cc0f129fa0c028a1addd702e99f162.png" loading="lazy" />
 							<label></label> </fallback-image
 					></graphics-element>
@@ -4337,18 +4018,20 @@ x    = x  - ───────
 						height="275"
 						src="./chapters/aligning/aligning.js"
 						data-type="cubic"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="550px" height="275px" src="./images/chapters/aligning/9a6755a1e31a990e8f072a6da98f811a.png" loading="lazy" />
 							<label></label> </fallback-image
 					></graphics-element>
 				</section>
 				<section id="tightbounds">
 					<h1>
-						<div class="nav"><a href="zh-CN/index.html#aligning">前</a><a href="#toc">目录</a><a href="zh-CN/index.html#inflections">下</a></div>
+						<div class="nav">
+							<a href="zh-CN/index.html#aligning">上一节</a><a href="#toc">目录</a><a href="zh-CN/index.html#inflections">下一节</a>
+						</div>
 						<a href="zh-CN/index.html#tightbounds">Tight bounding boxes</a>
 					</h1>
 					<p>
@@ -4364,11 +4047,11 @@ x    = x  - ───────
 							height="275"
 							src="./chapters/tightbounds/tightbounds.js"
 							data-type="quadratic"
-							reset="重启"
-							viewSource="view source"
+							reset="重置"
+							viewSource="查看源码"
 						>
 							<fallback-image>
-								<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+								<span class="view-source">脚本被禁用。显示备用图片。</span>
 								<img width="275px" height="275px" src="./images/chapters/tightbounds/ed91133976018ec032d9115344debb36.png" loading="lazy" />
 								<label>Aligning a quadratic curve</label>
 							</fallback-image></graphics-element
@@ -4379,11 +4062,11 @@ x    = x  - ───────
 							height="275"
 							src="./chapters/tightbounds/tightbounds.js"
 							data-type="cubic"
-							reset="重启"
-							viewSource="view source"
+							reset="重置"
+							viewSource="查看源码"
 						>
 							<fallback-image>
-								<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+								<span class="view-source">脚本被禁用。显示备用图片。</span>
 								<img width="275px" height="275px" src="./images/chapters/tightbounds/9ee5abc64b3fba71e284c70539279d74.png" loading="lazy" />
 								<label>Aligning a cubic curve</label>
 							</fallback-image></graphics-element
@@ -4398,7 +4081,9 @@ x    = x  - ───────
 				</section>
 				<section id="inflections">
 					<h1>
-						<div class="nav"><a href="zh-CN/index.html#tightbounds">前</a><a href="#toc">目录</a><a href="zh-CN/index.html#canonical">下</a></div>
+						<div class="nav">
+							<a href="zh-CN/index.html#tightbounds">上一节</a><a href="#toc">目录</a><a href="zh-CN/index.html#canonical">下一节</a>
+						</div>
 						<a href="zh-CN/index.html#inflections">Curve inflections</a>
 					</h1>
 					<p>
@@ -4591,11 +4276,11 @@ z =       c - a       ╯                             2x
 						width="275"
 						height="275"
 						src="./chapters/inflections/inflection.js"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="275px" height="275px" src="./images/chapters/inflections/726ece45630c43be14589c51f1606bd7.png" loading="lazy" />
 							<label>Finding cubic Bézier curve inflections</label>
 						</fallback-image></graphics-element
@@ -4603,7 +4288,7 @@ z =       c - a       ╯                             2x
 				</section>
 				<section id="canonical">
 					<h1>
-						<div class="nav"><a href="zh-CN/index.html#inflections">前</a><a href="#toc">目录</a><a href="zh-CN/index.html#yforx">下</a></div>
+						<div class="nav"><a href="zh-CN/index.html#inflections">上一节</a><a href="#toc">目录</a><a href="zh-CN/index.html#yforx">下一节</a></div>
 						<a href="zh-CN/index.html#canonical">The canonical form (for cubic curves)</a>
 					</h1>
 					<p>
@@ -4632,11 +4317,11 @@ z =       c - a       ╯                             2x
 						width="400"
 						height="400"
 						src="./chapters/canonical/canonical.js"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="400px" height="400px" src="./images/chapters/canonical/c086e72bd8aaeab37436515ab251b2df.png" loading="lazy" />
 							<label></label> </fallback-image
 					></graphics-element>
@@ -4951,18 +4636,20 @@ mapped  = (x) = │                                1  2                       �
 						width="800"
 						height="400"
 						src="./chapters/canonical/interactive.js"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="800px" height="400px" src="./images/chapters/canonical/83fe2473e20ea68b768765129ee44ae4.png" loading="lazy" />
 							<label></label> </fallback-image
 					></graphics-element>
 				</section>
 				<section id="yforx">
 					<h1>
-						<div class="nav"><a href="zh-CN/index.html#canonical">前</a><a href="#toc">目录</a><a href="zh-CN/index.html#arclength">下</a></div>
+						<div class="nav">
+							<a href="zh-CN/index.html#canonical">上一节</a><a href="#toc">目录</a><a href="zh-CN/index.html#arclength">下一节</a>
+						</div>
 						<a href="zh-CN/index.html#yforx">Finding Y, given X</a>
 					</h1>
 					<p>
@@ -4984,11 +4671,11 @@ mapped  = (x) = │                                1  2                       �
 						width="550"
 						height="275"
 						src="./chapters/yforx/basics.js"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="550px" height="275px" src="./images/chapters/yforx/e469af5bf27a2c27d1dd6fc62a78ac27.png" loading="lazy" />
 							<label></label>
 						</fallback-image>
@@ -5090,11 +4777,11 @@ y = curve.get(t).y</textarea
 						width="275"
 						height="275"
 						src="./chapters/yforx/yforx.js"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="275px" height="275px" src="./images/chapters/yforx/2fc5c57e5d1ed0eaa1655edc31026252.png" loading="lazy" />
 							<label>Finding By(t), by finding t for a given x</label>
 						</fallback-image>
@@ -5103,7 +4790,9 @@ y = curve.get(t).y</textarea
 				</section>
 				<section id="arclength">
 					<h1>
-						<div class="nav"><a href="zh-CN/index.html#yforx">前</a><a href="#toc">目录</a><a href="zh-CN/index.html#arclengthapprox">下</a></div>
+						<div class="nav">
+							<a href="zh-CN/index.html#yforx">上一节</a><a href="#toc">目录</a><a href="zh-CN/index.html#arclengthapprox">下一节</a>
+						</div>
 						<a href="zh-CN/index.html#arclength">Arc length</a>
 					</h1>
 					<p>
@@ -5178,11 +4867,11 @@ length =  |  ⟍│(dx/dt) +(dy/dt)   dt
 							height="275"
 							src="./chapters/arclength/draw-slices.js"
 							data-steps="10"
-							reset="重启"
-							viewSource="view source"
+							reset="重置"
+							viewSource="查看源码"
 						>
 							<fallback-image>
-								<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+								<span class="view-source">脚本被禁用。显示备用图片。</span>
 								<img width="275px" height="275px" src="./images/chapters/arclength/56533f47e73ad9fea08fa9bb3f597d49.png" loading="lazy" />
 								<label>A function's approximated integral</label>
 							</fallback-image></graphics-element
@@ -5193,11 +4882,11 @@ length =  |  ⟍│(dx/dt) +(dy/dt)   dt
 							height="275"
 							src="./chapters/arclength/draw-slices.js"
 							data-steps="24"
-							reset="重启"
-							viewSource="view source"
+							reset="重置"
+							viewSource="查看源码"
 						>
 							<fallback-image>
-								<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+								<span class="view-source">脚本被禁用。显示备用图片。</span>
 								<img width="275px" height="275px" src="./images/chapters/arclength/5ce02cbdbc47585c588f2656d5161a32.png" loading="lazy" />
 								<label>A better approximation</label>
 							</fallback-image></graphics-element
@@ -5208,11 +4897,11 @@ length =  |  ⟍│(dx/dt) +(dy/dt)   dt
 							height="275"
 							src="./chapters/arclength/draw-slices.js"
 							data-steps="99"
-							reset="重启"
-							viewSource="view source"
+							reset="重置"
+							viewSource="查看源码"
 						>
 							<fallback-image>
-								<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+								<span class="view-source">脚本被禁用。显示备用图片。</span>
 								<img width="275px" height="275px" src="./images/chapters/arclength/fe2663b205d14c157a5a02bfbbd55987.png" loading="lazy" />
 								<label>An even better approximation</label>
 							</fallback-image></graphics-element
@@ -5325,11 +5014,11 @@ t  = + ────
 						width="275"
 						height="275"
 						src="./chapters/arclength/arclength.js"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="275px" height="275px" src="./images/chapters/arclength/fa4c587126e8097206b88d9ea51974ca.png" loading="lazy" />
 							<label>Arc length for a Bézier curve</label>
 						</fallback-image></graphics-element
@@ -5337,7 +5026,9 @@ t  = + ────
 				</section>
 				<section id="arclengthapprox">
 					<h1>
-						<div class="nav"><a href="zh-CN/index.html#arclength">前</a><a href="#toc">目录</a><a href="zh-CN/index.html#curvature">下</a></div>
+						<div class="nav">
+							<a href="zh-CN/index.html#arclength">上一节</a><a href="#toc">目录</a><a href="zh-CN/index.html#curvature">下一节</a>
+						</div>
 						<a href="zh-CN/index.html#arclengthapprox">Approximated arc length</a>
 					</h1>
 					<p>
@@ -5356,11 +5047,11 @@ t  = + ────
 							height="275"
 							src="./chapters/arclengthapprox/approximate.js"
 							data-type="quadratic"
-							reset="重启"
-							viewSource="view source"
+							reset="重置"
+							viewSource="查看源码"
 						>
 							<fallback-image>
-								<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+								<span class="view-source">脚本被禁用。显示备用图片。</span>
 								<img width="275px" height="275px" src="./images/chapters/arclengthapprox/3fc083ea7bdcc6b021560f2f2491f8aa.png" loading="lazy" />
 								<label>Approximate quadratic curve arc length</label>
 							</fallback-image>
@@ -5372,11 +5063,11 @@ t  = + ────
 							height="275"
 							src="./chapters/arclengthapprox/approximate.js"
 							data-type="cubic"
-							reset="重启"
-							viewSource="view source"
+							reset="重置"
+							viewSource="查看源码"
 						>
 							<fallback-image>
-								<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+								<span class="view-source">脚本被禁用。显示备用图片。</span>
 								<img width="275px" height="275px" src="./images/chapters/arclengthapprox/537260c4aa9e98ffdea7c8120afbd427.png" loading="lazy" />
 								<label>Approximate cubic curve arc length</label>
 							</fallback-image>
@@ -5392,7 +5083,9 @@ t  = + ────
 				</section>
 				<section id="curvature">
 					<h1>
-						<div class="nav"><a href="zh-CN/index.html#arclengthapprox">前</a><a href="#toc">目录</a><a href="zh-CN/index.html#tracing">下</a></div>
+						<div class="nav">
+							<a href="zh-CN/index.html#arclengthapprox">上一节</a><a href="#toc">目录</a><a href="zh-CN/index.html#tracing">下一节</a>
+						</div>
 						<a href="zh-CN/index.html#curvature">Curvature of a curve</a>
 					</h1>
 					<p>
@@ -5538,11 +5231,11 @@ function kappa(t, B):
 						width="825"
 						height="275"
 						src="./chapters/curvature/curvature.js"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="825px" height="275px" src="./images/chapters/curvature/4f2647446363ca5d93b11e414fd976df.png" loading="lazy" />
 							<label></label> </fallback-image
 					></graphics-element>
@@ -5569,11 +5262,11 @@ R(t) = ─────────
 						height="275"
 						src="./chapters/curvature/curvature.js"
 						data-omni="true"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="825px" height="275px" src="./images/chapters/curvature/392624cedf7c78aed6d4c6065a014b42.png" loading="lazy" />
 							<label></label>
 						</fallback-image>
@@ -5582,7 +5275,9 @@ R(t) = ─────────
 				</section>
 				<section id="tracing">
 					<h1>
-						<div class="nav"><a href="zh-CN/index.html#curvature">前</a><a href="#toc">目录</a><a href="zh-CN/index.html#intersections">下</a></div>
+						<div class="nav">
+							<a href="zh-CN/index.html#curvature">上一节</a><a href="#toc">目录</a><a href="zh-CN/index.html#intersections">下一节</a>
+						</div>
 						<a href="zh-CN/index.html#tracing">Tracing a curve at fixed distance intervals</a>
 					</h1>
 					<p>
@@ -5608,11 +5303,11 @@ R(t) = ─────────
 						width="550"
 						height="275"
 						src="./chapters/tracing/distance-function.js"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="550px" height="275px" src="./images/chapters/tracing/d6239520389637a3c42e76ee44d86c41.png" loading="lazy" />
 							<label></label> </fallback-image
 					></graphics-element>
@@ -5633,11 +5328,11 @@ R(t) = ─────────
 						width="825"
 						height="275"
 						src="./chapters/tracing/tracing.js"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="825px" height="275px" src="./images/chapters/tracing/1cd7304fb8d044835bfbc305ca5e5d10.png" loading="lazy" />
 							<label></label>
 						</fallback-image>
@@ -5654,7 +5349,9 @@ R(t) = ─────────
 				</section>
 				<section id="intersections">
 					<h1>
-						<div class="nav"><a href="zh-CN/index.html#tracing">前</a><a href="#toc">目录</a><a href="zh-CN/index.html#curveintersection">下</a></div>
+						<div class="nav">
+							<a href="zh-CN/index.html#tracing">上一节</a><a href="#toc">目录</a><a href="zh-CN/index.html#curveintersection">下一节</a>
+						</div>
 						<a href="zh-CN/index.html#intersections">Intersections</a>
 					</h1>
 					<p>
@@ -5689,11 +5386,11 @@ R(t) = ─────────
 						width="275"
 						height="275"
 						src="./chapters/intersections/line-line.js"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="275px" height="275px" src="./images/chapters/intersections/b3f61036d8dc9888a6a64a1171583dd1.png" loading="lazy" />
 							<label>Line/line intersections</label>
 						</fallback-image></graphics-element
@@ -5797,11 +5494,11 @@ lli = function(line1, line2):
 							height="275"
 							src="./chapters/intersections/curve-line.js"
 							data-type="quadratic"
-							reset="重启"
-							viewSource="view source"
+							reset="重置"
+							viewSource="查看源码"
 						>
 							<fallback-image>
-								<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+								<span class="view-source">脚本被禁用。显示备用图片。</span>
 								<img width="275px" height="275px" src="./images/chapters/intersections/9b70fb7b03f082882515e55c0a1eacff.png" loading="lazy" />
 								<label>Quadratic curve/line intersections</label>
 							</fallback-image></graphics-element
@@ -5812,11 +5509,11 @@ lli = function(line1, line2):
 							height="275"
 							src="./chapters/intersections/curve-line.js"
 							data-type="cubic"
-							reset="重启"
-							viewSource="view source"
+							reset="重置"
+							viewSource="查看源码"
 						>
 							<fallback-image>
-								<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+								<span class="view-source">脚本被禁用。显示备用图片。</span>
 								<img width="275px" height="275px" src="./images/chapters/intersections/7196d3dec75d53f5df9d9c832ac3c493.png" loading="lazy" />
 								<label>Cubic curve/line intersections</label>
 							</fallback-image></graphics-element
@@ -5831,7 +5528,7 @@ lli = function(line1, line2):
 				</section>
 				<section id="curveintersection">
 					<h1>
-						<div class="nav"><a href="zh-CN/index.html#intersections">前</a><a href="#toc">目录</a><a href="zh-CN/index.html#abc">下</a></div>
+						<div class="nav"><a href="zh-CN/index.html#intersections">上一节</a><a href="#toc">目录</a><a href="zh-CN/index.html#abc">下一节</a></div>
 						<a href="zh-CN/index.html#curveintersection">Curve/curve intersection</a>
 					</h1>
 					<p>
@@ -5887,11 +5584,11 @@ lli = function(line1, line2):
 						width="825"
 						height="275"
 						src="./chapters/curveintersection/curve-curve.js"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="825px" height="275px" src="./images/chapters/curveintersection/b155682162a5b6da6d40c7b531164a7e.png" loading="lazy" />
 							<label></label>
 						</fallback-image>
@@ -5908,7 +5605,7 @@ lli = function(line1, line2):
 				<section id="abc">
 					<h1>
 						<div class="nav">
-							<a href="zh-CN/index.html#curveintersection">前</a><a href="#toc">目录</a><a href="zh-CN/index.html#pointcurves">下</a>
+							<a href="zh-CN/index.html#curveintersection">上一节</a><a href="#toc">目录</a><a href="zh-CN/index.html#pointcurves">下一节</a>
 						</div>
 						<a href="zh-CN/index.html#abc">The projection identity</a>
 					</h1>
@@ -5939,11 +5636,11 @@ lli = function(line1, line2):
 							height="275"
 							src="./chapters/abc/abc.js"
 							data-type="quadratic"
-							reset="重启"
-							viewSource="view source"
+							reset="重置"
+							viewSource="查看源码"
 						>
 							<fallback-image>
-								<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+								<span class="view-source">脚本被禁用。显示备用图片。</span>
 								<img width="275px" height="275px" src="./images/chapters/abc/7a69dd4350ddda5701712e1d3b46b863.png" loading="lazy" />
 								<label>Projections in a quadratic Bézier curve</label>
 							</fallback-image>
@@ -5956,11 +5653,11 @@ lli = function(line1, line2):
 							height="275"
 							src="./chapters/abc/abc.js"
 							data-type="cubic"
-							reset="重启"
-							viewSource="view source"
+							reset="重置"
+							viewSource="查看源码"
 						>
 							<fallback-image>
-								<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+								<span class="view-source">脚本被禁用。显示备用图片。</span>
 								<img width="275px" height="275px" src="./images/chapters/abc/eeec7cf16fb22c666e0143a3a030731f.png" loading="lazy" />
 								<label>Projections in a cubic Bézier curve</label>
 							</fallback-image>
@@ -6120,7 +5817,7 @@ A = B - ───────── = B + ─────────
 				</section>
 				<section id="pointcurves">
 					<h1>
-						<div class="nav"><a href="zh-CN/index.html#abc">前</a><a href="#toc">目录</a><a href="zh-CN/index.html#projections">下</a></div>
+						<div class="nav"><a href="zh-CN/index.html#abc">上一节</a><a href="#toc">目录</a><a href="zh-CN/index.html#projections">下一节</a></div>
 						<a href="zh-CN/index.html#pointcurves">Creating a curve from three points</a>
 					</h1>
 					<p>
@@ -6160,11 +5857,11 @@ A = B - ───────── = B + ─────────
 						width="275"
 						height="275"
 						src="./chapters/pointcurves/quadratic.js"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="275px" height="275px" src="./images/chapters/pointcurves/067a3df30e32708fc0d13f8eb78c0b05.png" loading="lazy" />
 							<label>Fitting a quadratic Bézier curve</label>
 						</fallback-image></graphics-element
@@ -6186,11 +5883,11 @@ A = B - ───────── = B + ─────────
 						width="275"
 						height="275"
 						src="./chapters/pointcurves/circle.js"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="275px" height="275px" src="./images/chapters/pointcurves/43875f6ad588bfd04cdb65b591a62052.png" loading="lazy" />
 							<label>Finding a circle through three points</label>
 						</fallback-image></graphics-element
@@ -6260,11 +5957,11 @@ d = {  d  if  0 ≤\phi ≤\pi
 						height="275"
 						src="./chapters/pointcurves/circle.js"
 						data-show-curve="true"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="275px" height="275px" src="./images/chapters/pointcurves/75f7b5b31e98444e13f17e5c3e5b7322.png" loading="lazy" />
 							<label>Finding the cubic e₁ and e₂ given three points </label>
 						</fallback-image></graphics-element
@@ -6281,11 +5978,11 @@ d = {  d  if  0 ≤\phi ≤\pi
 						width="275"
 						height="275"
 						src="./chapters/pointcurves/cubic.js"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="275px" height="275px" src="./images/chapters/pointcurves/eab6ea46fa93030e03ec0ef7deb571dc.png" loading="lazy" />
 							<label>Fitting a cubic Bézier curve</label>
 						</fallback-image></graphics-element
@@ -6301,7 +5998,7 @@ d = {  d  if  0 ≤\phi ≤\pi
 				<section id="projections">
 					<h1>
 						<div class="nav">
-							<a href="zh-CN/index.html#pointcurves">前</a><a href="#toc">目录</a><a href="zh-CN/index.html#circleintersection">下</a>
+							<a href="zh-CN/index.html#pointcurves">上一节</a><a href="#toc">目录</a><a href="zh-CN/index.html#circleintersection">下一节</a>
 						</div>
 						<a href="zh-CN/index.html#projections">Projecting a point onto a Bézier curve</a>
 					</h1>
@@ -6394,18 +6091,20 @@ for (coordinate, index) in LUT:
 						width="400"
 						height="400"
 						src="./chapters/projections/project.js"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="400px" height="400px" src="./images/chapters/projections/536a94885dc1637c066d0ef4f6e4e650.png" loading="lazy" />
 							<label></label> </fallback-image
 					></graphics-element>
 				</section>
 				<section id="circleintersection">
 					<h1>
-						<div class="nav"><a href="zh-CN/index.html#projections">前</a><a href="#toc">目录</a><a href="zh-CN/index.html#molding">下</a></div>
+						<div class="nav">
+							<a href="zh-CN/index.html#projections">上一节</a><a href="#toc">目录</a><a href="zh-CN/index.html#molding">下一节</a>
+						</div>
 						<a href="zh-CN/index.html#circleintersection">Intersections with a circle</a>
 					</h1>
 					<p>
@@ -6684,11 +6383,11 @@ findClosest(start, p, r, LUT):
 						width="275"
 						height="275"
 						src="./chapters/circleintersection/circle.js"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="275px" height="275px" src="./images/chapters/circleintersection/3a3ea30971de247da93034de614a63a4.png" loading="lazy" />
 							<label>circle intersection</label>
 						</fallback-image>
@@ -6699,7 +6398,7 @@ findClosest(start, p, r, LUT):
 				<section id="molding">
 					<h1>
 						<div class="nav">
-							<a href="zh-CN/index.html#circleintersection">前</a><a href="#toc">目录</a><a href="zh-CN/index.html#curvefitting">下</a>
+							<a href="zh-CN/index.html#circleintersection">上一节</a><a href="#toc">目录</a><a href="zh-CN/index.html#curvefitting">下一节</a>
 						</div>
 						<a href="zh-CN/index.html#molding">Molding a curve</a>
 					</h1>
@@ -6734,11 +6433,11 @@ A = B - ────────── = B + ──────────
 						height="275"
 						src="./chapters/molding/molding.js"
 						data-type="quadratic"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="825px" height="275px" src="./images/chapters/molding/2bd215d1db191b52a89a94727b6aa5ce.png" loading="lazy" />
 							<label></label> </fallback-image
 					></graphics-element>
@@ -6760,11 +6459,11 @@ A = B - ────────── = B + ──────────
 						height="275"
 						src="./chapters/molding/molding.js"
 						data-type="cubic"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="825px" height="275px" src="./images/chapters/molding/a54f990aa49fb9ea8200b59259f955f3.png" loading="lazy" />
 							<label></label> </fallback-image
 					></graphics-element>
@@ -6785,11 +6484,11 @@ A = B - ────────── = B + ──────────
 						src="./chapters/molding/molding.js"
 						data-type="cubic"
 						data-interpolated="true"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="825px" height="275px" src="./images/chapters/molding/1039d0bb0e49cfb472c2fa37f9010190.png" loading="lazy" />
 							<label></label>
 						</fallback-image>
@@ -6810,7 +6509,9 @@ A = B - ────────── = B + ──────────
 				</section>
 				<section id="curvefitting">
 					<h1>
-						<div class="nav"><a href="zh-CN/index.html#molding">前</a><a href="#toc">目录</a><a href="zh-CN/index.html#catmullconv">下</a></div>
+						<div class="nav">
+							<a href="zh-CN/index.html#molding">上一节</a><a href="#toc">目录</a><a href="zh-CN/index.html#catmullconv">下一节</a>
+						</div>
 						<a href="zh-CN/index.html#curvefitting">Curve fitting</a>
 					</h1>
 					<p>
@@ -7272,11 +6973,11 @@ C = M   (𝕋  𝕋)   𝕋  P
 						width="550"
 						height="275"
 						src="./chapters/curvefitting/curve-fitting.js"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="550px" height="275px" src="./images/chapters/curvefitting/798f3d7151dfb2887c7881a08e65cdd3.png" loading="lazy" />
 							<label></label>
 						</fallback-image>
@@ -7293,7 +6994,7 @@ C = M   (𝕋  𝕋)   𝕋  P
 				<section id="catmullconv">
 					<h1>
 						<div class="nav">
-							<a href="zh-CN/index.html#curvefitting">前</a><a href="#toc">目录</a><a href="zh-CN/index.html#catmullfitting">下</a>
+							<a href="zh-CN/index.html#curvefitting">上一节</a><a href="#toc">目录</a><a href="zh-CN/index.html#catmullfitting">下一节</a>
 						</div>
 						<a href="zh-CN/index.html#catmullconv">Bézier curves and Catmull-Rom curves</a>
 					</h1>
@@ -7312,11 +7013,11 @@ C = M   (𝕋  𝕋)   𝕋  P
 						width="275"
 						height="275"
 						src="./chapters/catmullconv/catmull-rom.js"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="275px" height="275px" src="./images/chapters/catmullconv/aa46749b9469341d9249ca452390d875.png" loading="lazy" />
 							<label>A Catmull-Rom curve</label>
 						</fallback-image>
@@ -8041,7 +7742,9 @@ CatmullRom(t) = ┌      2  3 ┐  · │  0  0  1 0  │  · │  2  │
 				</section>
 				<section id="catmullfitting">
 					<h1>
-						<div class="nav"><a href="zh-CN/index.html#catmullconv">前</a><a href="#toc">目录</a><a href="zh-CN/index.html#polybezier">下</a></div>
+						<div class="nav">
+							<a href="zh-CN/index.html#catmullconv">上一节</a><a href="#toc">目录</a><a href="zh-CN/index.html#polybezier">下一节</a>
+						</div>
 						<a href="zh-CN/index.html#catmullfitting">Creating a Catmull-Rom curve from three points</a>
 					</h1>
 					<p>
@@ -8056,7 +7759,9 @@ CatmullRom(t) = ┌      2  3 ┐  · │  0  0  1 0  │  · │  2  │
 				</section>
 				<section id="polybezier">
 					<h1>
-						<div class="nav"><a href="zh-CN/index.html#catmullfitting">前</a><a href="#toc">目录</a><a href="zh-CN/index.html#offsetting">下</a></div>
+						<div class="nav">
+							<a href="zh-CN/index.html#catmullfitting">上一节</a><a href="#toc">目录</a><a href="zh-CN/index.html#offsetting">下一节</a>
+						</div>
 						<a href="zh-CN/index.html#polybezier">Forming poly-Bézier curves</a>
 					</h1>
 					<p>
@@ -8080,11 +7785,11 @@ CatmullRom(t) = ┌      2  3 ┐  · │  0  0  1 0  │  · │  2  │
 						src="./chapters/polybezier/poly.js"
 						data-type="quadratic"
 						data-link="coordinate"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="275px" height="275px" src="./images/chapters/polybezier/41522a397171423e8a465dc8c74f6e87.png" loading="lazy" />
 							<label>Unlinked quadratic poly-Bézier</label>
 						</fallback-image></graphics-element
@@ -8096,11 +7801,11 @@ CatmullRom(t) = ┌      2  3 ┐  · │  0  0  1 0  │  · │  2  │
 						src="./chapters/polybezier/poly.js"
 						data-type="cubic"
 						data-link="coordinate"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="275px" height="275px" src="./images/chapters/polybezier/6fb33629373d7a731b6ac3f5365cb9f0.png" loading="lazy" />
 							<label>Unlinked cubic poly-Bézier</label>
 						</fallback-image></graphics-element
@@ -8141,11 +7846,11 @@ Mirrored = │  x     x    x  │ = │   x    x │
 						src="./chapters/polybezier/poly.js"
 						data-type="quadratic"
 						data-link="derivative"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="275px" height="275px" src="./images/chapters/polybezier/db04f805f42bdc9a1b7ec4d6b401d853.png" loading="lazy" />
 							<label>Connected quadratic poly-Bézier</label>
 						</fallback-image></graphics-element
@@ -8157,11 +7862,11 @@ Mirrored = │  x     x    x  │ = │   x    x │
 						src="./chapters/polybezier/poly.js"
 						data-type="cubic"
 						data-link="derivative"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="275px" height="275px" src="./images/chapters/polybezier/fe41b628f46f7035d151a8210d30111f.png" loading="lazy" />
 							<label>Connected cubic poly-Bézier</label>
 						</fallback-image></graphics-element
@@ -8187,11 +7892,11 @@ Mirrored = │  x     x    x  │ = │   x    x │
 						src="./chapters/polybezier/poly.js"
 						data-type="quadratic"
 						data-link="direction"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="275px" height="275px" src="./images/chapters/polybezier/777f3814965c39ec3cdbb13eab0c4eeb.png" loading="lazy" />
 							<label>Angularly connected quadratic poly-Bézier</label>
 						</fallback-image></graphics-element
@@ -8203,11 +7908,11 @@ Mirrored = │  x     x    x  │ = │   x    x │
 						src="./chapters/polybezier/poly.js"
 						data-type="cubic"
 						data-link="direction"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="275px" height="275px" src="./images/chapters/polybezier/f6c55cbc66333b6630939f67fc20e086.png" loading="lazy" />
 							<label>Angularly connected cubic poly-Bézier</label>
 						</fallback-image></graphics-element
@@ -8228,11 +7933,11 @@ Mirrored = │  x     x    x  │ = │   x    x │
 						src="./chapters/polybezier/poly.js"
 						data-type="quadratic"
 						data-link="conventional"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="275px" height="275px" src="./images/chapters/polybezier/b3aebf7803f4430187c249a891095062.png" loading="lazy" />
 							<label>Standard connected quadratic poly-Bézier</label>
 						</fallback-image></graphics-element
@@ -8244,11 +7949,11 @@ Mirrored = │  x     x    x  │ = │   x    x │
 						src="./chapters/polybezier/poly.js"
 						data-type="cubic"
 						data-link="conventional"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="275px" height="275px" src="./images/chapters/polybezier/1b94c6ada011bd8e50330e31a851a62e.png" loading="lazy" />
 							<label>Standard connected cubic poly-Bézier</label>
 						</fallback-image></graphics-element
@@ -8268,7 +7973,7 @@ Mirrored = │  x     x    x  │ = │   x    x │
 				<section id="offsetting">
 					<h1>
 						<div class="nav">
-							<a href="zh-CN/index.html#polybezier">前</a><a href="#toc">目录</a><a href="zh-CN/index.html#graduatedoffset">下</a>
+							<a href="zh-CN/index.html#polybezier">上一节</a><a href="#toc">目录</a><a href="zh-CN/index.html#graduatedoffset">下一节</a>
 						</div>
 						<a href="zh-CN/index.html#offsetting">Curve offsetting</a>
 					</h1>
@@ -8433,11 +8138,11 @@ N(t) \bot │ ────────── │
 						height="275"
 						src="./chapters/offsetting/offsetting.js"
 						data-type="quadratic"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="275px" height="275px" src="./images/chapters/offsetting/03b8e0849e7c8ba64d8c076f47fe2ec7.png" loading="lazy" />
 							<label>Offsetting a quadratic Bézier curve</label>
 						</fallback-image>
@@ -8449,11 +8154,11 @@ N(t) \bot │ ────────── │
 						height="275"
 						src="./chapters/offsetting/offsetting.js"
 						data-type="cubic"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="275px" height="275px" src="./images/chapters/offsetting/4c4738b6bf9f83eded12d680a29e337b.png" loading="lazy" />
 							<label>Offsetting a cubic Bézier curve</label>
 						</fallback-image>
@@ -8467,7 +8172,9 @@ N(t) \bot │ ────────── │
 				</section>
 				<section id="graduatedoffset">
 					<h1>
-						<div class="nav"><a href="zh-CN/index.html#offsetting">前</a><a href="#toc">目录</a><a href="zh-CN/index.html#circles">下</a></div>
+						<div class="nav">
+							<a href="zh-CN/index.html#offsetting">上一节</a><a href="#toc">目录</a><a href="zh-CN/index.html#circles">下一节</a>
+						</div>
 						<a href="zh-CN/index.html#graduatedoffset">Graduated curve offsetting</a>
 					</h1>
 					<p>
@@ -8502,11 +8209,11 @@ N(t) \bot │ ────────── │
 						height="275"
 						src="./chapters/graduatedoffset/offsetting.js"
 						data-type="quadratic"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="275px" height="275px" src="./images/chapters/graduatedoffset/8cc724d5343c65685d88c92b2d069a2a.png" loading="lazy" />
 							<label>Offsetting a quadratic Bézier curve</label>
 						</fallback-image>
@@ -8518,11 +8225,11 @@ N(t) \bot │ ────────── │
 						height="275"
 						src="./chapters/graduatedoffset/offsetting.js"
 						data-type="cubic"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="275px" height="275px" src="./images/chapters/graduatedoffset/17bf62e05a1fc3387b0c210f2decff45.png" loading="lazy" />
 							<label>Offsetting a cubic Bézier curve</label>
 						</fallback-image>
@@ -8532,7 +8239,7 @@ N(t) \bot │ ────────── │
 				<section id="circles">
 					<h1>
 						<div class="nav">
-							<a href="zh-CN/index.html#graduatedoffset">前</a><a href="#toc">目录</a><a href="zh-CN/index.html#circles_cubic">下</a>
+							<a href="zh-CN/index.html#graduatedoffset">上一节</a><a href="#toc">目录</a><a href="zh-CN/index.html#circles_cubic">下一节</a>
 						</div>
 						<a href="zh-CN/index.html#circles">Circles and quadratic Bézier curves</a>
 					</h1>
@@ -8565,11 +8272,11 @@ N(t) \bot │ ────────── │
 						width="400"
 						height="400"
 						src="./chapters/circles/arc-approximation.js"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="400px" height="400px" src="./images/chapters/circles/08ca09aacb271735e063e7e8d941a195.png" loading="lazy" />
 							<label></label>
 						</fallback-image>
@@ -8760,7 +8467,9 @@ d (φ)= T  - P  = ─│ 2tan│ ─ │ + sin(φ) │ - sin(─)  ,
 				</section>
 				<section id="circles_cubic">
 					<h1>
-						<div class="nav"><a href="zh-CN/index.html#circles">前</a><a href="#toc">目录</a><a href="zh-CN/index.html#arcapproximation">下</a></div>
+						<div class="nav">
+							<a href="zh-CN/index.html#circles">上一节</a><a href="#toc">目录</a><a href="zh-CN/index.html#arcapproximation">下一节</a>
+						</div>
 						<a href="zh-CN/index.html#circles_cubic">Circular arcs and cubic Béziers</a>
 					</h1>
 					<p>Let's look at approximating circles and circular arcs using cubic Béziers. How much better is that?</p>
@@ -8769,11 +8478,11 @@ d (φ)= T  - P  = ─│ 2tan│ ─ │ + sin(φ) │ - sin(─)  ,
 						width="400"
 						height="400"
 						src="./chapters/circles_cubic/arc-approximation.js"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="400px" height="400px" src="./images/chapters/circles_cubic/891d50a946936c9701adc855de12623d.png" loading="lazy" />
 							<label></label>
 						</fallback-image>
@@ -9523,7 +9232,9 @@ radialError(radius, points[]):
 				</section>
 				<section id="arcapproximation">
 					<h1>
-						<div class="nav"><a href="zh-CN/index.html#circles_cubic">前</a><a href="#toc">目录</a><a href="zh-CN/index.html#bsplines">下</a></div>
+						<div class="nav">
+							<a href="zh-CN/index.html#circles_cubic">上一节</a><a href="#toc">目录</a><a href="zh-CN/index.html#bsplines">下一节</a>
+						</div>
 						<a href="zh-CN/index.html#arcapproximation">Approximating Bézier curves with circular arcs</a>
 					</h1>
 					<p>
@@ -9598,11 +9309,11 @@ radialError(radius, points[]):
 						width="275"
 						height="275"
 						src="./chapters/arcapproximation/arc.js"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="275px" height="275px" src="./images/chapters/arcapproximation/7c9cce8142fa3e85bb124520f40645ff.png" loading="lazy" />
 							<label>First arc approximation of a Bézier curve</label>
 						</fallback-image>
@@ -9619,11 +9330,11 @@ radialError(radius, points[]):
 						width="275"
 						height="275"
 						src="./chapters/arcapproximation/arcs.js"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="275px" height="275px" src="./images/chapters/arcapproximation/da76341b841df1af8a39f797e85dfe3c.png" loading="lazy" />
 							<label>Arc approximation of a Bézier curve</label>
 						</fallback-image>
@@ -9643,7 +9354,9 @@ radialError(radius, points[]):
 				</section>
 				<section id="bsplines">
 					<h1>
-						<div class="nav"><a href="zh-CN/index.html#arcapproximation">前</a><a href="#toc">目录</a><a href="zh-CN/index.html#comments">下</a></div>
+						<div class="nav">
+							<a href="zh-CN/index.html#arcapproximation">上一节</a><a href="#toc">目录</a><a href="zh-CN/index.html#comments">下一节</a>
+						</div>
 						<a href="zh-CN/index.html#bsplines">B-Splines</a>
 					</h1>
 					<p>
@@ -9665,16 +9378,9 @@ radialError(radius, points[]):
 						What do they look like? They look like this! Tap on the graphic to add more points, and move points around to see how they map to the
 						spline curve drawn.
 					</p>
-					<graphics-element
-						title="A B-Spline example"
-						width="600"
-						height="300"
-						src="./chapters/bsplines/basic.js"
-						reset="重启"
-						viewSource="view source"
-					>
+					<graphics-element title="A B-Spline example" width="600" height="300" src="./chapters/bsplines/basic.js" reset="重置" viewSource="查看源码">
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="600px" height="300px" src="./images/chapters/bsplines/fe3a8ca5706f286d916e36699e237e51.png" loading="lazy" />
 							<label></label> </fallback-image
 					></graphics-element>
@@ -9699,11 +9405,11 @@ radialError(radius, points[]):
 						height="300"
 						src="./chapters/bsplines/basic.js"
 						data-show-curves="true"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="600px" height="300px" src="./images/chapters/bsplines/41167c64c51386414c6e62f0b45e6295.png" loading="lazy" />
 							<label></label>
 						</fallback-image>
@@ -10000,11 +9706,11 @@ for(let L = 1; L <= order; L++) {
 						width="400"
 						height="400"
 						src="./chapters/bsplines/uniform.js"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="400px" height="400px" src="./images/chapters/bsplines/48a30189e74658737b3a8b28bb816f8a.png" loading="lazy" />
 							<label></label>
 						</fallback-image>
@@ -10031,11 +9737,11 @@ for(let L = 1; L <= order; L++) {
 						width="400"
 						height="400"
 						src="./chapters/bsplines/reduced.js"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="400px" height="400px" src="./images/chapters/bsplines/ceaef2fbee05a58aa11835925403b4cd.png" loading="lazy" />
 							<label></label>
 						</fallback-image>
@@ -10059,11 +9765,11 @@ for(let L = 1; L <= order; L++) {
 						height="400"
 						src="./chapters/bsplines/uniform.js"
 						data-open="true"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="400px" height="400px" src="./images/chapters/bsplines/0215dc106e4ad51afe043c0176a595f6.png" loading="lazy" />
 							<label></label>
 						</fallback-image>
@@ -10088,11 +9794,11 @@ for(let L = 1; L <= order; L++) {
 						width="400"
 						height="400"
 						src="./chapters/bsplines/rational-uniform.js"
-						reset="重启"
-						viewSource="view source"
+						reset="重置"
+						viewSource="查看源码"
 					>
 						<fallback-image>
-							<span class="view-source">Scripts are disabled. Showing fallback image.</span>
+							<span class="view-source">脚本被禁用。显示备用图片。</span>
 							<img width="400px" height="400px" src="./images/chapters/bsplines/0d9c2186423466a32bb8fbd187409f82.png" loading="lazy" />
 							<label></label>
 						</fallback-image>
@@ -10147,7 +9853,7 @@ for(let L = 1; L <= order; L++) {
 					</script>
 
 					<h1>
-						<div class="nav"><a href="zh-CN/index.html#bsplines">前</a><a href="#toc">目录</a></div>
+						<div class="nav"><a href="zh-CN/index.html#bsplines">上一节</a><a href="#toc">目录</a></div>
 						<a href="zh-CN/index.html#comments">Comments and questions</a>
 					</h1>
 					<p>

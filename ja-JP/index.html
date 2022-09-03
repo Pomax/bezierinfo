@@ -41,7 +41,7 @@
 		<meta property="og:locale" content="ja-JP" />
 		<meta property="og:type" content="article" />
 		<meta property="og:published_time" content="2013-06-13T12:00:00+00:00" />
-		<meta property="og:updated_time" content="2022-01-08T18:14:03+00:00" />
+		<meta property="og:updated_time" content="2022-09-03T16:57:50+00:00" />
 		<meta property="og:author" content="Mike 'Pomax' Kamermans" />
 		<meta property="og:section" content="Bézier Curves" />
 		<meta property="og:tag" content="Bézier Curves" />
@@ -136,10 +136,10 @@
 				<ul class="lang-switcher">
 					<li><a href="./index.html">English</a> &nbsp;</li>
 					<li><a href="./ja-JP/index.html">日本語</a> <span class="localisation-progress">(24%)</span></li>
-					<li><a href="./zh-CN/index.html">中文</a> <span class="localisation-progress">(22%)</span></li>
+					<li><a href="./zh-CN/index.html">中文</a> <span class="localisation-progress">(35%)</span></li>
 					<li><a href="./ru-RU/index.html">Русский</a> <span class="localisation-progress">(24%)</span></li>
 					<li><a href="./uk-UA/index.html">Українська</a> <span class="localisation-progress">(2%)</span></li>
-					<li><a href="./ko-KR/index.html">한국어</a> <span class="localisation-progress">(7%)</span></li>
+					<li><a href="./ko-KR/index.html">한국어</a> <span class="localisation-progress">(9%)</span></li>
 				</ul>
 				<p>
 					(Don't see your language listed, or want to see it reach 100%?
@@ -2421,8 +2421,8 @@ B(t) = ┌      2 ┐  · M  · Q  · │ P  │ = ┌      2 ┐  · M  · │ 
 					/>
 					<p>
 						さて、これらの行列を見るに、後半部分の曲線の行列は本当に計算する必要があったのでしょうか？いえ、ありませんでした。片方の行列が得られれば、実はもう一方の行列も暗に得られたことになります。まず、行列
-						<strong><em>Q</em></strong> の各行の値を右側に寄せ、右側にあった0を左側に押しのけます。次に行列を上下に反転させます。これでたちまち
-						<strong><em>Q'</em></strong> が「計算」できるのです。
+						<strong>Q</strong> の各行の値を右側に寄せ、右側にあった0を左側に押しのけます。次に行列を上下に反転させます。これでたちまち
+						<strong>Q'</strong> が「計算」できるのです。
 					</p>
 					<p>
 						この方法で曲線の分割を実装すれば、再帰が少なくて済みます。また、数値のキャッシュを利用した単純な演算になるので、再帰の計算コストが大きいシステムにおいては、コストが抑えられるかもしれません。行列の乗算に適したデバイスで計算を行えば、ド・カステリョのアルゴリズムに比べてかなり速くなるでしょう。
