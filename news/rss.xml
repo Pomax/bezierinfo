@@ -6,7 +6,7 @@
   <atom:link href="https://pomax.github.io/bezierinfo" rel="self"></atom:link>
   <description>News updates for the <a href="https://pomax.github.io/bezierinfo">primer on Bézier Curves</a> by Pomax</description>
   <language>en-GB</language>
-  <lastBuildDate>Sat Sep 03 2022 09:57:50 +00:00</lastBuildDate>
+  <lastBuildDate>Mon Jul 24 2023 09:20:29 +00:00</lastBuildDate>
   <image>
     <url>https://pomax.github.io/bezierinfo/images/og-image.png</url>
     <title>A Primer on Bézier Curves</title>
@@ -20,7 +20,7 @@
     
 &lt;p&gt;While the primer covered line/line, line/curve, and curve/curve intersections, there was one other obvious intersection conspicuously missing: circle/curve intersections. You&#39;d think those were just an extension on the maths used for the other three, but unfortunately, this is not the case. Rather than using calculus, the only real way to determine where a polynomial curve intersects it is to sample the curve at a resolution high enough to find you intervals on the curve where there likely is an intersection, then refining that interval until you find actual intersections.&lt;/p&gt;
 &lt;p&gt;It is, in fact, rather similar to &lt;a href=&quot;https://pomax.github.io/bezierinfo/#projections&quot;&gt;projecting a point onto a bezier curve&lt;/a&gt; where the point is the circle&#39;s center, and where the projection distance actually needs to match the circle radius, so: &lt;a href=&quot;https://pomax.github.io/bezierinfo/#circleintersection&quot;&gt;let&#39;s see how to do that&lt;/a&gt;!&lt;/p&gt;
-&lt;p&gt;— &lt;a href=&quot;https://twitter.com/TheRealPomax&quot;&gt;Pomax&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;— &lt;a href=&quot;https://mastodon.social/@TheRealPomax&quot;&gt;Pomax&lt;/a&gt;&lt;/p&gt;
 
     </description>
     <pubDate>Sat Nov 21 2020 16:00:00 +00:00</pubDate>
@@ -115,7 +115,7 @@ draw() {
 &lt;p&gt;It&#39;s going to take me a while to detail the entire tech stack, but ultimately what matters is that you get a Primer that is a normal &quot;vanilla&quot; HTML, CSS, and JS page again, that &quot;just works&quot; even with JS disabled.&lt;/p&gt;
 &lt;p&gt;Enjoy &lt;a href=&quot;https://pomax.github.io/bezierinfo&quot;&gt;The new Primer on Bézier Curves&lt;/a&gt;, and if you find any problems, &lt;a href=&quot;https://github.com/Pomax/BezierInfo-2/issues&quot;&gt;you know where to go&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;See you in the next post!&lt;/p&gt;
-&lt;p&gt;— &lt;a href=&quot;https://twitter.com/TheRealPomax&quot;&gt;Pomax&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;— &lt;a href=&quot;https://mastodon.social/@TheRealPomax&quot;&gt;Pomax&lt;/a&gt;&lt;/p&gt;
 
     </description>
     <pubDate>Thu Sep 17 2020 17:00:00 +00:00</pubDate>
